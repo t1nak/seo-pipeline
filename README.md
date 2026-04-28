@@ -2,7 +2,9 @@
 
 Eine Pipeline, die aus dem zvoove Blog ein priorisiertes Keyword Set, thematische Cluster, Content Briefs und ein interaktives Reporting macht.
 
-![Cluster Map Vorschau](output/clustering/chart1_umap_map.png)
+![Pipeline Architektur](docs/architecture.svg)
+
+> Fünf entkoppelte Schritte. Externe Systeme links, lokale ML in der Mitte, Datenartefakte rechts. Die markierten Artefakte sind über GitHub Pages live verfügbar. Detail in [`docs/architecture.md`](docs/architecture.md).
 
 ## Das Problem in einem Satz
 

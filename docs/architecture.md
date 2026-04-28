@@ -4,6 +4,12 @@ Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwi
 
 ## Pipeline Diagramm
 
+![Architektur Diagramm](architecture.svg)
+
+Die SVG zeigt links die externen Systeme (zvoove Blog, DataForSEO, Anthropic API), in der Mitte die fünf Pipeline Schritte mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Markierte Artefakte (gelb) sind über GitHub Pages live deployed. Die Validierungs-Zahlen unten sind der Stand des manuellen Baseline Laufs.
+
+Für eine Mermaid Quelle, die in jedem GitHub Markdown Renderer funktioniert, hier dieselbe Struktur als Code:
+
 ```mermaid
 flowchart LR
     Blog[zvoove.de/wissen/blog]:::ext

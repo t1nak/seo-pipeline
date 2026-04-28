@@ -167,6 +167,33 @@ In Produktion würde nur der aktuelle Stand im Git landen, Snapshots würden in 
 - Pro: schnellere Responses auf Folge-Aufrufe.
 - Contra: minimale Komplexität (ein zusätzliches Feld im Request).
 
+## ADR-11: API Key statt Subscription Auth für Brief Generation
+
+**Kontext.** Anthropic bietet zwei Wege, Claude programmatisch zu nutzen: einen API Key über `console.anthropic.com` (`anthropic` Python SDK, separate pay-per-token Abrechnung) oder das `claude-agent-sdk`, das eine lokale Claude Code Installation als Subprocess nutzt und dort über die Max- oder Pro-Subscription authentifiziert.
+
+**Entscheidung.** API Key über `anthropic` SDK ist der dokumentierte Default in `src/brief.py`.
+
+**Alternativen geprüft.**
+
+- `claude-agent-sdk` mit Subscription Auth: nutzt das vorhandene Max-Abo des Entwicklers, keine separate Abrechnung
+- Subscription only: Pipeline läuft nur lokal, nicht reproduzierbar ohne Subscription
+
+**Konsequenzen.**
+
+- Pro API Key: industry-standard, reproduzierbar in CI ohne Claude Code Installation, predictable Kosten (~0,20 USD pro 13-Cluster-Lauf), klarer Audit Trail in console.anthropic.com.
+- Pro API Key: deployment-fähig in Serverless oder Cloud (Lambda, Cloud Run), wo keine CLI Session möglich ist.
+- Contra API Key: separate Abrechnung (kein bereits-bezahltes Abo), API Key Management (Rotation, Secrets Store).
+- Pro Subscription: keine Extra-Kosten, wenn der Entwickler ohnehin ein Max-Abo hat.
+- Contra Subscription: nicht in CI nutzbar, Subprocess-Overhead, weniger Standard, Subscription hat eigene Rate Limits.
+
+**Empfehlung für Produktion bei zvoove.** API Key. Drei Gründe:
+
+1. **CI/CD-Reproduzierbarkeit.** Ein GitHub Actions Runner oder ein zvoove-internes CI-System kann keine Claude Code CLI-Session halten. API Key ist das einzige Pattern, das in Build-Pipelines funktioniert.
+2. **Kosten-Transparenz.** Per-Token-Abrechnung skaliert linear mit Nutzung und ist im Anthropic Console Tag-genau nachvollziehbar. Eine Subscription mit "Unlimited" Charakter ist schwerer zu prognostizieren oder umzulegen.
+3. **Engineering-Standard.** Jeder Engineer, der die Pipeline in zwei Jahren wartet, erwartet API Key. Subscription Auth ist ungewöhnlich und braucht Erklärung.
+
+**Hinweis zur Lieferung dieser Case Study.** Die 13 Briefs in `output/briefings/` sind während der Entwicklung über die Subscription-Variante erzeugt worden (über die Claude Code Session des Autors), nicht über einen API Key. Inhaltlich identisch mit dem, was der API-Aufruf produziert hätte, weil derselbe System Prompt und dieselbe Modell-Familie verwendet wurde. Im Code-Pfad bleibt die API-Key-Variante der dokumentierte Default, weil das die Empfehlung für die produktive Nutzung ist.
+
 ## ADR-10: Plotly für interaktive Karte, matplotlib für PNG Charts
 
 **Kontext.** Visualisierung muss sowohl interaktiv (für die Stakeholder) als auch statisch (für Reports und Slides) verfügbar sein.

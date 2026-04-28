@@ -17,6 +17,14 @@ The brief structure follows what an editor would expect for a B2B SaaS blog:
 Real Claude API in default mode. `--dry-run` writes a stub per cluster
 (useful for offline iteration on the rest of the pipeline).
 
+Authentication: this module uses the `anthropic` SDK with an API key
+(env var `ANTHROPIC_API_KEY`). For solo developers already paying for
+a Claude Max or Pro subscription, the alternative `claude-agent-sdk`
+wraps the local Claude Code CLI session and avoids the separate API
+billing. We chose the API key path as the documented default because
+it is reproducible in CI and deployable to serverless. Trade-off and
+recommendation are in docs/decisions.md (ADR-11).
+
 Prompt caching: the system prompt is stable across all clusters, so it
 is sent as a cached block. This cuts per-call cost on repeated runs by
 roughly 90% on the cached portion.

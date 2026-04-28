@@ -1,6 +1,6 @@
 # Methodology
 
-Diese Datei erklärt die methodischen Entscheidungen in der Cluster Pipeline mit der Tiefe, die ein technischer Reviewer erwartet. Das [README](../README.md) gibt den Überblick, das [CASE_STUDY](../CASE_STUDY.md) verbindet die Methodik mit dem Geschäftsproblem, hier geht es um das technische Warum.
+Diese Datei erklärt die methodischen Entscheidungen in der Cluster Pipeline mit der Tiefe, die ein technischer Reviewer erwartet. Die [Übersicht](index.md) gibt den Einstieg, die [Case Study](case-study.md) verbindet die Methodik mit dem Geschäftsproblem, hier geht es um das technische Warum.
 
 ## Inhaltsübersicht
 

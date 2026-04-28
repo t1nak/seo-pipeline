@@ -35,6 +35,9 @@ secrets/
 # Local recovery scratch (chat-transcript extraction)
 _recovered/
 
+# MkDocs build output
+site/
+
 # Testing / coverage
 .pytest_cache/
 .coverage

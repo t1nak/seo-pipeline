@@ -1,0 +1,4 @@
+# Documentation site (mkdocs-material).
+# Used by .github/workflows/docs.yml to build the site for GitHub Pages.
+# Not needed to run the pipeline itself.
+mkdocs-material>=9.5

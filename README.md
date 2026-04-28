@@ -23,8 +23,8 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 | Was | Wo |
 |---|---|
-| Interaktive Cluster Karte | [`output/clustering/cluster_map.html`](output/clustering/cluster_map.html) (lokal im Browser öffnen) |
-| Konsolidierter Report | [`output/reporting/index.html`](output/reporting/index.html) |
+| Interaktive Cluster Karte (Live) | [t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html](https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html) |
+| Konsolidierter Report (Live) | [t1nak.github.io/seo-pipeline/output/reporting/index.html](https://t1nak.github.io/seo-pipeline/output/reporting/index.html) |
 | Beispiel Content Brief | [`output/briefings/cluster_05.md`](output/briefings/cluster_05.md) |
 | Cluster Profile (CSV) | [`output/clustering/cluster_profiles.csv`](output/clustering/cluster_profiles.csv) |
 | Methodische Begründung | [`docs/methodology.md`](docs/methodology.md) |

@@ -1,0 +1,15 @@
+hdb_id,n,tot_sv,med_sv,mean_kd,med_kd,mean_cpc,med_cpc,mean_priority,pct_comm,label,share_kw,share_sv,strategy,top_kw
+10,52,48945,186.0,48.0,47.5,6.03,6.285,17.3,77.0,B2B SaaS category heads,10.3,20.4,Build Authority,dokumentenmanagement software; bewerbermanagement software; mitarbeiterverwaltung software
+-1,71,29039,137.0,34.9,32.0,2.77,1.6,11.3,27.0,Noise,14.1,12.1,Long-Tail Support,debitorenmanagement; künstliche intelligenz personaldienstleistung; fachkräftemangel deutschland
+2,46,26062,150.5,47.8,43.5,6.57,6.23,9.4,93.0,Commercial SaaS heads,9.1,10.9,Build Authority,zeiterfassung software; mobile zeiterfassung; zeitarbeitssoftware
+12,82,24589,132.0,37.7,37.5,3.68,2.05,7.2,38.0,Industry & operations catch-all,16.3,10.2,Build Authority,zeitarbeit programm; zeitarbeit branche entwicklung; factoring zeitarbeit
+4,32,23432,103.5,53.5,53.0,6.71,6.845000000000001,11.7,100.0,Brand: zvoove product names,6.3,9.8,Build Authority,zvoove referenzen; zvoove dms; zvoove cockpit
+3,31,13831,155.0,34.2,34.0,2.67,1.57,13.7,26.0,Mixed operational how-to,6.2,5.8,Win Now,aüg; bewerber finden; lohnabrechnung sage
+8,22,12979,167.0,37.6,32.0,3.67,2.225,14.2,45.0,Digitalisation umbrella,4.4,5.4,Build Authority,digitalisierung zeitarbeit; digitale zeiterfassung; elektronische lohnabrechnung
+11,39,12922,149.0,29.6,29.0,1.85,1.63,9.5,3.0,AÜG / labor-law pillar,7.7,5.4,Win Now,arbeitnehmerüberlassung; arbeitnehmerüberlassungsgesetz; arbeitsschutz zeitarbeit
+1,34,12075,152.5,37.2,38.5,3.28,1.845,10.4,44.0,Recruiting & AI tooling,6.7,5.0,Build Authority,ki recruiting; recruiting software; recruiting plattform
+5,20,9265,137.0,37.1,35.0,2.8,1.74,10.7,30.0,Mid-funnel HR ops,4.0,3.9,Long-Tail Support,personaleinsatzplanung; personalakte inhalt; karriereseite erstellen
+7,20,8942,157.0,34.4,38.0,1.69,1.7650000000000001,11.8,0.0,Tariff & überlassung law,4.0,3.7,Win Now,höchstüberlassungsdauer; tariflandschaft zeitarbeit; igz tarifvertrag aktuell
+9,25,8166,134.0,40.2,39.0,4.38,2.73,6.8,52.0,Gebäudereinigung vertical,5.0,3.4,Build Authority,gebäudereinigung software; disposition gebäudereinigung; auftragsverwaltung gebäudereinigung
+6,15,6262,176.0,37.1,36.0,2.93,1.83,13.2,27.0,Equal pay & cashflow risk,3.0,2.6,Long-Tail Support,equal pay zeitarbeit; zahlungsausfall absichern; zahlungsziele kunden
+0,15,3516,161.0,35.7,39.0,3.23,1.95,8.4,27.0,Factoring fundamentals,3.0,1.5,Long-Tail Support,factoring buchen; factoring erlaubnis; offenes factoring

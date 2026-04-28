@@ -27,8 +27,13 @@ ENV/
 !package.json
 !tsconfig.json
 !pyproject*.json
+!output/**/*.json
+!output/_archive/**/*.json
 credentials/
 secrets/
+
+# Local recovery scratch (chat-transcript extraction)
+_recovered/
 
 # Testing / coverage
 .pytest_cache/

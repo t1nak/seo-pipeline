@@ -14,29 +14,36 @@ The brief structure follows what an editor would expect for a B2B SaaS blog:
   * Drei Wettbewerbs-URLs als Benchmarks (three benchmark URLs to study)
   * Call to action
 
-Real Claude API in default mode. `--dry-run` writes a stub per cluster
+Real LLM call in default mode. `--dry-run` writes a stub per cluster
 (useful for offline iteration on the rest of the pipeline).
 
-Authentication: this module uses the `anthropic` SDK with an API key
-(env var `ANTHROPIC_API_KEY`). For solo developers already paying for
-a Claude Max or Pro subscription, the alternative `claude-agent-sdk`
-wraps the local Claude Code CLI session and avoids the separate API
-billing. We chose the API key path as the documented default because
-it is reproducible in CI and deployable to serverless. Trade-off and
-recommendation are in docs/decisions.md (ADR-11).
+Two providers, switchable via `--provider`:
 
-Prompt caching: the system prompt is stable across all clusters, so it
-is sent as a cached block. This cuts per-call cost on repeated runs by
-roughly 90% on the cached portion.
+  api   anthropic SDK + ANTHROPIC_API_KEY env var.
+        Separate billing on the Anthropic API account. Reproducible in
+        CI, deployable to serverless. Supports `--model <id>` and
+        prompt caching for the stable system prompt.
+
+  max   claude-agent-sdk + local Claude Code CLI session.
+        Billed via Claude Max / Pro subscription. Model id is inherited
+        from the Claude Code session and cannot be pinned; passing
+        `--model` errors out. No prompt caching (SDK limitation). Local
+        only because GitHub-Action runners have no logged-in CLI.
+
+Recommendation: `max` for solo development, `api` for CI and deploys.
+See docs/decisions.md (ADR-11).
 
 CLI:
-    python -m src.brief                     real Claude API (needs ANTHROPIC_API_KEY)
-    python -m src.brief --dry-run            stub mode, no API calls
-    python -m src.brief --cluster 5          regenerate just one cluster
+    python -m src.brief                           api + ANTHROPIC_API_KEY, default model
+    python -m src.brief --provider max            Max subscription via local CC session
+    python -m src.brief --provider api --model claude-opus-4-7
+    python -m src.brief --dry-run                 stub mode, no LLM call
+    python -m src.brief --cluster 5               regenerate just one cluster (0-based)
 """
 from __future__ import annotations
 
 import argparse
+import asyncio
 import os
 import sys
 from pathlib import Path
@@ -49,7 +56,7 @@ BRIEFINGS = OUT / "briefings"
 PROFILES_CSV = OUT / "clustering" / "cluster_profiles.csv"
 LABELED_CSV = OUT / "clustering" / "keywords_labeled.csv"
 
-MODEL_ID = "claude-sonnet-4-6"
+DEFAULT_API_MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 4096
 
 SYSTEM_PROMPT = """Du bist Senior Content Strategist für den deutschen B2B SaaS Markt.
@@ -99,7 +106,26 @@ Format des Briefs (immer Markdown, immer Deutsch, immer in dieser Reihenfolge):
 {1 konkrete Aktion, idealerweise mit Bezug zu zvoove Produkten}
 
 Schreibe pragmatisch, nicht akademisch. Keine Floskeln. Keine KI Erkennungsmerkmale
-wie Gedankenstriche. Nutze Komma, Doppelpunkt, oder neuen Satz."""
+wie Gedankenstriche. Nutze Komma, Doppelpunkt, oder neuen Satz.
+
+Wichtig: Beginne deine Antwort SOFORT mit der Zeile `# {Arbeitstitel}`. Kein
+einleitender Satz, kein Vorwort, keine Beschreibung deines Vorgehens, kein
+'Ich recherchiere...'. Erste Zeichen der Antwort sind `# `."""
+
+
+def _strip_preamble(text: str) -> str:
+    """Drop anything before the first markdown H1 line.
+
+    Defensive: even with the system prompt instruction above, an agent-style
+    provider may still emit a narration line like 'Ich recherchiere ...'
+    before the actual brief. We anchor on the first '# ' that starts a line.
+    """
+    idx = text.find("\n# ")
+    if idx >= 0:
+        return text[idx + 1:]
+    if text.lstrip().startswith("# "):
+        return text.lstrip()
+    return text
 
 
 def _user_prompt(cluster_id: int, label_de: str, profile: dict, top_kw: list[str]) -> str:
@@ -119,55 +145,143 @@ def _user_prompt(cluster_id: int, label_de: str, profile: dict, top_kw: list[str
 
 
 def _stub_brief(cluster_id: int, label_de: str, top_kw: list[str]) -> str:
-    """Used in --dry-run mode and as fallback when the API call fails."""
+    """Used in --dry-run mode and as fallback when the LLM call fails."""
     return (
         f"# Cluster {cluster_id + 1}: {label_de}\n\n"
         f"**Status:** Stub (dry run mode, kein LLM Aufruf).\n\n"
         f"**Top Keywords:**\n"
         + "\n".join(f"- {kw}" for kw in top_kw[:5])
-        + "\n\nFür einen vollständigen Brief mit `python -m src.brief --cluster "
-        f"{cluster_id}` und gesetztem ANTHROPIC_API_KEY neu generieren.\n"
+        + f"\n\nFür einen vollständigen Brief mit `python -m src.brief --cluster "
+        f"{cluster_id}` neu generieren.\n"
     )
 
 
-def _generate_brief(client, cluster_id: int, label_de: str,
-                    profile: dict, top_kw: list[str]) -> str:
-    """One Claude API call. System prompt is cached across calls."""
-    system_blocks = [{
-        "type": "text",
-        "text": SYSTEM_PROMPT,
-        "cache_control": {"type": "ephemeral"},
-    }]
-    msg = client.messages.create(
-        model=MODEL_ID,
-        max_tokens=MAX_TOKENS,
-        system=system_blocks,
-        messages=[{"role": "user", "content": _user_prompt(cluster_id, label_de, profile, top_kw)}],
-    )
-    return msg.content[0].text
+# ---------------------------------------------------------------------------
+# Providers
+# ---------------------------------------------------------------------------
 
 
-def run(dry_run: bool = False, cluster_filter: int | None = None) -> None:
+class BriefProvider:
+    """Abstract provider. Concrete implementations: ApiKeyProvider, AgentSdkProvider."""
+
+    name: str = "abstract"
+
+    def generate(self, system: str, user: str) -> str:
+        raise NotImplementedError
+
+
+class ApiKeyProvider(BriefProvider):
+    """Anthropic SDK + API key. CI-safe path, supports model selection and prompt caching."""
+
+    name = "api"
+
+    def __init__(self, model: str):
+        try:
+            from anthropic import Anthropic
+        except ImportError:
+            sys.exit("anthropic SDK not installed. `pip install anthropic`, "
+                     "or switch to --provider max, or use --dry-run.")
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            sys.exit("ANTHROPIC_API_KEY not set. Export it, "
+                     "or switch to --provider max (uses local Claude Code session), "
+                     "or use --dry-run.")
+        self.model = model
+        self._client = Anthropic(api_key=api_key)
+
+    def generate(self, system: str, user: str) -> str:
+        msg = self._client.messages.create(
+            model=self.model,
+            max_tokens=MAX_TOKENS,
+            system=[{
+                "type": "text",
+                "text": system,
+                "cache_control": {"type": "ephemeral"},
+            }],
+            messages=[{"role": "user", "content": user}],
+        )
+        return msg.content[0].text
+
+
+class AgentSdkProvider(BriefProvider):
+    """claude-agent-sdk wrapping the local Claude Code CLI session.
+
+    Billed against the user's Claude Max / Pro subscription. Local only:
+    GitHub-Action runners have no logged-in CLI, so this provider cannot
+    run in CI. Model id is inherited from the active Claude Code session
+    and cannot be overridden. No prompt caching exposed by the SDK.
+    """
+
+    name = "max"
+
+    def __init__(self) -> None:
+        try:
+            from claude_agent_sdk import (
+                query, ClaudeAgentOptions, AssistantMessage,
+            )
+        except ImportError:
+            sys.exit("claude-agent-sdk not installed. `pip install claude-agent-sdk` "
+                     "(requires Python >=3.10), or switch to --provider api, "
+                     "or use --dry-run.")
+        self._query = query
+        self._options_cls = ClaudeAgentOptions
+        self._assistant_cls = AssistantMessage
+
+    def generate(self, system: str, user: str) -> str:
+        async def _run() -> str:
+            text = ""
+            async for msg in self._query(
+                prompt=user,
+                options=self._options_cls(
+                    system_prompt=system,
+                    allowed_tools=[],  # pure text output, no tool use
+                ),
+            ):
+                if isinstance(msg, self._assistant_cls):
+                    for block in msg.content:
+                        if hasattr(block, "text"):
+                            text += block.text
+            return text
+
+        return asyncio.run(_run())
+
+
+def make_provider(name: str, model: str | None) -> BriefProvider:
+    if name == "api":
+        return ApiKeyProvider(model=model or DEFAULT_API_MODEL)
+    if name == "max":
+        if model is not None:
+            sys.exit(
+                "--model is not supported with --provider max. The model is "
+                "inherited from the active Claude Code session. Either drop "
+                "--model, or switch to --provider api."
+            )
+        return AgentSdkProvider()
+    sys.exit(f"unknown provider: {name!r}. choose 'api' or 'max'.")
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+
+def run(provider_name: str = "api", model: str | None = None,
+        dry_run: bool = False, cluster_filter: int | None = None) -> None:
     if not PROFILES_CSV.exists() or not LABELED_CSV.exists():
         sys.exit(f"missing inputs. Expected {PROFILES_CSV.relative_to(ROOT)} and "
-                 f"{LABELED_CSV.relative_to(ROOT)}. Run `python -m src.cluster --step all` first.")
+                 f"{LABELED_CSV.relative_to(ROOT)}. Run `python -m src.cluster` first.")
 
     BRIEFINGS.mkdir(parents=True, exist_ok=True)
     profiles = pd.read_csv(PROFILES_CSV)
     labeled = pd.read_csv(LABELED_CSV)
 
-    client = None
+    provider: BriefProvider | None = None
     if not dry_run:
-        try:
-            from anthropic import Anthropic
-        except ImportError:
-            sys.exit("anthropic SDK not installed. `pip install anthropic` or use --dry-run.")
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
-        if not api_key:
-            sys.exit("ANTHROPIC_API_KEY not set. Export it or use --dry-run.")
-        client = Anthropic(api_key=api_key)
+        provider = make_provider(provider_name, model)
+        suffix = f" model={model}" if (model and provider.name == "api") else ""
+        print(f"[brief] provider={provider.name}{suffix}")
 
-    n_ok = n_fail = n_skip = 0
+    n_ok = n_fail = 0
     for _, row in profiles.iterrows():
         cid = int(row["cluster_id"])
         if cid == -1:
@@ -187,25 +301,40 @@ def run(dry_run: bool = False, cluster_filter: int | None = None) -> None:
             continue
 
         try:
-            text = _generate_brief(client, cid, label_de, row.to_dict(), top_kw)
+            assert provider is not None  # for type checker; set above when not dry_run
+            text = provider.generate(
+                SYSTEM_PROMPT,
+                _user_prompt(cid, label_de, row.to_dict(), top_kw),
+            )
+            text = _strip_preamble(text)
             out_path.write_text(text)
-            print(f"[brief] {out_path.relative_to(ROOT)} ({len(text)} chars)")
+            print(f"[brief] {out_path.relative_to(ROOT)} "
+                  f"({len(text)} chars, via {provider.name})")
             n_ok += 1
         except Exception as exc:
             print(f"[brief] cluster {cid} FAILED: {exc}", file=sys.stderr)
             out_path.write_text(_stub_brief(cid, label_de, top_kw))
             n_fail += 1
 
-    print(f"\n[brief] done. ok={n_ok} failed={n_fail} skipped={n_skip}")
+    print(f"\n[brief] done. ok={n_ok} failed={n_fail}")
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("--dry-run", action="store_true", help="skip API calls, write stubs")
+    p.add_argument("--provider", choices=["api", "max"], default="api",
+                   help="api: anthropic SDK + ANTHROPIC_API_KEY (CI-safe). "
+                        "max: claude-agent-sdk + local Claude Code session (Max-Abo, local only). "
+                        "Default: api.")
+    p.add_argument("--model", default=None,
+                   help=f"model id, only valid with --provider api. "
+                        f"Default: {DEFAULT_API_MODEL}.")
+    p.add_argument("--dry-run", action="store_true",
+                   help="skip LLM calls, write stubs (no provider needed).")
     p.add_argument("--cluster", type=int, default=None,
-                   help="only generate this cluster id (0-based)")
+                   help="only generate this cluster id (0-based).")
     args = p.parse_args()
-    run(dry_run=args.dry_run, cluster_filter=args.cluster)
+    run(provider_name=args.provider, model=args.model,
+        dry_run=args.dry_run, cluster_filter=args.cluster)
 
 
 if __name__ == "__main__":

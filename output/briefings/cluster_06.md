@@ -1,49 +1,51 @@
-# Personaleinsatzplanung in der Zeitarbeit: Methoden und Werkzeuge 2026
+# zvoove im Überblick: Module, Integrationen und echte Kundenreferenzen
 
-**Hauptkeyword:** personaleinsatzplanung
-**Nebenkeywords:** personalakte inhalt, karriereseite erstellen, saas personaldienstleister, kennzahlen personaldienstleister, personalakte führen, erp personaldienstleister
-**Suchintention:** informational mit Mid-Funnel Software-Hooks. Operations-Verantwortliche suchen Methoden, sind aber tool-affin.
-**Empfohlene Wortanzahl:** 2200
+**Hauptkeyword:** zvoove referenzen
+**Nebenkeywords:** zvoove dms, zvoove cockpit, zvoove payroll, zvoove alternative, zvoove integration datev, zvoove one, zvoove kunden
+**Suchintention:** commercial, Suchende kennen zvoove bereits und evaluieren konkret vor einer Kaufentscheidung
+**Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Disponenten, Operations-Leads und HR-Verantwortliche bei Zeitarbeitsfirmen mit 100 bis 500 Zeitarbeitnehmern. Verantwortlich für die tägliche Schichtplanung, Last-Minute-Einsätze und das Kunden-Reporting zu Schicht-Auslastung. Aktuelles Werkzeug ist meist Excel oder ein älteres Disposition-Modul.
+Geschäftsführer oder IT-Leiter eines Personaldienstleisters mit 50 bis 500 Mitarbeitenden, der aktuell verschiedene Softwarelösungen vergleicht.
 
 ## Schmerzpunkt
 
-Schichtplanung kostet täglich zwei bis vier Stunden. Last-Minute-Ausfälle eines Mitarbeiters bedeuten manuelle Telefonkette und oft eine unbesetzte Schicht. Compliance-Themen wie Höchstüberlassungsdauer pro Mitarbeiter und Kunde sind in Excel kaum nachverfolgbar, was im AÜG-Audit zum Problem wird. Gleichzeitig ist die Skalierung auf eine zweite Niederlassung blockiert, weil Excel keine zwei Disponenten parallel akzeptiert.
+Die Person hat bereits drei bis fünf Demos gesehen und verliert den Überblick. Sie braucht belastbare Informationen: Welche Module brauche ich wirklich? Funktioniert die DATEV-Schnittstelle zuverlässig? Gibt es Referenzkunden aus meiner Branche, die ich kontaktieren kann?
 
 ## Ziel des Artikels
 
-Der Leser kennt nach dem Lesen die drei Methoden-Stufen der Personaleinsatzplanung (manuell, regelbasiert, KI-gestützt), versteht welche Probleme jede Stufe löst, und kann die Anforderungen für ein passendes Tool für seine Größenklasse formulieren.
+Der Leser versteht, welche zvoove Module für seinen Use Case relevant sind, und fordert ein individuelles Angebot oder eine Referenzkundenvorstellung an.
 
 ## Outline
 
-- H1: Personaleinsatzplanung in der Zeitarbeit: Methoden und Werkzeuge 2026
-- H2: Was Personaleinsatzplanung in der Zeitarbeit besonders macht
-  - H3: Mehrkundeneinsatz und Schichtarbeit als strukturelle Komplexität
-  - H3: Compliance-Themen: AÜG, Tarif, Equal Pay, Höchstüberlassungsdauer
-- H2: Die drei Methoden-Stufen
-  - H3: Manuelle Planung mit Excel oder Whiteboard
-  - H3: Regelbasierte Disposition mit Branchen-Software
-  - H3: KI-gestützte Optimierung
-- H2: Anforderungen an ein gutes Disposition-Tool
-  - H3: Mitarbeiter-Profile mit Qualifikationen, Verfügbarkeiten, Wunsch-Schichten
-  - H3: Kunden-Profile mit Anforderungen, Zugangsregeln, Tarif
-  - H3: Mobile Mitarbeiter-Apps für Schicht-Annahme und Stempeln
-- H2: KPIs für Personaleinsatzplanung
-  - H3: Auslastungsquote, Fehlbesetzungs-Quote, Time-to-Fill
-  - H3: Wie diese KPIs in der Geschäftsführung berichtet werden
-- H2: Wann sich der Wechsel von Excel zu Software lohnt
-- H2: Auswahl-Kriterien für eine Disposition-Lösung
-- H2: FAQ
+- H1: zvoove im Überblick: Module, Integrationen und echte Kundenreferenzen
+- H2: Was ist zvoove one und für wen eignet es sich?
+  - H3: Die Idee hinter der All-in-One Plattform
+  - H3: Typische Unternehmensgrößen und Einsatzszenarien
+- H2: Die wichtigsten zvoove Module im Detail
+  - H3: zvoove recruit: Bewerbermanagement und Kandidatenpools
+  - H3: zvoove payroll: Lohnabrechnung für Zeitarbeit
+  - H3: zvoove dms: Digitale Personalakte und Dokumentenmanagement
+  - H3: zvoove cockpit: Dashboards und Kennzahlen für Disponenten
+  - H3: zvoove cashlink: Factoring und Liquiditätsmanagement
+- H2: Integrationen: DATEV, ERP und Jobbörsen
+  - H3: So funktioniert die zvoove DATEV Schnittstelle
+  - H3: Weitere Integrationen im Ökosystem
+- H2: Kundenreferenzen: Wer arbeitet bereits mit zvoove?
+  - H3: Praxisbeispiele aus der Zeitarbeit
+  - H3: Praxisbeispiele aus dem Recruiting
+- H2: zvoove vs. Alternativen: Worauf es beim Vergleich ankommt
+  - H3: Typische Vergleichskriterien
+  - H3: Wann zvoove passt und wann nicht
+- H2: Nächste Schritte: Demo, Referenzkunde oder Angebot
 
 ## Benchmark URLs
 
-1. https://www.haufe.de/personal/hr-management/personaleinsatzplanung/, weil Haufe für die Wissens-Ebene rankt und eine gute Methoden-Struktur hat.
-2. https://atoss.com/de/loesungen/personaleinsatzplanung/, weil ATOSS Marktführer in WFM ist und die Tool-Kategorie mit klarem Funktionsumfang demonstriert.
-3. https://www.personio.de/hr-lexikon/personaleinsatzplanung/, weil Personio die Wissens-Hub-SEO im DACH dominiert und das Format-Vorbild ist.
+1. https://www.zvoove.com/kunden — offizielle Referenzseite, zeigt aktuelle Positionierung und Kundenlogos
+2. https://www.personaldienstleister.de/software-vergleich — neutraler Branchenvergleich, zeigt Suchintention der Zielgruppe
+3. https://www.capterra.com.de/reviews/zvoove — Nutzerbewertungen, liefert authentische Pain Points und Praise
 
 ## Call to Action
 
-Wer Disposition aktuell in Excel macht und in eine zweite Niederlassung wachsen will, kann zvoove One Disposition als Beispiel anschauen. Demo-Termin zeigt typischerweise erst eine Schicht-Erstellung mit drei Mitarbeitern und zwei Kunden, dann das Reporting. 30 Minuten reichen für einen guten Eindruck.
+Jetzt persönliches Gespräch mit einem Referenzkunden aus Ihrer Branche vereinbaren: Link zur Kontaktseite mit Hinweis auf Referenzkundenvermittlung.

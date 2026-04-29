@@ -1,0 +1,101 @@
+name: Pipeline (full, 5 steps incl. brief)
+
+# Voller Pipeline-Lauf inklusive Brief-Step (Claude API).
+# Manuell ausgeloest, ANTHROPIC_API_KEY-Secret erforderlich.
+# Erwartete Kosten pro Lauf: ~0.50 bis 2 EUR (7 Cluster, Sonnet, mit
+# Prompt-Caching). dry_run=true testet die Verkabelung ohne API-Aufruf.
+#
+# Warum kein push-Trigger: Brief-Step kostet Geld, jeder Lauf soll eine
+# bewusste Entscheidung sein. Demo-Lauf ohne Brief: pipeline.yml.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Skip LLM call (write stubs only, useful for wiring tests)"
+        type: boolean
+        default: false
+      model:
+        description: "Override brief model id (default: claude-sonnet-4-6). Only used if dry_run=false."
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pipeline-full
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Verify secret
+        if: ${{ !inputs.dry_run }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is not set."
+            echo "Add it under Settings -> Secrets and variables -> Actions,"
+            echo "or re-run with dry_run=true to test the wiring without an API key."
+            exit 1
+          fi
+          echo "ANTHROPIC_API_KEY present (length: ${#ANTHROPIC_API_KEY})"
+
+      - name: Cache sentence-transformers model
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/torch/sentence_transformers
+          key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
+
+      - name: Run pipeline (5 steps incl. brief)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python pipeline.py \
+            --brief-provider api \
+            ${{ inputs.dry_run && '--dry-run' || '' }} \
+            ${{ inputs.model != '' && format('--brief-model {0}', inputs.model) || '' }}
+
+      - name: Show run summary
+        run: |
+          echo "=== Cluster profiles ==="
+          head -n 12 output/clustering/cluster_profiles.csv
+          echo ""
+          echo "=== Briefings ==="
+          ls -1 output/briefings/ | sort
+          echo ""
+          echo "=== Brief sample (cluster_01.md, first 10 lines) ==="
+          head -n 10 output/briefings/cluster_01.md || true
+          echo ""
+          echo "=== Report KPIs ==="
+          grep -E '"label"|"value"' output/reporting/index.html | head -n 12 || true
+
+      - name: Upload pipeline outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-full-output
+          path: |
+            data/keywords.csv
+            output/clustering/
+            output/briefings/
+            output/reporting/
+          retention-days: 14
+          if-no-files-found: error

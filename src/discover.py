@@ -8,8 +8,10 @@ Status: STUB. Not yet implemented end to end.
 What is implemented:
 
   * `--source manual` reads the existing `data/keywords.manual.csv`
-    (the recovered baseline) and writes it to `data/keywords.csv`. This
-    keeps the pipeline runnable while the live discovery step is built.
+    (the recovered baseline), caps it at `--max-keywords` (default 500,
+    per the case study brief), and writes the result to `data/keywords.csv`.
+    If the baseline already carries `priority_score`, the cap keeps the
+    top scoring rows; otherwise rows are kept in original order.
 
 What is NOT yet implemented:
 
@@ -17,7 +19,6 @@ What is NOT yet implemented:
     article titles and topical signals.
   * Expand each article into a seed keyword set via Claude API
     (head, body, longtail variants, German morphology aware).
-  * Filter to a max of 500 keywords, ranked by relevance.
   * Write to `data/keywords.csv` with columns:
     keyword, estimated_intent, category, type, notes.
 
@@ -27,26 +28,42 @@ see docs/decisions.md for the trade-off.
 
 CLI:
     python -m src.discover --source manual
+    python -m src.discover --source manual --max-keywords 300
     python -m src.discover --source live      # not yet implemented
 """
 from __future__ import annotations
 
 import argparse
-import shutil
 import sys
 from pathlib import Path
+
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 MANUAL_CSV = DATA / "keywords.manual.csv"
 CANONICAL_CSV = DATA / "keywords.csv"
 
+MAX_KEYWORDS_DEFAULT = 500
 
-def discover_manual() -> None:
+
+def discover_manual(max_keywords: int = MAX_KEYWORDS_DEFAULT) -> None:
     if not MANUAL_CSV.exists():
         sys.exit(f"missing {MANUAL_CSV}. The manual baseline was lost.")
-    shutil.copy(MANUAL_CSV, CANONICAL_CSV)
-    print(f"[discover] copied {MANUAL_CSV.relative_to(ROOT)} -> "
+    df = pd.read_csv(MANUAL_CSV)
+    n_in = len(df)
+    if n_in > max_keywords:
+        if "priority_score" in df.columns:
+            df = (df.sort_values("priority_score", ascending=False)
+                    .head(max_keywords)
+                    .reset_index(drop=True))
+            mode = "top by priority_score"
+        else:
+            df = df.head(max_keywords).reset_index(drop=True)
+            mode = "first rows"
+        print(f"[discover] capped {n_in} -> {len(df)} keywords ({mode})")
+    df.to_csv(CANONICAL_CSV, index=False)
+    print(f"[discover] wrote {len(df)} keywords to "
           f"{CANONICAL_CSV.relative_to(ROOT)}")
 
 
@@ -60,9 +77,12 @@ def discover_live() -> None:
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--source", choices=["manual", "live"], default="manual")
+    p.add_argument("--max-keywords", type=int, default=MAX_KEYWORDS_DEFAULT,
+                   help=f"hard cap on output rows (default {MAX_KEYWORDS_DEFAULT}, "
+                        f"per the case study brief)")
     args = p.parse_args()
     if args.source == "manual":
-        discover_manual()
+        discover_manual(max_keywords=args.max_keywords)
     else:
         discover_live()
 

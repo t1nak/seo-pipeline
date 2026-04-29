@@ -42,6 +42,37 @@ jobs:
           cp -r output site/output
           cp .nojekyll site/.nojekyll
 
+      - name: Setup Node.js for StatiCrypt
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install StatiCrypt
+        run: npm install -g @robinmoisson/staticrypt
+
+      - name: Encrypt site with shared password
+        # Why: the repo is private (Pro feature), but Pages is public so
+        # reviewers do not need a GitHub account. StatiCrypt encrypts every
+        # HTML file with a shared password. The MkDocs search index (JSON)
+        # contains plaintext content, so we delete it first to plug the leak.
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+        run: |
+          # 1. Drop the search index (would leak content as plain JSON)
+          rm -rf site/search
+
+          # 2. Encrypt all HTML files recursively into _encrypted/
+          staticrypt -r site --directory _encrypted --short \
+            --template-button "Show case study" \
+            --template-instructions "Enter the access password to view the SEO keyword pipeline case study."
+
+          # 3. Re-add non-HTML assets (CSS, JS, images, npy, csv, etc.)
+          rsync -a --exclude='*.html' site/ _encrypted/
+
+          # 4. Replace site/ with the encrypted version for upload
+          rm -rf site
+          mv _encrypted site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

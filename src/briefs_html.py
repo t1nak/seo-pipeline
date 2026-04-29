@@ -121,14 +121,45 @@ _PAGE_CSS = """
   --badge-ok-bg: #d1fae5;
   --badge-ok-fg: #065f46;
 }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
 * { box-sizing: border-box; }
 body { margin: 0; padding: 32px 24px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
        background: var(--bg); color: var(--text); line-height: 1.6; }
 .wrap { max-width: 980px; margin: 0 auto; }
 header { padding: 24px 32px; background: var(--bg-header); color: white; border-radius: 12px;
-         margin-bottom: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+         margin-bottom: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+         display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+header .header-text { flex: 1; min-width: 280px; }
 header h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.02em; }
 header p { margin: 0; color: #94a3b8; font-size: 13px; }
+header .map-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--primary); color: white; padding: 10px 18px;
+  border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;
+  letter-spacing: 0.01em; transition: background 0.18s, transform 0.18s;
+  white-space: nowrap; align-self: center;
+}
+header .map-cta:hover { background: var(--primary-dark); transform: translateY(-1px); }
+header .map-cta::before { content: "🗺"; font-size: 14px; }
+.minigrid-label { font-size: 11px; font-weight: 600; color: var(--text-muted);
+                  text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px; }
+.mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+             gap: 12px; margin-bottom: 36px; }
+.mini-card { display: flex; flex-direction: column; justify-content: space-between;
+             background: var(--bg-card); border: 1px solid var(--border);
+             border-radius: 10px; padding: 14px 16px; text-decoration: none;
+             color: var(--text); min-height: 132px;
+             transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; }
+.mini-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(15,23,42,0.08);
+                   border-color: var(--primary); }
+.mini-id { font-size: 10px; color: var(--text-muted); text-transform: uppercase;
+           letter-spacing: 0.05em; margin-bottom: 6px; font-weight: 600; }
+.mini-title { font-size: 13px; font-weight: 600; line-height: 1.35;
+              margin-bottom: 10px; color: var(--text); }
+.mini-meta { display: flex; justify-content: space-between; align-items: center;
+             gap: 6px; flex-wrap: wrap; }
+.mini-sv { font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums;
+           font-weight: 600; }
 .summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;
                margin: 24px 0 32px; }
 .summary-cell { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
@@ -319,15 +350,42 @@ def _render_summary(prof: pd.DataFrame) -> str:
 """.replace(",", ".").strip()
 
 
-def _render_toc(prof: pd.DataFrame, titles: dict[int, str]) -> str:
+def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
+    """Mini cluster cards at the top. Click a card to jump to the full brief below."""
     real = prof[prof["cluster_id"] != -1].sort_values("total_sv", ascending=False)
-    items = []
+    cards = []
     for _, r in real.iterrows():
         cid = int(r["cluster_id"])
         display_id = cid + 1
         title = titles.get(cid, r["label_de"] or f"Cluster {display_id}")
-        items.append(f'<li><a href="#cluster-{display_id}">{htmllib.escape(title)}</a></li>')
-    return f'<div class="toc"><h3>Inhaltsverzeichnis</h3><ol>{"".join(items)}</ol></div>'
+        sv = int(r["total_sv"])
+        pct_comm = int(r["pct_commercial"])
+
+        # Same intent logic as the full card
+        if pct_comm >= 70:
+            intent_label, intent_kind = "commercial", "ok"
+        elif pct_comm <= 20:
+            intent_label, intent_kind = "informational", "warn"
+        else:
+            intent_label, intent_kind = "mixed", "info"
+
+        sv_fmt = f"{sv:,}".replace(",", ".")
+        cards.append(
+            f'<a href="#cluster-{display_id}" class="mini-card">'
+            f'<div>'
+            f'<div class="mini-id">Cluster {display_id}</div>'
+            f'<div class="mini-title">{htmllib.escape(title)}</div>'
+            f'</div>'
+            f'<div class="mini-meta">'
+            f'{_badge(intent_label, intent_kind)}'
+            f'<span class="mini-sv">{sv_fmt}/Mo</span>'
+            f'</div>'
+            f'</a>'
+        )
+    return (
+        '<p class="minigrid-label">Cluster im Überblick · Klick öffnet den Brief</p>'
+        f'<div class="mini-grid">{"".join(cards)}</div>'
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -361,7 +419,7 @@ def run() -> None:
         cards.append(_render_card(row, top_kw, md))
 
     summary = _render_summary(profiles)
-    toc = _render_toc(profiles, titles)
+    minicards = _render_minicards(profiles, titles)
     cards_html = "\n".join(cards)
 
     page = f"""<!DOCTYPE html>
@@ -372,15 +430,17 @@ def run() -> None:
 </head><body><div class="wrap">
 
 <header>
-  <h1>Cluster Briefs</h1>
-  <p>Pro Cluster ein Content Brief: Top-Keywords, Persona, Seitenstruktur, SERP-Lücken, CTA.
-  Sortiert nach Suchvolumen pro Monat. Markdown-Quellen liegen unter
-  <code style="color:#fbbf24">output/briefings/cluster_NN.md</code>.</p>
+  <div class="header-text">
+    <h1>Cluster Briefs</h1>
+    <p>Pro Cluster ein Content Brief: Top-Keywords, Persona, Seitenstruktur, SERP-Lücken, CTA.
+    Sortiert nach Suchvolumen pro Monat.</p>
+  </div>
+  <a class="map-cta" href="../clustering/cluster_map.html">Cluster Karte öffnen</a>
 </header>
 
 {summary}
 
-{toc}
+{minicards}
 
 {cards_html}
 

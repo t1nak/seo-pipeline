@@ -68,19 +68,25 @@
 }
 
 /* ============================================================
-   Header (top bar): primary teal in light, deep navy in dark
+   Header (top bar): subtle diagonal gradient for character
    Tabs (lower nav bar): always deep navy #0f172a (per design)
    ============================================================ */
 
 .md-header[data-md-state],
 .md-header {
-  background-color: var(--md-primary-fg-color--dark) !important;
+  background: linear-gradient(135deg,
+    var(--md-primary-fg-color--dark) 0%,
+    var(--md-primary-fg-color) 60%,
+    var(--md-primary-fg-color--light) 100%) !important;
   box-shadow: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 [data-md-color-scheme="slate"] .md-header {
-  background-color: #0f172a !important;
+  background: linear-gradient(135deg,
+    #0f172a 0%,
+    #134e4a 50%,
+    #115e59 100%) !important;
   border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 

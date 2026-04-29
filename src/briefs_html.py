@@ -141,6 +141,61 @@ header .map-cta {
 }
 header .map-cta:hover { background: var(--primary-dark); transform: translateY(-1px); }
 header .map-cta::before { content: "🗺"; font-size: 14px; }
+header .header-actions { display: flex; flex-direction: column; gap: 8px; align-self: center; }
+header .glossar-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; color: white; padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.25); border-radius: 8px;
+  text-decoration: none; font-size: 12px; font-weight: 500;
+  cursor: pointer; font-family: inherit;
+  transition: background 0.18s, border-color 0.18s;
+  white-space: nowrap;
+}
+header .glossar-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+header .glossar-btn::before { content: "ⓘ"; font-size: 14px; opacity: 0.85; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(2px);
+  display: none; z-index: 100; overflow-y: auto;
+  padding: 40px 16px;
+  animation: fadein 0.18s ease;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  background: var(--bg-card); border-radius: 12px;
+  max-width: 760px; width: 100%; padding: 32px 36px 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  position: relative; animation: slidein 0.22s ease;
+}
+@keyframes slidein { from { transform: translateY(-12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 6px;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-muted); font-size: 20px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: var(--bg-row); color: var(--text); }
+.modal h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.01em; }
+.modal .modal-sub { color: var(--text-muted); font-size: 13px; margin: 0 0 24px; }
+.modal h3 { font-size: 13px; margin: 24px 0 10px; color: var(--text); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em; }
+.modal h3:first-of-type { margin-top: 8px; }
+.modal table { width: 100%; border-collapse: collapse; margin: 0 0 8px; font-size: 13px; }
+.modal table th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border);
+                  color: var(--text-muted); font-weight: 600; font-size: 11px;
+                  text-transform: uppercase; letter-spacing: 0.04em; }
+.modal table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top;
+                  color: var(--text-secondary); line-height: 1.5; }
+.modal table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+.modal table tr:last-child td { border-bottom: none; }
+.modal .note { background: #fef9e7; border-left: 3px solid var(--accent);
+               padding: 10px 14px; margin: 18px 0 4px; border-radius: 4px;
+               font-size: 12px; line-height: 1.55; color: var(--text-secondary); }
 .minigrid-label { font-size: 11px; font-weight: 600; color: var(--text-muted);
                   text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px; }
 .mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -435,8 +490,94 @@ def run() -> None:
     <p>Pro Cluster ein Content Brief: Top-Keywords, Persona, Seitenstruktur, SERP-Lücken, CTA.
     Sortiert nach Suchvolumen pro Monat.</p>
   </div>
-  <a class="map-cta" href="../clustering/cluster_map.html">Cluster Karte öffnen</a>
+  <div class="header-actions">
+    <a class="map-cta" href="../clustering/cluster_map.html">Cluster Karte öffnen</a>
+    <button type="button" class="glossar-btn" onclick="openGlossar()">Glossar: was heißen die Zahlen?</button>
+  </div>
 </header>
+
+<!-- Glossar Modal -->
+<div class="modal-overlay" id="glossar-modal" onclick="if(event.target===this)closeGlossar()">
+  <div class="modal" role="dialog" aria-labelledby="glossar-title">
+    <button class="modal-close" onclick="closeGlossar()" aria-label="Schließen">×</button>
+    <h2 id="glossar-title">Glossar</h2>
+    <p class="modal-sub">Was die Kennzahlen im Dashboard bedeuten, in einfachem Deutsch.</p>
+
+    <h3>KPI-Box ganz oben</h3>
+    <table>
+      <thead><tr><th>Feld</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>Cluster</td><td>Anzahl der thematischen Gruppen, in die HDBSCAN die Keywords sortiert hat</td></tr>
+        <tr><td>Keywords</td><td>Summe aller Keywords über alle Cluster</td></tr>
+        <tr><td>SV / Monat</td><td>Geschätztes Suchvolumen pro Monat: wie oft alle Keywords zusammen monatlich auf Google in Deutschland gesucht werden</td></tr>
+        <tr><td>Mittlere KD</td><td>Durchschnittliche Keyword Difficulty über alle Keywords. Skala 0 bis 100</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pro Cluster</h3>
+    <table>
+      <thead><tr><th>Feld</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>Volumen</td><td>Suchvolumen pro Monat über alle Keywords im Cluster zusammen</td></tr>
+        <tr><td>Difficulty</td><td>Median Keyword Difficulty: wie schwer es im Schnitt ist, in den Top 10 von Google zu landen</td></tr>
+        <tr><td>Keywords</td><td>Anzahl der Keywords in diesem Cluster</td></tr>
+        <tr><td>% kommerziell</td><td>Anteil der Keywords, deren Suchintention "commercial" ist (Nutzer will kaufen oder vergleichen, nicht nur Wissen sammeln)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Intent-Badges</h3>
+    <table>
+      <thead><tr><th>Badge</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>commercial</td><td>Cluster mehrheitlich kaufnah, mindestens 70 Prozent kommerziell. Bottom-of-Funnel</td></tr>
+        <tr><td>informational</td><td>Cluster mehrheitlich Wissens-Suche, maximal 20 Prozent kommerziell. Top-of-Funnel</td></tr>
+        <tr><td>mixed</td><td>Mischung, zwischen 20 und 70 Prozent kommerziell. Mid-Funnel</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pro Keyword (in der Tabelle)</h3>
+    <table>
+      <thead><tr><th>Wert</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>SV</td><td>Suchvolumen: geschätzte monatliche Suchen für genau dieses Keyword</td></tr>
+        <tr><td>KD</td><td>Keyword Difficulty 0 bis 100. 0-30 leicht, 30-60 mittel, 60-100 schwer</td></tr>
+        <tr><td>CPC</td><td>Cost Per Click in Euro: was Werbetreibende auf Google Ads pro Klick zahlen. Hoch heißt kommerziell wertvoll</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Suchvolumen-Skala</h3>
+    <table>
+      <thead><tr><th>Bereich</th><th>Was es heißt</th></tr></thead>
+      <tbody>
+        <tr><td>unter 100</td><td>Nische, wenig Traffic, oft hoch konvertierend</td></tr>
+        <tr><td>100 bis 1.000</td><td>Sweet-Spot, oft Long-Tail mit klarer Intention</td></tr>
+        <tr><td>1.000 bis 5.000</td><td>Starkes Volumen, oft Head-Terms</td></tr>
+        <tr><td>über 5.000</td><td>Top-Volumen, oft generisch und stark umkämpft</td></tr>
+      </tbody>
+    </table>
+
+    <h3>KD-Skala</h3>
+    <table>
+      <thead><tr><th>Bereich</th><th>Was es heißt</th></tr></thead>
+      <tbody>
+        <tr><td>0 bis 30</td><td>Leicht, mit gutem Content rankt man oft schnell auf Seite 1</td></tr>
+        <tr><td>30 bis 60</td><td>Mittel, braucht solide Optimierung und Backlinks</td></tr>
+        <tr><td>60 bis 80</td><td>Schwer, etablierte Wettbewerber, lange Aufbauzeit</td></tr>
+        <tr><td>80 bis 100</td><td>Brutal, oft nur große Brands oder Nachrichten-Sites ranken</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <b>Wichtig:</b> Die Werte sind Schätzungen aus einer deterministischen Heuristik (SHA256 Hash des Keywords als Seed), nicht echte DataForSEO Daten. Spalte <code>data_source</code> in den CSV-Dateien markiert das. In Produktion stehen hier echte Werte, die Größenordnungen sind aber realistisch genug, um die Cluster-Strategie zu bewerten.
+    </div>
+  </div>
+</div>
+
+<script>
+function openGlossar() {{ document.getElementById('glossar-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }}
+function closeGlossar() {{ document.getElementById('glossar-modal').classList.remove('open'); document.body.style.overflow = ''; }}
+document.addEventListener('keydown', function(e) {{ if (e.key === 'Escape') closeGlossar(); }});
+</script>
 
 {summary}
 

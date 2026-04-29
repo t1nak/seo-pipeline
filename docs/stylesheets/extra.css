@@ -68,30 +68,26 @@
 }
 
 /* ============================================================
-   Header + Tabs: unified solid background, no gradient
-   so the two bars read as one continuous block.
-   !important is needed because Material's own .md-tabs rule has
-   the same specificity but loads earlier under some conditions.
+   Header (top bar): primary teal in light, deep navy in dark
+   Tabs (lower nav bar): always deep navy #0f172a (per design)
    ============================================================ */
 
 .md-header[data-md-state],
-.md-header,
-.md-tabs {
+.md-header {
   background-color: var(--md-primary-fg-color--dark) !important;
   box-shadow: none;
-}
-
-.md-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-[data-md-color-scheme="slate"] .md-header,
-[data-md-color-scheme="slate"] .md-tabs {
+[data-md-color-scheme="slate"] .md-header {
   background-color: #0f172a !important;
+  border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 
-[data-md-color-scheme="slate"] .md-header {
-  border-bottom-color: rgba(255, 255, 255, 0.05);
+/* Lower nav bar: always deep navy, in both light and dark mode */
+.md-tabs {
+  background-color: #0f172a !important;
+  box-shadow: none;
 }
 
 /* Subtle highlight on the active tab so the unified bar still

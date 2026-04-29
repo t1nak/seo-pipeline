@@ -38,6 +38,9 @@ _recovered/
 # MkDocs build output
 site/
 
+# Claude Code worktrees (not part of the case study)
+.claude/worktrees/
+
 # Testing / coverage
 .pytest_cache/
 .coverage

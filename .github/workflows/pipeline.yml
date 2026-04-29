@@ -1,0 +1,76 @@
+name: Pipeline (4 steps, no brief)
+
+# Reproduzierbarer Pipeline-Lauf ohne LLM-Aufruf:
+#   discover  ->  enrich  ->  cluster  ->  report
+# Kosten: 0 (keine API, keine Secrets noetig). Brief-Step laeuft separat
+# in pipeline-full.yml mit ANTHROPIC_API_KEY-Secret.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "pipeline.py"
+      - "data/keywords.manual.csv"
+      - "requirements.txt"
+      - ".github/workflows/pipeline.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pipeline-demo
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Cache sentence-transformers model
+        # Spart 1 bis 2 Min pro Run nach dem ersten Lauf. Modell-ID ist im
+        # cluster-Step hardcodiert; wenn die wechselt, key anpassen.
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            ~/.cache/torch/sentence_transformers
+          key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
+
+      - name: Run pipeline (discover, enrich, cluster, report)
+        run: python pipeline.py --step discover,enrich,cluster,report
+
+      - name: Show run summary
+        run: |
+          echo "=== Cluster profiles ==="
+          head -n 12 output/clustering/cluster_profiles.csv
+          echo ""
+          echo "=== Report KPIs ==="
+          grep -E '"label"|"value"' output/reporting/index.html | head -n 12 || true
+          echo ""
+          echo "=== Files in output ==="
+          find output -maxdepth 2 -type f | sort
+
+      - name: Upload pipeline outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-output
+          path: |
+            data/keywords.csv
+            output/clustering/
+            output/reporting/
+          retention-days: 14
+          if-no-files-found: error

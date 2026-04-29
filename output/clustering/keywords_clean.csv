@@ -1,505 +1,501 @@
-keyword,estimated_intent,category,type,notes,search_volume,kd,cpc_eur,serp_features,priority_score,data_source,orig_cluster_name
-zeitarbeit software,commercial,cluster_01,head,Hauptbegriff zvoove One,1822,82,2.83,ads|site-links,22.2,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeitssoftware,commercial,cluster_01,head,Schreibvariante zusammen,4381,57,9.99,ads,76.9,estimated,Zeitarbeitssoftware & zvoove One
-software für zeitarbeitsfirmen,commercial,cluster_01,body,Long-Head Brand-Match,482,68,4.08,ads|shopping|site-links,7.1,estimated,Zeitarbeitssoftware & zvoove One
-software für personaldienstleister,commercial,cluster_01,body,zvoove Hauptzielgruppe,159,37,10.66,ads|shopping,4.3,estimated,Zeitarbeitssoftware & zvoove One
-zvoove one,commercial,cluster_01,head,Brand-Keyword,928,75,5.2,ads|shopping,12.4,estimated,Zeitarbeitssoftware & zvoove One
-zvoove one preise,commercial,cluster_01,longtail,Kaufintention hoch,88,58,6.98,site-links,1.5,estimated,Zeitarbeitssoftware & zvoove One
-zvoove one kosten,commercial,cluster_01,longtail,Kaufintention hoch,40,65,10.46,ads|shopping|site-links,0.6,estimated,Zeitarbeitssoftware & zvoove One
-zvoove one demo,commercial,cluster_01,longtail,Lead-Magnet Trigger,157,66,3.13,shopping|site-links,2.4,estimated,Zeitarbeitssoftware & zvoove One
-zvoove software erfahrungen,commercial,cluster_01,longtail,Reviewsuche,179,37,10.85,shopping|site-links,4.8,estimated,Zeitarbeitssoftware & zvoove One
-zvoove erfahrungen,commercial,cluster_01,body,Brand Reputation,87,73,8.79,site-links,1.2,estimated,Zeitarbeitssoftware & zvoove One
-erp zeitarbeit,commercial,cluster_01,body,Kategoriebegriff,565,43,11.83,shopping,13.1,estimated,Zeitarbeitssoftware & zvoove One
-erp personaldienstleister,commercial,cluster_01,body,Kategoriebegriff,142,36,4.85,ads|shopping,3.9,estimated,Zeitarbeitssoftware & zvoove One
-cloud erp zeitarbeit,commercial,cluster_01,longtail,Cloud-Trend,49,31,4.03,ads|shopping,1.6,estimated,Zeitarbeitssoftware & zvoove One
-branchensoftware zeitarbeit,commercial,cluster_01,body,Kategorie,197,60,4.38,ads|shopping|site-links,3.3,estimated,Zeitarbeitssoftware & zvoove One
-branchensoftware personaldienstleistung,commercial,cluster_01,body,Kategorie,93,51,7.25,site-links,1.8,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit programm,commercial,cluster_01,head,Synonym,3980,79,6.78,shopping|site-links,50.4,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit verwaltungssoftware,commercial,cluster_01,body,Synonym,227,43,3.41,ads|shopping,5.3,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit komplettlösung,commercial,cluster_01,longtail,USP-orientiert,197,55,4.23,shopping,3.6,estimated,Zeitarbeitssoftware & zvoove One
-all in one zeitarbeit software,commercial,cluster_01,longtail,Komplettlösung,64,41,10.91,ads|site-links,1.6,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software vergleich,commercial,cluster_01,longtail,Bottom-Funnel,149,40,11.84,shopping,3.7,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software test,commercial,cluster_01,longtail,Bottom-Funnel,30,63,10.96,shopping,0.5,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software anbieter,commercial,cluster_01,longtail,Anbietersuche,84,28,2.2,ads,3.0,estimated,Zeitarbeitssoftware & zvoove One
-beste zeitarbeit software,commercial,cluster_01,longtail,Vergleichsabsicht,37,50,8.84,ads|shopping,0.7,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software open source,commercial,cluster_01,longtail,Sparvariante,95,61,6.51,site-links,1.6,estimated,Zeitarbeitssoftware & zvoove One
-landwer zeitarbeit software,commercial,cluster_01,longtail,Wettbewerb,55,39,4.75,ads,1.4,estimated,Zeitarbeitssoftware & zvoove One
-prosoft zeitarbeit alternative,commercial,cluster_01,longtail,Wettbewerber-Switch,55,45,9.03,ads|shopping|site-links,1.2,estimated,Zeitarbeitssoftware & zvoove One
-zvoove vs landwehr,commercial,cluster_01,longtail,Comparison-Query,61,46,6.98,site-links,1.3,estimated,Zeitarbeitssoftware & zvoove One
-zvoove vs prosoft,commercial,cluster_01,longtail,Comparison-Query,93,60,2.52,site-links,1.6,estimated,Zeitarbeitssoftware & zvoove One
-zvoove alternative,commercial,cluster_01,body,Wettbewerb,410,73,6.98,shopping|site-links,5.6,estimated,Zeitarbeitssoftware & zvoove One
-software zeitarbeit kmu,commercial,cluster_01,longtail,Segment KMU,27,34,4.4,site-links,0.8,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software mittelstand,commercial,cluster_01,longtail,Segment,152,29,8.89,shopping|site-links,5.2,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software einführung,commercial,cluster_01,longtail,Implementation,172,34,11.96,shopping,5.1,estimated,Zeitarbeitssoftware & zvoove One
-software zeitarbeit kleine firma,commercial,cluster_01,longtail,Segment Klein,111,30,4.71,site-links,3.7,estimated,Zeitarbeitssoftware & zvoove One
-saas zeitarbeit,commercial,cluster_01,body,Liefermodell,707,56,5.76,ads|shopping|site-links,12.6,estimated,Zeitarbeitssoftware & zvoove One
-saas personaldienstleister,commercial,cluster_01,body,Liefermodell,654,38,2.39,shopping,17.2,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software dsgvo,commercial,cluster_01,longtail,Compliance-Filter,85,30,8.36,shopping,2.8,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software api,commercial,cluster_01,longtail,Integration,105,63,6.26,site-links,1.7,estimated,Zeitarbeitssoftware & zvoove One
-zvoove integration datev,commercial,cluster_01,longtail,Integration DATEV,183,43,4.03,shopping|site-links,4.3,estimated,Zeitarbeitssoftware & zvoove One
-zvoove schnittstellen,commercial,cluster_01,longtail,Integration,103,37,11.54,ads|site-links,2.8,estimated,Zeitarbeitssoftware & zvoove One
-zvoove implementierung,commercial,cluster_01,longtail,Onboarding,25,53,11.48,ads,0.5,estimated,Zeitarbeitssoftware & zvoove One
-zvoove demo termin,commercial,cluster_01,longtail,Lead-Stage,45,55,7.53,shopping,0.8,estimated,Zeitarbeitssoftware & zvoove One
-zvoove webinar,commercial,cluster_01,longtail,Lead-Magnet,129,43,8.67,ads,3.0,estimated,Zeitarbeitssoftware & zvoove One
-zvoove case study,commercial,cluster_01,longtail,Trust-Signal,75,40,7.89,shopping|site-links,1.9,estimated,Zeitarbeitssoftware & zvoove One
-software für arbeitnehmerüberlassung,commercial,cluster_01,longtail,Synonym AÜG,95,33,10.31,ads|shopping,2.9,estimated,Zeitarbeitssoftware & zvoove One
-aüg software,commercial,cluster_01,head,Kategorie,1563,48,10.48,site-links,32.6,estimated,Zeitarbeitssoftware & zvoove One
-aüg software vergleich,commercial,cluster_01,longtail,Vergleich,30,43,3.32,shopping,0.7,estimated,Zeitarbeitssoftware & zvoove One
-aüg software cloud,commercial,cluster_01,longtail,Cloud,57,56,6.93,ads|site-links,1.0,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software mac,commercial,cluster_01,longtail,Plattform,52,30,10.3,shopping,1.7,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software windows,commercial,cluster_01,longtail,Plattform,44,31,8.2,site-links,1.4,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit software mobile app,commercial,cluster_01,longtail,Mobile,128,39,6.12,ads,3.3,estimated,Zeitarbeitssoftware & zvoove One
-zeitarbeit komplettsystem,commercial,cluster_01,longtail,USP,33,51,4.97,ads|site-links,0.6,estimated,Zeitarbeitssoftware & zvoove One
-lohnabrechnung zeitarbeit,commercial,cluster_02,head,Hauptbegriff,851,72,11.92,ads|site-links,11.8,estimated,Lohnabrechnung & Payroll
-lohnabrechnung personaldienstleister,commercial,cluster_02,body,Zielgruppe,276,72,7.6,shopping|site-links,3.8,estimated,Lohnabrechnung & Payroll
-lohnabrechnung software zeitarbeit,commercial,cluster_02,body,Tool-Suche,780,68,11.5,site-links,11.5,estimated,Lohnabrechnung & Payroll
-zvoove payroll,commercial,cluster_02,head,Brand,3188,85,2.56,ads|shopping,37.5,estimated,Lohnabrechnung & Payroll
-zvoove payroll preise,commercial,cluster_02,longtail,Kaufphase,88,44,2.68,ads|shopping,2.0,estimated,Lohnabrechnung & Payroll
-zvoove payroll erfahrungen,commercial,cluster_02,longtail,Reviews,31,62,9.21,shopping,0.5,estimated,Lohnabrechnung & Payroll
-payroll software zeitarbeit,commercial,cluster_02,body,Synonym,671,48,3.21,ads,14.0,estimated,Lohnabrechnung & Payroll
-gehaltsabrechnung zeitarbeit,informational,cluster_02,body,Synonym,293,35,2.06,featured-snippet|people-also-ask,8.4,estimated,Lohnabrechnung & Payroll
-gehaltsabrechnung software,commercial,cluster_02,head,Kategorie,3940,70,5.57,site-links,56.3,estimated,Lohnabrechnung & Payroll
-gehaltsabrechnung outsourcing,commercial,cluster_02,body,Service-Modell,765,55,4.48,site-links,13.9,estimated,Lohnabrechnung & Payroll
-lohnbuchhaltung zeitarbeit,informational,cluster_02,body,Buchhaltung,549,24,1.95,video,22.9,estimated,Lohnabrechnung & Payroll
-lohnabrechnung erstellen,informational,cluster_02,body,DIY-Query,456,49,2.49,people-also-ask,9.3,estimated,Lohnabrechnung & Payroll
-lohnabrechnung beispiel zeitarbeit,informational,cluster_02,longtail,Vorlagen-Suche,56,15,0.53,featured-snippet,3.7,estimated,Lohnabrechnung & Payroll
-lohnabrechnung muster,informational,cluster_02,body,Vorlage,423,43,2.46,featured-snippet|people-also-ask,9.8,estimated,Lohnabrechnung & Payroll
-lohnabrechnung pdf vorlage,informational,cluster_02,longtail,Download-Intent,136,7,1.57,featured-snippet|people-also-ask,19.4,estimated,Lohnabrechnung & Payroll
-gesetzliche abzüge lohn,informational,cluster_02,body,Wissensfrage,538,43,2.32,featured-snippet|video,12.5,estimated,Lohnabrechnung & Payroll
-brutto netto rechner zeitarbeit,informational,cluster_02,longtail,Tool-Suche,78,10,1.01,people-also-ask|video,7.8,estimated,Lohnabrechnung & Payroll
-arbeitgeberanteile sozialversicherung,informational,cluster_02,body,Wissensfrage,420,46,2.32,featured-snippet,9.1,estimated,Lohnabrechnung & Payroll
-sozialversicherung zeitarbeitnehmer,informational,cluster_02,longtail,Spezialisierung,149,41,1.39,people-also-ask|video,3.6,estimated,Lohnabrechnung & Payroll
-lohnsteuer zeitarbeit,informational,cluster_02,body,Steuerfrage,663,52,0.74,featured-snippet|video,12.8,estimated,Lohnabrechnung & Payroll
-einkommensteuer zeitarbeit,informational,cluster_02,body,Steuerfrage,591,50,1.53,featured-snippet|people-also-ask|video,11.8,estimated,Lohnabrechnung & Payroll
-lohnabrechnung outsourcing kosten,commercial,cluster_02,longtail,Pricing,94,63,4.52,site-links,1.5,estimated,Lohnabrechnung & Payroll
-lohnabrechnung externer dienstleister,commercial,cluster_02,longtail,Service,132,51,4.71,site-links,2.6,estimated,Lohnabrechnung & Payroll
-lohnabrechnung was beachten,informational,cluster_02,longtail,Wie-Frage,131,7,1.62,featured-snippet|people-also-ask,18.7,estimated,Lohnabrechnung & Payroll
-lohnabrechnung fehler vermeiden,informational,cluster_02,longtail,Risiko,25,31,0.37,featured-snippet|people-also-ask,0.8,estimated,Lohnabrechnung & Payroll
-lohnabrechnung digitalisieren,commercial,cluster_02,longtail,Trend,183,29,3.31,shopping,6.3,estimated,Lohnabrechnung & Payroll
-digitale lohnabrechnung,commercial,cluster_02,body,Trend,391,46,11.9,ads|shopping,8.5,estimated,Lohnabrechnung & Payroll
-elektronische lohnabrechnung,commercial,cluster_02,body,Trend,759,61,4.78,shopping,12.4,estimated,Lohnabrechnung & Payroll
-automatisierte lohnabrechnung,commercial,cluster_02,longtail,Trend,84,31,4.1,ads|site-links,2.7,estimated,Lohnabrechnung & Payroll
-lohnabrechnung datev integration,commercial,cluster_02,longtail,Integration,50,30,5.06,shopping,1.7,estimated,Lohnabrechnung & Payroll
-lohnabrechnung lexware vs datev,commercial,cluster_02,longtail,Comparison,98,61,7.46,ads|shopping|site-links,1.6,estimated,Lohnabrechnung & Payroll
-lohnabrechnung sage,commercial,cluster_02,body,Wettbewerb,604,47,11.71,ads|shopping,12.9,estimated,Lohnabrechnung & Payroll
-lohnabrechnung addison,commercial,cluster_02,body,Wettbewerb,400,54,4.69,ads,7.4,estimated,Lohnabrechnung & Payroll
-zuschläge berechnen zeitarbeit,informational,cluster_02,longtail,Wissensfrage,52,19,1.13,featured-snippet,2.7,estimated,Lohnabrechnung & Payroll
-nachtzuschlag zeitarbeit,informational,cluster_02,longtail,Wissensfrage,89,19,2.48,featured-snippet|people-also-ask|video,4.7,estimated,Lohnabrechnung & Payroll
-sonntagszuschlag zeitarbeit,informational,cluster_02,longtail,Wissensfrage,160,22,1.37,people-also-ask|video,7.3,estimated,Lohnabrechnung & Payroll
-feiertagszuschlag zeitarbeit,informational,cluster_02,longtail,Wissensfrage,95,31,2.44,featured-snippet,3.1,estimated,Lohnabrechnung & Payroll
-urlaubsgeld zeitarbeit,informational,cluster_02,body,Wissensfrage,86,15,1.63,featured-snippet|people-also-ask|video,5.7,estimated,Lohnabrechnung & Payroll
-weihnachtsgeld zeitarbeitnehmer,informational,cluster_02,longtail,Wissensfrage,113,21,0.36,featured-snippet|video,5.4,estimated,Lohnabrechnung & Payroll
-tarifvertrag zeitarbeit lohn,informational,cluster_02,longtail,Tarif,81,13,1.37,people-also-ask|video,6.2,estimated,Lohnabrechnung & Payroll
-igz lohntabelle 2026,informational,cluster_02,longtail,Tarif aktuell,38,30,0.73,featured-snippet|people-also-ask,1.3,estimated,Lohnabrechnung & Payroll
-bap lohntabelle,informational,cluster_02,longtail,Tarif,33,21,1.17,featured-snippet|people-also-ask,1.6,estimated,Lohnabrechnung & Payroll
-mindestlohn zeitarbeit 2026,informational,cluster_02,longtail,Aktuell,70,22,0.5,featured-snippet|people-also-ask,3.2,estimated,Lohnabrechnung & Payroll
-lohnabrechnung leiharbeiter,informational,cluster_02,body,Synonym,350,45,0.32,video,7.8,estimated,Lohnabrechnung & Payroll
-abrechnung zeitarbeitnehmer,informational,cluster_02,body,Synonym,280,19,1.09,featured-snippet|video,14.7,estimated,Lohnabrechnung & Payroll
-recruiting software,commercial,cluster_03,head,Hauptbegriff,1149,52,6.81,ads,22.1,estimated,Recruiting & Bewerbermanagement
-zvoove recruit,commercial,cluster_03,head,Brand,1369,61,3.75,shopping|site-links,22.4,estimated,Recruiting & Bewerbermanagement
-zvoove recruit preise,commercial,cluster_03,longtail,Kaufphase,79,41,4.6,ads|shopping,1.9,estimated,Recruiting & Bewerbermanagement
-zvoove recruit demo,commercial,cluster_03,longtail,Lead,78,36,6.27,ads|shopping,2.2,estimated,Recruiting & Bewerbermanagement
-ats software,commercial,cluster_03,head,Kategorie,3060,78,10.59,ads,39.2,estimated,Recruiting & Bewerbermanagement
-applicant tracking system deutsch,commercial,cluster_03,body,Synonym,671,50,2.65,ads,13.4,estimated,Recruiting & Bewerbermanagement
-bewerbermanagement software,commercial,cluster_03,head,Hauptbegriff,5670,84,10.51,shopping,67.5,estimated,Recruiting & Bewerbermanagement
-bewerbermanagement zeitarbeit,commercial,cluster_03,body,Spezialisierung,500,74,6.55,shopping|site-links,6.8,estimated,Recruiting & Bewerbermanagement
-bewerbermanagement system,commercial,cluster_03,head,Synonym,1138,67,9.09,ads|shopping,17.0,estimated,Recruiting & Bewerbermanagement
-bewerbermanagement vergleich,commercial,cluster_03,longtail,Vergleich,136,45,6.89,ads,3.0,estimated,Recruiting & Bewerbermanagement
-recruiting tool zeitarbeit,commercial,cluster_03,body,Spezialisierung,666,62,2.94,site-links,10.7,estimated,Recruiting & Bewerbermanagement
-recruiting plattform,commercial,cluster_03,body,Generisch,796,66,8.35,ads|site-links,12.1,estimated,Recruiting & Bewerbermanagement
-multiposting software,commercial,cluster_03,body,Funktion,439,43,6.27,shopping,10.2,estimated,Recruiting & Bewerbermanagement
-multiposting jobbörsen,informational,cluster_03,body,Funktion,352,34,1.57,featured-snippet,10.4,estimated,Recruiting & Bewerbermanagement
-multiposting kosten,commercial,cluster_03,longtail,Pricing,10,50,8.32,ads|shopping,0.2,estimated,Recruiting & Bewerbermanagement
-job multiposting tool,commercial,cluster_03,longtail,Funktion,100,65,6.99,shopping,1.5,estimated,Recruiting & Bewerbermanagement
-stellenanzeige schalten,informational,cluster_03,body,Aufgabe,404,36,0.78,featured-snippet,11.2,estimated,Recruiting & Bewerbermanagement
-stellenanzeige schalten kosten,commercial,cluster_03,longtail,Pricing,79,36,6.31,ads|shopping,2.2,estimated,Recruiting & Bewerbermanagement
-stellenanzeige formulieren,informational,cluster_03,longtail,Wie-Frage,92,40,1.43,video,2.3,estimated,Recruiting & Bewerbermanagement
-stellenanzeige vorlage zeitarbeit,informational,cluster_03,longtail,Vorlage,49,12,0.8,featured-snippet|people-also-ask,4.1,estimated,Recruiting & Bewerbermanagement
-stellenanzeige beispiel,informational,cluster_03,body,Vorlage,169,16,0.52,video,10.6,estimated,Recruiting & Bewerbermanagement
-beste jobbörsen deutschland,informational,cluster_03,body,Recherche,98,24,1.22,people-also-ask,4.1,estimated,Recruiting & Bewerbermanagement
-indeed alternative,commercial,cluster_03,body,Wettbewerb,549,58,11.86,shopping,9.5,estimated,Recruiting & Bewerbermanagement
-stepstone alternative,commercial,cluster_03,body,Wettbewerb,141,48,5.71,ads|site-links,2.9,estimated,Recruiting & Bewerbermanagement
-xing kosten arbeitgeber,informational,cluster_03,body,Pricing,98,34,0.37,people-also-ask|video,2.9,estimated,Recruiting & Bewerbermanagement
-linkedin recruiter kosten,informational,cluster_03,longtail,Pricing,17,44,1.18,featured-snippet,0.4,estimated,Recruiting & Bewerbermanagement
-active sourcing zeitarbeit,informational,cluster_03,longtail,Methode,106,10,1.9,featured-snippet|people-also-ask,10.6,estimated,Recruiting & Bewerbermanagement
-active sourcing tools,commercial,cluster_03,body,Methode,736,74,4.26,shopping|site-links,9.9,estimated,Recruiting & Bewerbermanagement
-candidate experience verbessern,informational,cluster_03,longtail,Best Practice,195,7,0.4,featured-snippet|people-also-ask|video,27.9,estimated,Recruiting & Bewerbermanagement
-bewerberprozess automatisieren,informational,cluster_03,longtail,Trend,172,45,1.88,video,3.8,estimated,Recruiting & Bewerbermanagement
-bewerberkommunikation chatbot,commercial,cluster_03,longtail,KI,20,66,9.96,ads|shopping,0.3,estimated,Recruiting & Bewerbermanagement
-karriereseite erstellen,informational,cluster_03,body,Aufgabe,706,19,0.43,featured-snippet|people-also-ask,37.2,estimated,Recruiting & Bewerbermanagement
-karriereseite zeitarbeit,informational,cluster_03,longtail,Spezialisierung,11,16,1.84,featured-snippet|people-also-ask,0.7,estimated,Recruiting & Bewerbermanagement
-employer branding zeitarbeit,informational,cluster_03,longtail,Marketing,187,17,2.4,featured-snippet,11.0,estimated,Recruiting & Bewerbermanagement
-employer branding kmu,informational,cluster_03,longtail,Segment,182,40,2.16,featured-snippet|video,4.5,estimated,Recruiting & Bewerbermanagement
-fachkräftemangel zeitarbeit,informational,cluster_03,body,Branchenproblem,276,40,0.65,people-also-ask,6.9,estimated,Recruiting & Bewerbermanagement
-mitarbeiter werben zeitarbeit,informational,cluster_03,longtail,Recruiting-Aufgabe,106,23,0.37,featured-snippet|people-also-ask,4.6,estimated,Recruiting & Bewerbermanagement
-bewerber finden,informational,cluster_03,head,Generisch,2768,39,1.54,featured-snippet,71.0,estimated,Recruiting & Bewerbermanagement
-bewerber gewinnen zeitarbeit,informational,cluster_03,longtail,Spezialisierung,16,17,1.23,featured-snippet|video,0.9,estimated,Recruiting & Bewerbermanagement
-bewerber pool aufbauen,informational,cluster_03,longtail,Methode,96,17,0.91,featured-snippet|video,5.6,estimated,Recruiting & Bewerbermanagement
-recruiting kennzahlen,informational,cluster_03,body,KPI,195,33,0.97,people-also-ask,5.9,estimated,Recruiting & Bewerbermanagement
-time to hire optimieren,informational,cluster_03,longtail,KPI,29,45,1.61,featured-snippet,0.6,estimated,Recruiting & Bewerbermanagement
-cost per hire berechnen,informational,cluster_03,longtail,KPI,75,44,1.83,featured-snippet,1.7,estimated,Recruiting & Bewerbermanagement
-recruiting funnel,informational,cluster_03,body,Methode,302,43,1.32,featured-snippet|people-also-ask|video,7.0,estimated,Recruiting & Bewerbermanagement
-talentpool software,commercial,cluster_03,body,Tool,544,69,6.27,site-links,7.9,estimated,Recruiting & Bewerbermanagement
-zeiterfassung software,commercial,cluster_04,head,Hauptbegriff,4892,76,8.87,ads|site-links,64.4,estimated,Zeiterfassung & Disposition
-zeiterfassung zeitarbeit,commercial,cluster_04,body,Spezialisierung,575,69,9.41,ads,8.3,estimated,Zeiterfassung & Disposition
-zeiterfassungssystem zeitarbeit,commercial,cluster_04,longtail,Spezialisierung,90,44,8.15,ads|shopping|site-links,2.0,estimated,Zeiterfassung & Disposition
-mobile zeiterfassung,commercial,cluster_04,head,Trend Mobile,4743,82,5.13,shopping|site-links,57.8,estimated,Zeiterfassung & Disposition
-mobile zeiterfassung app,commercial,cluster_04,body,App,755,39,2.83,shopping,19.4,estimated,Zeiterfassung & Disposition
-zeiterfassung app zeitarbeit,commercial,cluster_04,longtail,Spezialisierung,159,30,7.49,site-links,5.3,estimated,Zeiterfassung & Disposition
-digitale zeiterfassung,commercial,cluster_04,head,Trend,3656,77,8.72,shopping,47.5,estimated,Zeiterfassung & Disposition
-zeiterfassung pflicht 2026,informational,cluster_04,longtail,Gesetz,82,11,1.63,people-also-ask|video,7.5,estimated,Zeiterfassung & Disposition
-gesetzliche zeiterfassungspflicht,informational,cluster_04,body,Gesetz,223,33,1.49,featured-snippet|video,6.8,estimated,Zeiterfassung & Disposition
-arbeitszeiterfassung urteil eugh,informational,cluster_04,longtail,Rechtsprechung,41,40,0.97,featured-snippet|people-also-ask,1.0,estimated,Zeiterfassung & Disposition
-arbeitszeitgesetz zeitarbeit,informational,cluster_04,longtail,Gesetz,159,24,2.35,featured-snippet,6.6,estimated,Zeiterfassung & Disposition
-disposition zeitarbeit software,commercial,cluster_04,longtail,Funktion,161,63,10.82,ads|site-links,2.6,estimated,Zeiterfassung & Disposition
-disposition zeitarbeitnehmer,informational,cluster_04,body,Funktion,395,26,1.67,video,15.2,estimated,Zeiterfassung & Disposition
-einsatzplanung zeitarbeit,commercial,cluster_04,body,Funktion,658,49,2.95,ads,13.4,estimated,Zeiterfassung & Disposition
-einsatzplanung software,commercial,cluster_04,head,Tool,2335,47,2.15,ads|shopping,49.7,estimated,Zeiterfassung & Disposition
-schichtplanung software,commercial,cluster_04,body,Tool,225,57,6.24,ads,3.9,estimated,Zeiterfassung & Disposition
-schichtplanung zeitarbeit,commercial,cluster_04,longtail,Spezialisierung,88,64,9.55,ads|shopping,1.4,estimated,Zeiterfassung & Disposition
-dienstplan software,commercial,cluster_04,body,Tool,779,62,4.04,ads|shopping,12.6,estimated,Zeiterfassung & Disposition
-personaleinsatzplanung,informational,cluster_04,head,Generisch,4799,64,1.15,featured-snippet|video,75.0,estimated,Zeiterfassung & Disposition
-personaleinsatzplanung software,commercial,cluster_04,body,Tool,222,66,9.18,ads|site-links,3.4,estimated,Zeiterfassung & Disposition
-arbeitszeitkonto führen,informational,cluster_04,body,Aufgabe,376,39,2.02,people-also-ask,9.6,estimated,Zeiterfassung & Disposition
-zeiterfassung gps,commercial,cluster_04,longtail,Tech,13,37,6.43,ads|shopping|site-links,0.4,estimated,Zeiterfassung & Disposition
-zeiterfassung biometrisch,commercial,cluster_04,longtail,Tech,100,57,10.73,ads|shopping,1.8,estimated,Zeiterfassung & Disposition
-stundenzettel digital,commercial,cluster_04,longtail,Tool,171,28,4.94,ads|site-links,6.1,estimated,Zeiterfassung & Disposition
-stundenzettel app zeitarbeit,commercial,cluster_04,longtail,App,67,28,3.47,ads|site-links,2.4,estimated,Zeiterfassung & Disposition
-stundenerfassung kunde,informational,cluster_04,longtail,Workflow,21,27,1.67,featured-snippet,0.8,estimated,Zeiterfassung & Disposition
-stundenerfassung baustelle,informational,cluster_04,longtail,Branche,86,11,2.0,featured-snippet|people-also-ask|video,7.8,estimated,Zeiterfassung & Disposition
-zeiterfassung handwerk,commercial,cluster_04,body,Branche,618,41,8.2,ads|shopping,15.1,estimated,Zeiterfassung & Disposition
-zeiterfassung gebäudereinigung,commercial,cluster_04,longtail,Branche,184,39,9.28,ads|site-links,4.7,estimated,Zeiterfassung & Disposition
-zeiterfassung pflege,commercial,cluster_04,body,Branche,629,52,8.36,ads|shopping,12.1,estimated,Zeiterfassung & Disposition
-zeiterfassung baustelle,commercial,cluster_04,longtail,Branche,129,31,8.8,ads|shopping,4.2,estimated,Zeiterfassung & Disposition
-zeiterfassung kosten,commercial,cluster_04,body,Pricing,219,65,10.8,ads|site-links,3.4,estimated,Zeiterfassung & Disposition
-zeiterfassung kostenlos,commercial,cluster_04,longtail,Sparvariante,171,47,10.83,ads|shopping,3.6,estimated,Zeiterfassung & Disposition
-zeiterfassung dsgvo,informational,cluster_04,longtail,Compliance,150,30,1.71,featured-snippet|people-also-ask,5.0,estimated,Zeiterfassung & Disposition
-zeiterfassung betriebsrat,informational,cluster_04,longtail,Mitbestimmung,14,20,0.62,video,0.7,estimated,Zeiterfassung & Disposition
-zeiterfassung manipulationssicher,commercial,cluster_04,longtail,USP,95,48,11.11,shopping|site-links,2.0,estimated,Zeiterfassung & Disposition
-clockodo alternative,commercial,cluster_04,longtail,Wettbewerb,17,62,2.27,shopping,0.3,estimated,Zeiterfassung & Disposition
-timetac alternative,commercial,cluster_04,longtail,Wettbewerb,13,60,8.65,ads|shopping|site-links,0.2,estimated,Zeiterfassung & Disposition
-einsatzplanung excel ablösen,informational,cluster_04,longtail,Migration,195,37,1.3,people-also-ask|video,5.3,estimated,Zeiterfassung & Disposition
-disposition optimieren,informational,cluster_04,longtail,Optimierung,31,14,1.8,people-also-ask|video,2.2,estimated,Zeiterfassung & Disposition
-factoring zeitarbeit,commercial,cluster_05,head,Hauptbegriff,2219,85,8.96,shopping,26.1,estimated,Liquiditaet & Factoring
-zvoove cashlink,commercial,cluster_05,head,Brand,2982,47,5.67,shopping,63.4,estimated,Liquiditaet & Factoring
-zvoove cashlink kosten,commercial,cluster_05,longtail,Pricing,104,27,10.01,shopping|site-links,3.9,estimated,Liquiditaet & Factoring
-zvoove cashlink erfahrungen,commercial,cluster_05,longtail,Reviews,59,30,8.13,ads,2.0,estimated,Liquiditaet & Factoring
-factoring personaldienstleister,commercial,cluster_05,body,Zielgruppe,288,61,10.69,shopping|site-links,4.7,estimated,Liquiditaet & Factoring
-factoring zeitarbeitsunternehmen,commercial,cluster_05,longtail,Zielgruppe,101,61,3.35,site-links,1.7,estimated,Liquiditaet & Factoring
-factoring kosten zeitarbeit,commercial,cluster_05,longtail,Pricing,170,41,5.81,ads|shopping,4.1,estimated,Liquiditaet & Factoring
-factoring vergleich anbieter,commercial,cluster_05,longtail,Vergleich,140,44,11.98,ads,3.2,estimated,Liquiditaet & Factoring
-echtes factoring,informational,cluster_05,body,Variante,244,19,0.64,video,12.8,estimated,Liquiditaet & Factoring
-unechtes factoring,informational,cluster_05,body,Variante,161,51,0.91,featured-snippet|video,3.2,estimated,Liquiditaet & Factoring
-stilles factoring,informational,cluster_05,body,Variante,170,29,1.81,featured-snippet,5.9,estimated,Liquiditaet & Factoring
-offenes factoring,informational,cluster_05,body,Variante,296,39,1.22,featured-snippet|video,7.6,estimated,Liquiditaet & Factoring
-factoring gebühren,commercial,cluster_05,body,Pricing,222,51,8.92,site-links,4.4,estimated,Liquiditaet & Factoring
-factoring zinsen,commercial,cluster_05,body,Pricing,80,59,8.79,shopping|site-links,1.4,estimated,Liquiditaet & Factoring
-factoring vorteile zeitarbeit,informational,cluster_05,longtail,Nutzen,163,26,2.15,featured-snippet,6.3,estimated,Liquiditaet & Factoring
-factoring nachteile,informational,cluster_05,body,Nutzen,120,46,1.53,people-also-ask,2.6,estimated,Liquiditaet & Factoring
-liquidität zeitarbeit,informational,cluster_05,body,Branchenproblem,719,48,2.0,featured-snippet|people-also-ask|video,15.0,estimated,Liquiditaet & Factoring
-liquiditätsplanung zeitarbeit,informational,cluster_05,longtail,Methode,16,8,0.69,featured-snippet|people-also-ask|video,2.0,estimated,Liquiditaet & Factoring
-liquiditätsengpass vermeiden,informational,cluster_05,longtail,Best Practice,46,16,0.63,people-also-ask|video,2.9,estimated,Liquiditaet & Factoring
-working capital zeitarbeit,informational,cluster_05,longtail,Finanzbegriff,84,17,1.68,people-also-ask|video,4.9,estimated,Liquiditaet & Factoring
-forderungsmanagement zeitarbeit,commercial,cluster_05,longtail,Aufgabe,70,27,6.56,shopping,2.6,estimated,Liquiditaet & Factoring
-forderungsmanagement software,commercial,cluster_05,body,Tool,295,67,10.73,site-links,4.4,estimated,Liquiditaet & Factoring
-zahlungsausfall absichern,informational,cluster_05,body,Risiko,769,20,2.27,people-also-ask,38.5,estimated,Liquiditaet & Factoring
-zahlungsziele kunden,informational,cluster_05,body,Cashflow,433,53,1.83,featured-snippet,8.2,estimated,Liquiditaet & Factoring
-mahnwesen automatisieren,commercial,cluster_05,longtail,Tool,186,29,7.77,site-links,6.4,estimated,Liquiditaet & Factoring
-factoring vs kontokorrent,informational,cluster_05,longtail,Vergleich,107,25,2.23,people-also-ask,4.3,estimated,Liquiditaet & Factoring
-factoring vs bankkredit,informational,cluster_05,longtail,Vergleich,85,18,1.91,video,4.7,estimated,Liquiditaet & Factoring
-fintech zeitarbeit,informational,cluster_05,longtail,Trend,90,26,1.03,featured-snippet|people-also-ask,3.5,estimated,Liquiditaet & Factoring
-factoring online beantragen,commercial,cluster_05,longtail,Conversion,164,46,2.67,ads|shopping,3.6,estimated,Liquiditaet & Factoring
-factoring online plattform,commercial,cluster_05,longtail,Tool,135,46,7.02,shopping|site-links,2.9,estimated,Liquiditaet & Factoring
-factoring sofort liquidität,commercial,cluster_05,longtail,USP,72,42,11.39,ads|shopping,1.7,estimated,Liquiditaet & Factoring
-finanzierung zeitarbeitsfirma,informational,cluster_05,body,Bedarf,200,43,1.11,featured-snippet,4.7,estimated,Liquiditaet & Factoring
-betriebsmittelkredit zeitarbeit,informational,cluster_05,longtail,Finanzierung,51,30,0.35,people-also-ask,1.7,estimated,Liquiditaet & Factoring
-factoring buchen,informational,cluster_05,body,Buchhaltung,799,18,2.27,featured-snippet|people-also-ask,44.4,estimated,Liquiditaet & Factoring
-factoring datev,informational,cluster_05,longtail,Integration,110,24,1.95,featured-snippet|people-also-ask,4.6,estimated,Liquiditaet & Factoring
-zessionskredit zeitarbeit,informational,cluster_05,longtail,Finanzierung,91,26,0.34,people-also-ask,3.5,estimated,Liquiditaet & Factoring
-factoring erlaubnis,informational,cluster_05,body,Recht,671,40,2.28,featured-snippet|people-also-ask|video,16.8,estimated,Liquiditaet & Factoring
-factoring kfw,informational,cluster_05,body,Förderung,234,32,1.27,featured-snippet,7.3,estimated,Liquiditaet & Factoring
-forderungsverkauf zeitarbeit,commercial,cluster_05,longtail,Synonym,192,50,8.72,shopping|site-links,3.8,estimated,Liquiditaet & Factoring
-inkasso zeitarbeit,commercial,cluster_05,body,Service,454,40,5.29,ads|shopping,11.3,estimated,Liquiditaet & Factoring
-debitorenmanagement,informational,cluster_05,head,Aufgabe,4929,54,0.77,video,91.3,estimated,Liquiditaet & Factoring
-aüg,informational,cluster_06,head,Kürzel,5006,32,1.5,people-also-ask|video,156.4,estimated,AUEG & Rechtssicherheit
-arbeitnehmerüberlassungsgesetz,informational,cluster_06,head,Gesetz,2910,40,2.23,featured-snippet|people-also-ask,72.8,estimated,AUEG & Rechtssicherheit
-arbeitnehmerüberlassung,informational,cluster_06,head,Begriff,4131,66,2.24,people-also-ask,62.6,estimated,AUEG & Rechtssicherheit
-aüg novelle,informational,cluster_06,body,Gesetzesänderung,249,24,0.57,people-also-ask|video,10.4,estimated,AUEG & Rechtssicherheit
-aüg 2026,informational,cluster_06,longtail,Aktuell,108,12,0.84,featured-snippet|people-also-ask,9.0,estimated,AUEG & Rechtssicherheit
-aüg erlaubnis beantragen,informational,cluster_06,longtail,Verfahren,147,17,1.13,people-also-ask|video,8.6,estimated,AUEG & Rechtssicherheit
-aüg erlaubnis kosten,informational,cluster_06,longtail,Pricing,176,32,1.5,featured-snippet|video,5.5,estimated,AUEG & Rechtssicherheit
-aüg erlaubnis voraussetzungen,informational,cluster_06,longtail,Anforderungen,105,40,1.37,featured-snippet|people-also-ask,2.6,estimated,AUEG & Rechtssicherheit
-aüg erlaubnis verlängern,informational,cluster_06,longtail,Verfahren,134,43,2.13,people-also-ask,3.1,estimated,AUEG & Rechtssicherheit
-aüg unbefristete erlaubnis,informational,cluster_06,longtail,Status,113,39,0.94,video,2.9,estimated,AUEG & Rechtssicherheit
-equal pay zeitarbeit,informational,cluster_06,head,Begriff,3331,37,1.16,video,90.0,estimated,AUEG & Rechtssicherheit
-equal pay nach 9 monaten,informational,cluster_06,longtail,Frist,190,20,0.55,people-also-ask,9.5,estimated,AUEG & Rechtssicherheit
-equal pay berechnen,informational,cluster_06,longtail,Wie-Frage,131,8,1.3,video,16.4,estimated,AUEG & Rechtssicherheit
-equal pay ausnahmen,informational,cluster_06,longtail,Spezialfall,120,35,1.99,featured-snippet|people-also-ask|video,3.4,estimated,AUEG & Rechtssicherheit
-equal treatment zeitarbeit,informational,cluster_06,body,Synonym,594,46,0.73,featured-snippet|people-also-ask,12.9,estimated,AUEG & Rechtssicherheit
-höchstüberlassungsdauer,informational,cluster_06,head,Begriff,3959,51,1.87,people-also-ask,77.6,estimated,AUEG & Rechtssicherheit
-höchstüberlassungsdauer 18 monate,informational,cluster_06,longtail,Konkret,23,25,2.46,featured-snippet|people-also-ask,0.9,estimated,AUEG & Rechtssicherheit
-höchstüberlassungsdauer ausnahmen,informational,cluster_06,longtail,Spezialfall,108,11,2.04,featured-snippet,9.8,estimated,AUEG & Rechtssicherheit
-höchstüberlassungsdauer tarifvertrag,informational,cluster_06,longtail,Tarif,152,30,2.11,people-also-ask|video,5.1,estimated,AUEG & Rechtssicherheit
-verleihverbot bau,informational,cluster_06,body,Branche,261,47,2.25,featured-snippet|video,5.6,estimated,AUEG & Rechtssicherheit
-synchronisationsverbot zeitarbeit,informational,cluster_06,longtail,Verbot,87,43,1.92,featured-snippet,2.0,estimated,AUEG & Rechtssicherheit
-kettenüberlassung,informational,cluster_06,body,Verbot,183,41,1.56,people-also-ask|video,4.5,estimated,AUEG & Rechtssicherheit
-sanktionen aüg verstoß,informational,cluster_06,longtail,Risiko,165,31,1.92,featured-snippet|people-also-ask,5.3,estimated,AUEG & Rechtssicherheit
-zeitarbeit prüfung agentur arbeit,informational,cluster_06,longtail,Audit,175,18,2.04,featured-snippet,9.7,estimated,AUEG & Rechtssicherheit
-aüg statistik meldung,informational,cluster_06,longtail,Pflicht,168,26,0.75,featured-snippet|video,6.5,estimated,AUEG & Rechtssicherheit
-aüg statistik wann,informational,cluster_06,longtail,Frist,166,34,2.0,featured-snippet|people-also-ask|video,4.9,estimated,AUEG & Rechtssicherheit
-zeitarbeit dsgvo,informational,cluster_06,body,Compliance,396,42,1.61,featured-snippet,9.4,estimated,AUEG & Rechtssicherheit
-datenschutz personaldienstleister,informational,cluster_06,body,Compliance,718,36,1.47,people-also-ask,19.9,estimated,AUEG & Rechtssicherheit
-datenschutz bewerberdaten,informational,cluster_06,longtail,Compliance,41,20,1.81,featured-snippet|video,2.0,estimated,AUEG & Rechtssicherheit
-arbeitsvertrag zeitarbeitnehmer muster,informational,cluster_06,longtail,Vorlage,23,41,0.99,people-also-ask|video,0.6,estimated,AUEG & Rechtssicherheit
-überlassungsvertrag muster,informational,cluster_06,longtail,Vorlage,131,40,0.5,featured-snippet|video,3.3,estimated,AUEG & Rechtssicherheit
-überlassungsvertrag inhalt,informational,cluster_06,longtail,Wissen,175,37,2.5,people-also-ask|video,4.7,estimated,AUEG & Rechtssicherheit
-arbeitsschutz zeitarbeit,informational,cluster_06,body,Pflicht,464,37,1.46,people-also-ask,12.5,estimated,AUEG & Rechtssicherheit
-arbeitsschutzunterweisung zeitarbeit,informational,cluster_06,longtail,Pflicht,154,39,2.26,people-also-ask|video,3.9,estimated,AUEG & Rechtssicherheit
-gefährdungsbeurteilung zeitarbeit,informational,cluster_06,longtail,Pflicht,189,33,0.5,featured-snippet|people-also-ask|video,5.7,estimated,AUEG & Rechtssicherheit
-unfallversicherung zeitarbeitnehmer,informational,cluster_06,longtail,Versicherung,37,41,0.82,people-also-ask|video,0.9,estimated,AUEG & Rechtssicherheit
-gesundheitsuntersuchung zeitarbeit,informational,cluster_06,longtail,Pflicht,147,29,2.01,people-also-ask,5.1,estimated,AUEG & Rechtssicherheit
-mindestlohngesetz zeitarbeit,informational,cluster_06,body,Gesetz,296,30,2.45,people-also-ask|video,9.9,estimated,AUEG & Rechtssicherheit
-nachweisgesetz zeitarbeit,informational,cluster_06,longtail,Gesetz,67,35,1.74,people-also-ask|video,1.9,estimated,AUEG & Rechtssicherheit
-betriebsrat zeitarbeit,informational,cluster_06,body,Mitbestimmung,353,26,1.24,featured-snippet,13.6,estimated,AUEG & Rechtssicherheit
-betriebsrat aüg mitbestimmung,informational,cluster_06,longtail,Mitbestimmung,56,32,1.21,featured-snippet|video,1.8,estimated,AUEG & Rechtssicherheit
-zoll prüfung zeitarbeit,informational,cluster_06,longtail,Audit,162,15,0.93,featured-snippet,10.8,estimated,AUEG & Rechtssicherheit
-schwarzarbeit zeitarbeit,informational,cluster_06,body,Risiko,188,52,2.24,featured-snippet|people-also-ask,3.6,estimated,AUEG & Rechtssicherheit
-scheinselbstständigkeit aüg,informational,cluster_06,longtail,Risiko,25,29,0.35,featured-snippet,0.9,estimated,AUEG & Rechtssicherheit
-arbeitnehmerüberlassung werkvertrag abgrenzung,informational,cluster_06,longtail,Wissen,119,30,2.25,featured-snippet|people-also-ask|video,4.0,estimated,AUEG & Rechtssicherheit
-zeitarbeit checkliste compliance,informational,cluster_06,longtail,Vorlage,185,30,0.36,featured-snippet,6.2,estimated,AUEG & Rechtssicherheit
-digitalisierung personaldienstleistung,informational,cluster_07,head,Trend,4088,32,2.34,people-also-ask,127.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-digitalisierung zeitarbeit,informational,cluster_07,head,Trend,5645,40,2.1,featured-snippet|video,141.1,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-digitalisierungsstrategie zeitarbeit,informational,cluster_07,longtail,Strategie,158,34,2.02,featured-snippet|video,4.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-cloud software zeitarbeit,commercial,cluster_07,body,Trend Cloud,267,46,2.66,ads|shopping|site-links,5.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-saas vs on premise zeitarbeit,informational,cluster_07,longtail,Vergleich,149,40,1.09,featured-snippet|people-also-ask,3.7,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-on premise zeitarbeit ablösen,informational,cluster_07,longtail,Migration,95,10,0.73,people-also-ask|video,9.5,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-papierloses büro zeitarbeit,informational,cluster_07,longtail,Trend,23,25,1.14,featured-snippet,0.9,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-papierlose lohnabrechnung,informational,cluster_07,longtail,Trend,30,31,1.08,featured-snippet|people-also-ask,1.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-e signatur arbeitsvertrag,commercial,cluster_07,longtail,Tool,22,62,11.47,site-links,0.4,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-elektronische signatur zeitarbeit,commercial,cluster_07,longtail,Tool,167,64,4.61,site-links,2.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-digitale personalakte,commercial,cluster_07,body,Tool,526,66,5.88,ads|site-links,8.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-digitale personalakte zeitarbeit,commercial,cluster_07,longtail,Spezialisierung,15,60,5.09,shopping|site-links,0.2,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-zvoove dms,commercial,cluster_07,head,Brand,3902,76,8.61,ads,51.3,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-zvoove dms+ funktionen,commercial,cluster_07,longtail,Funktionen,138,63,6.49,site-links,2.2,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-dokumentenmanagement personaldienstleister,commercial,cluster_07,longtail,Tool,186,63,2.31,site-links,3.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-dokumentenmanagement software,commercial,cluster_07,head,Kategorie,5975,59,9.45,ads,101.3,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-dms zeitarbeit,commercial,cluster_07,body,Tool,244,37,7.42,site-links,6.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-revisionssichere archivierung,informational,cluster_07,body,Compliance,681,38,2.3,people-also-ask,17.9,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-gobd konforme archivierung,informational,cluster_07,longtail,Compliance,117,29,0.87,video,4.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-self service portal mitarbeiter,commercial,cluster_07,longtail,Tool,102,32,8.81,site-links,3.2,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-mitarbeiter app zeitarbeit,commercial,cluster_07,longtail,App,173,38,2.22,ads|shopping,4.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-bewerber app,commercial,cluster_07,body,App,439,53,4.25,ads|site-links,8.3,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-zeitarbeit prozesse digitalisieren,informational,cluster_07,longtail,Beratung,85,42,0.48,featured-snippet|people-also-ask,2.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-prozessautomatisierung personaldienstleister,informational,cluster_07,longtail,Trend,55,24,0.8,featured-snippet|people-also-ask,2.3,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-workflow automatisierung zeitarbeit,commercial,cluster_07,longtail,Tool,97,37,2.09,shopping,2.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-api personaldienstleister,informational,cluster_07,body,Integration,170,18,0.42,people-also-ask|video,9.4,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-schnittstelle zeitarbeit datev,commercial,cluster_07,longtail,Integration,25,41,5.56,shopping,0.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-schnittstelle zeitarbeit indeed,commercial,cluster_07,longtail,Integration,74,50,3.54,site-links,1.5,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-xml import jobbörse,informational,cluster_07,longtail,Tech,140,35,2.15,people-also-ask|video,4.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-single sign on zeitarbeit,commercial,cluster_07,longtail,Tech,173,29,7.4,shopping|site-links,6.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-cloud sicherheit kmu,informational,cluster_07,body,Compliance,446,21,0.78,featured-snippet,21.2,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-cloud dsgvo zeitarbeit,informational,cluster_07,longtail,Compliance,169,44,0.44,video,3.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-serverstandort deutschland software,informational,cluster_07,longtail,Trust,180,30,1.15,featured-snippet,6.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-zertifizierung iso 27001 software,informational,cluster_07,longtail,Trust,125,8,0.9,featured-snippet,15.6,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-backup strategie zeitarbeit,informational,cluster_07,longtail,Tech,10,38,0.4,video,0.3,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-remote arbeiten personaldienstleister,informational,cluster_07,longtail,Trend,53,14,1.19,video,3.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-homeoffice disponent,informational,cluster_07,longtail,Trend,81,27,1.9,featured-snippet,3.0,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-mobile crm zeitarbeit,commercial,cluster_07,longtail,Tool,190,65,5.97,shopping|site-links,2.9,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-crm zeitarbeit,commercial,cluster_07,head,Tool,1360,81,8.83,shopping|site-links,16.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-zvoove cockpit,commercial,cluster_07,head,Brand,3418,70,6.71,shopping|site-links,48.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-zvoove cockpit funktionen,commercial,cluster_07,longtail,Funktionen,165,43,3.13,shopping,3.8,estimated,Digitalisierung & Cloud in der Personaldienstleistung
-gebäudedienstleister software,commercial,cluster_08,head,Hauptbegriff,2662,61,8.35,ads|site-links,43.6,estimated,Gebaeudedienstleistung Software
-gebäudedienstleistung software,commercial,cluster_08,body,Synonym,615,51,11.53,ads,12.1,estimated,Gebaeudedienstleistung Software
-gebäudereinigung software,commercial,cluster_08,head,Branchenfokus,5051,78,8.43,shopping|site-links,64.8,estimated,Gebaeudedienstleistung Software
-gebäudereiniger digital,informational,cluster_08,body,Trend,619,16,1.03,people-also-ask|video,38.7,estimated,Gebaeudedienstleistung Software
-software für reinigungsfirmen,commercial,cluster_08,longtail,Synonym,73,59,2.73,shopping,1.2,estimated,Gebaeudedienstleistung Software
-software gebäudemanagement,commercial,cluster_08,body,Synonym,458,71,2.05,shopping,6.5,estimated,Gebaeudedienstleistung Software
-facility management software,commercial,cluster_08,head,Branchenfokus,1493,72,6.03,shopping|site-links,20.7,estimated,Gebaeudedienstleistung Software
-facility management kmu,commercial,cluster_08,body,Segment,497,65,2.45,shopping,7.6,estimated,Gebaeudedienstleistung Software
-gebäudereinigung digitalisieren,informational,cluster_08,longtail,Trend,178,12,2.23,people-also-ask,14.8,estimated,Gebaeudedienstleistung Software
-disposition gebäudereinigung,commercial,cluster_08,body,Funktion,367,35,6.64,site-links,10.5,estimated,Gebaeudedienstleistung Software
-einsatzplanung reinigungskräfte,commercial,cluster_08,longtail,Funktion,36,36,5.98,shopping|site-links,1.0,estimated,Gebaeudedienstleistung Software
-schichtplan reinigung software,commercial,cluster_08,longtail,Funktion,72,44,7.86,ads,1.6,estimated,Gebaeudedienstleistung Software
-qualitätsmanagement gebäudereinigung,informational,cluster_08,body,Branche,172,54,1.75,featured-snippet,3.2,estimated,Gebaeudedienstleistung Software
-revierplanung reinigung,informational,cluster_08,longtail,Branche,148,43,1.88,featured-snippet,3.4,estimated,Gebaeudedienstleistung Software
-objektkartei reinigung,informational,cluster_08,longtail,Branche,33,46,0.67,featured-snippet|video,0.7,estimated,Gebaeudedienstleistung Software
-zeiterfassung reinigungskräfte,commercial,cluster_08,longtail,Tool,31,57,6.17,ads|shopping|site-links,0.5,estimated,Gebaeudedienstleistung Software
-mobile zeiterfassung gebäudereinigung,commercial,cluster_08,longtail,Tool,136,30,5.26,shopping,4.5,estimated,Gebaeudedienstleistung Software
-nfc zeiterfassung gebäudereinigung,commercial,cluster_08,longtail,Tech,60,45,6.75,site-links,1.3,estimated,Gebaeudedienstleistung Software
-qr code zeiterfassung,commercial,cluster_08,body,Tech,102,60,10.12,shopping|site-links,1.7,estimated,Gebaeudedienstleistung Software
-gebäudedienstleistung kalkulation,informational,cluster_08,body,Aufgabe,159,25,1.41,featured-snippet|people-also-ask,6.4,estimated,Gebaeudedienstleistung Software
-reinigungskalkulation software,commercial,cluster_08,longtail,Tool,196,64,2.84,shopping,3.1,estimated,Gebaeudedienstleistung Software
-leistungsverzeichnis reinigung,informational,cluster_08,longtail,Vorlage,88,20,1.42,featured-snippet|people-also-ask,4.4,estimated,Gebaeudedienstleistung Software
-reinigungsangebot vorlage,informational,cluster_08,longtail,Vorlage,133,13,1.55,people-also-ask|video,10.2,estimated,Gebaeudedienstleistung Software
-glasreinigung kalkulation,informational,cluster_08,longtail,Branche,118,31,1.29,featured-snippet,3.8,estimated,Gebaeudedienstleistung Software
-unterhaltsreinigung kalkulation,informational,cluster_08,longtail,Branche,187,27,2.34,people-also-ask,6.9,estimated,Gebaeudedienstleistung Software
-sondereinigung software,commercial,cluster_08,longtail,Branche,119,63,2.72,ads|shopping|site-links,1.9,estimated,Gebaeudedienstleistung Software
-gebäudereiniger tarifvertrag 2026,informational,cluster_08,longtail,Tarif,59,15,1.38,video,3.9,estimated,Gebaeudedienstleistung Software
-mindestlohn gebäudereinigung,informational,cluster_08,longtail,Tarif,136,35,1.36,featured-snippet,3.9,estimated,Gebaeudedienstleistung Software
-qualitätskontrolle reinigung digital,informational,cluster_08,longtail,Tool,78,38,1.68,people-also-ask,2.1,estimated,Gebaeudedienstleistung Software
-auditieren reinigungsleistung,informational,cluster_08,longtail,Aufgabe,64,7,0.85,people-also-ask|video,9.1,estimated,Gebaeudedienstleistung Software
-crm gebäudereinigung,commercial,cluster_08,body,Tool,133,70,10.07,ads|site-links,1.9,estimated,Gebaeudedienstleistung Software
-auftragsverwaltung gebäudereinigung,commercial,cluster_08,longtail,Tool,197,47,9.72,ads,4.2,estimated,Gebaeudedienstleistung Software
-gebäudereinigung software vergleich,commercial,cluster_08,longtail,Vergleich,134,47,9.67,ads|shopping|site-links,2.9,estimated,Gebaeudedienstleistung Software
-softwareeinführung reinigungsfirma,informational,cluster_08,longtail,Implementation,161,27,1.02,people-also-ask|video,6.0,estimated,Gebaeudedienstleistung Software
-zvoove gebäudedienstleistung,commercial,cluster_08,longtail,Brand,142,57,6.58,site-links,2.5,estimated,Gebaeudedienstleistung Software
-hr software kmu,commercial,cluster_09,head,Generisch,4028,58,5.66,ads,69.4,estimated,HR & Mitarbeiterverwaltung
-hr software zeitarbeit,commercial,cluster_09,body,Spezialisierung,588,73,10.7,site-links,8.1,estimated,HR & Mitarbeiterverwaltung
-mitarbeiterverwaltung software,commercial,cluster_09,head,Tool,4809,63,11.52,ads|shopping|site-links,76.3,estimated,HR & Mitarbeiterverwaltung
-personalverwaltung software,commercial,cluster_09,body,Tool,184,36,7.63,ads|shopping,5.1,estimated,HR & Mitarbeiterverwaltung
-personalakte digital,commercial,cluster_09,body,Trend,221,41,8.91,ads|site-links,5.4,estimated,HR & Mitarbeiterverwaltung
-personalakte führen,informational,cluster_09,body,Aufgabe,239,42,1.84,featured-snippet|people-also-ask|video,5.7,estimated,HR & Mitarbeiterverwaltung
-personalakte inhalt,informational,cluster_09,body,Wissen,792,35,1.89,featured-snippet|people-also-ask,22.6,estimated,HR & Mitarbeiterverwaltung
-mitarbeiterstammdaten,informational,cluster_09,body,Begriff,105,28,1.76,featured-snippet|people-also-ask,3.8,estimated,HR & Mitarbeiterverwaltung
-mitarbeiterportal software,commercial,cluster_09,body,Tool,155,45,10.74,site-links,3.4,estimated,HR & Mitarbeiterverwaltung
-mitarbeiter onboarding zeitarbeit,informational,cluster_09,longtail,Prozess,163,10,0.46,featured-snippet,16.3,estimated,HR & Mitarbeiterverwaltung
-onboarding prozess automatisieren,informational,cluster_09,longtail,Trend,167,22,1.08,video,7.6,estimated,HR & Mitarbeiterverwaltung
-offboarding prozess,informational,cluster_09,body,Prozess,517,37,1.91,people-also-ask|video,14.0,estimated,HR & Mitarbeiterverwaltung
-mitarbeitergespräch vorlage,informational,cluster_09,longtail,Vorlage,128,31,1.95,people-also-ask|video,4.1,estimated,HR & Mitarbeiterverwaltung
-mitarbeiterbindung zeitarbeit,informational,cluster_09,longtail,Strategie,29,13,2.2,featured-snippet,2.2,estimated,HR & Mitarbeiterverwaltung
-mitarbeitermotivation zeitarbeit,informational,cluster_09,longtail,Strategie,144,26,1.57,featured-snippet|video,5.5,estimated,HR & Mitarbeiterverwaltung
-mitarbeiterzufriedenheit messen,informational,cluster_09,longtail,Methode,158,30,2.32,featured-snippet|people-also-ask,5.3,estimated,HR & Mitarbeiterverwaltung
-fluktuation senken zeitarbeit,informational,cluster_09,longtail,Strategie,117,9,1.05,featured-snippet,13.0,estimated,HR & Mitarbeiterverwaltung
-krankmeldung digital zeitarbeit,informational,cluster_09,longtail,Prozess,27,33,2.35,featured-snippet,0.8,estimated,HR & Mitarbeiterverwaltung
-urlaubsantrag digital,commercial,cluster_09,longtail,Tool,18,48,7.8,site-links,0.4,estimated,HR & Mitarbeiterverwaltung
-urlaubsplanung software,commercial,cluster_09,body,Tool,705,50,6.3,ads|shopping|site-links,14.1,estimated,HR & Mitarbeiterverwaltung
-abwesenheitsmanagement software,commercial,cluster_09,body,Tool,262,63,3.04,ads|shopping|site-links,4.2,estimated,HR & Mitarbeiterverwaltung
-arbeitszeugnis erstellen zeitarbeit,informational,cluster_09,longtail,Aufgabe,177,8,2.29,featured-snippet|people-also-ask|video,22.1,estimated,HR & Mitarbeiterverwaltung
-arbeitszeugnis vorlage zeitarbeitnehmer,informational,cluster_09,longtail,Vorlage,155,44,2.42,video,3.5,estimated,HR & Mitarbeiterverwaltung
-arbeitsvertrag zeitarbeit erstellen,informational,cluster_09,longtail,Aufgabe,35,29,1.5,people-also-ask|video,1.2,estimated,HR & Mitarbeiterverwaltung
-arbeitsvertrag zeitarbeit vorlage,informational,cluster_09,longtail,Vorlage,57,14,2.4,featured-snippet,4.1,estimated,HR & Mitarbeiterverwaltung
-weiterbildung zeitarbeit,informational,cluster_09,body,Trend,534,28,0.97,featured-snippet|people-also-ask,19.1,estimated,HR & Mitarbeiterverwaltung
-qualifizierung zeitarbeitnehmer,informational,cluster_09,longtail,Strategie,144,41,0.86,featured-snippet,3.5,estimated,HR & Mitarbeiterverwaltung
-skill management software,commercial,cluster_09,body,Tool,375,42,2.46,ads|shopping,8.9,estimated,HR & Mitarbeiterverwaltung
-qualifikationsmatrix erstellen,informational,cluster_09,longtail,Methode,55,11,1.08,featured-snippet|video,5.0,estimated,HR & Mitarbeiterverwaltung
-qualifikationen verwalten zeitarbeit,commercial,cluster_09,longtail,Tool,70,32,7.25,ads|site-links,2.2,estimated,HR & Mitarbeiterverwaltung
-gesundheitsmanagement zeitarbeit,informational,cluster_09,longtail,Strategie,27,37,1.6,featured-snippet|people-also-ask,0.7,estimated,HR & Mitarbeiterverwaltung
-bgm zeitarbeit,informational,cluster_09,body,Strategie,165,33,2.02,featured-snippet|people-also-ask,5.0,estimated,HR & Mitarbeiterverwaltung
-mitarbeitergespräche dokumentieren,informational,cluster_09,longtail,Aufgabe,43,12,1.6,people-also-ask|video,3.6,estimated,HR & Mitarbeiterverwaltung
-azubi verwaltung,commercial,cluster_09,body,Tool,712,42,9.34,ads,17.0,estimated,HR & Mitarbeiterverwaltung
-ausbildung zeitarbeit,informational,cluster_09,body,Strategie,617,50,0.74,people-also-ask,12.3,estimated,HR & Mitarbeiterverwaltung
-hr kennzahlen zeitarbeit,informational,cluster_09,longtail,KPI,131,32,1.17,people-also-ask,4.1,estimated,HR & Mitarbeiterverwaltung
-hr reporting software,commercial,cluster_09,body,Tool,95,50,7.95,ads|site-links,1.9,estimated,HR & Mitarbeiterverwaltung
-mitarbeiterstruktur analysieren,informational,cluster_09,longtail,Analyse,181,16,0.42,featured-snippet|video,11.3,estimated,HR & Mitarbeiterverwaltung
-personalcontrolling zeitarbeit,informational,cluster_09,longtail,Methode,109,13,0.35,people-also-ask,8.4,estimated,HR & Mitarbeiterverwaltung
-hr automatisierung kmu,informational,cluster_09,longtail,Trend,83,20,0.62,featured-snippet,4.2,estimated,HR & Mitarbeiterverwaltung
-zeitarbeit branche entwicklung,informational,cluster_10,head,Marktanalyse,2456,56,0.68,people-also-ask|video,43.9,estimated,Branchentrends & Marktentwicklung
-zeitarbeitsbranche 2026,informational,cluster_10,longtail,Aktuell,190,34,0.99,featured-snippet,5.6,estimated,Branchentrends & Marktentwicklung
-markt zeitarbeit deutschland,informational,cluster_10,body,Marktanalyse,484,38,1.4,featured-snippet|video,12.7,estimated,Branchentrends & Marktentwicklung
-zeitarbeit umsatz statistik,informational,cluster_10,longtail,Statistik,36,42,1.32,featured-snippet|video,0.9,estimated,Branchentrends & Marktentwicklung
-zeitarbeit beschäftigte zahl,informational,cluster_10,longtail,Statistik,21,15,1.38,featured-snippet|people-also-ask,1.4,estimated,Branchentrends & Marktentwicklung
-zukunft zeitarbeit,informational,cluster_10,body,Trend,631,39,0.65,featured-snippet|people-also-ask,16.2,estimated,Branchentrends & Marktentwicklung
-zeitarbeit krise,informational,cluster_10,body,Marktlage,333,41,1.36,featured-snippet|video,8.1,estimated,Branchentrends & Marktentwicklung
-fachkräftemangel deutschland,informational,cluster_10,head,Branchenproblem,3916,29,0.31,featured-snippet|people-also-ask|video,135.0,estimated,Branchentrends & Marktentwicklung
-arbeitsmarkt 2026,informational,cluster_10,body,Trend,417,19,1.91,people-also-ask,21.9,estimated,Branchentrends & Marktentwicklung
-demografischer wandel arbeitsmarkt,informational,cluster_10,longtail,Trend,164,14,0.57,featured-snippet,11.7,estimated,Branchentrends & Marktentwicklung
-generation z recruiting,informational,cluster_10,longtail,Trend,53,7,0.84,people-also-ask,7.6,estimated,Branchentrends & Marktentwicklung
-new work zeitarbeit,informational,cluster_10,longtail,Trend,114,16,0.66,people-also-ask,7.1,estimated,Branchentrends & Marktentwicklung
-gen z arbeitswelt,informational,cluster_10,longtail,Trend,92,12,1.94,video,7.7,estimated,Branchentrends & Marktentwicklung
-remote work trends,informational,cluster_10,body,Trend,332,32,1.04,video,10.4,estimated,Branchentrends & Marktentwicklung
-hybrides arbeiten zeitarbeit,informational,cluster_10,longtail,Trend,105,29,1.23,featured-snippet,3.6,estimated,Branchentrends & Marktentwicklung
-flexibler arbeitsmarkt,informational,cluster_10,body,Trend,260,46,2.47,featured-snippet|video,5.7,estimated,Branchentrends & Marktentwicklung
-gig economy deutschland,informational,cluster_10,body,Trend,789,17,2.2,video,46.4,estimated,Branchentrends & Marktentwicklung
-plattformökonomie arbeit,informational,cluster_10,longtail,Trend,65,36,1.41,video,1.8,estimated,Branchentrends & Marktentwicklung
-zeitarbeit corona auswirkung,informational,cluster_10,longtail,Marktanalyse,138,34,1.27,people-also-ask,4.1,estimated,Branchentrends & Marktentwicklung
-inflation lohn zeitarbeit,informational,cluster_10,longtail,Marktanalyse,162,45,2.39,people-also-ask|video,3.6,estimated,Branchentrends & Marktentwicklung
-mindestlohn entwicklung 2026,informational,cluster_10,longtail,Politik,121,22,0.42,people-also-ask,5.5,estimated,Branchentrends & Marktentwicklung
-tariflandschaft zeitarbeit,informational,cluster_10,body,Tarif,701,50,1.52,people-also-ask|video,14.0,estimated,Branchentrends & Marktentwicklung
-igz tarifvertrag aktuell,informational,cluster_10,body,Tarif,700,17,1.76,people-also-ask,41.2,estimated,Branchentrends & Marktentwicklung
-bap tarif aktuell,informational,cluster_10,body,Tarif,338,42,0.65,featured-snippet|video,8.0,estimated,Branchentrends & Marktentwicklung
-zeitarbeit politik regulierung,informational,cluster_10,longtail,Politik,71,21,1.77,featured-snippet|video,3.4,estimated,Branchentrends & Marktentwicklung
-ampel zeitarbeit,informational,cluster_10,longtail,Politik,120,43,2.25,video,2.8,estimated,Branchentrends & Marktentwicklung
-zeitarbeit eu vergleich,informational,cluster_10,longtail,Marktanalyse,32,33,1.79,people-also-ask,1.0,estimated,Branchentrends & Marktentwicklung
-zeitarbeit europa,informational,cluster_10,body,Marktanalyse,184,23,2.27,video,8.0,estimated,Branchentrends & Marktentwicklung
-ranking zeitarbeitsfirmen deutschland,informational,cluster_10,longtail,Marktanalyse,193,22,0.72,featured-snippet|people-also-ask,8.8,estimated,Branchentrends & Marktentwicklung
-größte zeitarbeitsfirma deutschland,informational,cluster_10,longtail,Marktanalyse,30,27,1.9,featured-snippet|people-also-ask|video,1.1,estimated,Branchentrends & Marktentwicklung
-randstad konkurrenz,informational,cluster_10,longtail,Wettbewerb,169,14,1.03,featured-snippet|people-also-ask,12.1,estimated,Branchentrends & Marktentwicklung
-adecco konkurrenz,informational,cluster_10,longtail,Wettbewerb,40,17,0.31,people-also-ask,2.4,estimated,Branchentrends & Marktentwicklung
-leiharbeit image,informational,cluster_10,body,Marktanalyse,332,43,1.98,featured-snippet|people-also-ask,7.7,estimated,Branchentrends & Marktentwicklung
-arbeitgeberattraktivität zeitarbeit,informational,cluster_10,longtail,Marketing,111,18,1.07,featured-snippet|people-also-ask,6.2,estimated,Branchentrends & Marktentwicklung
-nachhaltigkeit personaldienstleistung,informational,cluster_10,longtail,Trend,55,42,0.59,featured-snippet|video,1.3,estimated,Branchentrends & Marktentwicklung
-esg personaldienstleister,informational,cluster_10,longtail,Trend,76,22,0.46,featured-snippet|people-also-ask,3.5,estimated,Branchentrends & Marktentwicklung
-diversity zeitarbeit,informational,cluster_10,body,Trend,325,22,1.62,people-also-ask|video,14.8,estimated,Branchentrends & Marktentwicklung
-inklusion zeitarbeit,informational,cluster_10,body,Trend,187,33,1.72,people-also-ask,5.7,estimated,Branchentrends & Marktentwicklung
-zeitarbeit pflege markt,informational,cluster_10,longtail,Branche,99,35,0.93,featured-snippet|video,2.8,estimated,Branchentrends & Marktentwicklung
-zeitarbeit logistik wachstum,informational,cluster_10,longtail,Branche,55,31,1.61,people-also-ask|video,1.8,estimated,Branchentrends & Marktentwicklung
-zvoove referenzen,commercial,cluster_11,head,Brand-Trust,4617,61,11.42,ads|site-links,75.7,estimated,Kundenreferenzen & ROI
-zvoove kunden,commercial,cluster_11,body,Brand-Trust,533,53,5.76,ads|site-links,10.1,estimated,Kundenreferenzen & ROI
-zvoove customer success,commercial,cluster_11,longtail,Brand-Trust,65,39,8.41,shopping|site-links,1.7,estimated,Kundenreferenzen & ROI
-zvoove case study lohn,commercial,cluster_11,longtail,Asset,22,50,4.29,shopping,0.4,estimated,Kundenreferenzen & ROI
-zvoove case study recruiting,commercial,cluster_11,longtail,Asset,143,38,6.52,ads|site-links,3.8,estimated,Kundenreferenzen & ROI
-zvoove erfolgsstory,commercial,cluster_11,longtail,Marketing,94,31,5.41,ads|site-links,3.0,estimated,Kundenreferenzen & ROI
-roi zeitarbeit software,commercial,cluster_11,head,Business Case,2065,76,4.1,shopping,27.2,estimated,Kundenreferenzen & ROI
-roi rechner personalsoftware,commercial,cluster_11,longtail,Tool,43,44,6.62,shopping,1.0,estimated,Kundenreferenzen & ROI
-investition software zeitarbeit,commercial,cluster_11,longtail,Business Case,144,44,10.82,shopping|site-links,3.3,estimated,Kundenreferenzen & ROI
-amortisation hr software,commercial,cluster_11,longtail,Business Case,94,45,9.11,ads|shopping,2.1,estimated,Kundenreferenzen & ROI
-total cost ownership erp,informational,cluster_11,longtail,Business Case,196,32,2.4,featured-snippet|video,6.1,estimated,Kundenreferenzen & ROI
-business case digitalisierung kmu,informational,cluster_11,longtail,Methode,191,19,1.48,featured-snippet|people-also-ask,10.1,estimated,Kundenreferenzen & ROI
-benchmark zeitarbeit kennzahlen,informational,cluster_11,longtail,KPI,33,40,2.25,people-also-ask|video,0.8,estimated,Kundenreferenzen & ROI
-kennzahlen personaldienstleister,informational,cluster_11,body,KPI,470,45,0.45,featured-snippet|video,10.4,estimated,Kundenreferenzen & ROI
-deckungsbeitrag zeitarbeit,informational,cluster_11,body,KPI,560,44,1.98,featured-snippet|people-also-ask,12.7,estimated,Kundenreferenzen & ROI
-auslastung zeitarbeit erhöhen,informational,cluster_11,longtail,KPI,176,7,2.44,featured-snippet,25.1,estimated,Kundenreferenzen & ROI
-kostenoptimierung zeitarbeit,informational,cluster_11,longtail,Strategie,58,20,0.65,featured-snippet,2.9,estimated,Kundenreferenzen & ROI
-prozesskosten senken zeitarbeit,informational,cluster_11,longtail,Strategie,197,34,0.56,video,5.8,estimated,Kundenreferenzen & ROI
-effizienz steigern personaldienstleister,informational,cluster_11,longtail,Strategie,15,22,1.59,video,0.7,estimated,Kundenreferenzen & ROI
-zeitersparnis durch software,commercial,cluster_11,longtail,USP,30,37,6.2,ads|site-links,0.8,estimated,Kundenreferenzen & ROI
-software wirtschaftlichkeit nachweisen,informational,cluster_11,longtail,Methode,62,27,1.49,people-also-ask|video,2.3,estimated,Kundenreferenzen & ROI
-testimonial zeitarbeit software,commercial,cluster_11,longtail,Trust,80,31,9.98,shopping,2.6,estimated,Kundenreferenzen & ROI
-kundenstimme erp,commercial,cluster_11,longtail,Trust,76,48,3.48,shopping|site-links,1.6,estimated,Kundenreferenzen & ROI
-referenzliste software anbieter,commercial,cluster_11,longtail,Trust,11,45,11.5,ads,0.2,estimated,Kundenreferenzen & ROI
-anwenderbericht zeitarbeit,commercial,cluster_11,longtail,Marketing,17,44,6.85,ads|shopping|site-links,0.4,estimated,Kundenreferenzen & ROI
-projekterfolg digitalisierung,informational,cluster_11,longtail,Marketing,86,29,0.75,video,3.0,estimated,Kundenreferenzen & ROI
-implementierungserfolg software,informational,cluster_11,longtail,Methode,188,25,0.76,featured-snippet|video,7.5,estimated,Kundenreferenzen & ROI
-go live software zeitarbeit,informational,cluster_11,longtail,Implementation,88,21,1.02,featured-snippet|people-also-ask|video,4.2,estimated,Kundenreferenzen & ROI
-schulung zeitarbeit software,commercial,cluster_11,longtail,Service,64,62,10.32,site-links,1.0,estimated,Kundenreferenzen & ROI
-training erp personaldienstleister,commercial,cluster_11,longtail,Service,66,55,9.65,site-links,1.2,estimated,Kundenreferenzen & ROI
-support zvoove,commercial,cluster_11,longtail,Service,154,41,5.56,ads,3.8,estimated,Kundenreferenzen & ROI
-hotline software zeitarbeit,commercial,cluster_11,longtail,Service,173,41,5.91,site-links,4.2,estimated,Kundenreferenzen & ROI
-preismodell zeitarbeit software,commercial,cluster_11,body,Pricing,650,69,6.79,site-links,9.4,estimated,Kundenreferenzen & ROI
-lizenzmodell saas,informational,cluster_11,body,Pricing,436,21,1.68,featured-snippet|people-also-ask,20.8,estimated,Kundenreferenzen & ROI
-abopreis software pro nutzer,commercial,cluster_11,longtail,Pricing,143,57,4.62,ads,2.5,estimated,Kundenreferenzen & ROI
-ki recruiting,informational,cluster_12,head,Trend,3354,36,2.43,people-also-ask,93.2,estimated,KI & Automatisierung im Recruiting
-künstliche intelligenz personaldienstleistung,informational,cluster_12,head,Trend,4035,39,1.89,featured-snippet|video,103.5,estimated,KI & Automatisierung im Recruiting
-ki im recruiting,informational,cluster_12,body,Trend,433,41,1.11,people-also-ask|video,10.6,estimated,KI & Automatisierung im Recruiting
-ki bewerbermanagement,informational,cluster_12,body,Trend,506,41,0.34,video,12.3,estimated,KI & Automatisierung im Recruiting
-ki matching kandidaten,informational,cluster_12,longtail,Tech,150,7,1.18,people-also-ask|video,21.4,estimated,KI & Automatisierung im Recruiting
-ki cv parsing,commercial,cluster_12,longtail,Tech,35,40,2.51,shopping|site-links,0.9,estimated,KI & Automatisierung im Recruiting
-cv parser deutsch,commercial,cluster_12,longtail,Tool,20,66,10.67,ads|shopping,0.3,estimated,KI & Automatisierung im Recruiting
-resume parsing tool,commercial,cluster_12,longtail,Tool,66,41,5.62,ads|shopping,1.6,estimated,KI & Automatisierung im Recruiting
-chatbot bewerbung,commercial,cluster_12,longtail,Tool,29,52,7.16,shopping,0.6,estimated,KI & Automatisierung im Recruiting
-recruiting chatbot,commercial,cluster_12,body,Tool,261,42,2.51,shopping|site-links,6.2,estimated,KI & Automatisierung im Recruiting
-ki stellenanzeige generieren,commercial,cluster_12,longtail,Tool,22,66,5.33,ads|shopping|site-links,0.3,estimated,KI & Automatisierung im Recruiting
-chatgpt im recruiting,informational,cluster_12,longtail,Trend,155,38,1.91,people-also-ask|video,4.1,estimated,KI & Automatisierung im Recruiting
-chatgpt zeitarbeit,informational,cluster_12,longtail,Trend,127,16,2.28,people-also-ask,7.9,estimated,KI & Automatisierung im Recruiting
-ai assistent personaldienstleister,informational,cluster_12,longtail,Trend,50,23,1.81,featured-snippet|video,2.2,estimated,KI & Automatisierung im Recruiting
-automatisierung recruiting prozess,informational,cluster_12,body,Trend,739,29,0.73,featured-snippet|people-also-ask,25.5,estimated,KI & Automatisierung im Recruiting
-recruiting automatisieren,informational,cluster_12,body,Aufgabe,699,52,0.92,featured-snippet,13.4,estimated,KI & Automatisierung im Recruiting
-robotic process automation hr,informational,cluster_12,longtail,Tech,52,30,1.91,featured-snippet|people-also-ask,1.7,estimated,KI & Automatisierung im Recruiting
-predictive analytics personal,informational,cluster_12,longtail,Tech,137,26,0.44,video,5.3,estimated,KI & Automatisierung im Recruiting
-candidate scoring ki,informational,cluster_12,longtail,Tech,60,33,1.48,featured-snippet|people-also-ask|video,1.8,estimated,KI & Automatisierung im Recruiting
-bias ki recruiting,informational,cluster_12,longtail,Risiko,197,39,0.31,people-also-ask,5.1,estimated,KI & Automatisierung im Recruiting
-fairness ki bewerbermanagement,informational,cluster_12,longtail,Risiko,90,19,0.5,people-also-ask,4.7,estimated,KI & Automatisierung im Recruiting
-ai act recruiting,informational,cluster_12,longtail,Recht,175,12,1.31,featured-snippet|people-also-ask|video,14.6,estimated,KI & Automatisierung im Recruiting
-ki gesetz personaldienstleister,informational,cluster_12,longtail,Recht,97,34,0.36,featured-snippet|people-also-ask,2.9,estimated,KI & Automatisierung im Recruiting
-ki datenschutz bewerber,informational,cluster_12,longtail,Compliance,23,42,1.67,featured-snippet|people-also-ask,0.5,estimated,KI & Automatisierung im Recruiting
-ki ethik recruiting,informational,cluster_12,longtail,Diskurs,10,10,1.78,people-also-ask,1.0,estimated,KI & Automatisierung im Recruiting
-voice bot recruiting,commercial,cluster_12,longtail,Tool,54,32,9.7,shopping|site-links,1.7,estimated,KI & Automatisierung im Recruiting
-videointerview ki analyse,informational,cluster_12,longtail,Tech,76,12,1.73,featured-snippet|video,6.3,estimated,KI & Automatisierung im Recruiting
-auswahl kandidaten ki,informational,cluster_12,longtail,Methode,142,40,0.9,featured-snippet|video,3.5,estimated,KI & Automatisierung im Recruiting
-talent intelligence platform,commercial,cluster_12,body,Tool,614,71,6.15,ads|shopping,8.6,estimated,KI & Automatisierung im Recruiting
-ki sourcing tool,commercial,cluster_12,longtail,Tool,150,29,4.82,site-links,5.2,estimated,KI & Automatisierung im Recruiting
-ki email sourcing,commercial,cluster_12,longtail,Tool,30,56,10.71,ads|shopping|site-links,0.5,estimated,KI & Automatisierung im Recruiting
-ki personalisierung jobangebot,informational,cluster_12,longtail,Methode,114,35,0.87,people-also-ask,3.3,estimated,KI & Automatisierung im Recruiting
-generative ai zeitarbeit,informational,cluster_12,longtail,Trend,124,46,0.95,featured-snippet|people-also-ask,2.7,estimated,KI & Automatisierung im Recruiting
-machine learning personaldienstleistung,informational,cluster_12,longtail,Tech,18,9,2.31,people-also-ask|video,2.0,estimated,KI & Automatisierung im Recruiting
-prompt engineering recruiting,informational,cluster_12,longtail,Tech,106,26,0.55,people-also-ask|video,4.1,estimated,KI & Automatisierung im Recruiting
-llm im personalwesen,informational,cluster_12,longtail,Trend,45,29,1.67,video,1.6,estimated,KI & Automatisierung im Recruiting
-hyperautomation hr,informational,cluster_12,longtail,Tech,64,25,1.92,video,2.6,estimated,KI & Automatisierung im Recruiting
-intelligent document processing personalakte,commercial,cluster_12,longtail,Tech,21,54,6.75,shopping,0.4,estimated,KI & Automatisierung im Recruiting
-ocr personaldokumente,commercial,cluster_12,longtail,Tech,109,47,6.39,shopping|site-links,2.3,estimated,KI & Automatisierung im Recruiting
-no code automatisierung hr,commercial,cluster_12,longtail,Tool,107,52,8.26,ads,2.1,estimated,KI & Automatisierung im Recruiting
-zapier zeitarbeit,commercial,cluster_12,longtail,Tool,133,48,8.15,ads|shopping|site-links,2.8,estimated,KI & Automatisierung im Recruiting
-make integromat hr,commercial,cluster_12,longtail,Tool,155,47,4.09,ads|shopping|site-links,3.3,estimated,KI & Automatisierung im Recruiting
-ki disposition zeitarbeit,informational,cluster_12,longtail,Tech,135,41,2.32,video,3.3,estimated,KI & Automatisierung im Recruiting
-demand forecasting personal,informational,cluster_12,longtail,Tech,42,19,1.52,featured-snippet|people-also-ask,2.2,estimated,KI & Automatisierung im Recruiting
-ki lohnabrechnung prüfung,informational,cluster_12,longtail,Tech,14,10,1.35,people-also-ask|video,1.4,estimated,KI & Automatisierung im Recruiting
+keyword,estimated_intent,category,type,notes,search_volume,kd,cpc_eur,serp_features,priority_score,data_source,keyword_clean,orig_cluster_name
+aüg,informational,cluster_06,head,Kürzel,5006,32,1.5,people-also-ask|video,156.4,estimated,aüg,AUEG & Rechtssicherheit
+digitalisierung zeitarbeit,informational,cluster_07,head,Trend,5645,40,2.1,featured-snippet|video,141.1,estimated,digitalisierung zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+fachkräftemangel deutschland,informational,cluster_10,head,Branchenproblem,3916,29,0.31,featured-snippet|people-also-ask|video,135.0,estimated,fachkräftemangel deutschland,Branchentrends & Marktentwicklung
+digitalisierung personaldienstleistung,informational,cluster_07,head,Trend,4088,32,2.34,people-also-ask,127.8,estimated,digitalisierung personaldienstleistung,Digitalisierung & Cloud in der Personaldienstleistung
+künstliche intelligenz personaldienstleistung,informational,cluster_12,head,Trend,4035,39,1.89,featured-snippet|video,103.5,estimated,künstliche intelligenz personaldienstleistung,KI & Automatisierung im Recruiting
+dokumentenmanagement software,commercial,cluster_07,head,Kategorie,5975,59,9.45,ads,101.3,estimated,dokumentenmanagement software,Digitalisierung & Cloud in der Personaldienstleistung
+ki recruiting,informational,cluster_12,head,Trend,3354,36,2.43,people-also-ask,93.2,estimated,ki recruiting,KI & Automatisierung im Recruiting
+debitorenmanagement,informational,cluster_05,head,Aufgabe,4929,54,0.77,video,91.3,estimated,debitorenmanagement,Liquiditaet & Factoring
+equal pay zeitarbeit,informational,cluster_06,head,Begriff,3331,37,1.16,video,90.0,estimated,equal pay zeitarbeit,AUEG & Rechtssicherheit
+höchstüberlassungsdauer,informational,cluster_06,head,Begriff,3959,51,1.87,people-also-ask,77.6,estimated,höchstüberlassungsdauer,AUEG & Rechtssicherheit
+zeitarbeitssoftware,commercial,cluster_01,head,Schreibvariante zusammen,4381,57,9.99,ads,76.9,estimated,zeitarbeitssoftware,Zeitarbeitssoftware & zvoove One
+mitarbeiterverwaltung software,commercial,cluster_09,head,Tool,4809,63,11.52,ads|shopping|site-links,76.3,estimated,mitarbeiterverwaltung software,HR & Mitarbeiterverwaltung
+zvoove referenzen,commercial,cluster_11,head,Brand-Trust,4617,61,11.42,ads|site-links,75.7,estimated,zvoove referenzen,Kundenreferenzen & ROI
+personaleinsatzplanung,informational,cluster_04,head,Generisch,4799,64,1.15,featured-snippet|video,75.0,estimated,personaleinsatzplanung,Zeiterfassung & Disposition
+arbeitnehmerüberlassungsgesetz,informational,cluster_06,head,Gesetz,2910,40,2.23,featured-snippet|people-also-ask,72.8,estimated,arbeitnehmerüberlassungsgesetz,AUEG & Rechtssicherheit
+bewerber finden,informational,cluster_03,head,Generisch,2768,39,1.54,featured-snippet,71.0,estimated,bewerber finden,Recruiting & Bewerbermanagement
+hr software kmu,commercial,cluster_09,head,Generisch,4028,58,5.66,ads,69.4,estimated,hr software kmu,HR & Mitarbeiterverwaltung
+bewerbermanagement software,commercial,cluster_03,head,Hauptbegriff,5670,84,10.51,shopping,67.5,estimated,bewerbermanagement software,Recruiting & Bewerbermanagement
+gebäudereinigung software,commercial,cluster_08,head,Branchenfokus,5051,78,8.43,shopping|site-links,64.8,estimated,gebäudereinigung software,Gebaeudedienstleistung Software
+zeiterfassung software,commercial,cluster_04,head,Hauptbegriff,4892,76,8.87,ads|site-links,64.4,estimated,zeiterfassung software,Zeiterfassung & Disposition
+zvoove cashlink,commercial,cluster_05,head,Brand,2982,47,5.67,shopping,63.4,estimated,zvoove cashlink,Liquiditaet & Factoring
+arbeitnehmerüberlassung,informational,cluster_06,head,Begriff,4131,66,2.24,people-also-ask,62.6,estimated,arbeitnehmerüberlassung,AUEG & Rechtssicherheit
+mobile zeiterfassung,commercial,cluster_04,head,Trend Mobile,4743,82,5.13,shopping|site-links,57.8,estimated,mobile zeiterfassung,Zeiterfassung & Disposition
+gehaltsabrechnung software,commercial,cluster_02,head,Kategorie,3940,70,5.57,site-links,56.3,estimated,gehaltsabrechnung software,Lohnabrechnung & Payroll
+zvoove dms,commercial,cluster_07,head,Brand,3902,76,8.61,ads,51.3,estimated,zvoove dms,Digitalisierung & Cloud in der Personaldienstleistung
+zeitarbeit programm,commercial,cluster_01,head,Synonym,3980,79,6.78,shopping|site-links,50.4,estimated,zeitarbeit programm,Zeitarbeitssoftware & zvoove One
+einsatzplanung software,commercial,cluster_04,head,Tool,2335,47,2.15,ads|shopping,49.7,estimated,einsatzplanung software,Zeiterfassung & Disposition
+zvoove cockpit,commercial,cluster_07,head,Brand,3418,70,6.71,shopping|site-links,48.8,estimated,zvoove cockpit,Digitalisierung & Cloud in der Personaldienstleistung
+digitale zeiterfassung,commercial,cluster_04,head,Trend,3656,77,8.72,shopping,47.5,estimated,digitale zeiterfassung,Zeiterfassung & Disposition
+gig economy deutschland,informational,cluster_10,body,Trend,789,17,2.2,video,46.4,estimated,gig economy deutschland,Branchentrends & Marktentwicklung
+factoring buchen,informational,cluster_05,body,Buchhaltung,799,18,2.27,featured-snippet|people-also-ask,44.4,estimated,factoring buchen,Liquiditaet & Factoring
+zeitarbeit branche entwicklung,informational,cluster_10,head,Marktanalyse,2456,56,0.68,people-also-ask|video,43.9,estimated,zeitarbeit branche entwicklung,Branchentrends & Marktentwicklung
+gebäudedienstleister software,commercial,cluster_08,head,Hauptbegriff,2662,61,8.35,ads|site-links,43.6,estimated,gebäudedienstleister software,Gebaeudedienstleistung Software
+igz tarifvertrag aktuell,informational,cluster_10,body,Tarif,700,17,1.76,people-also-ask,41.2,estimated,igz tarifvertrag aktuell,Branchentrends & Marktentwicklung
+ats software,commercial,cluster_03,head,Kategorie,3060,78,10.59,ads,39.2,estimated,ats software,Recruiting & Bewerbermanagement
+gebäudereiniger digital,informational,cluster_08,body,Trend,619,16,1.03,people-also-ask|video,38.7,estimated,gebäudereiniger digital,Gebaeudedienstleistung Software
+zahlungsausfall absichern,informational,cluster_05,body,Risiko,769,20,2.27,people-also-ask,38.5,estimated,zahlungsausfall absichern,Liquiditaet & Factoring
+zvoove payroll,commercial,cluster_02,head,Brand,3188,85,2.56,ads|shopping,37.5,estimated,zvoove payroll,Lohnabrechnung & Payroll
+karriereseite erstellen,informational,cluster_03,body,Aufgabe,706,19,0.43,featured-snippet|people-also-ask,37.2,estimated,karriereseite erstellen,Recruiting & Bewerbermanagement
+aüg software,commercial,cluster_01,head,Kategorie,1563,48,10.48,site-links,32.6,estimated,aüg software,Zeitarbeitssoftware & zvoove One
+candidate experience verbessern,informational,cluster_03,longtail,Best Practice,195,7,0.4,featured-snippet|people-also-ask|video,27.9,estimated,candidate experience verbessern,Recruiting & Bewerbermanagement
+roi zeitarbeit software,commercial,cluster_11,head,Business Case,2065,76,4.1,shopping,27.2,estimated,roi zeitarbeit software,Kundenreferenzen & ROI
+factoring zeitarbeit,commercial,cluster_05,head,Hauptbegriff,2219,85,8.96,shopping,26.1,estimated,factoring zeitarbeit,Liquiditaet & Factoring
+automatisierung recruiting prozess,informational,cluster_12,body,Trend,739,29,0.73,featured-snippet|people-also-ask,25.5,estimated,automatisierung recruiting prozess,KI & Automatisierung im Recruiting
+auslastung zeitarbeit erhöhen,informational,cluster_11,longtail,KPI,176,7,2.44,featured-snippet,25.1,estimated,auslastung zeitarbeit erhöhen,Kundenreferenzen & ROI
+lohnbuchhaltung zeitarbeit,informational,cluster_02,body,Buchhaltung,549,24,1.95,video,22.9,estimated,lohnbuchhaltung zeitarbeit,Lohnabrechnung & Payroll
+personalakte inhalt,informational,cluster_09,body,Wissen,792,35,1.89,featured-snippet|people-also-ask,22.6,estimated,personalakte inhalt,HR & Mitarbeiterverwaltung
+zvoove recruit,commercial,cluster_03,head,Brand,1369,61,3.75,shopping|site-links,22.4,estimated,zvoove recruit,Recruiting & Bewerbermanagement
+zeitarbeit software,commercial,cluster_01,head,Hauptbegriff zvoove One,1822,82,2.83,ads|site-links,22.2,estimated,zeitarbeit software,Zeitarbeitssoftware & zvoove One
+arbeitszeugnis erstellen zeitarbeit,informational,cluster_09,longtail,Aufgabe,177,8,2.29,featured-snippet|people-also-ask|video,22.1,estimated,arbeitszeugnis erstellen zeitarbeit,HR & Mitarbeiterverwaltung
+recruiting software,commercial,cluster_03,head,Hauptbegriff,1149,52,6.81,ads,22.1,estimated,recruiting software,Recruiting & Bewerbermanagement
+arbeitsmarkt 2026,informational,cluster_10,body,Trend,417,19,1.91,people-also-ask,21.9,estimated,arbeitsmarkt 2026,Branchentrends & Marktentwicklung
+ki matching kandidaten,informational,cluster_12,longtail,Tech,150,7,1.18,people-also-ask|video,21.4,estimated,ki matching kandidaten,KI & Automatisierung im Recruiting
+cloud sicherheit kmu,informational,cluster_07,body,Compliance,446,21,0.78,featured-snippet,21.2,estimated,cloud sicherheit kmu,Digitalisierung & Cloud in der Personaldienstleistung
+lizenzmodell saas,informational,cluster_11,body,Pricing,436,21,1.68,featured-snippet|people-also-ask,20.8,estimated,lizenzmodell saas,Kundenreferenzen & ROI
+facility management software,commercial,cluster_08,head,Branchenfokus,1493,72,6.03,shopping|site-links,20.7,estimated,facility management software,Gebaeudedienstleistung Software
+datenschutz personaldienstleister,informational,cluster_06,body,Compliance,718,36,1.47,people-also-ask,19.9,estimated,datenschutz personaldienstleister,AUEG & Rechtssicherheit
+lohnabrechnung pdf vorlage,informational,cluster_02,longtail,Download-Intent,136,7,1.57,featured-snippet|people-also-ask,19.4,estimated,lohnabrechnung pdf vorlage,Lohnabrechnung & Payroll
+mobile zeiterfassung app,commercial,cluster_04,body,App,755,39,2.83,shopping,19.4,estimated,mobile zeiterfassung app,Zeiterfassung & Disposition
+weiterbildung zeitarbeit,informational,cluster_09,body,Trend,534,28,0.97,featured-snippet|people-also-ask,19.1,estimated,weiterbildung zeitarbeit,HR & Mitarbeiterverwaltung
+lohnabrechnung was beachten,informational,cluster_02,longtail,Wie-Frage,131,7,1.62,featured-snippet|people-also-ask,18.7,estimated,lohnabrechnung was beachten,Lohnabrechnung & Payroll
+revisionssichere archivierung,informational,cluster_07,body,Compliance,681,38,2.3,people-also-ask,17.9,estimated,revisionssichere archivierung,Digitalisierung & Cloud in der Personaldienstleistung
+saas personaldienstleister,commercial,cluster_01,body,Liefermodell,654,38,2.39,shopping,17.2,estimated,saas personaldienstleister,Zeitarbeitssoftware & zvoove One
+bewerbermanagement system,commercial,cluster_03,head,Synonym,1138,67,9.09,ads|shopping,17.0,estimated,bewerbermanagement system,Recruiting & Bewerbermanagement
+azubi verwaltung,commercial,cluster_09,body,Tool,712,42,9.34,ads,17.0,estimated,azubi verwaltung,HR & Mitarbeiterverwaltung
+crm zeitarbeit,commercial,cluster_07,head,Tool,1360,81,8.83,shopping|site-links,16.8,estimated,crm zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+factoring erlaubnis,informational,cluster_05,body,Recht,671,40,2.28,featured-snippet|people-also-ask|video,16.8,estimated,factoring erlaubnis,Liquiditaet & Factoring
+equal pay berechnen,informational,cluster_06,longtail,Wie-Frage,131,8,1.3,video,16.4,estimated,equal pay berechnen,AUEG & Rechtssicherheit
+mitarbeiter onboarding zeitarbeit,informational,cluster_09,longtail,Prozess,163,10,0.46,featured-snippet,16.3,estimated,mitarbeiter onboarding zeitarbeit,HR & Mitarbeiterverwaltung
+zukunft zeitarbeit,informational,cluster_10,body,Trend,631,39,0.65,featured-snippet|people-also-ask,16.2,estimated,zukunft zeitarbeit,Branchentrends & Marktentwicklung
+zertifizierung iso 27001 software,informational,cluster_07,longtail,Trust,125,8,0.9,featured-snippet,15.6,estimated,zertifizierung iso 27001 software,Digitalisierung & Cloud in der Personaldienstleistung
+disposition zeitarbeitnehmer,informational,cluster_04,body,Funktion,395,26,1.67,video,15.2,estimated,disposition zeitarbeitnehmer,Zeiterfassung & Disposition
+zeiterfassung handwerk,commercial,cluster_04,body,Branche,618,41,8.2,ads|shopping,15.1,estimated,zeiterfassung handwerk,Zeiterfassung & Disposition
+liquidität zeitarbeit,informational,cluster_05,body,Branchenproblem,719,48,2.0,featured-snippet|people-also-ask|video,15.0,estimated,liquidität zeitarbeit,Liquiditaet & Factoring
+gebäudereinigung digitalisieren,informational,cluster_08,longtail,Trend,178,12,2.23,people-also-ask,14.8,estimated,gebäudereinigung digitalisieren,Gebaeudedienstleistung Software
+diversity zeitarbeit,informational,cluster_10,body,Trend,325,22,1.62,people-also-ask|video,14.8,estimated,diversity zeitarbeit,Branchentrends & Marktentwicklung
+abrechnung zeitarbeitnehmer,informational,cluster_02,body,Synonym,280,19,1.09,featured-snippet|video,14.7,estimated,abrechnung zeitarbeitnehmer,Lohnabrechnung & Payroll
+ai act recruiting,informational,cluster_12,longtail,Recht,175,12,1.31,featured-snippet|people-also-ask|video,14.6,estimated,ai act recruiting,KI & Automatisierung im Recruiting
+urlaubsplanung software,commercial,cluster_09,body,Tool,705,50,6.3,ads|shopping|site-links,14.1,estimated,urlaubsplanung software,HR & Mitarbeiterverwaltung
+tariflandschaft zeitarbeit,informational,cluster_10,body,Tarif,701,50,1.52,people-also-ask|video,14.0,estimated,tariflandschaft zeitarbeit,Branchentrends & Marktentwicklung
+payroll software zeitarbeit,commercial,cluster_02,body,Synonym,671,48,3.21,ads,14.0,estimated,payroll software zeitarbeit,Lohnabrechnung & Payroll
+offboarding prozess,informational,cluster_09,body,Prozess,517,37,1.91,people-also-ask|video,14.0,estimated,offboarding prozess,HR & Mitarbeiterverwaltung
+gehaltsabrechnung outsourcing,commercial,cluster_02,body,Service-Modell,765,55,4.48,site-links,13.9,estimated,gehaltsabrechnung outsourcing,Lohnabrechnung & Payroll
+betriebsrat zeitarbeit,informational,cluster_06,body,Mitbestimmung,353,26,1.24,featured-snippet,13.6,estimated,betriebsrat zeitarbeit,AUEG & Rechtssicherheit
+recruiting automatisieren,informational,cluster_12,body,Aufgabe,699,52,0.92,featured-snippet,13.4,estimated,recruiting automatisieren,KI & Automatisierung im Recruiting
+einsatzplanung zeitarbeit,commercial,cluster_04,body,Funktion,658,49,2.95,ads,13.4,estimated,einsatzplanung zeitarbeit,Zeiterfassung & Disposition
+applicant tracking system deutsch,commercial,cluster_03,body,Synonym,671,50,2.65,ads,13.4,estimated,applicant tracking system deutsch,Recruiting & Bewerbermanagement
+erp zeitarbeit,commercial,cluster_01,body,Kategoriebegriff,565,43,11.83,shopping,13.1,estimated,erp zeitarbeit,Zeitarbeitssoftware & zvoove One
+fluktuation senken zeitarbeit,informational,cluster_09,longtail,Strategie,117,9,1.05,featured-snippet,13.0,estimated,fluktuation senken zeitarbeit,HR & Mitarbeiterverwaltung
+lohnabrechnung sage,commercial,cluster_02,body,Wettbewerb,604,47,11.71,ads|shopping,12.9,estimated,lohnabrechnung sage,Lohnabrechnung & Payroll
+equal treatment zeitarbeit,informational,cluster_06,body,Synonym,594,46,0.73,featured-snippet|people-also-ask,12.9,estimated,equal treatment zeitarbeit,AUEG & Rechtssicherheit
+echtes factoring,informational,cluster_05,body,Variante,244,19,0.64,video,12.8,estimated,echtes factoring,Liquiditaet & Factoring
+lohnsteuer zeitarbeit,informational,cluster_02,body,Steuerfrage,663,52,0.74,featured-snippet|video,12.8,estimated,lohnsteuer zeitarbeit,Lohnabrechnung & Payroll
+markt zeitarbeit deutschland,informational,cluster_10,body,Marktanalyse,484,38,1.4,featured-snippet|video,12.7,estimated,markt zeitarbeit deutschland,Branchentrends & Marktentwicklung
+deckungsbeitrag zeitarbeit,informational,cluster_11,body,KPI,560,44,1.98,featured-snippet|people-also-ask,12.7,estimated,deckungsbeitrag zeitarbeit,Kundenreferenzen & ROI
+saas zeitarbeit,commercial,cluster_01,body,Liefermodell,707,56,5.76,ads|shopping|site-links,12.6,estimated,saas zeitarbeit,Zeitarbeitssoftware & zvoove One
+dienstplan software,commercial,cluster_04,body,Tool,779,62,4.04,ads|shopping,12.6,estimated,dienstplan software,Zeiterfassung & Disposition
+arbeitsschutz zeitarbeit,informational,cluster_06,body,Pflicht,464,37,1.46,people-also-ask,12.5,estimated,arbeitsschutz zeitarbeit,AUEG & Rechtssicherheit
+gesetzliche abzüge lohn,informational,cluster_02,body,Wissensfrage,538,43,2.32,featured-snippet|video,12.5,estimated,gesetzliche abzüge lohn,Lohnabrechnung & Payroll
+zvoove one,commercial,cluster_01,head,Brand-Keyword,928,75,5.2,ads|shopping,12.4,estimated,zvoove one,Zeitarbeitssoftware & zvoove One
+elektronische lohnabrechnung,commercial,cluster_02,body,Trend,759,61,4.78,shopping,12.4,estimated,elektronische lohnabrechnung,Lohnabrechnung & Payroll
+ki bewerbermanagement,informational,cluster_12,body,Trend,506,41,0.34,video,12.3,estimated,ki bewerbermanagement,KI & Automatisierung im Recruiting
+ausbildung zeitarbeit,informational,cluster_09,body,Strategie,617,50,0.74,people-also-ask,12.3,estimated,ausbildung zeitarbeit,HR & Mitarbeiterverwaltung
+randstad konkurrenz,informational,cluster_10,longtail,Wettbewerb,169,14,1.03,featured-snippet|people-also-ask,12.1,estimated,randstad konkurrenz,Branchentrends & Marktentwicklung
+recruiting plattform,commercial,cluster_03,body,Generisch,796,66,8.35,ads|site-links,12.1,estimated,recruiting plattform,Recruiting & Bewerbermanagement
+gebäudedienstleistung software,commercial,cluster_08,body,Synonym,615,51,11.53,ads,12.1,estimated,gebäudedienstleistung software,Gebaeudedienstleistung Software
+zeiterfassung pflege,commercial,cluster_04,body,Branche,629,52,8.36,ads|shopping,12.1,estimated,zeiterfassung pflege,Zeiterfassung & Disposition
+lohnabrechnung zeitarbeit,commercial,cluster_02,head,Hauptbegriff,851,72,11.92,ads|site-links,11.8,estimated,lohnabrechnung zeitarbeit,Lohnabrechnung & Payroll
+einkommensteuer zeitarbeit,informational,cluster_02,body,Steuerfrage,591,50,1.53,featured-snippet|people-also-ask|video,11.8,estimated,einkommensteuer zeitarbeit,Lohnabrechnung & Payroll
+demografischer wandel arbeitsmarkt,informational,cluster_10,longtail,Trend,164,14,0.57,featured-snippet,11.7,estimated,demografischer wandel arbeitsmarkt,Branchentrends & Marktentwicklung
+lohnabrechnung software zeitarbeit,commercial,cluster_02,body,Tool-Suche,780,68,11.5,site-links,11.5,estimated,lohnabrechnung software zeitarbeit,Lohnabrechnung & Payroll
+inkasso zeitarbeit,commercial,cluster_05,body,Service,454,40,5.29,ads|shopping,11.3,estimated,inkasso zeitarbeit,Liquiditaet & Factoring
+mitarbeiterstruktur analysieren,informational,cluster_09,longtail,Analyse,181,16,0.42,featured-snippet|video,11.3,estimated,mitarbeiterstruktur analysieren,HR & Mitarbeiterverwaltung
+stellenanzeige schalten,informational,cluster_03,body,Aufgabe,404,36,0.78,featured-snippet,11.2,estimated,stellenanzeige schalten,Recruiting & Bewerbermanagement
+employer branding zeitarbeit,informational,cluster_03,longtail,Marketing,187,17,2.4,featured-snippet,11.0,estimated,employer branding zeitarbeit,Recruiting & Bewerbermanagement
+zoll prüfung zeitarbeit,informational,cluster_06,longtail,Audit,162,15,0.93,featured-snippet,10.8,estimated,zoll prüfung zeitarbeit,AUEG & Rechtssicherheit
+recruiting tool zeitarbeit,commercial,cluster_03,body,Spezialisierung,666,62,2.94,site-links,10.7,estimated,recruiting tool zeitarbeit,Recruiting & Bewerbermanagement
+ki im recruiting,informational,cluster_12,body,Trend,433,41,1.11,people-also-ask|video,10.6,estimated,ki im recruiting,KI & Automatisierung im Recruiting
+stellenanzeige beispiel,informational,cluster_03,body,Vorlage,169,16,0.52,video,10.6,estimated,stellenanzeige beispiel,Recruiting & Bewerbermanagement
+active sourcing zeitarbeit,informational,cluster_03,longtail,Methode,106,10,1.9,featured-snippet|people-also-ask,10.6,estimated,active sourcing zeitarbeit,Recruiting & Bewerbermanagement
+disposition gebäudereinigung,commercial,cluster_08,body,Funktion,367,35,6.64,site-links,10.5,estimated,disposition gebäudereinigung,Gebaeudedienstleistung Software
+remote work trends,informational,cluster_10,body,Trend,332,32,1.04,video,10.4,estimated,remote work trends,Branchentrends & Marktentwicklung
+kennzahlen personaldienstleister,informational,cluster_11,body,KPI,470,45,0.45,featured-snippet|video,10.4,estimated,kennzahlen personaldienstleister,Kundenreferenzen & ROI
+aüg novelle,informational,cluster_06,body,Gesetzesänderung,249,24,0.57,people-also-ask|video,10.4,estimated,aüg novelle,AUEG & Rechtssicherheit
+multiposting jobbörsen,informational,cluster_03,body,Funktion,352,34,1.57,featured-snippet,10.4,estimated,multiposting jobbörsen,Recruiting & Bewerbermanagement
+reinigungsangebot vorlage,informational,cluster_08,longtail,Vorlage,133,13,1.55,people-also-ask|video,10.2,estimated,reinigungsangebot vorlage,Gebaeudedienstleistung Software
+multiposting software,commercial,cluster_03,body,Funktion,439,43,6.27,shopping,10.2,estimated,multiposting software,Recruiting & Bewerbermanagement
+zvoove kunden,commercial,cluster_11,body,Brand-Trust,533,53,5.76,ads|site-links,10.1,estimated,zvoove kunden,Kundenreferenzen & ROI
+business case digitalisierung kmu,informational,cluster_11,longtail,Methode,191,19,1.48,featured-snippet|people-also-ask,10.1,estimated,business case digitalisierung kmu,Kundenreferenzen & ROI
+mindestlohngesetz zeitarbeit,informational,cluster_06,body,Gesetz,296,30,2.45,people-also-ask|video,9.9,estimated,mindestlohngesetz zeitarbeit,AUEG & Rechtssicherheit
+active sourcing tools,commercial,cluster_03,body,Methode,736,74,4.26,shopping|site-links,9.9,estimated,active sourcing tools,Recruiting & Bewerbermanagement
+höchstüberlassungsdauer ausnahmen,informational,cluster_06,longtail,Spezialfall,108,11,2.04,featured-snippet,9.8,estimated,höchstüberlassungsdauer ausnahmen,AUEG & Rechtssicherheit
+lohnabrechnung muster,informational,cluster_02,body,Vorlage,423,43,2.46,featured-snippet|people-also-ask,9.8,estimated,lohnabrechnung muster,Lohnabrechnung & Payroll
+zeitarbeit prüfung agentur arbeit,informational,cluster_06,longtail,Audit,175,18,2.04,featured-snippet,9.7,estimated,zeitarbeit prüfung agentur arbeit,AUEG & Rechtssicherheit
+arbeitszeitkonto führen,informational,cluster_04,body,Aufgabe,376,39,2.02,people-also-ask,9.6,estimated,arbeitszeitkonto führen,Zeiterfassung & Disposition
+indeed alternative,commercial,cluster_03,body,Wettbewerb,549,58,11.86,shopping,9.5,estimated,indeed alternative,Recruiting & Bewerbermanagement
+equal pay nach 9 monaten,informational,cluster_06,longtail,Frist,190,20,0.55,people-also-ask,9.5,estimated,equal pay nach 9 monaten,AUEG & Rechtssicherheit
+on premise zeitarbeit ablösen,informational,cluster_07,longtail,Migration,95,10,0.73,people-also-ask|video,9.5,estimated,on premise zeitarbeit ablösen,Digitalisierung & Cloud in der Personaldienstleistung
+zeitarbeit dsgvo,informational,cluster_06,body,Compliance,396,42,1.61,featured-snippet,9.4,estimated,zeitarbeit dsgvo,AUEG & Rechtssicherheit
+preismodell zeitarbeit software,commercial,cluster_11,body,Pricing,650,69,6.79,site-links,9.4,estimated,preismodell zeitarbeit software,Kundenreferenzen & ROI
+api personaldienstleister,informational,cluster_07,body,Integration,170,18,0.42,people-also-ask|video,9.4,estimated,api personaldienstleister,Digitalisierung & Cloud in der Personaldienstleistung
+lohnabrechnung erstellen,informational,cluster_02,body,DIY-Query,456,49,2.49,people-also-ask,9.3,estimated,lohnabrechnung erstellen,Lohnabrechnung & Payroll
+auditieren reinigungsleistung,informational,cluster_08,longtail,Aufgabe,64,7,0.85,people-also-ask|video,9.1,estimated,auditieren reinigungsleistung,Gebaeudedienstleistung Software
+arbeitgeberanteile sozialversicherung,informational,cluster_02,body,Wissensfrage,420,46,2.32,featured-snippet,9.1,estimated,arbeitgeberanteile sozialversicherung,Lohnabrechnung & Payroll
+aüg 2026,informational,cluster_06,longtail,Aktuell,108,12,0.84,featured-snippet|people-also-ask,9.0,estimated,aüg 2026,AUEG & Rechtssicherheit
+skill management software,commercial,cluster_09,body,Tool,375,42,2.46,ads|shopping,8.9,estimated,skill management software,HR & Mitarbeiterverwaltung
+ranking zeitarbeitsfirmen deutschland,informational,cluster_10,longtail,Marktanalyse,193,22,0.72,featured-snippet|people-also-ask,8.8,estimated,ranking zeitarbeitsfirmen deutschland,Branchentrends & Marktentwicklung
+aüg erlaubnis beantragen,informational,cluster_06,longtail,Verfahren,147,17,1.13,people-also-ask|video,8.6,estimated,aüg erlaubnis beantragen,AUEG & Rechtssicherheit
+talent intelligence platform,commercial,cluster_12,body,Tool,614,71,6.15,ads|shopping,8.6,estimated,talent intelligence platform,KI & Automatisierung im Recruiting
+digitale lohnabrechnung,commercial,cluster_02,body,Trend,391,46,11.9,ads|shopping,8.5,estimated,digitale lohnabrechnung,Lohnabrechnung & Payroll
+gehaltsabrechnung zeitarbeit,informational,cluster_02,body,Synonym,293,35,2.06,featured-snippet|people-also-ask,8.4,estimated,gehaltsabrechnung zeitarbeit,Lohnabrechnung & Payroll
+personalcontrolling zeitarbeit,informational,cluster_09,longtail,Methode,109,13,0.35,people-also-ask,8.4,estimated,personalcontrolling zeitarbeit,HR & Mitarbeiterverwaltung
+zeiterfassung zeitarbeit,commercial,cluster_04,body,Spezialisierung,575,69,9.41,ads,8.3,estimated,zeiterfassung zeitarbeit,Zeiterfassung & Disposition
+bewerber app,commercial,cluster_07,body,App,439,53,4.25,ads|site-links,8.3,estimated,bewerber app,Digitalisierung & Cloud in der Personaldienstleistung
+zahlungsziele kunden,informational,cluster_05,body,Cashflow,433,53,1.83,featured-snippet,8.2,estimated,zahlungsziele kunden,Liquiditaet & Factoring
+hr software zeitarbeit,commercial,cluster_09,body,Spezialisierung,588,73,10.7,site-links,8.1,estimated,hr software zeitarbeit,HR & Mitarbeiterverwaltung
+zeitarbeit krise,informational,cluster_10,body,Marktlage,333,41,1.36,featured-snippet|video,8.1,estimated,zeitarbeit krise,Branchentrends & Marktentwicklung
+digitale personalakte,commercial,cluster_07,body,Tool,526,66,5.88,ads|site-links,8.0,estimated,digitale personalakte,Digitalisierung & Cloud in der Personaldienstleistung
+bap tarif aktuell,informational,cluster_10,body,Tarif,338,42,0.65,featured-snippet|video,8.0,estimated,bap tarif aktuell,Branchentrends & Marktentwicklung
+zeitarbeit europa,informational,cluster_10,body,Marktanalyse,184,23,2.27,video,8.0,estimated,zeitarbeit europa,Branchentrends & Marktentwicklung
+chatgpt zeitarbeit,informational,cluster_12,longtail,Trend,127,16,2.28,people-also-ask,7.9,estimated,chatgpt zeitarbeit,KI & Automatisierung im Recruiting
+talentpool software,commercial,cluster_03,body,Tool,544,69,6.27,site-links,7.9,estimated,talentpool software,Recruiting & Bewerbermanagement
+brutto netto rechner zeitarbeit,informational,cluster_02,longtail,Tool-Suche,78,10,1.01,people-also-ask|video,7.8,estimated,brutto netto rechner zeitarbeit,Lohnabrechnung & Payroll
+lohnabrechnung leiharbeiter,informational,cluster_02,body,Synonym,350,45,0.32,video,7.8,estimated,lohnabrechnung leiharbeiter,Lohnabrechnung & Payroll
+stundenerfassung baustelle,informational,cluster_04,longtail,Branche,86,11,2.0,featured-snippet|people-also-ask|video,7.8,estimated,stundenerfassung baustelle,Zeiterfassung & Disposition
+leiharbeit image,informational,cluster_10,body,Marktanalyse,332,43,1.98,featured-snippet|people-also-ask,7.7,estimated,leiharbeit image,Branchentrends & Marktentwicklung
+gen z arbeitswelt,informational,cluster_10,longtail,Trend,92,12,1.94,video,7.7,estimated,gen z arbeitswelt,Branchentrends & Marktentwicklung
+facility management kmu,commercial,cluster_08,body,Segment,497,65,2.45,shopping,7.6,estimated,facility management kmu,Gebaeudedienstleistung Software
+generation z recruiting,informational,cluster_10,longtail,Trend,53,7,0.84,people-also-ask,7.6,estimated,generation z recruiting,Branchentrends & Marktentwicklung
+onboarding prozess automatisieren,informational,cluster_09,longtail,Trend,167,22,1.08,video,7.6,estimated,onboarding prozess automatisieren,HR & Mitarbeiterverwaltung
+offenes factoring,informational,cluster_05,body,Variante,296,39,1.22,featured-snippet|video,7.6,estimated,offenes factoring,Liquiditaet & Factoring
+zeiterfassung pflicht 2026,informational,cluster_04,longtail,Gesetz,82,11,1.63,people-also-ask|video,7.5,estimated,zeiterfassung pflicht 2026,Zeiterfassung & Disposition
+implementierungserfolg software,informational,cluster_11,longtail,Methode,188,25,0.76,featured-snippet|video,7.5,estimated,implementierungserfolg software,Kundenreferenzen & ROI
+lohnabrechnung addison,commercial,cluster_02,body,Wettbewerb,400,54,4.69,ads,7.4,estimated,lohnabrechnung addison,Lohnabrechnung & Payroll
+factoring kfw,informational,cluster_05,body,Förderung,234,32,1.27,featured-snippet,7.3,estimated,factoring kfw,Liquiditaet & Factoring
+sonntagszuschlag zeitarbeit,informational,cluster_02,longtail,Wissensfrage,160,22,1.37,people-also-ask|video,7.3,estimated,sonntagszuschlag zeitarbeit,Lohnabrechnung & Payroll
+new work zeitarbeit,informational,cluster_10,longtail,Trend,114,16,0.66,people-also-ask,7.1,estimated,new work zeitarbeit,Branchentrends & Marktentwicklung
+software für zeitarbeitsfirmen,commercial,cluster_01,body,Long-Head Brand-Match,482,68,4.08,ads|shopping|site-links,7.1,estimated,software für zeitarbeitsfirmen,Zeitarbeitssoftware & zvoove One
+recruiting funnel,informational,cluster_03,body,Methode,302,43,1.32,featured-snippet|people-also-ask|video,7.0,estimated,recruiting funnel,Recruiting & Bewerbermanagement
+unterhaltsreinigung kalkulation,informational,cluster_08,longtail,Branche,187,27,2.34,people-also-ask,6.9,estimated,unterhaltsreinigung kalkulation,Gebaeudedienstleistung Software
+fachkräftemangel zeitarbeit,informational,cluster_03,body,Branchenproblem,276,40,0.65,people-also-ask,6.9,estimated,fachkräftemangel zeitarbeit,Recruiting & Bewerbermanagement
+gesetzliche zeiterfassungspflicht,informational,cluster_04,body,Gesetz,223,33,1.49,featured-snippet|video,6.8,estimated,gesetzliche zeiterfassungspflicht,Zeiterfassung & Disposition
+bewerbermanagement zeitarbeit,commercial,cluster_03,body,Spezialisierung,500,74,6.55,shopping|site-links,6.8,estimated,bewerbermanagement zeitarbeit,Recruiting & Bewerbermanagement
+dms zeitarbeit,commercial,cluster_07,body,Tool,244,37,7.42,site-links,6.6,estimated,dms zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+arbeitszeitgesetz zeitarbeit,informational,cluster_04,longtail,Gesetz,159,24,2.35,featured-snippet,6.6,estimated,arbeitszeitgesetz zeitarbeit,Zeiterfassung & Disposition
+software gebäudemanagement,commercial,cluster_08,body,Synonym,458,71,2.05,shopping,6.5,estimated,software gebäudemanagement,Gebaeudedienstleistung Software
+aüg statistik meldung,informational,cluster_06,longtail,Pflicht,168,26,0.75,featured-snippet|video,6.5,estimated,aüg statistik meldung,AUEG & Rechtssicherheit
+gebäudedienstleistung kalkulation,informational,cluster_08,body,Aufgabe,159,25,1.41,featured-snippet|people-also-ask,6.4,estimated,gebäudedienstleistung kalkulation,Gebaeudedienstleistung Software
+mahnwesen automatisieren,commercial,cluster_05,longtail,Tool,186,29,7.77,site-links,6.4,estimated,mahnwesen automatisieren,Liquiditaet & Factoring
+factoring vorteile zeitarbeit,informational,cluster_05,longtail,Nutzen,163,26,2.15,featured-snippet,6.3,estimated,factoring vorteile zeitarbeit,Liquiditaet & Factoring
+lohnabrechnung digitalisieren,commercial,cluster_02,longtail,Trend,183,29,3.31,shopping,6.3,estimated,lohnabrechnung digitalisieren,Lohnabrechnung & Payroll
+videointerview ki analyse,informational,cluster_12,longtail,Tech,76,12,1.73,featured-snippet|video,6.3,estimated,videointerview ki analyse,KI & Automatisierung im Recruiting
+tarifvertrag zeitarbeit lohn,informational,cluster_02,longtail,Tarif,81,13,1.37,people-also-ask|video,6.2,estimated,tarifvertrag zeitarbeit lohn,Lohnabrechnung & Payroll
+recruiting chatbot,commercial,cluster_12,body,Tool,261,42,2.51,shopping|site-links,6.2,estimated,recruiting chatbot,KI & Automatisierung im Recruiting
+zeitarbeit checkliste compliance,informational,cluster_06,longtail,Vorlage,185,30,0.36,featured-snippet,6.2,estimated,zeitarbeit checkliste compliance,AUEG & Rechtssicherheit
+arbeitgeberattraktivität zeitarbeit,informational,cluster_10,longtail,Marketing,111,18,1.07,featured-snippet|people-also-ask,6.2,estimated,arbeitgeberattraktivität zeitarbeit,Branchentrends & Marktentwicklung
+total cost ownership erp,informational,cluster_11,longtail,Business Case,196,32,2.4,featured-snippet|video,6.1,estimated,total cost ownership erp,Kundenreferenzen & ROI
+stundenzettel digital,commercial,cluster_04,longtail,Tool,171,28,4.94,ads|site-links,6.1,estimated,stundenzettel digital,Zeiterfassung & Disposition
+single sign on zeitarbeit,commercial,cluster_07,longtail,Tech,173,29,7.4,shopping|site-links,6.0,estimated,single sign on zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+softwareeinführung reinigungsfirma,informational,cluster_08,longtail,Implementation,161,27,1.02,people-also-ask|video,6.0,estimated,softwareeinführung reinigungsfirma,Gebaeudedienstleistung Software
+serverstandort deutschland software,informational,cluster_07,longtail,Trust,180,30,1.15,featured-snippet,6.0,estimated,serverstandort deutschland software,Digitalisierung & Cloud in der Personaldienstleistung
+stilles factoring,informational,cluster_05,body,Variante,170,29,1.81,featured-snippet,5.9,estimated,stilles factoring,Liquiditaet & Factoring
+recruiting kennzahlen,informational,cluster_03,body,KPI,195,33,0.97,people-also-ask,5.9,estimated,recruiting kennzahlen,Recruiting & Bewerbermanagement
+cloud software zeitarbeit,commercial,cluster_07,body,Trend Cloud,267,46,2.66,ads|shopping|site-links,5.8,estimated,cloud software zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+prozesskosten senken zeitarbeit,informational,cluster_11,longtail,Strategie,197,34,0.56,video,5.8,estimated,prozesskosten senken zeitarbeit,Kundenreferenzen & ROI
+personalakte führen,informational,cluster_09,body,Aufgabe,239,42,1.84,featured-snippet|people-also-ask|video,5.7,estimated,personalakte führen,HR & Mitarbeiterverwaltung
+urlaubsgeld zeitarbeit,informational,cluster_02,body,Wissensfrage,86,15,1.63,featured-snippet|people-also-ask|video,5.7,estimated,urlaubsgeld zeitarbeit,Lohnabrechnung & Payroll
+inklusion zeitarbeit,informational,cluster_10,body,Trend,187,33,1.72,people-also-ask,5.7,estimated,inklusion zeitarbeit,Branchentrends & Marktentwicklung
+flexibler arbeitsmarkt,informational,cluster_10,body,Trend,260,46,2.47,featured-snippet|video,5.7,estimated,flexibler arbeitsmarkt,Branchentrends & Marktentwicklung
+gefährdungsbeurteilung zeitarbeit,informational,cluster_06,longtail,Pflicht,189,33,0.5,featured-snippet|people-also-ask|video,5.7,estimated,gefährdungsbeurteilung zeitarbeit,AUEG & Rechtssicherheit
+zeitarbeitsbranche 2026,informational,cluster_10,longtail,Aktuell,190,34,0.99,featured-snippet,5.6,estimated,zeitarbeitsbranche 2026,Branchentrends & Marktentwicklung
+zvoove alternative,commercial,cluster_01,body,Wettbewerb,410,73,6.98,shopping|site-links,5.6,estimated,zvoove alternative,Zeitarbeitssoftware & zvoove One
+verleihverbot bau,informational,cluster_06,body,Branche,261,47,2.25,featured-snippet|video,5.6,estimated,verleihverbot bau,AUEG & Rechtssicherheit
+bewerber pool aufbauen,informational,cluster_03,longtail,Methode,96,17,0.91,featured-snippet|video,5.6,estimated,bewerber pool aufbauen,Recruiting & Bewerbermanagement
+aüg erlaubnis kosten,informational,cluster_06,longtail,Pricing,176,32,1.5,featured-snippet|video,5.5,estimated,aüg erlaubnis kosten,AUEG & Rechtssicherheit
+mitarbeitermotivation zeitarbeit,informational,cluster_09,longtail,Strategie,144,26,1.57,featured-snippet|video,5.5,estimated,mitarbeitermotivation zeitarbeit,HR & Mitarbeiterverwaltung
+mindestlohn entwicklung 2026,informational,cluster_10,longtail,Politik,121,22,0.42,people-also-ask,5.5,estimated,mindestlohn entwicklung 2026,Branchentrends & Marktentwicklung
+personalakte digital,commercial,cluster_09,body,Trend,221,41,8.91,ads|site-links,5.4,estimated,personalakte digital,HR & Mitarbeiterverwaltung
+weihnachtsgeld zeitarbeitnehmer,informational,cluster_02,longtail,Wissensfrage,113,21,0.36,featured-snippet|video,5.4,estimated,weihnachtsgeld zeitarbeitnehmer,Lohnabrechnung & Payroll
+mitarbeiterzufriedenheit messen,informational,cluster_09,longtail,Methode,158,30,2.32,featured-snippet|people-also-ask,5.3,estimated,mitarbeiterzufriedenheit messen,HR & Mitarbeiterverwaltung
+sanktionen aüg verstoß,informational,cluster_06,longtail,Risiko,165,31,1.92,featured-snippet|people-also-ask,5.3,estimated,sanktionen aüg verstoß,AUEG & Rechtssicherheit
+zeitarbeit verwaltungssoftware,commercial,cluster_01,body,Synonym,227,43,3.41,ads|shopping,5.3,estimated,zeitarbeit verwaltungssoftware,Zeitarbeitssoftware & zvoove One
+einsatzplanung excel ablösen,informational,cluster_04,longtail,Migration,195,37,1.3,people-also-ask|video,5.3,estimated,einsatzplanung excel ablösen,Zeiterfassung & Disposition
+zeiterfassung app zeitarbeit,commercial,cluster_04,longtail,Spezialisierung,159,30,7.49,site-links,5.3,estimated,zeiterfassung app zeitarbeit,Zeiterfassung & Disposition
+predictive analytics personal,informational,cluster_12,longtail,Tech,137,26,0.44,video,5.3,estimated,predictive analytics personal,KI & Automatisierung im Recruiting
+zeitarbeit software mittelstand,commercial,cluster_01,longtail,Segment,152,29,8.89,shopping|site-links,5.2,estimated,zeitarbeit software mittelstand,Zeitarbeitssoftware & zvoove One
+ki sourcing tool,commercial,cluster_12,longtail,Tool,150,29,4.82,site-links,5.2,estimated,ki sourcing tool,KI & Automatisierung im Recruiting
+gesundheitsuntersuchung zeitarbeit,informational,cluster_06,longtail,Pflicht,147,29,2.01,people-also-ask,5.1,estimated,gesundheitsuntersuchung zeitarbeit,AUEG & Rechtssicherheit
+zeitarbeit software einführung,commercial,cluster_01,longtail,Implementation,172,34,11.96,shopping,5.1,estimated,zeitarbeit software einführung,Zeitarbeitssoftware & zvoove One
+höchstüberlassungsdauer tarifvertrag,informational,cluster_06,longtail,Tarif,152,30,2.11,people-also-ask|video,5.1,estimated,höchstüberlassungsdauer tarifvertrag,AUEG & Rechtssicherheit
+personalverwaltung software,commercial,cluster_09,body,Tool,184,36,7.63,ads|shopping,5.1,estimated,personalverwaltung software,HR & Mitarbeiterverwaltung
+bias ki recruiting,informational,cluster_12,longtail,Risiko,197,39,0.31,people-also-ask,5.1,estimated,bias ki recruiting,KI & Automatisierung im Recruiting
+qualifikationsmatrix erstellen,informational,cluster_09,longtail,Methode,55,11,1.08,featured-snippet|video,5.0,estimated,qualifikationsmatrix erstellen,HR & Mitarbeiterverwaltung
+zeiterfassung dsgvo,informational,cluster_04,longtail,Compliance,150,30,1.71,featured-snippet|people-also-ask,5.0,estimated,zeiterfassung dsgvo,Zeiterfassung & Disposition
+bgm zeitarbeit,informational,cluster_09,body,Strategie,165,33,2.02,featured-snippet|people-also-ask,5.0,estimated,bgm zeitarbeit,HR & Mitarbeiterverwaltung
+working capital zeitarbeit,informational,cluster_05,longtail,Finanzbegriff,84,17,1.68,people-also-ask|video,4.9,estimated,working capital zeitarbeit,Liquiditaet & Factoring
+aüg statistik wann,informational,cluster_06,longtail,Frist,166,34,2.0,featured-snippet|people-also-ask|video,4.9,estimated,aüg statistik wann,AUEG & Rechtssicherheit
+zvoove software erfahrungen,commercial,cluster_01,longtail,Reviewsuche,179,37,10.85,shopping|site-links,4.8,estimated,zvoove software erfahrungen,Zeitarbeitssoftware & zvoove One
+factoring personaldienstleister,commercial,cluster_05,body,Zielgruppe,288,61,10.69,shopping|site-links,4.7,estimated,factoring personaldienstleister,Liquiditaet & Factoring
+nachtzuschlag zeitarbeit,informational,cluster_02,longtail,Wissensfrage,89,19,2.48,featured-snippet|people-also-ask|video,4.7,estimated,nachtzuschlag zeitarbeit,Lohnabrechnung & Payroll
+zeiterfassung gebäudereinigung,commercial,cluster_04,longtail,Branche,184,39,9.28,ads|site-links,4.7,estimated,zeiterfassung gebäudereinigung,Zeiterfassung & Disposition
+fairness ki bewerbermanagement,informational,cluster_12,longtail,Risiko,90,19,0.5,people-also-ask,4.7,estimated,fairness ki bewerbermanagement,KI & Automatisierung im Recruiting
+factoring vs bankkredit,informational,cluster_05,longtail,Vergleich,85,18,1.91,video,4.7,estimated,factoring vs bankkredit,Liquiditaet & Factoring
+überlassungsvertrag inhalt,informational,cluster_06,longtail,Wissen,175,37,2.5,people-also-ask|video,4.7,estimated,überlassungsvertrag inhalt,AUEG & Rechtssicherheit
+finanzierung zeitarbeitsfirma,informational,cluster_05,body,Bedarf,200,43,1.11,featured-snippet,4.7,estimated,finanzierung zeitarbeitsfirma,Liquiditaet & Factoring
+digitalisierungsstrategie zeitarbeit,informational,cluster_07,longtail,Strategie,158,34,2.02,featured-snippet|video,4.6,estimated,digitalisierungsstrategie zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+mitarbeiter app zeitarbeit,commercial,cluster_07,longtail,App,173,38,2.22,ads|shopping,4.6,estimated,mitarbeiter app zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+mitarbeiter werben zeitarbeit,informational,cluster_03,longtail,Recruiting-Aufgabe,106,23,0.37,featured-snippet|people-also-ask,4.6,estimated,mitarbeiter werben zeitarbeit,Recruiting & Bewerbermanagement
+factoring datev,informational,cluster_05,longtail,Integration,110,24,1.95,featured-snippet|people-also-ask,4.6,estimated,factoring datev,Liquiditaet & Factoring
+mobile zeiterfassung gebäudereinigung,commercial,cluster_08,longtail,Tool,136,30,5.26,shopping,4.5,estimated,mobile zeiterfassung gebäudereinigung,Gebaeudedienstleistung Software
+employer branding kmu,informational,cluster_03,longtail,Segment,182,40,2.16,featured-snippet|video,4.5,estimated,employer branding kmu,Recruiting & Bewerbermanagement
+kettenüberlassung,informational,cluster_06,body,Verbot,183,41,1.56,people-also-ask|video,4.5,estimated,kettenüberlassung,AUEG & Rechtssicherheit
+factoring gebühren,commercial,cluster_05,body,Pricing,222,51,8.92,site-links,4.4,estimated,factoring gebühren,Liquiditaet & Factoring
+leistungsverzeichnis reinigung,informational,cluster_08,longtail,Vorlage,88,20,1.42,featured-snippet|people-also-ask,4.4,estimated,leistungsverzeichnis reinigung,Gebaeudedienstleistung Software
+forderungsmanagement software,commercial,cluster_05,body,Tool,295,67,10.73,site-links,4.4,estimated,forderungsmanagement software,Liquiditaet & Factoring
+factoring vs kontokorrent,informational,cluster_05,longtail,Vergleich,107,25,2.23,people-also-ask,4.3,estimated,factoring vs kontokorrent,Liquiditaet & Factoring
+software für personaldienstleister,commercial,cluster_01,body,zvoove Hauptzielgruppe,159,37,10.66,ads|shopping,4.3,estimated,software für personaldienstleister,Zeitarbeitssoftware & zvoove One
+zvoove integration datev,commercial,cluster_01,longtail,Integration DATEV,183,43,4.03,shopping|site-links,4.3,estimated,zvoove integration datev,Zeitarbeitssoftware & zvoove One
+auftragsverwaltung gebäudereinigung,commercial,cluster_08,longtail,Tool,197,47,9.72,ads,4.2,estimated,auftragsverwaltung gebäudereinigung,Gebaeudedienstleistung Software
+zeiterfassung baustelle,commercial,cluster_04,longtail,Branche,129,31,8.8,ads|shopping,4.2,estimated,zeiterfassung baustelle,Zeiterfassung & Disposition
+hr automatisierung kmu,informational,cluster_09,longtail,Trend,83,20,0.62,featured-snippet,4.2,estimated,hr automatisierung kmu,HR & Mitarbeiterverwaltung
+go live software zeitarbeit,informational,cluster_11,longtail,Implementation,88,21,1.02,featured-snippet|people-also-ask|video,4.2,estimated,go live software zeitarbeit,Kundenreferenzen & ROI
+hotline software zeitarbeit,commercial,cluster_11,longtail,Service,173,41,5.91,site-links,4.2,estimated,hotline software zeitarbeit,Kundenreferenzen & ROI
+abwesenheitsmanagement software,commercial,cluster_09,body,Tool,262,63,3.04,ads|shopping|site-links,4.2,estimated,abwesenheitsmanagement software,HR & Mitarbeiterverwaltung
+hr kennzahlen zeitarbeit,informational,cluster_09,longtail,KPI,131,32,1.17,people-also-ask,4.1,estimated,hr kennzahlen zeitarbeit,HR & Mitarbeiterverwaltung
+stellenanzeige vorlage zeitarbeit,informational,cluster_03,longtail,Vorlage,49,12,0.8,featured-snippet|people-also-ask,4.1,estimated,stellenanzeige vorlage zeitarbeit,Recruiting & Bewerbermanagement
+zeitarbeit corona auswirkung,informational,cluster_10,longtail,Marktanalyse,138,34,1.27,people-also-ask,4.1,estimated,zeitarbeit corona auswirkung,Branchentrends & Marktentwicklung
+chatgpt im recruiting,informational,cluster_12,longtail,Trend,155,38,1.91,people-also-ask|video,4.1,estimated,chatgpt im recruiting,KI & Automatisierung im Recruiting
+prompt engineering recruiting,informational,cluster_12,longtail,Tech,106,26,0.55,people-also-ask|video,4.1,estimated,prompt engineering recruiting,KI & Automatisierung im Recruiting
+mitarbeitergespräch vorlage,informational,cluster_09,longtail,Vorlage,128,31,1.95,people-also-ask|video,4.1,estimated,mitarbeitergespräch vorlage,HR & Mitarbeiterverwaltung
+beste jobbörsen deutschland,informational,cluster_03,body,Recherche,98,24,1.22,people-also-ask,4.1,estimated,beste jobbörsen deutschland,Recruiting & Bewerbermanagement
+factoring kosten zeitarbeit,commercial,cluster_05,longtail,Pricing,170,41,5.81,ads|shopping,4.1,estimated,factoring kosten zeitarbeit,Liquiditaet & Factoring
+arbeitsvertrag zeitarbeit vorlage,informational,cluster_09,longtail,Vorlage,57,14,2.4,featured-snippet,4.1,estimated,arbeitsvertrag zeitarbeit vorlage,HR & Mitarbeiterverwaltung
+gobd konforme archivierung,informational,cluster_07,longtail,Compliance,117,29,0.87,video,4.0,estimated,gobd konforme archivierung,Digitalisierung & Cloud in der Personaldienstleistung
+xml import jobbörse,informational,cluster_07,longtail,Tech,140,35,2.15,people-also-ask|video,4.0,estimated,xml import jobbörse,Digitalisierung & Cloud in der Personaldienstleistung
+arbeitnehmerüberlassung werkvertrag abgrenzung,informational,cluster_06,longtail,Wissen,119,30,2.25,featured-snippet|people-also-ask|video,4.0,estimated,arbeitnehmerüberlassung werkvertrag abgrenzung,AUEG & Rechtssicherheit
+schichtplanung software,commercial,cluster_04,body,Tool,225,57,6.24,ads,3.9,estimated,schichtplanung software,Zeiterfassung & Disposition
+gebäudereiniger tarifvertrag 2026,informational,cluster_08,longtail,Tarif,59,15,1.38,video,3.9,estimated,gebäudereiniger tarifvertrag 2026,Gebaeudedienstleistung Software
+mindestlohn gebäudereinigung,informational,cluster_08,longtail,Tarif,136,35,1.36,featured-snippet,3.9,estimated,mindestlohn gebäudereinigung,Gebaeudedienstleistung Software
+arbeitsschutzunterweisung zeitarbeit,informational,cluster_06,longtail,Pflicht,154,39,2.26,people-also-ask|video,3.9,estimated,arbeitsschutzunterweisung zeitarbeit,AUEG & Rechtssicherheit
+erp personaldienstleister,commercial,cluster_01,body,Kategoriebegriff,142,36,4.85,ads|shopping,3.9,estimated,erp personaldienstleister,Zeitarbeitssoftware & zvoove One
+zvoove cashlink kosten,commercial,cluster_05,longtail,Pricing,104,27,10.01,shopping|site-links,3.9,estimated,zvoove cashlink kosten,Liquiditaet & Factoring
+zvoove cockpit funktionen,commercial,cluster_07,longtail,Funktionen,165,43,3.13,shopping,3.8,estimated,zvoove cockpit funktionen,Digitalisierung & Cloud in der Personaldienstleistung
+cloud dsgvo zeitarbeit,informational,cluster_07,longtail,Compliance,169,44,0.44,video,3.8,estimated,cloud dsgvo zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+mitarbeiterstammdaten,informational,cluster_09,body,Begriff,105,28,1.76,featured-snippet|people-also-ask,3.8,estimated,mitarbeiterstammdaten,HR & Mitarbeiterverwaltung
+lohnabrechnung personaldienstleister,commercial,cluster_02,body,Zielgruppe,276,72,7.6,shopping|site-links,3.8,estimated,lohnabrechnung personaldienstleister,Lohnabrechnung & Payroll
+forderungsverkauf zeitarbeit,commercial,cluster_05,longtail,Synonym,192,50,8.72,shopping|site-links,3.8,estimated,forderungsverkauf zeitarbeit,Liquiditaet & Factoring
+remote arbeiten personaldienstleister,informational,cluster_07,longtail,Trend,53,14,1.19,video,3.8,estimated,remote arbeiten personaldienstleister,Digitalisierung & Cloud in der Personaldienstleistung
+glasreinigung kalkulation,informational,cluster_08,longtail,Branche,118,31,1.29,featured-snippet,3.8,estimated,glasreinigung kalkulation,Gebaeudedienstleistung Software
+support zvoove,commercial,cluster_11,longtail,Service,154,41,5.56,ads,3.8,estimated,support zvoove,Kundenreferenzen & ROI
+zvoove case study recruiting,commercial,cluster_11,longtail,Asset,143,38,6.52,ads|site-links,3.8,estimated,zvoove case study recruiting,Kundenreferenzen & ROI
+bewerberprozess automatisieren,informational,cluster_03,longtail,Trend,172,45,1.88,video,3.8,estimated,bewerberprozess automatisieren,Recruiting & Bewerbermanagement
+saas vs on premise zeitarbeit,informational,cluster_07,longtail,Vergleich,149,40,1.09,featured-snippet|people-also-ask,3.7,estimated,saas vs on premise zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+software zeitarbeit kleine firma,commercial,cluster_01,longtail,Segment Klein,111,30,4.71,site-links,3.7,estimated,software zeitarbeit kleine firma,Zeitarbeitssoftware & zvoove One
+zeitarbeit software vergleich,commercial,cluster_01,longtail,Bottom-Funnel,149,40,11.84,shopping,3.7,estimated,zeitarbeit software vergleich,Zeitarbeitssoftware & zvoove One
+lohnabrechnung beispiel zeitarbeit,informational,cluster_02,longtail,Vorlagen-Suche,56,15,0.53,featured-snippet,3.7,estimated,lohnabrechnung beispiel zeitarbeit,Lohnabrechnung & Payroll
+factoring online beantragen,commercial,cluster_05,longtail,Conversion,164,46,2.67,ads|shopping,3.6,estimated,factoring online beantragen,Liquiditaet & Factoring
+zeitarbeit komplettlösung,commercial,cluster_01,longtail,USP-orientiert,197,55,4.23,shopping,3.6,estimated,zeitarbeit komplettlösung,Zeitarbeitssoftware & zvoove One
+sozialversicherung zeitarbeitnehmer,informational,cluster_02,longtail,Spezialisierung,149,41,1.39,people-also-ask|video,3.6,estimated,sozialversicherung zeitarbeitnehmer,Lohnabrechnung & Payroll
+mitarbeitergespräche dokumentieren,informational,cluster_09,longtail,Aufgabe,43,12,1.6,people-also-ask|video,3.6,estimated,mitarbeitergespräche dokumentieren,HR & Mitarbeiterverwaltung
+schwarzarbeit zeitarbeit,informational,cluster_06,body,Risiko,188,52,2.24,featured-snippet|people-also-ask,3.6,estimated,schwarzarbeit zeitarbeit,AUEG & Rechtssicherheit
+inflation lohn zeitarbeit,informational,cluster_10,longtail,Marktanalyse,162,45,2.39,people-also-ask|video,3.6,estimated,inflation lohn zeitarbeit,Branchentrends & Marktentwicklung
+hybrides arbeiten zeitarbeit,informational,cluster_10,longtail,Trend,105,29,1.23,featured-snippet,3.6,estimated,hybrides arbeiten zeitarbeit,Branchentrends & Marktentwicklung
+zeiterfassung kostenlos,commercial,cluster_04,longtail,Sparvariante,171,47,10.83,ads|shopping,3.6,estimated,zeiterfassung kostenlos,Zeiterfassung & Disposition
+auswahl kandidaten ki,informational,cluster_12,longtail,Methode,142,40,0.9,featured-snippet|video,3.5,estimated,auswahl kandidaten ki,KI & Automatisierung im Recruiting
+esg personaldienstleister,informational,cluster_10,longtail,Trend,76,22,0.46,featured-snippet|people-also-ask,3.5,estimated,esg personaldienstleister,Branchentrends & Marktentwicklung
+arbeitszeugnis vorlage zeitarbeitnehmer,informational,cluster_09,longtail,Vorlage,155,44,2.42,video,3.5,estimated,arbeitszeugnis vorlage zeitarbeitnehmer,HR & Mitarbeiterverwaltung
+zessionskredit zeitarbeit,informational,cluster_05,longtail,Finanzierung,91,26,0.34,people-also-ask,3.5,estimated,zessionskredit zeitarbeit,Liquiditaet & Factoring
+fintech zeitarbeit,informational,cluster_05,longtail,Trend,90,26,1.03,featured-snippet|people-also-ask,3.5,estimated,fintech zeitarbeit,Liquiditaet & Factoring
+qualifizierung zeitarbeitnehmer,informational,cluster_09,longtail,Strategie,144,41,0.86,featured-snippet,3.5,estimated,qualifizierung zeitarbeitnehmer,HR & Mitarbeiterverwaltung
+revierplanung reinigung,informational,cluster_08,longtail,Branche,148,43,1.88,featured-snippet,3.4,estimated,revierplanung reinigung,Gebaeudedienstleistung Software
+equal pay ausnahmen,informational,cluster_06,longtail,Spezialfall,120,35,1.99,featured-snippet|people-also-ask|video,3.4,estimated,equal pay ausnahmen,AUEG & Rechtssicherheit
+personaleinsatzplanung software,commercial,cluster_04,body,Tool,222,66,9.18,ads|site-links,3.4,estimated,personaleinsatzplanung software,Zeiterfassung & Disposition
+zeiterfassung kosten,commercial,cluster_04,body,Pricing,219,65,10.8,ads|site-links,3.4,estimated,zeiterfassung kosten,Zeiterfassung & Disposition
+mitarbeiterportal software,commercial,cluster_09,body,Tool,155,45,10.74,site-links,3.4,estimated,mitarbeiterportal software,HR & Mitarbeiterverwaltung
+zeitarbeit politik regulierung,informational,cluster_10,longtail,Politik,71,21,1.77,featured-snippet|video,3.4,estimated,zeitarbeit politik regulierung,Branchentrends & Marktentwicklung
+ki personalisierung jobangebot,informational,cluster_12,longtail,Methode,114,35,0.87,people-also-ask,3.3,estimated,ki personalisierung jobangebot,KI & Automatisierung im Recruiting
+make integromat hr,commercial,cluster_12,longtail,Tool,155,47,4.09,ads|shopping|site-links,3.3,estimated,make integromat hr,KI & Automatisierung im Recruiting
+ki disposition zeitarbeit,informational,cluster_12,longtail,Tech,135,41,2.32,video,3.3,estimated,ki disposition zeitarbeit,KI & Automatisierung im Recruiting
+investition software zeitarbeit,commercial,cluster_11,longtail,Business Case,144,44,10.82,shopping|site-links,3.3,estimated,investition software zeitarbeit,Kundenreferenzen & ROI
+überlassungsvertrag muster,informational,cluster_06,longtail,Vorlage,131,40,0.5,featured-snippet|video,3.3,estimated,überlassungsvertrag muster,AUEG & Rechtssicherheit
+branchensoftware zeitarbeit,commercial,cluster_01,body,Kategorie,197,60,4.38,ads|shopping|site-links,3.3,estimated,branchensoftware zeitarbeit,Zeitarbeitssoftware & zvoove One
+zeitarbeit software mobile app,commercial,cluster_01,longtail,Mobile,128,39,6.12,ads,3.3,estimated,zeitarbeit software mobile app,Zeitarbeitssoftware & zvoove One
+qualitätsmanagement gebäudereinigung,informational,cluster_08,body,Branche,172,54,1.75,featured-snippet,3.2,estimated,qualitätsmanagement gebäudereinigung,Gebaeudedienstleistung Software
+unechtes factoring,informational,cluster_05,body,Variante,161,51,0.91,featured-snippet|video,3.2,estimated,unechtes factoring,Liquiditaet & Factoring
+mindestlohn zeitarbeit 2026,informational,cluster_02,longtail,Aktuell,70,22,0.5,featured-snippet|people-also-ask,3.2,estimated,mindestlohn zeitarbeit 2026,Lohnabrechnung & Payroll
+self service portal mitarbeiter,commercial,cluster_07,longtail,Tool,102,32,8.81,site-links,3.2,estimated,self service portal mitarbeiter,Digitalisierung & Cloud in der Personaldienstleistung
+factoring vergleich anbieter,commercial,cluster_05,longtail,Vergleich,140,44,11.98,ads,3.2,estimated,factoring vergleich anbieter,Liquiditaet & Factoring
+feiertagszuschlag zeitarbeit,informational,cluster_02,longtail,Wissensfrage,95,31,2.44,featured-snippet,3.1,estimated,feiertagszuschlag zeitarbeit,Lohnabrechnung & Payroll
+reinigungskalkulation software,commercial,cluster_08,longtail,Tool,196,64,2.84,shopping,3.1,estimated,reinigungskalkulation software,Gebaeudedienstleistung Software
+aüg erlaubnis verlängern,informational,cluster_06,longtail,Verfahren,134,43,2.13,people-also-ask,3.1,estimated,aüg erlaubnis verlängern,AUEG & Rechtssicherheit
+dokumentenmanagement personaldienstleister,commercial,cluster_07,longtail,Tool,186,63,2.31,site-links,3.0,estimated,dokumentenmanagement personaldienstleister,Digitalisierung & Cloud in der Personaldienstleistung
+zvoove erfolgsstory,commercial,cluster_11,longtail,Marketing,94,31,5.41,ads|site-links,3.0,estimated,zvoove erfolgsstory,Kundenreferenzen & ROI
+zvoove webinar,commercial,cluster_01,longtail,Lead-Magnet,129,43,8.67,ads,3.0,estimated,zvoove webinar,Zeitarbeitssoftware & zvoove One
+bewerbermanagement vergleich,commercial,cluster_03,longtail,Vergleich,136,45,6.89,ads,3.0,estimated,bewerbermanagement vergleich,Recruiting & Bewerbermanagement
+projekterfolg digitalisierung,informational,cluster_11,longtail,Marketing,86,29,0.75,video,3.0,estimated,projekterfolg digitalisierung,Kundenreferenzen & ROI
+zeitarbeit software anbieter,commercial,cluster_01,longtail,Anbietersuche,84,28,2.2,ads,3.0,estimated,zeitarbeit software anbieter,Zeitarbeitssoftware & zvoove One
+homeoffice disponent,informational,cluster_07,longtail,Trend,81,27,1.9,featured-snippet,3.0,estimated,homeoffice disponent,Digitalisierung & Cloud in der Personaldienstleistung
+xing kosten arbeitgeber,informational,cluster_03,body,Pricing,98,34,0.37,people-also-ask|video,2.9,estimated,xing kosten arbeitgeber,Recruiting & Bewerbermanagement
+ki gesetz personaldienstleister,informational,cluster_12,longtail,Recht,97,34,0.36,featured-snippet|people-also-ask,2.9,estimated,ki gesetz personaldienstleister,KI & Automatisierung im Recruiting
+liquiditätsengpass vermeiden,informational,cluster_05,longtail,Best Practice,46,16,0.63,people-also-ask|video,2.9,estimated,liquiditätsengpass vermeiden,Liquiditaet & Factoring
+gebäudereinigung software vergleich,commercial,cluster_08,longtail,Vergleich,134,47,9.67,ads|shopping|site-links,2.9,estimated,gebäudereinigung software vergleich,Gebaeudedienstleistung Software
+factoring online plattform,commercial,cluster_05,longtail,Tool,135,46,7.02,shopping|site-links,2.9,estimated,factoring online plattform,Liquiditaet & Factoring
+aüg unbefristete erlaubnis,informational,cluster_06,longtail,Status,113,39,0.94,video,2.9,estimated,aüg unbefristete erlaubnis,AUEG & Rechtssicherheit
+mobile crm zeitarbeit,commercial,cluster_07,longtail,Tool,190,65,5.97,shopping|site-links,2.9,estimated,mobile crm zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+software für arbeitnehmerüberlassung,commercial,cluster_01,longtail,Synonym AÜG,95,33,10.31,ads|shopping,2.9,estimated,software für arbeitnehmerüberlassung,Zeitarbeitssoftware & zvoove One
+kostenoptimierung zeitarbeit,informational,cluster_11,longtail,Strategie,58,20,0.65,featured-snippet,2.9,estimated,kostenoptimierung zeitarbeit,Kundenreferenzen & ROI
+stepstone alternative,commercial,cluster_03,body,Wettbewerb,141,48,5.71,ads|site-links,2.9,estimated,stepstone alternative,Recruiting & Bewerbermanagement
+zeitarbeit pflege markt,informational,cluster_10,longtail,Branche,99,35,0.93,featured-snippet|video,2.8,estimated,zeitarbeit pflege markt,Branchentrends & Marktentwicklung
+zapier zeitarbeit,commercial,cluster_12,longtail,Tool,133,48,8.15,ads|shopping|site-links,2.8,estimated,zapier zeitarbeit,KI & Automatisierung im Recruiting
+ampel zeitarbeit,informational,cluster_10,longtail,Politik,120,43,2.25,video,2.8,estimated,ampel zeitarbeit,Branchentrends & Marktentwicklung
+zvoove schnittstellen,commercial,cluster_01,longtail,Integration,103,37,11.54,ads|site-links,2.8,estimated,zvoove schnittstellen,Zeitarbeitssoftware & zvoove One
+zeitarbeit software dsgvo,commercial,cluster_01,longtail,Compliance-Filter,85,30,8.36,shopping,2.8,estimated,zeitarbeit software dsgvo,Zeitarbeitssoftware & zvoove One
+automatisierte lohnabrechnung,commercial,cluster_02,longtail,Trend,84,31,4.1,ads|site-links,2.7,estimated,automatisierte lohnabrechnung,Lohnabrechnung & Payroll
+zuschläge berechnen zeitarbeit,informational,cluster_02,longtail,Wissensfrage,52,19,1.13,featured-snippet,2.7,estimated,zuschläge berechnen zeitarbeit,Lohnabrechnung & Payroll
+generative ai zeitarbeit,informational,cluster_12,longtail,Trend,124,46,0.95,featured-snippet|people-also-ask,2.7,estimated,generative ai zeitarbeit,KI & Automatisierung im Recruiting
+aüg erlaubnis voraussetzungen,informational,cluster_06,longtail,Anforderungen,105,40,1.37,featured-snippet|people-also-ask,2.6,estimated,aüg erlaubnis voraussetzungen,AUEG & Rechtssicherheit
+forderungsmanagement zeitarbeit,commercial,cluster_05,longtail,Aufgabe,70,27,6.56,shopping,2.6,estimated,forderungsmanagement zeitarbeit,Liquiditaet & Factoring
+factoring nachteile,informational,cluster_05,body,Nutzen,120,46,1.53,people-also-ask,2.6,estimated,factoring nachteile,Liquiditaet & Factoring
+disposition zeitarbeit software,commercial,cluster_04,longtail,Funktion,161,63,10.82,ads|site-links,2.6,estimated,disposition zeitarbeit software,Zeiterfassung & Disposition
+lohnabrechnung externer dienstleister,commercial,cluster_02,longtail,Service,132,51,4.71,site-links,2.6,estimated,lohnabrechnung externer dienstleister,Lohnabrechnung & Payroll
+hyperautomation hr,informational,cluster_12,longtail,Tech,64,25,1.92,video,2.6,estimated,hyperautomation hr,KI & Automatisierung im Recruiting
+elektronische signatur zeitarbeit,commercial,cluster_07,longtail,Tool,167,64,4.61,site-links,2.6,estimated,elektronische signatur zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+workflow automatisierung zeitarbeit,commercial,cluster_07,longtail,Tool,97,37,2.09,shopping,2.6,estimated,workflow automatisierung zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+testimonial zeitarbeit software,commercial,cluster_11,longtail,Trust,80,31,9.98,shopping,2.6,estimated,testimonial zeitarbeit software,Kundenreferenzen & ROI
+zvoove gebäudedienstleistung,commercial,cluster_08,longtail,Brand,142,57,6.58,site-links,2.5,estimated,zvoove gebäudedienstleistung,Gebaeudedienstleistung Software
+abopreis software pro nutzer,commercial,cluster_11,longtail,Pricing,143,57,4.62,ads,2.5,estimated,abopreis software pro nutzer,Kundenreferenzen & ROI
+zvoove one demo,commercial,cluster_01,longtail,Lead-Magnet Trigger,157,66,3.13,shopping|site-links,2.4,estimated,zvoove one demo,Zeitarbeitssoftware & zvoove One
+stundenzettel app zeitarbeit,commercial,cluster_04,longtail,App,67,28,3.47,ads|site-links,2.4,estimated,stundenzettel app zeitarbeit,Zeiterfassung & Disposition
+adecco konkurrenz,informational,cluster_10,longtail,Wettbewerb,40,17,0.31,people-also-ask,2.4,estimated,adecco konkurrenz,Branchentrends & Marktentwicklung
+stellenanzeige formulieren,informational,cluster_03,longtail,Wie-Frage,92,40,1.43,video,2.3,estimated,stellenanzeige formulieren,Recruiting & Bewerbermanagement
+ocr personaldokumente,commercial,cluster_12,longtail,Tech,109,47,6.39,shopping|site-links,2.3,estimated,ocr personaldokumente,KI & Automatisierung im Recruiting
+prozessautomatisierung personaldienstleister,informational,cluster_07,longtail,Trend,55,24,0.8,featured-snippet|people-also-ask,2.3,estimated,prozessautomatisierung personaldienstleister,Digitalisierung & Cloud in der Personaldienstleistung
+software wirtschaftlichkeit nachweisen,informational,cluster_11,longtail,Methode,62,27,1.49,people-also-ask|video,2.3,estimated,software wirtschaftlichkeit nachweisen,Kundenreferenzen & ROI
+disposition optimieren,informational,cluster_04,longtail,Optimierung,31,14,1.8,people-also-ask|video,2.2,estimated,disposition optimieren,Zeiterfassung & Disposition
+stellenanzeige schalten kosten,commercial,cluster_03,longtail,Pricing,79,36,6.31,ads|shopping,2.2,estimated,stellenanzeige schalten kosten,Recruiting & Bewerbermanagement
+ai assistent personaldienstleister,informational,cluster_12,longtail,Trend,50,23,1.81,featured-snippet|video,2.2,estimated,ai assistent personaldienstleister,KI & Automatisierung im Recruiting
+demand forecasting personal,informational,cluster_12,longtail,Tech,42,19,1.52,featured-snippet|people-also-ask,2.2,estimated,demand forecasting personal,KI & Automatisierung im Recruiting
+zvoove recruit demo,commercial,cluster_03,longtail,Lead,78,36,6.27,ads|shopping,2.2,estimated,zvoove recruit demo,Recruiting & Bewerbermanagement
+mitarbeiterbindung zeitarbeit,informational,cluster_09,longtail,Strategie,29,13,2.2,featured-snippet,2.2,estimated,mitarbeiterbindung zeitarbeit,HR & Mitarbeiterverwaltung
+zvoove dms+ funktionen,commercial,cluster_07,longtail,Funktionen,138,63,6.49,site-links,2.2,estimated,zvoove dms+ funktionen,Digitalisierung & Cloud in der Personaldienstleistung
+qualifikationen verwalten zeitarbeit,commercial,cluster_09,longtail,Tool,70,32,7.25,ads|site-links,2.2,estimated,qualifikationen verwalten zeitarbeit,HR & Mitarbeiterverwaltung
+amortisation hr software,commercial,cluster_11,longtail,Business Case,94,45,9.11,ads|shopping,2.1,estimated,amortisation hr software,Kundenreferenzen & ROI
+no code automatisierung hr,commercial,cluster_12,longtail,Tool,107,52,8.26,ads,2.1,estimated,no code automatisierung hr,KI & Automatisierung im Recruiting
+qualitätskontrolle reinigung digital,informational,cluster_08,longtail,Tool,78,38,1.68,people-also-ask,2.1,estimated,qualitätskontrolle reinigung digital,Gebaeudedienstleistung Software
+zeiterfassungssystem zeitarbeit,commercial,cluster_04,longtail,Spezialisierung,90,44,8.15,ads|shopping|site-links,2.0,estimated,zeiterfassungssystem zeitarbeit,Zeiterfassung & Disposition
+zvoove payroll preise,commercial,cluster_02,longtail,Kaufphase,88,44,2.68,ads|shopping,2.0,estimated,zvoove payroll preise,Lohnabrechnung & Payroll
+datenschutz bewerberdaten,informational,cluster_06,longtail,Compliance,41,20,1.81,featured-snippet|video,2.0,estimated,datenschutz bewerberdaten,AUEG & Rechtssicherheit
+synchronisationsverbot zeitarbeit,informational,cluster_06,longtail,Verbot,87,43,1.92,featured-snippet,2.0,estimated,synchronisationsverbot zeitarbeit,AUEG & Rechtssicherheit
+zeitarbeit prozesse digitalisieren,informational,cluster_07,longtail,Beratung,85,42,0.48,featured-snippet|people-also-ask,2.0,estimated,zeitarbeit prozesse digitalisieren,Digitalisierung & Cloud in der Personaldienstleistung
+liquiditätsplanung zeitarbeit,informational,cluster_05,longtail,Methode,16,8,0.69,featured-snippet|people-also-ask|video,2.0,estimated,liquiditätsplanung zeitarbeit,Liquiditaet & Factoring
+zvoove cashlink erfahrungen,commercial,cluster_05,longtail,Reviews,59,30,8.13,ads,2.0,estimated,zvoove cashlink erfahrungen,Liquiditaet & Factoring
+zeiterfassung manipulationssicher,commercial,cluster_04,longtail,USP,95,48,11.11,shopping|site-links,2.0,estimated,zeiterfassung manipulationssicher,Zeiterfassung & Disposition
+machine learning personaldienstleistung,informational,cluster_12,longtail,Tech,18,9,2.31,people-also-ask|video,2.0,estimated,machine learning personaldienstleistung,KI & Automatisierung im Recruiting
+nachweisgesetz zeitarbeit,informational,cluster_06,longtail,Gesetz,67,35,1.74,people-also-ask|video,1.9,estimated,nachweisgesetz zeitarbeit,AUEG & Rechtssicherheit
+zvoove recruit preise,commercial,cluster_03,longtail,Kaufphase,79,41,4.6,ads|shopping,1.9,estimated,zvoove recruit preise,Recruiting & Bewerbermanagement
+crm gebäudereinigung,commercial,cluster_08,body,Tool,133,70,10.07,ads|site-links,1.9,estimated,crm gebäudereinigung,Gebaeudedienstleistung Software
+hr reporting software,commercial,cluster_09,body,Tool,95,50,7.95,ads|site-links,1.9,estimated,hr reporting software,HR & Mitarbeiterverwaltung
+zvoove case study,commercial,cluster_01,longtail,Trust-Signal,75,40,7.89,shopping|site-links,1.9,estimated,zvoove case study,Zeitarbeitssoftware & zvoove One
+sondereinigung software,commercial,cluster_08,longtail,Branche,119,63,2.72,ads|shopping|site-links,1.9,estimated,sondereinigung software,Gebaeudedienstleistung Software
+betriebsrat aüg mitbestimmung,informational,cluster_06,longtail,Mitbestimmung,56,32,1.21,featured-snippet|video,1.8,estimated,betriebsrat aüg mitbestimmung,AUEG & Rechtssicherheit
+plattformökonomie arbeit,informational,cluster_10,longtail,Trend,65,36,1.41,video,1.8,estimated,plattformökonomie arbeit,Branchentrends & Marktentwicklung
+candidate scoring ki,informational,cluster_12,longtail,Tech,60,33,1.48,featured-snippet|people-also-ask|video,1.8,estimated,candidate scoring ki,KI & Automatisierung im Recruiting
+zeiterfassung biometrisch,commercial,cluster_04,longtail,Tech,100,57,10.73,ads|shopping,1.8,estimated,zeiterfassung biometrisch,Zeiterfassung & Disposition
+branchensoftware personaldienstleistung,commercial,cluster_01,body,Kategorie,93,51,7.25,site-links,1.8,estimated,branchensoftware personaldienstleistung,Zeitarbeitssoftware & zvoove One
+zeitarbeit logistik wachstum,informational,cluster_10,longtail,Branche,55,31,1.61,people-also-ask|video,1.8,estimated,zeitarbeit logistik wachstum,Branchentrends & Marktentwicklung
+qr code zeiterfassung,commercial,cluster_08,body,Tech,102,60,10.12,shopping|site-links,1.7,estimated,qr code zeiterfassung,Gebaeudedienstleistung Software
+betriebsmittelkredit zeitarbeit,informational,cluster_05,longtail,Finanzierung,51,30,0.35,people-also-ask,1.7,estimated,betriebsmittelkredit zeitarbeit,Liquiditaet & Factoring
+zeitarbeit software api,commercial,cluster_01,longtail,Integration,105,63,6.26,site-links,1.7,estimated,zeitarbeit software api,Zeitarbeitssoftware & zvoove One
+voice bot recruiting,commercial,cluster_12,longtail,Tool,54,32,9.7,shopping|site-links,1.7,estimated,voice bot recruiting,KI & Automatisierung im Recruiting
+lohnabrechnung datev integration,commercial,cluster_02,longtail,Integration,50,30,5.06,shopping,1.7,estimated,lohnabrechnung datev integration,Lohnabrechnung & Payroll
+factoring sofort liquidität,commercial,cluster_05,longtail,USP,72,42,11.39,ads|shopping,1.7,estimated,factoring sofort liquidität,Liquiditaet & Factoring
+zvoove customer success,commercial,cluster_11,longtail,Brand-Trust,65,39,8.41,shopping|site-links,1.7,estimated,zvoove customer success,Kundenreferenzen & ROI
+robotic process automation hr,informational,cluster_12,longtail,Tech,52,30,1.91,featured-snippet|people-also-ask,1.7,estimated,robotic process automation hr,KI & Automatisierung im Recruiting
+cost per hire berechnen,informational,cluster_03,longtail,KPI,75,44,1.83,featured-snippet,1.7,estimated,cost per hire berechnen,Recruiting & Bewerbermanagement
+factoring zeitarbeitsunternehmen,commercial,cluster_05,longtail,Zielgruppe,101,61,3.35,site-links,1.7,estimated,factoring zeitarbeitsunternehmen,Liquiditaet & Factoring
+zeitarbeit software mac,commercial,cluster_01,longtail,Plattform,52,30,10.3,shopping,1.7,estimated,zeitarbeit software mac,Zeitarbeitssoftware & zvoove One
+lohnabrechnung lexware vs datev,commercial,cluster_02,longtail,Comparison,98,61,7.46,ads|shopping|site-links,1.6,estimated,lohnabrechnung lexware vs datev,Lohnabrechnung & Payroll
+llm im personalwesen,informational,cluster_12,longtail,Trend,45,29,1.67,video,1.6,estimated,llm im personalwesen,KI & Automatisierung im Recruiting
+schichtplan reinigung software,commercial,cluster_08,longtail,Funktion,72,44,7.86,ads,1.6,estimated,schichtplan reinigung software,Gebaeudedienstleistung Software
+kundenstimme erp,commercial,cluster_11,longtail,Trust,76,48,3.48,shopping|site-links,1.6,estimated,kundenstimme erp,Kundenreferenzen & ROI
+bap lohntabelle,informational,cluster_02,longtail,Tarif,33,21,1.17,featured-snippet|people-also-ask,1.6,estimated,bap lohntabelle,Lohnabrechnung & Payroll
+cloud erp zeitarbeit,commercial,cluster_01,longtail,Cloud-Trend,49,31,4.03,ads|shopping,1.6,estimated,cloud erp zeitarbeit,Zeitarbeitssoftware & zvoove One
+zvoove vs prosoft,commercial,cluster_01,longtail,Comparison-Query,93,60,2.52,site-links,1.6,estimated,zvoove vs prosoft,Zeitarbeitssoftware & zvoove One
+zeitarbeit software open source,commercial,cluster_01,longtail,Sparvariante,95,61,6.51,site-links,1.6,estimated,zeitarbeit software open source,Zeitarbeitssoftware & zvoove One
+all in one zeitarbeit software,commercial,cluster_01,longtail,Komplettlösung,64,41,10.91,ads|site-links,1.6,estimated,all in one zeitarbeit software,Zeitarbeitssoftware & zvoove One
+resume parsing tool,commercial,cluster_12,longtail,Tool,66,41,5.62,ads|shopping,1.6,estimated,resume parsing tool,KI & Automatisierung im Recruiting
+zvoove one preise,commercial,cluster_01,longtail,Kaufintention hoch,88,58,6.98,site-links,1.5,estimated,zvoove one preise,Zeitarbeitssoftware & zvoove One
+schnittstelle zeitarbeit indeed,commercial,cluster_07,longtail,Integration,74,50,3.54,site-links,1.5,estimated,schnittstelle zeitarbeit indeed,Digitalisierung & Cloud in der Personaldienstleistung
+job multiposting tool,commercial,cluster_03,longtail,Funktion,100,65,6.99,shopping,1.5,estimated,job multiposting tool,Recruiting & Bewerbermanagement
+lohnabrechnung outsourcing kosten,commercial,cluster_02,longtail,Pricing,94,63,4.52,site-links,1.5,estimated,lohnabrechnung outsourcing kosten,Lohnabrechnung & Payroll
+landwer zeitarbeit software,commercial,cluster_01,longtail,Wettbewerb,55,39,4.75,ads,1.4,estimated,landwer zeitarbeit software,Zeitarbeitssoftware & zvoove One
+zeitarbeit software windows,commercial,cluster_01,longtail,Plattform,44,31,8.2,site-links,1.4,estimated,zeitarbeit software windows,Zeitarbeitssoftware & zvoove One
+ki lohnabrechnung prüfung,informational,cluster_12,longtail,Tech,14,10,1.35,people-also-ask|video,1.4,estimated,ki lohnabrechnung prüfung,KI & Automatisierung im Recruiting
+zeitarbeit beschäftigte zahl,informational,cluster_10,longtail,Statistik,21,15,1.38,featured-snippet|people-also-ask,1.4,estimated,zeitarbeit beschäftigte zahl,Branchentrends & Marktentwicklung
+factoring zinsen,commercial,cluster_05,body,Pricing,80,59,8.79,shopping|site-links,1.4,estimated,factoring zinsen,Liquiditaet & Factoring
+schichtplanung zeitarbeit,commercial,cluster_04,longtail,Spezialisierung,88,64,9.55,ads|shopping,1.4,estimated,schichtplanung zeitarbeit,Zeiterfassung & Disposition
+nachhaltigkeit personaldienstleistung,informational,cluster_10,longtail,Trend,55,42,0.59,featured-snippet|video,1.3,estimated,nachhaltigkeit personaldienstleistung,Branchentrends & Marktentwicklung
+nfc zeiterfassung gebäudereinigung,commercial,cluster_08,longtail,Tech,60,45,6.75,site-links,1.3,estimated,nfc zeiterfassung gebäudereinigung,Gebaeudedienstleistung Software
+igz lohntabelle 2026,informational,cluster_02,longtail,Tarif aktuell,38,30,0.73,featured-snippet|people-also-ask,1.3,estimated,igz lohntabelle 2026,Lohnabrechnung & Payroll
+zvoove vs landwehr,commercial,cluster_01,longtail,Comparison-Query,61,46,6.98,site-links,1.3,estimated,zvoove vs landwehr,Zeitarbeitssoftware & zvoove One
+prosoft zeitarbeit alternative,commercial,cluster_01,longtail,Wettbewerber-Switch,55,45,9.03,ads|shopping|site-links,1.2,estimated,prosoft zeitarbeit alternative,Zeitarbeitssoftware & zvoove One
+arbeitsvertrag zeitarbeit erstellen,informational,cluster_09,longtail,Aufgabe,35,29,1.5,people-also-ask|video,1.2,estimated,arbeitsvertrag zeitarbeit erstellen,HR & Mitarbeiterverwaltung
+training erp personaldienstleister,commercial,cluster_11,longtail,Service,66,55,9.65,site-links,1.2,estimated,training erp personaldienstleister,Kundenreferenzen & ROI
+zvoove erfahrungen,commercial,cluster_01,body,Brand Reputation,87,73,8.79,site-links,1.2,estimated,zvoove erfahrungen,Zeitarbeitssoftware & zvoove One
+software für reinigungsfirmen,commercial,cluster_08,longtail,Synonym,73,59,2.73,shopping,1.2,estimated,software für reinigungsfirmen,Gebaeudedienstleistung Software
+größte zeitarbeitsfirma deutschland,informational,cluster_10,longtail,Marktanalyse,30,27,1.9,featured-snippet|people-also-ask|video,1.1,estimated,größte zeitarbeitsfirma deutschland,Branchentrends & Marktentwicklung
+arbeitszeiterfassung urteil eugh,informational,cluster_04,longtail,Rechtsprechung,41,40,0.97,featured-snippet|people-also-ask,1.0,estimated,arbeitszeiterfassung urteil eugh,Zeiterfassung & Disposition
+schulung zeitarbeit software,commercial,cluster_11,longtail,Service,64,62,10.32,site-links,1.0,estimated,schulung zeitarbeit software,Kundenreferenzen & ROI
+zeitarbeit eu vergleich,informational,cluster_10,longtail,Marktanalyse,32,33,1.79,people-also-ask,1.0,estimated,zeitarbeit eu vergleich,Branchentrends & Marktentwicklung
+einsatzplanung reinigungskräfte,commercial,cluster_08,longtail,Funktion,36,36,5.98,shopping|site-links,1.0,estimated,einsatzplanung reinigungskräfte,Gebaeudedienstleistung Software
+ki ethik recruiting,informational,cluster_12,longtail,Diskurs,10,10,1.78,people-also-ask,1.0,estimated,ki ethik recruiting,KI & Automatisierung im Recruiting
+roi rechner personalsoftware,commercial,cluster_11,longtail,Tool,43,44,6.62,shopping,1.0,estimated,roi rechner personalsoftware,Kundenreferenzen & ROI
+aüg software cloud,commercial,cluster_01,longtail,Cloud,57,56,6.93,ads|site-links,1.0,estimated,aüg software cloud,Zeitarbeitssoftware & zvoove One
+papierlose lohnabrechnung,informational,cluster_07,longtail,Trend,30,31,1.08,featured-snippet|people-also-ask,1.0,estimated,papierlose lohnabrechnung,Digitalisierung & Cloud in der Personaldienstleistung
+höchstüberlassungsdauer 18 monate,informational,cluster_06,longtail,Konkret,23,25,2.46,featured-snippet|people-also-ask,0.9,estimated,höchstüberlassungsdauer 18 monate,AUEG & Rechtssicherheit
+zeitarbeit umsatz statistik,informational,cluster_10,longtail,Statistik,36,42,1.32,featured-snippet|video,0.9,estimated,zeitarbeit umsatz statistik,Branchentrends & Marktentwicklung
+unfallversicherung zeitarbeitnehmer,informational,cluster_06,longtail,Versicherung,37,41,0.82,people-also-ask|video,0.9,estimated,unfallversicherung zeitarbeitnehmer,AUEG & Rechtssicherheit
+scheinselbstständigkeit aüg,informational,cluster_06,longtail,Risiko,25,29,0.35,featured-snippet,0.9,estimated,scheinselbstständigkeit aüg,AUEG & Rechtssicherheit
+bewerber gewinnen zeitarbeit,informational,cluster_03,longtail,Spezialisierung,16,17,1.23,featured-snippet|video,0.9,estimated,bewerber gewinnen zeitarbeit,Recruiting & Bewerbermanagement
+papierloses büro zeitarbeit,informational,cluster_07,longtail,Trend,23,25,1.14,featured-snippet,0.9,estimated,papierloses büro zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+ki cv parsing,commercial,cluster_12,longtail,Tech,35,40,2.51,shopping|site-links,0.9,estimated,ki cv parsing,KI & Automatisierung im Recruiting
+lohnabrechnung fehler vermeiden,informational,cluster_02,longtail,Risiko,25,31,0.37,featured-snippet|people-also-ask,0.8,estimated,lohnabrechnung fehler vermeiden,Lohnabrechnung & Payroll
+benchmark zeitarbeit kennzahlen,informational,cluster_11,longtail,KPI,33,40,2.25,people-also-ask|video,0.8,estimated,benchmark zeitarbeit kennzahlen,Kundenreferenzen & ROI
+stundenerfassung kunde,informational,cluster_04,longtail,Workflow,21,27,1.67,featured-snippet,0.8,estimated,stundenerfassung kunde,Zeiterfassung & Disposition
+zeitersparnis durch software,commercial,cluster_11,longtail,USP,30,37,6.2,ads|site-links,0.8,estimated,zeitersparnis durch software,Kundenreferenzen & ROI
+software zeitarbeit kmu,commercial,cluster_01,longtail,Segment KMU,27,34,4.4,site-links,0.8,estimated,software zeitarbeit kmu,Zeitarbeitssoftware & zvoove One
+krankmeldung digital zeitarbeit,informational,cluster_09,longtail,Prozess,27,33,2.35,featured-snippet,0.8,estimated,krankmeldung digital zeitarbeit,HR & Mitarbeiterverwaltung
+zvoove demo termin,commercial,cluster_01,longtail,Lead-Stage,45,55,7.53,shopping,0.8,estimated,zvoove demo termin,Zeitarbeitssoftware & zvoove One
+beste zeitarbeit software,commercial,cluster_01,longtail,Vergleichsabsicht,37,50,8.84,ads|shopping,0.7,estimated,beste zeitarbeit software,Zeitarbeitssoftware & zvoove One
+gesundheitsmanagement zeitarbeit,informational,cluster_09,longtail,Strategie,27,37,1.6,featured-snippet|people-also-ask,0.7,estimated,gesundheitsmanagement zeitarbeit,HR & Mitarbeiterverwaltung
+objektkartei reinigung,informational,cluster_08,longtail,Branche,33,46,0.67,featured-snippet|video,0.7,estimated,objektkartei reinigung,Gebaeudedienstleistung Software
+zeiterfassung betriebsrat,informational,cluster_04,longtail,Mitbestimmung,14,20,0.62,video,0.7,estimated,zeiterfassung betriebsrat,Zeiterfassung & Disposition
+karriereseite zeitarbeit,informational,cluster_03,longtail,Spezialisierung,11,16,1.84,featured-snippet|people-also-ask,0.7,estimated,karriereseite zeitarbeit,Recruiting & Bewerbermanagement
+effizienz steigern personaldienstleister,informational,cluster_11,longtail,Strategie,15,22,1.59,video,0.7,estimated,effizienz steigern personaldienstleister,Kundenreferenzen & ROI
+aüg software vergleich,commercial,cluster_01,longtail,Vergleich,30,43,3.32,shopping,0.7,estimated,aüg software vergleich,Zeitarbeitssoftware & zvoove One
+zvoove one kosten,commercial,cluster_01,longtail,Kaufintention hoch,40,65,10.46,ads|shopping|site-links,0.6,estimated,zvoove one kosten,Zeitarbeitssoftware & zvoove One
+zeitarbeit komplettsystem,commercial,cluster_01,longtail,USP,33,51,4.97,ads|site-links,0.6,estimated,zeitarbeit komplettsystem,Zeitarbeitssoftware & zvoove One
+arbeitsvertrag zeitarbeitnehmer muster,informational,cluster_06,longtail,Vorlage,23,41,0.99,people-also-ask|video,0.6,estimated,arbeitsvertrag zeitarbeitnehmer muster,AUEG & Rechtssicherheit
+chatbot bewerbung,commercial,cluster_12,longtail,Tool,29,52,7.16,shopping,0.6,estimated,chatbot bewerbung,KI & Automatisierung im Recruiting
+time to hire optimieren,informational,cluster_03,longtail,KPI,29,45,1.61,featured-snippet,0.6,estimated,time to hire optimieren,Recruiting & Bewerbermanagement
+schnittstelle zeitarbeit datev,commercial,cluster_07,longtail,Integration,25,41,5.56,shopping,0.6,estimated,schnittstelle zeitarbeit datev,Digitalisierung & Cloud in der Personaldienstleistung
+zeitarbeit software test,commercial,cluster_01,longtail,Bottom-Funnel,30,63,10.96,shopping,0.5,estimated,zeitarbeit software test,Zeitarbeitssoftware & zvoove One
+ki datenschutz bewerber,informational,cluster_12,longtail,Compliance,23,42,1.67,featured-snippet|people-also-ask,0.5,estimated,ki datenschutz bewerber,KI & Automatisierung im Recruiting
+zeiterfassung reinigungskräfte,commercial,cluster_08,longtail,Tool,31,57,6.17,ads|shopping|site-links,0.5,estimated,zeiterfassung reinigungskräfte,Gebaeudedienstleistung Software
+zvoove implementierung,commercial,cluster_01,longtail,Onboarding,25,53,11.48,ads,0.5,estimated,zvoove implementierung,Zeitarbeitssoftware & zvoove One
+zvoove payroll erfahrungen,commercial,cluster_02,longtail,Reviews,31,62,9.21,shopping,0.5,estimated,zvoove payroll erfahrungen,Lohnabrechnung & Payroll
+ki email sourcing,commercial,cluster_12,longtail,Tool,30,56,10.71,ads|shopping|site-links,0.5,estimated,ki email sourcing,KI & Automatisierung im Recruiting
+urlaubsantrag digital,commercial,cluster_09,longtail,Tool,18,48,7.8,site-links,0.4,estimated,urlaubsantrag digital,HR & Mitarbeiterverwaltung
+linkedin recruiter kosten,informational,cluster_03,longtail,Pricing,17,44,1.18,featured-snippet,0.4,estimated,linkedin recruiter kosten,Recruiting & Bewerbermanagement
+intelligent document processing personalakte,commercial,cluster_12,longtail,Tech,21,54,6.75,shopping,0.4,estimated,intelligent document processing personalakte,KI & Automatisierung im Recruiting
+e signatur arbeitsvertrag,commercial,cluster_07,longtail,Tool,22,62,11.47,site-links,0.4,estimated,e signatur arbeitsvertrag,Digitalisierung & Cloud in der Personaldienstleistung
+anwenderbericht zeitarbeit,commercial,cluster_11,longtail,Marketing,17,44,6.85,ads|shopping|site-links,0.4,estimated,anwenderbericht zeitarbeit,Kundenreferenzen & ROI
+zvoove case study lohn,commercial,cluster_11,longtail,Asset,22,50,4.29,shopping,0.4,estimated,zvoove case study lohn,Kundenreferenzen & ROI
+zeiterfassung gps,commercial,cluster_04,longtail,Tech,13,37,6.43,ads|shopping|site-links,0.4,estimated,zeiterfassung gps,Zeiterfassung & Disposition
+bewerberkommunikation chatbot,commercial,cluster_03,longtail,KI,20,66,9.96,ads|shopping,0.3,estimated,bewerberkommunikation chatbot,Recruiting & Bewerbermanagement
+cv parser deutsch,commercial,cluster_12,longtail,Tool,20,66,10.67,ads|shopping,0.3,estimated,cv parser deutsch,KI & Automatisierung im Recruiting
+backup strategie zeitarbeit,informational,cluster_07,longtail,Tech,10,38,0.4,video,0.3,estimated,backup strategie zeitarbeit,Digitalisierung & Cloud in der Personaldienstleistung
+clockodo alternative,commercial,cluster_04,longtail,Wettbewerb,17,62,2.27,shopping,0.3,estimated,clockodo alternative,Zeiterfassung & Disposition
+ki stellenanzeige generieren,commercial,cluster_12,longtail,Tool,22,66,5.33,ads|shopping|site-links,0.3,estimated,ki stellenanzeige generieren,KI & Automatisierung im Recruiting

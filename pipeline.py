@@ -9,13 +9,15 @@ Five steps in order:
     5. report      consolidated HTML report -> output/reporting/index.html
 
 CLI:
-    python pipeline.py                       run all 5 steps
-    python pipeline.py --step cluster        run one step
-    python pipeline.py --step brief,report   run a subset
-    python pipeline.py --dry-run             skip API calls (for brief)
+    python pipeline.py                              run all 5 steps
+    python pipeline.py --step cluster               run one step
+    python pipeline.py --step brief,report          run a subset
+    python pipeline.py --dry-run                    skip LLM call in brief
+    python pipeline.py --brief-provider max         brief via Max subscription
+    python pipeline.py --brief-provider api --brief-model claude-opus-4-7
 
 Each step can also be invoked directly via its own module CLI for finer
-control. See src/cluster.py for the cluster sub-step CLI.
+control. See src/cluster.py and src/brief.py for sub-CLIs.
 """
 from __future__ import annotations
 
@@ -51,7 +53,9 @@ def step_cluster(args: argparse.Namespace) -> None:
 
 
 def step_brief(args: argparse.Namespace) -> None:
-    brief.run(dry_run=args.dry_run)
+    brief.run(provider_name=args.brief_provider,
+              model=args.brief_model,
+              dry_run=args.dry_run)
 
 
 def step_report(args: argparse.Namespace) -> None:
@@ -75,8 +79,13 @@ def main() -> None:
                    help="discover step source")
     p.add_argument("--provider", choices=["estimate", "dataforseo"], default="estimate",
                    help="enrich step provider")
+    p.add_argument("--brief-provider", choices=["api", "max"], default="api",
+                   help="brief step LLM provider (api: ANTHROPIC_API_KEY, "
+                        "max: local Claude Code session via claude-agent-sdk)")
+    p.add_argument("--brief-model", default=None,
+                   help="brief step model id, only valid with --brief-provider api")
     p.add_argument("--dry-run", action="store_true",
-                   help="brief step: write stubs instead of calling Claude API")
+                   help="brief step: write stubs instead of calling the LLM")
     args = p.parse_args()
 
     requested = (ALL_STEPS if args.step == "all"

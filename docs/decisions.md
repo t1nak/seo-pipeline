@@ -4,7 +4,7 @@ Knappe Architecture Decision Records für die wichtigsten Entscheidungen in dies
 
 ## ADR-1: HDBSCAN statt k-means für das Clustering
 
-**Kontext.** 504 deutsche SEO Keywords sollen thematisch gruppiert werden. Die Anzahl der Cluster ist nicht vorab bekannt. Manche Keywords passen zu keinem Thema klar.
+**Kontext.** 500 deutsche SEO Keywords sollen thematisch gruppiert werden. Die Anzahl der Cluster ist nicht vorab bekannt. Manche Keywords passen zu keinem Thema klar.
 
 **Entscheidung.** HDBSCAN.
 
@@ -16,7 +16,7 @@ Knappe Architecture Decision Records für die wichtigsten Entscheidungen in dies
 
 **Konsequenzen.**
 
-- Pro: 13 Cluster aus den Daten heraus, 71 echte Ausreißer als Rauschen markiert.
+- Pro: 10 Cluster aus den Daten heraus, 38 echte Ausreißer als Rauschen markiert.
 - Pro: Variable Cluster-Dichte handhaben (zvoove Marken-Cluster ist eng, Branche-Sammelcluster ist breit).
 - Contra: Hyperparameter `min_cluster_size` und `min_samples` müssen gesweept werden.
 
@@ -152,7 +152,7 @@ In Produktion würde nur der aktuelle Stand im Git landen, Snapshots würden in 
 
 ## ADR-9: Prompt Caching für Brief Generation
 
-**Kontext.** Pro Lauf werden 13 Briefs generiert, jeweils mit einem ungefähr 800-Token System Prompt, der das Brief Format beschreibt. Das ist 13x derselbe System Prompt.
+**Kontext.** Pro Lauf werden 10 Briefs generiert, jeweils mit einem ungefähr 800-Token System Prompt, der das Brief Format beschreibt. Das ist 10x derselbe System Prompt.
 
 **Entscheidung.** Anthropic Prompt Caching auf dem System Block (`cache_control: ephemeral`).
 
@@ -163,36 +163,60 @@ In Produktion würde nur der aktuelle Stand im Git landen, Snapshots würden in 
 
 **Konsequenzen.**
 
-- Pro: 90 Prozent Token Ersparnis auf den gecachten Anteil. Bei 13 Cluster ungefähr 8000 gecachte Tokens.
+- Pro: 90 Prozent Token Ersparnis auf den gecachten Anteil. Bei 10 Cluster ungefähr 6000 gecachte Tokens.
 - Pro: schnellere Responses auf Folge-Aufrufe.
 - Contra: minimale Komplexität (ein zusätzliches Feld im Request).
 
-## ADR-11: API Key statt Subscription Auth für Brief Generation
+## ADR-11: Pluggable LLM Provider mit drei Implementierungen
 
-**Kontext.** Anthropic bietet zwei Wege, Claude programmatisch zu nutzen: einen API Key über `console.anthropic.com` (`anthropic` Python SDK, separate pay-per-token Abrechnung) oder das `claude-agent-sdk`, das eine lokale Claude Code Installation als Subprocess nutzt und dort über die Max- oder Pro-Subscription authentifiziert.
+**Kontext.** Die Brief-Generierung braucht einen Sprachmodell-Aufruf. Es gibt drei realistische Wege:
 
-**Entscheidung.** API Key über `anthropic` SDK ist der dokumentierte Default in `src/brief.py`.
+1. **Anthropic API Key.** Anthropic SDK plus `ANTHROPIC_API_KEY` aus `console.anthropic.com`, separate pay-per-token Abrechnung.
+2. **OpenAI API Key.** OpenAI SDK plus `OPENAI_API_KEY` aus `platform.openai.com`, separate pay-per-token Abrechnung.
+3. **Claude Subscription.** `claude-agent-sdk` nutzt eine lokale Claude Code Installation als Subprocess, authentifiziert über das Max- oder Pro-Abo des Entwicklers, keine separate Abrechnung.
+
+**Entscheidung.** Pluggable Provider-Abstraktion. `BriefProvider` als Basis-Klasse, drei konkrete Implementierungen (`ApiKeyProvider`, `OpenAIProvider`, `AgentSdkProvider`), Auswahl per CLI-Flag `--provider {api,openai,max}`.
+
+Default: `api` (Anthropic). Begründung: in der DACH B2B SaaS Welt ist Anthropic für Inhalts-Erzeugung etabliert, und Claude generiert insbesondere deutsche Texte mit der gewünschten pragmatischen Tonalität.
 
 **Alternativen geprüft.**
 
-- `claude-agent-sdk` mit Subscription Auth: nutzt das vorhandene Max-Abo des Entwicklers, keine separate Abrechnung
-- Subscription only: Pipeline läuft nur lokal, nicht reproduzierbar ohne Subscription
+- Nur Anthropic API Key: einfacher, aber Lock-in. Falls zvoove intern OpenAI bereits einsetzt, will man nicht doppelt zahlen. Falls ein neues Modell von OpenAI später besser für deutsche Marketing-Texte ist, muss man die Pipeline erweitern.
+- Nur Subscription: nicht in CI nutzbar.
+- LangChain als Universal-Wrapper: zu schwer für ein Case Study Projekt, zusätzliche Abhängigkeit, weniger Kontrolle über Prompt-Caching-Spezifika.
 
 **Konsequenzen.**
 
-- Pro API Key: industry-standard, reproduzierbar in CI ohne Claude Code Installation, predictable Kosten (~0,20 USD pro 13-Cluster-Lauf), klarer Audit Trail in console.anthropic.com.
-- Pro API Key: deployment-fähig in Serverless oder Cloud (Lambda, Cloud Run), wo keine CLI Session möglich ist.
-- Contra API Key: separate Abrechnung (kein bereits-bezahltes Abo), API Key Management (Rotation, Secrets Store).
-- Pro Subscription: keine Extra-Kosten, wenn der Entwickler ohnehin ein Max-Abo hat.
-- Contra Subscription: nicht in CI nutzbar, Subprocess-Overhead, weniger Standard, Subscription hat eigene Rate Limits.
+| | Anthropic API | OpenAI API | Claude Subscription |
+|---|---|---|---|
+| Abrechnung | pay-per-token, console.anthropic.com | pay-per-token, platform.openai.com | Bestehendes Max/Pro-Abo |
+| CI-tauglich | Ja | Ja | Nein (braucht CLI Session) |
+| Serverless-tauglich | Ja | Ja | Nein |
+| Prompt Caching | explizit über `cache_control: ephemeral` | automatisch ab 1024 Tokens Prefix | nicht im SDK exponiert |
+| Modell-Auswahl | per `--model claude-opus-4-7` etc. | per `--model gpt-5` etc. | Inherits aktive CC Session, nicht setzbar |
+| Kosten pro 10-Cluster Lauf | ungefähr 0,15 USD | ungefähr 0,12 USD | 0 USD (im Abo) |
+| Sprache Deutsch | sehr gut | sehr gut | sehr gut (gleiche Modell-Familie wie API) |
 
-**Empfehlung für Produktion bei zvoove.** API Key. Drei Gründe:
+**Empfehlung für Produktion bei zvoove.** API Key (Anthropic ODER OpenAI je nach internem Stack). Drei Gründe:
 
 1. **CI/CD-Reproduzierbarkeit.** Ein GitHub Actions Runner oder ein zvoove-internes CI-System kann keine Claude Code CLI-Session halten. API Key ist das einzige Pattern, das in Build-Pipelines funktioniert.
-2. **Kosten-Transparenz.** Per-Token-Abrechnung skaliert linear mit Nutzung und ist im Anthropic Console Tag-genau nachvollziehbar. Eine Subscription mit "Unlimited" Charakter ist schwerer zu prognostizieren oder umzulegen.
-3. **Engineering-Standard.** Jeder Engineer, der die Pipeline in zwei Jahren wartet, erwartet API Key. Subscription Auth ist ungewöhnlich und braucht Erklärung.
+2. **Kosten-Transparenz.** Per-Token-Abrechnung skaliert linear mit Nutzung und ist im Provider-Console Tag-genau nachvollziehbar. Eine Subscription mit "Unlimited" Charakter ist schwerer zu prognostizieren oder umzulegen.
+3. **Provider-Wechsel ist möglich.** Sollte sich ein Provider verschlechtern oder seine Preise erhöhen, ist der Switch eine Zeile CLI-Flag plus ein neuer API Key. Kein Code-Refactoring.
 
-**Hinweis zur Lieferung dieser Case Study.** Die 13 Briefs in `output/briefings/` sind während der Entwicklung über die Subscription-Variante erzeugt worden (über die Claude Code Session des Autors), nicht über einen API Key. Inhaltlich identisch mit dem, was der API-Aufruf produziert hätte, weil derselbe System Prompt und dieselbe Modell-Familie verwendet wurde. Im Code-Pfad bleibt die API-Key-Variante der dokumentierte Default, weil das die Empfehlung für die produktive Nutzung ist.
+**Empfehlung für die Wahl Anthropic vs OpenAI.** Hängt vom internen Stack ab. Wenn zvoove bereits OpenAI für andere Use Cases nutzt, dort weitermachen (gemeinsame Abrechnung, gemeinsamer Audit-Trail). Sonst Anthropic, weil deren Modelle in DACH B2B SaaS Content gut etabliert sind und Prompt Caching explizit steuerbar ist.
+
+**Hinweis zur Lieferung dieser Case Study.** Die 10 Briefs in `output/briefings/` sind während der Entwicklung über die Subscription-Variante erzeugt worden (über die Claude Code Session des Autors), nicht über einen API Key. Inhaltlich identisch mit dem, was der API-Aufruf produziert hätte, weil derselbe System Prompt verwendet wurde. Im Code-Pfad bleibt die API-Key-Variante der dokumentierte Default, weil das die Empfehlung für die produktive Nutzung ist.
+
+**Provider hinzufügen.** Falls ein neuer Provider gebraucht wird (zum Beispiel Mistral, Gemini, lokales Llama), reicht eine neue Klasse:
+
+```python
+class MistralProvider(BriefProvider):
+    name = "mistral"
+    def __init__(self, model: str): ...
+    def generate(self, system: str, user: str) -> str: ...
+```
+
+Plus eine Zeile in `make_provider()` und ein neuer Choice in den CLIs (`brief.py` und `pipeline.py`). Kein Code in den anderen Pipeline-Modulen ändert sich.
 
 ## ADR-10: Plotly für interaktive Karte, matplotlib für PNG Charts
 

@@ -17,28 +17,36 @@ The brief structure follows what an editor would expect for a B2B SaaS blog:
 Real LLM call in default mode. `--dry-run` writes a stub per cluster
 (useful for offline iteration on the rest of the pipeline).
 
-Two providers, switchable via `--provider`:
+Three providers, switchable via `--provider`:
 
-  api   anthropic SDK + ANTHROPIC_API_KEY env var.
-        Separate billing on the Anthropic API account. Reproducible in
-        CI, deployable to serverless. Supports `--model <id>` and
-        prompt caching for the stable system prompt.
+  api      anthropic SDK + ANTHROPIC_API_KEY env var.
+           Separate billing on the Anthropic API account. Reproducible
+           in CI, deployable to serverless. Supports `--model <id>` and
+           prompt caching for the stable system prompt.
 
-  max   claude-agent-sdk + local Claude Code CLI session.
-        Billed via Claude Max / Pro subscription. Model id is inherited
-        from the Claude Code session and cannot be pinned; passing
-        `--model` errors out. No prompt caching (SDK limitation). Local
-        only because GitHub-Action runners have no logged-in CLI.
+  openai   openai SDK + OPENAI_API_KEY env var.
+           Separate billing on the OpenAI account. CI- and serverless-
+           safe. Supports `--model <id>`. Uses standard chat-completion
+           endpoint with system + user messages.
 
-Recommendation: `max` for solo development, `api` for CI and deploys.
-See docs/decisions.md (ADR-11).
+  max      claude-agent-sdk + local Claude Code CLI session.
+           Billed via Claude Max / Pro subscription. Model id is
+           inherited from the Claude Code session and cannot be pinned;
+           passing `--model` errors out. No prompt caching (SDK
+           limitation). Local only because GitHub-Action runners have
+           no logged-in CLI.
+
+Recommendation: `max` for solo development, `api` (or `openai`) for CI
+and deploys. See docs/decisions.md (ADR-11) for the trade-off.
 
 CLI:
-    python -m src.brief                           api + ANTHROPIC_API_KEY, default model
-    python -m src.brief --provider max            Max subscription via local CC session
+    python -m src.brief                                    api + ANTHROPIC_API_KEY, default model
+    python -m src.brief --provider max                     Max subscription via local CC session
+    python -m src.brief --provider openai                  openai + OPENAI_API_KEY, default model
     python -m src.brief --provider api --model claude-opus-4-7
-    python -m src.brief --dry-run                 stub mode, no LLM call
-    python -m src.brief --cluster 5               regenerate just one cluster (0-based)
+    python -m src.brief --provider openai --model gpt-5
+    python -m src.brief --dry-run                          stub mode, no LLM call
+    python -m src.brief --cluster 5                        regenerate just one cluster (0-based)
 """
 from __future__ import annotations
 
@@ -57,6 +65,7 @@ PROFILES_CSV = OUT / "clustering" / "cluster_profiles.csv"
 LABELED_CSV = OUT / "clustering" / "keywords_labeled.csv"
 
 DEFAULT_API_MODEL = "claude-sonnet-4-6"
+DEFAULT_OPENAI_MODEL = "gpt-5"
 MAX_TOKENS = 4096
 
 SYSTEM_PROMPT = """Du bist Senior Content Strategist für den deutschen B2B SaaS Markt.
@@ -156,13 +165,27 @@ def _stub_brief(cluster_id: int, label_de: str, top_kw: list[str]) -> str:
     )
 
 
+def _looks_like_real_brief(path: Path) -> bool:
+    """Heuristic: a real brief contains the structured sections, a stub does not."""
+    if not path.exists():
+        return False
+    text = path.read_text(encoding="utf-8")
+    return ("**Hauptkeyword:**" in text and "## Outline" in text
+            and "Status:** Stub" not in text)
+
+
 # ---------------------------------------------------------------------------
 # Providers
 # ---------------------------------------------------------------------------
 
 
 class BriefProvider:
-    """Abstract provider. Concrete implementations: ApiKeyProvider, AgentSdkProvider."""
+    """Abstract provider. Concrete implementations: ApiKeyProvider (Anthropic),
+    OpenAIProvider, AgentSdkProvider (Claude Code subscription).
+
+    Adding a new provider: subclass BriefProvider, set `name`, implement
+    `generate(system, user) -> str`, register in `make_provider`.
+    """
 
     name: str = "abstract"
 
@@ -201,6 +224,42 @@ class ApiKeyProvider(BriefProvider):
             messages=[{"role": "user", "content": user}],
         )
         return msg.content[0].text
+
+
+class OpenAIProvider(BriefProvider):
+    """OpenAI SDK + API key. CI-safe path, supports model selection.
+
+    Standard chat-completion request with system + user messages. Prompt
+    caching on the OpenAI side happens automatically for prefixes longer
+    than 1024 tokens (no explicit field needed).
+    """
+
+    name = "openai"
+
+    def __init__(self, model: str):
+        try:
+            from openai import OpenAI
+        except ImportError:
+            sys.exit("openai SDK not installed. `pip install openai`, "
+                     "or switch to --provider api / max, or use --dry-run.")
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            sys.exit("OPENAI_API_KEY not set. Export it, "
+                     "or switch to --provider api / max, "
+                     "or use --dry-run.")
+        self.model = model
+        self._client = OpenAI(api_key=api_key)
+
+    def generate(self, system: str, user: str) -> str:
+        msg = self._client.chat.completions.create(
+            model=self.model,
+            max_completion_tokens=MAX_TOKENS,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+        )
+        return msg.choices[0].message.content or ""
 
 
 class AgentSdkProvider(BriefProvider):
@@ -249,15 +308,17 @@ class AgentSdkProvider(BriefProvider):
 def make_provider(name: str, model: str | None) -> BriefProvider:
     if name == "api":
         return ApiKeyProvider(model=model or DEFAULT_API_MODEL)
+    if name == "openai":
+        return OpenAIProvider(model=model or DEFAULT_OPENAI_MODEL)
     if name == "max":
         if model is not None:
             sys.exit(
                 "--model is not supported with --provider max. The model is "
                 "inherited from the active Claude Code session. Either drop "
-                "--model, or switch to --provider api."
+                "--model, or switch to --provider api or --provider openai."
             )
         return AgentSdkProvider()
-    sys.exit(f"unknown provider: {name!r}. choose 'api' or 'max'.")
+    sys.exit(f"unknown provider: {name!r}. choose 'api', 'openai', or 'max'.")
 
 
 # ---------------------------------------------------------------------------
@@ -295,6 +356,11 @@ def run(provider_name: str = "api", model: str | None = None,
         out_path = BRIEFINGS / f"cluster_{cid + 1:02d}.md"
 
         if dry_run:
+            # Safety: do not overwrite a real, structured brief with a stub.
+            # If the user wanted to reset, they can delete the file first.
+            if _looks_like_real_brief(out_path):
+                print(f"[brief] (dry-run) skipping {out_path.name}, real brief in place")
+                continue
             out_path.write_text(_stub_brief(cid, label_de, top_kw))
             print(f"[brief] (dry-run) {out_path.relative_to(ROOT)}")
             n_ok += 1
@@ -321,13 +387,14 @@ def run(provider_name: str = "api", model: str | None = None,
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("--provider", choices=["api", "max"], default="api",
+    p.add_argument("--provider", choices=["api", "openai", "max"], default="api",
                    help="api: anthropic SDK + ANTHROPIC_API_KEY (CI-safe). "
+                        "openai: openai SDK + OPENAI_API_KEY (CI-safe). "
                         "max: claude-agent-sdk + local Claude Code session (Max-Abo, local only). "
                         "Default: api.")
     p.add_argument("--model", default=None,
-                   help=f"model id, only valid with --provider api. "
-                        f"Default: {DEFAULT_API_MODEL}.")
+                   help=f"model id, valid with --provider api or openai. "
+                        f"Defaults: api={DEFAULT_API_MODEL}, openai={DEFAULT_OPENAI_MODEL}.")
     p.add_argument("--dry-run", action="store_true",
                    help="skip LLM calls, write stubs (no provider needed).")
     p.add_argument("--cluster", type=int, default=None,

@@ -14,11 +14,13 @@ matplotlib>=3.7
 plotly>=5.20
 
 # LLM-driven content briefs
-# Two providers, switchable via `python -m src.brief --provider {api,max}`:
-#   api   anthropic SDK + ANTHROPIC_API_KEY  (CI-safe, separate billing)
-#   max   claude-agent-sdk + local Claude Code session  (Max subscription, local only)
-# See src/brief.py docstring and docs/decisions.md (ADR-11).
+# Three providers, switchable via `python -m src.brief --provider {api,openai,max}`:
+#   api      anthropic SDK + ANTHROPIC_API_KEY     (CI-safe, separate billing)
+#   openai   openai SDK + OPENAI_API_KEY            (CI-safe, separate billing)
+#   max      claude-agent-sdk + local Claude Code   (Max subscription, local only)
+# See src/brief.py docstring and docs/decisions.md (ADR-11) for the trade-off.
 anthropic>=0.40
+openai>=1.40
 claude-agent-sdk>=0.1.70  # requires Python >=3.10
 
 # Live keyword metrics (optional, only used with --provider dataforseo)

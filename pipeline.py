@@ -15,6 +15,7 @@ CLI:
     python pipeline.py --dry-run                    skip LLM call in brief
     python pipeline.py --brief-provider max         brief via Max subscription
     python pipeline.py --brief-provider api --brief-model claude-opus-4-7
+    python pipeline.py --brief-provider openai --brief-model gpt-5
 
 Each step can also be invoked directly via its own module CLI for finer
 control. See src/cluster.py and src/brief.py for sub-CLIs.
@@ -79,11 +80,14 @@ def main() -> None:
                    help="discover step source")
     p.add_argument("--provider", choices=["estimate", "dataforseo"], default="estimate",
                    help="enrich step provider")
-    p.add_argument("--brief-provider", choices=["api", "max"], default="api",
-                   help="brief step LLM provider (api: ANTHROPIC_API_KEY, "
-                        "max: local Claude Code session via claude-agent-sdk)")
+    p.add_argument("--brief-provider", choices=["api", "openai", "max"], default="api",
+                   help="brief step LLM provider. "
+                        "api: ANTHROPIC_API_KEY (default). "
+                        "openai: OPENAI_API_KEY. "
+                        "max: local Claude Code session via claude-agent-sdk.")
     p.add_argument("--brief-model", default=None,
-                   help="brief step model id, only valid with --brief-provider api")
+                   help="brief step model id, valid with --brief-provider api or openai. "
+                        "Defaults: api=claude-sonnet-4-6, openai=gpt-5.")
     p.add_argument("--dry-run", action="store_true",
                    help="brief step: write stubs instead of calling the LLM")
     args = p.parse_args()

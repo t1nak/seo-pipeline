@@ -50,6 +50,7 @@ nav:
     - Ergebnisse: results.md
     - Architektur: architecture.md
     - Entscheidungen: decisions.md
+    - Technical Review: technical_review.md
   - Live Demo:
     - Cluster Karte: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
     - Reporting: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
@@ -111,9 +112,11 @@ plugins:
             Ergebnisse: Results
             Architektur: Architecture
             Entscheidungen: Decisions
+            Technical Review: Technical Review
             Live Demo: Live Demo
             Cluster Karte: Cluster Map
             Reporting: Reporting
+            Cluster Briefs: Cluster Briefs
 
 extra:
   social:

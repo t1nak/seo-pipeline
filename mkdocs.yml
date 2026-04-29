@@ -44,8 +44,8 @@ theme:
 
 nav:
   - Übersicht: index.md
-  - Case Study: case-study.md
-  - Detail Docs:
+  - Dokumentation:
+    - Case Study: case-study.md
     - Methodik: methodology.md
     - Ergebnisse: results.md
     - Architektur: architecture.md
@@ -106,8 +106,8 @@ plugins:
           build: true
           nav_translations:
             Übersicht: Overview
+            Dokumentation: Documentation
             Case Study: Case Study
-            Detail Docs: Detail Docs
             Methodik: Methodology
             Ergebnisse: Results
             Architektur: Architecture

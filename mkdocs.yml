@@ -53,6 +53,7 @@ nav:
   - Live Demo:
     - Cluster Karte: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
     - Reporting: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
+    - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
   - GitHub: https://github.com/t1nak/seo-pipeline
 
 markdown_extensions:

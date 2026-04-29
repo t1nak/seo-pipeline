@@ -25,6 +25,12 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 
     [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/reporting/index.html)
 
+-   :material-card-text-outline: __Cluster Briefs Dashboard__
+
+    Pro Cluster ein Content Brief mit Top-Keywords, Persona, Seitenstruktur, SERP-Lücken, CTA.
+
+    [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/briefings/index.html)
+
 -   :material-book-open-variant: __Case Study__
 
     Vollständige Schreibarbeit mit Architektur, Validierung, Empfehlungen, Reflektion.

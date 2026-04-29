@@ -34,11 +34,13 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 ## Ergebnisse aus dem aktuellen Lauf
 
-- 504 Keywords, 13 thematische Cluster plus 71 Ausreißer
-- Gesamt Suchvolumen: 240.025 pro Monat (geschätzt)
-- Größter Cluster nach SV: B2B SaaS Kategorie-Heads (48.945 SV / Monat, 52 Keywords)
-- Höchste kommerzielle Dichte: Marke zvoove (100 Prozent kommerziell, 23.432 SV)
-- Methodische Validierung: Silhouette Score 0.64 auf der 5D UMAP (ohne Rauschen), 0.46 inklusive Rauschen. ARI gegen die ursprünglichen LLM Cluster bei 0.14, NMI bei 0.33. Diese Werte sind erwartet niedrig, weil HDBSCAN und die LLM Cluster unterschiedliche Granularität haben. Details in [`docs/methodology.md`](docs/methodology.md)
+- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 10 thematische Cluster plus 38 Ausreißer (7,6 Prozent Rauschen)
+- Gesamt Suchvolumen: 213.302 pro Monat (geschätzt, ohne Rauschen)
+- Größter Cluster nach Keyword-Anzahl: Branche & Arbeitsrecht Sammelbecken (189 Keywords, 64.264 SV)
+- Größter Cluster nach SV: B2B-SaaS Kategorie-Heads (47.989 SV / Monat, 44 Keywords)
+- Höchste kommerzielle Dichte: Marke zvoove (97 Prozent kommerziell, 23.604 SV)
+- Methodische Validierung: Silhouette Score 0,67 auf der 5D UMAP (ohne Rauschen), 0,59 inklusive Rauschen. ARI gegen die ursprünglichen LLM Cluster bei 0,10, NMI bei 0,30, ARI gegen Ward(k=10) bei 0,54. Details in [`docs/methodology.md`](docs/methodology.md)
+- Vorheriger Lauf ohne Cap (504 Keywords, 13 Cluster) ist als Snapshot pinned unter `output/_archive/2026-04-27_manual/`
 
 ## Aktueller Stand
 
@@ -100,7 +102,7 @@ seo-pipeline/
 │   └── keywords.manual.csv      kuratierter Baseline Datensatz, bleibt frozen
 ├── docs/
 │   ├── methodology.md     warum HDBSCAN, warum UMAP, Parameter Sweep, Validierung
-│   ├── results.md         13 Cluster Katalog mit Revenue Empfehlung
+│   ├── results.md         10 Cluster Katalog mit Revenue Empfehlung
 │   ├── architecture.md    Pipeline Diagramm, Datenfluss, Integration
 │   └── decisions.md       Architecture Decision Records, knappe ADRs
 ├── output/

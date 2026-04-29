@@ -43,7 +43,7 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 
     [:octicons-arrow-right-24: Tiefe](methodology.md)
 
--   :material-format-list-bulleted: __13 Cluster Katalog__
+-   :material-format-list-bulleted: __10 Cluster Katalog__
 
     Pro Cluster: Stats, Top Keywords, Empfehlung, Aufwand, Revenue Hypothese.
 
@@ -61,16 +61,16 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 
 <div class="grid" markdown>
 
-`504` Keywords
+`500` Keywords (Cap aus 504 Baseline)
 { .annotate }
 
-`13` Cluster plus 71 Ausreißer
+`10` Cluster plus 38 Ausreißer (7,6 Prozent)
 
-`240.025` SV pro Monat (geschätzt)
+`213.302` SV pro Monat (geschätzt, ohne Rauschen)
 
-`0,64` Silhouette Score (ohne Rauschen)
+`0,67` Silhouette Score (ohne Rauschen)
 
-`0,75` ARI gegen Ward Hierarchical (k=10)
+`0,54` ARI gegen Ward Hierarchical (k=10)
 
 `~25 s` voller Lauf ohne Briefs
 
@@ -80,13 +80,15 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster | Keywords | SV / Monat | Ø KD | % komm. |
 |---|---|---|---|---|---|
-| 11 | B2B-SaaS Kategorie-Heads | 52 | 48.945 | 48 | 77 |
-| 3 | Kommerzielle SaaS-Heads (Zeit/Software) | 46 | 26.062 | 48 | 93 |
-| 13 | Branche & Betrieb (Sammelbecken) | 82 | 24.589 | 38 | 38 |
-| 5 | Marke: zvoove Produktnamen | 32 | 23.432 | 54 | 100 |
-| 9 | Digitalisierung allgemein | 22 | 12.979 | 38 | 45 |
+| 10 | B2B-SaaS Kategorie-Heads | 44 | 47.989 | 49 | 82 |
+| 3 | Kommerzielle Zeit/Software-Heads | 47 | 26.159 | 43 | 94 |
+| 5 | Marke: zvoove Produktnamen | 34 | 23.604 | 51 | 97 |
+| 6 | Operative Anleitungen (gemischt) | 30 | 13.755 | 33 | 23 |
+| 4 | Recruiting & KI-Tools | 34 | 12.075 | 38 | 44 |
 
-[Alle 13 Cluster im Detail :octicons-arrow-right-24:](results.md)
+Plus der Catch-all Cluster 2 mit 189 Keywords (Branche & Arbeitsrecht), nach Anzahl der größte mit 64.264 SV.
+
+[Alle 10 Cluster im Detail :octicons-arrow-right-24:](results.md)
 
 ## Aktueller Stand der Pipeline
 

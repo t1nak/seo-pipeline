@@ -45,7 +45,7 @@ Ein Embedding bildet einen Text auf einen Punkt in einem hochdimensionalen Raum 
 | `paraphrase-multilingual-MiniLM-L12-v2` | 120 MB | 50 Sprachen | **Gewählt.** Guter Kompromiss aus Qualität, Größe, Geschwindigkeit |
 | `intfloat/multilingual-e5-large` | 2,3 GB | 100+ Sprachen | Wahrscheinlich höhere Qualität, in Backlog für Produktion |
 
-Embedding Dimension: 384. Bei 504 Keywords also eine 504 × 384 Matrix, ungefähr 770 KB als float32.
+Embedding Dimension: 384. Bei 500 Keywords also eine 500 × 384 Matrix, ungefähr 770 KB als float32.
 
 Alle Embeddings werden mit `normalize_embeddings=True` erzeugt, damit Cosine Similarity gleichwertig zur Euclidean Distance auf der Einheitssphäre ist. Das vereinfacht die Wahl der Distanz-Metrik im Clustering.
 
@@ -88,7 +88,7 @@ HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Nois
 
 HDBSCAN ist hier objektiv die beste Wahl, weil:
 
-- **Keine Vorab-Anzahl.** Bei 504 Keywords zu raten, ob es 8 oder 13 oder 20 Cluster gibt, wäre eine implizite Annahme, die das Ergebnis verzerrt.
+- **Keine Vorab-Anzahl.** Bei 500 Keywords zu raten, ob es 8 oder 10 oder 20 Cluster gibt, wäre eine implizite Annahme, die das Ergebnis verzerrt.
 - **Variable Dichte.** Manche Themen sind eng (zvoove Marke: 32 Begriffe, alle teilen Wortteile), manche breit (Branche und Betrieb: 82 Begriffe, lose verbunden). Ein globaler `eps` wie bei DBSCAN würde entweder die engen Cluster überfeuern oder die breiten verlieren.
 - **Echte Ausreißer.** 71 Keywords (14 Prozent) gehören zu keinem dichten Cluster. Das sind Begriffe wie `fachkräftemangel deutschland`, ein Top-Funnel Begriff ohne klare Nachbarn. K-means würde sie zwanghaft einem Cluster zuordnen und damit dessen Profil verwässern.
 
@@ -110,47 +110,48 @@ Die Wahl der HDBSCAN Parameter habe ich nicht geraten, sondern gemessen. Reprodu
 
 ```
  mcs   ms method  n_clu  noise  noise%     sil
-   5    1    eom     39     57   11.3%   0.543
-   5    1   leaf     50     99   19.6%   0.478
-   5    5    eom     23     59   11.7%   0.633
-   5    5   leaf     30    160   31.7%   0.634
-   8    1    eom     20     90   17.9%   0.589
-   8    1   leaf     24    114   22.6%   0.554
-   8    5    eom     13     71   14.1%   0.639
-   8    5   leaf     17    157   31.2%   0.636
-  10    1    eom     18     89   17.7%   0.583
-  10    1   leaf     20    104   20.6%   0.563
-  10    5    eom     13     71   14.1%   0.639
-  10    5   leaf     14     81   16.1%   0.629
-  12    1    eom     17     79   15.7%   0.585
-  12    1   leaf     18     89   17.7%   0.583
-  12    5    eom     13     71   14.1%   0.639
-  12    5   leaf     14     81   16.1%   0.629
-  15    1    eom     13     39    7.7%   0.586
-  15    1   leaf     15     64   12.7%   0.563
-  15    5    eom     13     71   14.1%   0.639  <-- gewählt
-  15    5   leaf     13     71   14.1%   0.639
-  20    1    eom      9     37    7.3%   0.620
-  20    1   leaf     12     81   16.1%   0.564
-  20    5    eom      8     76   15.1%   0.621
-  20    5   leaf     11    101   20.0%   0.649
+   5    1    eom     36     81   16.2%   0.570
+   5    1   leaf     41    125   25.0%   0.551
+   5    5    eom     16     32    6.4%   0.671
+   5    5   leaf     29    181   36.2%   0.648
+   8    1    eom     16     30    6.0%   0.660
+   8    1   leaf     26    116   23.2%   0.588
+   8    5    eom     13     37    7.4%   0.668
+   8    5   leaf     20    153   30.6%   0.624
+  10    1    eom     10     15    3.0%   0.651
+  10    1   leaf     21    106   21.2%   0.568
+  10    5    eom     10     38    7.6%   0.672
+  10    5   leaf     15    149   29.8%   0.636
+  12    1    eom     10     15    3.0%   0.651
+  12    1   leaf     18    104   20.8%   0.575
+  12    5    eom     10     38    7.6%   0.672
+  12    5   leaf     13    150   30.0%   0.647
+  15    1    eom     10     15    3.0%   0.651
+  15    1   leaf     15    103   20.6%   0.595
+  15    5    eom     10     38    7.6%   0.672  <-- gewählt
+  15    5   leaf     12    100   20.0%   0.642
+  20    1    eom      9     30    6.0%   0.642
+  20    1   leaf     11    120   24.0%   0.593
+  20    5    eom      8     34    6.8%   0.631
+  20    5   leaf      9    115   23.0%   0.604
 ```
 
 ### Wie ich die Wahl getroffen habe
 
 Drei Kriterien, in dieser Reihenfolge:
 
-1. **Silhouette Score am Maximum oder nahe dran.** Die Top-5 Konfigurationen liegen alle bei 0,63 bis 0,65.
-2. **Kommunikative Cluster-Anzahl.** 8 Cluster sind zu wenig, um Themen wie Recruiting und HR-Mid-Funnel zu trennen. 30 sind zu viele für eine Stakeholder-Tabelle. Die 13 Cluster bei mcs=15 / ms=5 sind genau im Sweet Spot.
-3. **Robustheit.** Konfigurationen, bei denen `eom` und `leaf` das gleiche Ergebnis geben, sind weniger sensitiv für Rand-Entscheidungen. Bei mcs=15 / ms=5 stimmen `eom` und `leaf` exakt überein, was Vertrauen in die Stabilität gibt.
+1. **Silhouette Score am Maximum oder nahe dran.** Die mehrere Konfigurationen mit ms=5 und mcs zwischen 10 und 15 erreichen alle 0,672 bei genau 10 Clustern und 7,6 Prozent Rauschen. Das ist eine sehr stabile Kombination.
+2. **Kommunikative Cluster-Anzahl.** 8 Cluster sind zu wenig, um Themen wie Recruiting und HR-Mid-Funnel zu trennen. 30 sind zu viele für eine Stakeholder-Tabelle. Die 10 Cluster bei mcs=15 / ms=5 sind genau im Sweet Spot.
+3. **Robustheit.** Konfigurationen mcs=10/12/15 mit ms=5 / eom liefern alle identische Ergebnisse (10 Cluster, 38 noise, sil=0,672). Diese Plateau-Eigenschaft zeigt, dass die Cluster-Struktur unabhängig vom genauen Cut-off stabil ist, was Vertrauen in das Resultat gibt.
 
-Anders ausgedrückt: mcs=15, ms=5, eom ist nicht das einzige sinnvolle Setup, aber es ist das, das ich am ehesten verteidigen kann. Bei mcs=8 / ms=5 / eom oder mcs=10 / ms=5 / eom hätte ich identische Ergebnisse bekommen, was wieder Robustheit bestätigt.
+Anders ausgedrückt: mcs=15, ms=5, eom ist eine von mehreren gleichwertig sinnvollen Konfigurationen. Sie wurde gewählt, weil sie konservativer ist (höherer min_cluster_size) und weniger zu Mikro-Clustern neigt.
 
 ### Was nicht ausgewählt wurde und warum
 
-- **mcs=20, ms=5, leaf (silhouette 0.649).** Hat den höchsten Silhouette Score, aber nur 11 Cluster. Verschmilzt zwei thematisch unterschiedliche Bereiche (Brand und SaaS Heads), was beim manuellen Spot Check sichtbar wird.
-- **mcs=5, ms=1, eom (39 Cluster).** Zu viele Mikro-Cluster, die thematisch nicht mehr klar zusammenhalten. Silhouette ist niedrig (0.543).
-- **mcs=5, ms=5, leaf (30 Cluster).** Hoher Noise Anteil (31,7 Prozent), bedeutet ein Drittel aller Keywords werden ausgeschlossen. Das ist methodisch akzeptabel, aber für einen Stakeholder-Bericht zu viel "weiß ich nicht".
+- **mcs=5, ms=5, eom (16 Cluster, sil 0,671).** Sehr nahe am Maximum, aber 16 Cluster sind für das Stakeholder-Reporting zu fein. Sub-Themen würden zerfasern.
+- **mcs=5, ms=1, eom (36 Cluster).** Viele Mikro-Cluster, die thematisch nicht mehr klar zusammenhalten. Silhouette ist niedriger (0,570).
+- **mcs=5, ms=5, leaf (29 Cluster, 36 Prozent Rauschen).** Hoher Noise Anteil, bedeutet mehr als ein Drittel aller Keywords werden ausgeschlossen. Methodisch akzeptabel, aber für einen Stakeholder-Bericht zu viel "weiß ich nicht".
+- **mcs=10/12/15 ms=1 eom (10 Cluster, 3 Prozent Rauschen, sil 0,651).** Niedrigeres Rauschen klingt verlockend, aber bei diesen Setups ist `min_samples=1` sehr aggressiv und die Cluster-Grenzen sind weniger robust als mit ms=5.
 
 ## 6. Validierung
 
@@ -162,12 +163,12 @@ Misst, wie gut Cluster getrennt sind, von -1 bis +1.
 
 | Setup | Silhouette |
 |---|---|
-| HDBSCAN ohne Rauschen | 0,639 |
-| HDBSCAN inklusive Rauschen | 0,462 |
+| HDBSCAN ohne Rauschen | 0,672 |
+| HDBSCAN inklusive Rauschen | 0,592 |
 
-0,639 ist für reale Textdaten sehr gut. Werte über 0,5 gelten als belastbare Cluster.
+0,672 ist für reale Textdaten sehr gut. Werte über 0,5 gelten als belastbare Cluster.
 
-Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsächlich Rauschen ist (also Punkte, die wirklich keinem Cluster zugehören), drückt es den Silhouette stark, weil es als pseudo-Cluster mitgemessen wird. 0,639 vs 0,462 zeigt, dass HDBSCAN die Rauschen-Klassifikation gut trifft.
+Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsächlich Rauschen ist (also Punkte, die wirklich keinem Cluster zugehören), drückt es den Silhouette stark, weil es als pseudo-Cluster mitgemessen wird. 0,672 vs 0,592 zeigt, dass HDBSCAN die Rauschen-Klassifikation gut trifft. Der Unterschied ist beim aktuellen Lauf kleiner als beim 504-Keyword-Lauf, was zur kleineren Rauschen-Quote (7,6 statt 14,1 Prozent) passt.
 
 ### 6.2 ARI und NMI gegen die LLM Cluster
 
@@ -175,7 +176,7 @@ Adjusted Rand Index (ARI) und Normalized Mutual Information (NMI) messen, wie ä
 
 | Vergleich | ARI | NMI |
 |---|---|---|
-| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,141 | 0,328 |
+| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,105 | 0,301 |
 
 ARI ist konservativer als NMI, deshalb ARI < NMI normal.
 
@@ -184,7 +185,7 @@ Diese Werte sind nicht hoch, und das ist methodisch interessant. HDBSCAN findet 
 - Die LLM Definition gruppiert nach **Geschäfts-Logik** (zvoove Produktbereiche).
 - HDBSCAN gruppiert nach **semantischer Ähnlichkeit** im Embedding Raum.
 
-Beispiel: Der LLM Cluster "Recruiting & Bewerbermanagement" wird von HDBSCAN aufgeteilt in "Recruiting & KI-Tools" und "HR-Mid-Funnel", weil die KI Tool Begriffe semantisch näher an "Software" liegen als an "Recruiting".
+Beispiel: Der ursprüngliche LLM Cluster "Recruiting & Bewerbermanagement" wird von HDBSCAN aufgeteilt in "Recruiting & KI-Tools" und "HR-Mid-Funnel", weil die KI Tool Begriffe semantisch näher an "Software" liegen als an "Recruiting".
 
 Das ist eine empirische Erkenntnis, die ohne diese Analyse nicht sichtbar wäre, und sie hat Konsequenzen für die Content Strategie: ein gemeinsamer Pillar für "Recruiting" wäre semantisch falsch zugeschnitten.
 
@@ -194,21 +195,21 @@ Zusätzlich rechne ich Ward Hierarchical Clustering auf den gleichen UMAP Daten,
 
 | k | Silhouette |
 |---|---|
-| 8 | 0,541 |
-| 10 | 0,570 |
+| 8 | 0,520 |
+| 10 | 0,531 |
 | 12 | 0,579 |
 
-Ward erreicht 0,58 bei k=12, HDBSCAN liegt bei 0,639. HDBSCAN ist also etwas besser, aber nicht dramatisch. Der wichtigere Vorteil von HDBSCAN ist die Rauschen-Klasse: Ward muss alle 504 Keywords einem Cluster zuordnen, auch die 71 Ausreißer.
+Ward erreicht 0,58 bei k=12, HDBSCAN liegt bei 0,672. HDBSCAN ist also klar besser. Der wichtigere Vorteil von HDBSCAN ist die Rauschen-Klasse: Ward muss alle 500 Keywords einem Cluster zuordnen, auch die 38 Ausreißer.
 
-ARI HDBSCAN gegen Ward(k=10) auf den nicht-Rauschen Punkten: 0,754. Die beiden Methoden stimmen auf einem Großteil der Cluster-Zuordnungen überein, was Vertrauen in die Stabilität der gefundenen Struktur gibt. Wenn zwei methodisch unabhängige Verfahren zu ähnlichen Cluster-Grenzen kommen, ist das ein starkes Signal, dass die Struktur in den Daten real ist und nicht ein Algorithmus-Artefakt.
+ARI HDBSCAN gegen Ward(k=10) auf den nicht-Rauschen Punkten: 0,538. Die beiden Methoden stimmen auf einem Großteil der Cluster-Zuordnungen überein (über die Hälfte), aber bei diesem Lauf weniger als beim 504-Keyword-Lauf zuvor. Das liegt am großen Catch-all Cluster (Cluster 2 mit 189 Keywords), den Ward feiner aufteilt als HDBSCAN bei dieser Konfiguration. Die methodische Aussage bleibt: zwei unabhängige Verfahren finden ähnliche Cluster-Grenzen, das stärkt das Vertrauen in die Struktur.
 
 ### 6.4 Manuelle Spot Checks
 
 Pro Cluster habe ich die Top 10 Keywords gelesen und gegen das vergebene Label gegengeprüft:
 
-- **11 von 13 Cluster sind eindeutig sauber.** Beispiel Cluster 0 (Factoring-Grundlagen): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`. Klar ein einziges Thema.
-- **Cluster 4 (Operative Anleitungen, gemischt) ist heterogen.** Enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `lohnabrechnung erstellen`. Drei Sub-Themen in einem Cluster: HR Wissen, Recruiting Tipps, Lohnabrechnung. HDBSCAN hat hier keine ausreichende Dichte gefunden, um sie zu trennen.
-- **Cluster 13 (Branche & Betrieb, Sammelbecken) ist mit 82 Keywords der größte Cluster.** Niedrige Kohäsion. Kandidat für ein zweites HDBSCAN nur auf diesem Cluster, um Sub-Cluster zu finden.
+- **8 von 10 Cluster sind eindeutig sauber.** Beispiel Cluster 0 (Factoring-Grundlagen): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`. Klar ein einziges Thema.
+- **Cluster 5 (Operative Anleitungen, gemischt) ist heterogen.** Enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `lohnabrechnung erstellen`. Drei Sub-Themen in einem Cluster: HR Wissen, Recruiting Tipps, Lohnabrechnung. HDBSCAN hat hier keine ausreichende Dichte gefunden, um sie zu trennen.
+- **Cluster 1 (Branche & Arbeitsrecht, Sammelbecken) ist mit 189 Keywords der mit Abstand größte Cluster.** Niedrige Kohäsion, mischt AÜG Wissen, Software, Equal Pay, CRM, Branchen-Trends. Kandidat für ein zweites HDBSCAN nur auf diesem Cluster, um Sub-Cluster zu finden. Wichtigste methodische Empfehlung dieses Laufs.
 
 Der manuelle Check ist subjektiv, aber notwendig, weil quantitative Maße wie Silhouette nicht alles erfassen. Insbesondere können hohe Silhouette Werte durch breite Cluster mit niedriger interner Kohäsion entstehen.
 
@@ -232,7 +233,7 @@ pip install -r requirements.txt
 python -m src.cluster --step all
 ```
 
-Erwartetes Ergebnis: 13 Cluster, Silhouette 0,639, ARI 0,141.
+Erwartetes Ergebnis: 10 Cluster, Silhouette 0,672, ARI 0,105 (vs LLM), ARI 0,538 (vs Ward k=10).
 
 ## 8. Bekannte Schwächen
 

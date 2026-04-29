@@ -37,7 +37,7 @@ The goal is to win organic traffic in the temp staffing and HR services space, t
 
     [:octicons-arrow-right-24: Depth](methodology.md)
 
--   :material-format-list-bulleted: __13 cluster catalogue__
+-   :material-format-list-bulleted: __10 cluster catalogue__
 
     Per cluster: stats, top keywords, recommendation, effort, revenue hypothesis.
 
@@ -58,15 +58,15 @@ The goal is to win organic traffic in the temp staffing and HR services space, t
 
 <div class="grid" markdown>
 
-`504` keywords
+`500` keywords (cap from 504 baseline)
 
-`13` clusters plus 71 outliers
+`10` clusters plus 38 outliers (7.6 percent)
 
-`240,025` SV per month (estimated)
+`213,302` SV per month (estimated, without noise)
 
-`0.64` silhouette score (without noise)
+`0.67` silhouette score (without noise)
 
-`0.75` ARI vs Ward hierarchical (k=10)
+`0.54` ARI vs Ward hierarchical (k=10)
 
 `~25 s` full run without briefs
 
@@ -76,13 +76,15 @@ The five largest clusters by search volume:
 
 | # | Cluster | Keywords | SV / month | Avg KD | % comm. |
 |---|---|---|---|---|---|
-| 11 | B2B SaaS category heads | 52 | 48,945 | 48 | 77 |
-| 3 | Commercial SaaS heads (Zeit/Software) | 46 | 26,062 | 48 | 93 |
-| 13 | Industry & operations catch-all | 82 | 24,589 | 38 | 38 |
-| 5 | Brand: zvoove product names | 32 | 23,432 | 54 | 100 |
-| 9 | Digitalisation umbrella | 22 | 12,979 | 38 | 45 |
+| 10 | B2B SaaS category heads | 44 | 47,989 | 49 | 82 |
+| 3 | Commercial Zeit/Software heads | 47 | 26,159 | 43 | 94 |
+| 5 | Brand: zvoove product names | 34 | 23,604 | 51 | 97 |
+| 6 | Operational how-to (mixed) | 30 | 13,755 | 33 | 23 |
+| 4 | Recruiting & AI tooling | 34 | 12,075 | 38 | 44 |
 
-[All 13 clusters in detail :octicons-arrow-right-24:](results.md)
+Plus the catch-all Cluster 2 (Industry & labour law) with 189 keywords, the largest by count at 64,264 SV.
+
+[All 10 clusters in detail :octicons-arrow-right-24:](results.md)
 
 ## Current pipeline state
 

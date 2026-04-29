@@ -146,7 +146,7 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | Pipeline Output | Zielsystem | Anbindung |
 |---|---|---|
 | `data/keywords.csv` | Google Ads | Direkter CSV Import in Keyword Planner für Search Kampagnen |
-| `data/keywords.csv` | Ahrefs / Semrush | CSV Import für Rank Tracking auf den 504 Keywords |
+| `data/keywords.csv` | Ahrefs / Semrush | CSV Import für Rank Tracking auf den 500 Keywords |
 | `output/clustering/clusters.json` | Notion / Airtable | Content Kalender Anker, ein Eintrag pro Cluster |
 | `output/clustering/cluster_profiles.csv` | Looker Studio | Datenquelle für SEO Dashboard, Visualisierung von Cluster Performance |
 | `output/briefings/*.md` | Sanity / Contentful | Draft Eintrag pro Cluster für die Redaktion |
@@ -161,7 +161,7 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 
 ## Cost und Performance
 
-### Zeit pro Schritt (lokaler Lauf, 504 Keywords, MacBook Air M2)
+### Zeit pro Schritt (lokaler Lauf, 500 Keywords, MacBook Air M2)
 
 | Schritt | Zeit | Wovon abhängig |
 |---|---|---|
@@ -173,7 +173,7 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | `profile` | < 1 Sekunde | Cluster Anzahl |
 | `charts` | 5 bis 7 Sekunden | matplotlib Rendering |
 | `viz` | 3 bis 5 Sekunden | Plotly Figure Größe |
-| `brief` (alle 13 Cluster, mit API) | 60 bis 120 Sekunden | Anthropic API Latenz |
+| `brief` (alle 10 Cluster, mit API) | 50 bis 100 Sekunden | Anthropic API Latenz |
 | `report` | < 1 Sekunde | Anzahl Cluster, Dateigrößen |
 
 Voller Lauf ohne Briefs (Demo): ungefähr 25 Sekunden. Voller Lauf mit Briefs: ungefähr 2 Minuten.
@@ -185,7 +185,7 @@ Voller Lauf ohne Briefs (Demo): ungefähr 25 Sekunden. Voller Lauf mit Briefs: u
 | Embeddings (lokal) | 0 EUR |
 | UMAP / HDBSCAN (lokal) | 0 EUR |
 | DataForSEO Search Volume (500 Keywords, optional) | ~0,75 USD |
-| Claude Briefs (13 Cluster, sonnet-4-6 mit Caching) | ~0,15 bis 0,25 USD |
+| Claude Briefs (10 Cluster, sonnet-4-6 mit Caching) | ~0,12 bis 0,20 USD |
 | **Gesamt** | **~1 USD pro vollem Lauf** |
 
 Bei wöchentlich nur Enrich plus Report (ohne neue Cluster und Briefs): null Cent für die lokalen Schritte, optional 0,75 USD wenn DataForSEO mitläuft. Quartalsweise voller Lauf: 1 USD.

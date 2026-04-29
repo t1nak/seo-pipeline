@@ -24,7 +24,7 @@
     <circle cx="80" cy="140" r="14" fill="#2563eb"/>
     <text x="80" y="146" font-size="13" font-weight="700" fill="white" text-anchor="middle">1</text>
     <text x="108" y="128" font-size="14" font-weight="700" fill="#1e3a8a">Discover · Keywords ableiten</text>
-    <text x="108" y="148" font-size="12" fill="#1e40af">Blog zvoove.de/wissen/blog ▸ Seed Keywords (Stub, nutzt 504 kuratierte Keywords)</text>
+    <text x="108" y="148" font-size="12" fill="#1e40af">Blog zvoove.de/wissen/blog ▸ Seed Keywords (Stub, nutzt 500 kuratierte Keywords mit Cap)</text>
     <text x="108" y="166" font-size="11" fill="#475569" font-style="italic">Output: data/keywords.csv</text>
   </g>
   <line x1="410" y1="180" x2="410" y2="200" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
@@ -50,8 +50,8 @@
     <circle cx="80" cy="350" r="14" fill="#059669"/>
     <text x="80" y="356" font-size="13" font-weight="700" fill="white" text-anchor="middle">3</text>
     <text x="108" y="328" font-size="14" font-weight="700" fill="#064e3b">Cluster · semantische Gruppen finden</text>
-    <text x="108" y="348" font-size="12" fill="#047857">MiniLM Embeddings (mehrsprachig) ▸ UMAP Reduktion ▸ HDBSCAN ▸ 13 Cluster + 71 Ausreißer</text>
-    <text x="108" y="366" font-size="12" fill="#047857">Manuelle DE+EN Labels, statische Reproduzierbarkeit (random_state=42, Silhouette 0,64)</text>
+    <text x="108" y="348" font-size="12" fill="#047857">MiniLM Embeddings (mehrsprachig) ▸ UMAP Reduktion ▸ HDBSCAN ▸ 10 Cluster + 38 Ausreißer</text>
+    <text x="108" y="366" font-size="12" fill="#047857">Manuelle DE+EN Labels, statische Reproduzierbarkeit (random_state=42, Silhouette 0,67)</text>
     <text x="108" y="384" font-size="11" fill="#475569" font-style="italic">Output: 6 Diagnose-Charts, interaktive Plotly-Karte (DE/EN), cluster_profiles.csv</text>
   </g>
   <line x1="410" y1="400" x2="410" y2="420" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>

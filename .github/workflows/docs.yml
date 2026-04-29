@@ -48,7 +48,7 @@ jobs:
           node-version: "20"
 
       - name: Install StatiCrypt
-        run: npm install -g @robinmoisson/staticrypt
+        run: npm install -g staticrypt
 
       - name: Encrypt site with shared password
         # Why: the repo is private (Pro feature), but Pages is public so

@@ -2,3 +2,4 @@
 # Used by .github/workflows/docs.yml to build the site for GitHub Pages.
 # Not needed to run the pipeline itself.
 mkdocs-material>=9.5
+mkdocs-static-i18n>=1.3

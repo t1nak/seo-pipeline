@@ -69,12 +69,15 @@
 
 /* ============================================================
    Header + Tabs: unified solid background, no gradient
-   so the two bars read as one continuous block
+   so the two bars read as one continuous block.
+   !important is needed because Material's own .md-tabs rule has
+   the same specificity but loads earlier under some conditions.
    ============================================================ */
 
+.md-header[data-md-state],
 .md-header,
 .md-tabs {
-  background-color: var(--md-primary-fg-color--dark);
+  background-color: var(--md-primary-fg-color--dark) !important;
   box-shadow: none;
 }
 
@@ -84,7 +87,7 @@
 
 [data-md-color-scheme="slate"] .md-header,
 [data-md-color-scheme="slate"] .md-tabs {
-  background-color: #0f172a;
+  background-color: #0f172a !important;
 }
 
 [data-md-color-scheme="slate"] .md-header {

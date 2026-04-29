@@ -27,7 +27,6 @@ theme:
         icon: material/brightness-4
         name: Light Mode
   features:
-    - navigation.instant
     - navigation.tracking
     - navigation.tabs
     - navigation.sections
@@ -90,6 +89,30 @@ plugins:
       lang:
         - de
         - en
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: de
+          default: true
+          name: Deutsch
+          build: true
+        - locale: en
+          name: English
+          build: true
+          nav_translations:
+            Übersicht: Overview
+            Case Study: Case Study
+            Detail Docs: Detail Docs
+            Methodik: Methodology
+            Ergebnisse: Results
+            Architektur: Architecture
+            Entscheidungen: Decisions
+            Live Demo: Live Demo
+            Cluster Karte: Cluster Map
+            Reporting: Reporting
 
 extra:
   social:

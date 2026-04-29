@@ -64,11 +64,14 @@ jobs:
           # 2. Encrypt every HTML file in place. Loop because staticrypt's
           #    -r flag nests output under the input dir name, which would
           #    break Pages routing. One file at a time keeps paths flat.
+          # Color palette matches the docs site (dark navy + teal accent).
           find site -type f -name '*.html' | while read -r f; do
             staticrypt "$f" \
               --short \
               --template-button "Show case study" \
               --template-instructions "Enter the access password to view the SEO keyword pipeline case study." \
+              --template-color-primary "#0f172a" \
+              --template-color-secondary "#2dd4bf" \
               --directory "$(dirname "$f")"
           done
 

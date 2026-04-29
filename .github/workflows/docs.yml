@@ -51,27 +51,29 @@ jobs:
         run: npm install -g staticrypt
 
       - name: Encrypt site with shared password
-        # Why: the repo is private (Pro feature), but Pages is public so
-        # reviewers do not need a GitHub account. StatiCrypt encrypts every
-        # HTML file with a shared password. The MkDocs search index (JSON)
-        # contains plaintext content, so we delete it first to plug the leak.
+        # Why: Pages is public so reviewers do not need a GitHub account.
+        # StatiCrypt encrypts every HTML file with a shared password.
+        # The MkDocs search index (JSON) contains plaintext content, so we
+        # delete it first to plug the leak.
         env:
           STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
         run: |
           # 1. Drop the search index (would leak content as plain JSON)
           rm -rf site/search
 
-          # 2. Encrypt all HTML files recursively into _encrypted/
-          staticrypt -r site --directory _encrypted --short \
-            --template-button "Show case study" \
-            --template-instructions "Enter the access password to view the SEO keyword pipeline case study."
+          # 2. Encrypt every HTML file in place. Loop because staticrypt's
+          #    -r flag nests output under the input dir name, which would
+          #    break Pages routing. One file at a time keeps paths flat.
+          find site -type f -name '*.html' | while read -r f; do
+            staticrypt "$f" \
+              --short \
+              --template-button "Show case study" \
+              --template-instructions "Enter the access password to view the SEO keyword pipeline case study." \
+              --directory "$(dirname "$f")"
+          done
 
-          # 3. Re-add non-HTML assets (CSS, JS, images, npy, csv, etc.)
-          rsync -a --exclude='*.html' site/ _encrypted/
-
-          # 4. Replace site/ with the encrypted version for upload
-          rm -rf site
-          mv _encrypted site
+          # 3. Verify: a sampled file should now contain the StatiCrypt loader
+          grep -q "staticrypt" site/index.html && echo "encryption OK"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -39,12 +39,14 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.config import settings
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 MANUAL_CSV = DATA / "keywords.manual.csv"
 CANONICAL_CSV = DATA / "keywords.csv"
 
-MAX_KEYWORDS_DEFAULT = 500
+MAX_KEYWORDS_DEFAULT = settings.discover_max_keywords
 
 
 def discover_manual(max_keywords: int = MAX_KEYWORDS_DEFAULT) -> None:

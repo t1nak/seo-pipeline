@@ -30,19 +30,22 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
 from src import brief, cluster, discover, enrich, report  # noqa: E402
+from src.config import settings  # noqa: E402
 
 ALL_STEPS = ("discover", "enrich", "cluster", "brief", "report")
 
 
 def step_discover(args: argparse.Namespace) -> None:
-    if args.source == "manual":
-        discover.discover_manual()
+    source = args.source or settings.discover_source
+    if source == "manual":
+        discover.discover_manual(max_keywords=settings.discover_max_keywords)
     else:
         discover.discover_live()
 
 
 def step_enrich(args: argparse.Namespace) -> None:
-    enrich.run(provider=args.provider,
+    provider = args.provider or settings.enrich_provider
+    enrich.run(provider=provider,
                in_csv=ROOT / "data" / "keywords.csv",
                out_csv=ROOT / "data" / "keywords.csv")
 
@@ -54,8 +57,8 @@ def step_cluster(args: argparse.Namespace) -> None:
 
 
 def step_brief(args: argparse.Namespace) -> None:
-    brief.run(provider_name=args.brief_provider,
-              model=args.brief_model,
+    brief.run(provider_name=args.brief_provider or settings.brief_provider,
+              model=args.brief_model or settings.brief_model,
               dry_run=args.dry_run)
 
 
@@ -76,18 +79,20 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--step", default="all",
                    help="comma-separated steps from: " + ", ".join(ALL_STEPS) + " (or 'all')")
-    p.add_argument("--source", choices=["manual", "live"], default="manual",
-                   help="discover step source")
-    p.add_argument("--provider", choices=["estimate", "dataforseo"], default="estimate",
-                   help="enrich step provider")
-    p.add_argument("--brief-provider", choices=["api", "openai", "max"], default="api",
+    p.add_argument("--source", choices=["manual", "live"], default=None,
+                   help=f"discover step source. Default from settings: {settings.discover_source}.")
+    p.add_argument("--provider", choices=["estimate", "dataforseo"], default=None,
+                   help=f"enrich step provider. Default from settings: {settings.enrich_provider}.")
+    p.add_argument("--brief-provider", choices=["api", "openai", "max"], default=None,
                    help="brief step LLM provider. "
-                        "api: ANTHROPIC_API_KEY (default). "
+                        "api: ANTHROPIC_API_KEY. "
                         "openai: OPENAI_API_KEY. "
-                        "max: local Claude Code session via claude-agent-sdk.")
+                        "max: local Claude Code session via claude-agent-sdk. "
+                        f"Default from settings: {settings.brief_provider}.")
     p.add_argument("--brief-model", default=None,
                    help="brief step model id, valid with --brief-provider api or openai. "
-                        "Defaults: api=claude-sonnet-4-6, openai=gpt-5.")
+                        "Defaults: api=claude-sonnet-4-6, openai=gpt-5. "
+                        f"Settings default: {settings.brief_model or 'provider default'}.")
     p.add_argument("--dry-run", action="store_true",
                    help="brief step: write stubs instead of calling the LLM")
     args = p.parse_args()

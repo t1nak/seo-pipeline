@@ -218,6 +218,64 @@ class MistralProvider(BriefProvider):
 
 Plus eine Zeile in `make_provider()` und ein neuer Choice in den CLIs (`brief.py` und `pipeline.py`). Kein Code in den anderen Pipeline-Modulen ändert sich.
 
+## ADR-12: Konfiguration über Environment Variables (Twelve-Factor)
+
+**Kontext.** Pipeline-Settings (Provider, Modell, Hyperparameter, Cap-Werte) waren in der ersten Iteration als Modul-Konstanten (`UMAP_N_NEIGHBORS = 15`) plus CLI-Flags verteilt. Bei Wachstum wäre das chaotisch: Änderung von Hyperparametern bedeutet Code-Edit, kein deklarativer "Diese Konfiguration ist aktiv" Stand.
+
+**Entscheidung.** Konfiguration zentral in `src/config.py` als Pydantic Settings Klasse. Werte kommen aus dem Environment (mit Prefix `PIPELINE_`). Lokal mit `.env` Datei, in CI über GitHub Actions Secrets und Workflow-Inputs, in Produktion über die Mechanik der jeweiligen Plattform (Docker, Kubernetes, Lambda).
+
+Secrets (API Keys) bleiben getrennt davon. Sie werden direkt von den Modulen gelesen, die sie brauchen, NICHT typsicher in das Settings-Objekt geladen. Damit landen sie nie in einem versehentlichen Settings-Dump.
+
+**Alternativen geprüft.**
+
+- **YAML/TOML Konfigurationsdatei** (`pipeline.yaml`): natürliche Hierarchie, Inline-Kommentare, aber unhandlich für Per-Deployment-Overrides und nicht 12-Factor-konform für Cloud-Deployments.
+- **Mehrere Config-Files plus ENV-Overrides**: zu komplex für ein Case Study Projekt.
+- **CLI-Flags als einzige Schnittstelle**: funktioniert für lokal, aber unhandlich in CI.
+
+**Konsequenzen.**
+
+| | ENV (gewählt) | YAML/TOML | CLI nur |
+|---|---|---|---|
+| Cloud-Native | sehr gut | Volume-Mount nötig | nicht praktikabel |
+| GitHub Secrets | trivial | umständlich | trivial |
+| Hierarchie | über Prefixe (PIPELINE\_BRIEF\_PROVIDER) | natürlich | flach |
+| Inline-Kommentare | nein, separates `.env.example` | ja | nicht relevant |
+| Per-Deployment-Overrides | trivial | extra Mechanismus | bei jedem Aufruf nötig |
+
+**Präzedenz-Reihenfolge** (höchste zuerst):
+
+```
+CLI-Flag  >  Shell-Env  >  .env Datei  >  Code-Default in src/config.py
+```
+
+`PIPELINE_BRIEF_PROVIDER=openai` in `.env` gilt, kann von einer Shell-Umgebung übersteuert werden, kann von einem CLI-Flag `--brief-provider api` übersteuert werden.
+
+**Implementierung.**
+
+`src/config.py` definiert eine `Settings`-Klasse mit Pydantic Validation. Module importieren `from src.config import settings` und lesen `settings.brief_provider` etc. CLI-Flags in `pipeline.py` und den Sub-Modulen sind alle `default=None` und fallen auf `settings.*` zurück, wenn nicht gesetzt.
+
+`.env` ist gitignored, `.env.example` ist die Vorlage. In CI ersetzt das Workflow-`env:` Block beides: GitHub Secrets liefern die Secrets, Workflow-Inputs liefern die Pipeline-Settings als `PIPELINE_*` env vars.
+
+**Beispiel.** Brief-Generierung mit OpenAI in CI:
+
+```yaml
+- run: python pipeline.py --step brief
+  env:
+    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    PIPELINE_BRIEF_PROVIDER: openai
+    PIPELINE_BRIEF_MODEL: gpt-5
+```
+
+Lokal äquivalent in `.env`:
+
+```bash
+OPENAI_API_KEY=sk-...
+PIPELINE_BRIEF_PROVIDER=openai
+PIPELINE_BRIEF_MODEL=gpt-5
+```
+
+Dann: `python pipeline.py --step brief`. Das Verhalten ist identisch.
+
 ## ADR-10: Plotly für interaktive Karte, matplotlib für PNG Charts
 
 **Kontext.** Visualisierung muss sowohl interaktiv (für die Stakeholder) als auch statisch (für Reports und Slides) verfügbar sein.

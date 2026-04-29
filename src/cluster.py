@@ -35,27 +35,34 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.config import settings
+
 warnings.filterwarnings("ignore")
 
 # ---------------------------------------------------------------------------
 # Paths and hyperparameters
 # ---------------------------------------------------------------------------
+#
+# Hyperparameters live in src/config.py and are loaded from environment
+# variables via Pydantic Settings. The aliases below keep the rest of the
+# module readable. Any deployment can override via PIPELINE_CLUSTER_* env
+# vars. See docs/decisions.md (ADR-12) for the precedence rules.
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 OUT = ROOT / "output"
 CLUSTERING = OUT / "clustering"
 
-EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+EMBED_MODEL = settings.cluster_embedding_model
 
-UMAP_N_NEIGHBORS = 15
-UMAP_RANDOM_STATE = 42
-UMAP_METRIC = "cosine"
+UMAP_N_NEIGHBORS = settings.cluster_umap_neighbors
+UMAP_RANDOM_STATE = settings.cluster_umap_random_state
+UMAP_METRIC = settings.cluster_umap_metric
 
-HDBSCAN_MIN_CLUSTER_SIZE = 15
-HDBSCAN_MIN_SAMPLES = 5
-HDBSCAN_METHOD = "eom"
-HDBSCAN_METRIC = "euclidean"
+HDBSCAN_MIN_CLUSTER_SIZE = settings.cluster_hdbscan_mcs
+HDBSCAN_MIN_SAMPLES = settings.cluster_hdbscan_ms
+HDBSCAN_METHOD = settings.cluster_hdbscan_method
+HDBSCAN_METRIC = settings.cluster_hdbscan_metric
 
 # Manual cluster labels, derived once from inspection of the recovered run.
 # Keeping them stable means re-runs with random_state=42 produce the same

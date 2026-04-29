@@ -15,10 +15,24 @@ on:
         description: "Skip LLM call (write stubs only, useful for wiring tests)"
         type: boolean
         default: false
+      brief_provider:
+        description: "Brief LLM provider"
+        type: choice
+        options: [api, openai]
+        default: api
       model:
-        description: "Override brief model id (default: claude-sonnet-4-6). Only used if dry_run=false."
+        description: "Override brief model id (defaults: api=claude-sonnet-4-6, openai=gpt-5). Only used if dry_run=false."
         type: string
         default: ""
+      enrich_provider:
+        description: "Enrich provider"
+        type: choice
+        options: [estimate, dataforseo]
+        default: estimate
+      max_keywords:
+        description: "Maximum keyword count after discover"
+        type: string
+        default: "500"
 
 permissions:
   contents: read
@@ -44,18 +58,28 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Verify secret
+      - name: Verify provider secret
         if: ${{ !inputs.dry_run }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          BRIEF_PROVIDER: ${{ inputs.brief_provider }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::error::ANTHROPIC_API_KEY secret is not set."
-            echo "Add it under Settings -> Secrets and variables -> Actions,"
-            echo "or re-run with dry_run=true to test the wiring without an API key."
-            exit 1
+          if [ "$BRIEF_PROVIDER" = "api" ]; then
+            if [ -z "$ANTHROPIC_API_KEY" ]; then
+              echo "::error::ANTHROPIC_API_KEY secret missing for --brief-provider api."
+              echo "Add it under Settings -> Secrets and variables -> Actions, or use dry_run=true."
+              exit 1
+            fi
+            echo "ANTHROPIC_API_KEY present (length: ${#ANTHROPIC_API_KEY})"
+          elif [ "$BRIEF_PROVIDER" = "openai" ]; then
+            if [ -z "$OPENAI_API_KEY" ]; then
+              echo "::error::OPENAI_API_KEY secret missing for --brief-provider openai."
+              echo "Add it under Settings -> Secrets and variables -> Actions, or use dry_run=true."
+              exit 1
+            fi
+            echo "OPENAI_API_KEY present (length: ${#OPENAI_API_KEY})"
           fi
-          echo "ANTHROPIC_API_KEY present (length: ${#ANTHROPIC_API_KEY})"
 
       - name: Cache sentence-transformers model
         uses: actions/cache@v4
@@ -66,13 +90,20 @@ jobs:
           key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
 
       - name: Run pipeline (5 steps incl. brief)
+        # Pipeline-Settings als PIPELINE_* env vars. Pydantic Settings in
+        # src/config.py liest sie automatisch. CLI-Flags würden die env
+        # Werte überschreiben, aber wir passen alles über env.
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          PIPELINE_BRIEF_PROVIDER: ${{ inputs.brief_provider }}
+          PIPELINE_BRIEF_MODEL: ${{ inputs.model }}
+          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
+          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
         run: |
-          python pipeline.py \
-            --brief-provider api \
-            ${{ inputs.dry_run && '--dry-run' || '' }} \
-            ${{ inputs.model != '' && format('--brief-model {0}', inputs.model) || '' }}
+          python pipeline.py ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: Show run summary
         run: |

@@ -58,6 +58,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.config import settings
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "output"
 BRIEFINGS = OUT / "briefings"
@@ -66,7 +68,7 @@ LABELED_CSV = OUT / "clustering" / "keywords_labeled.csv"
 
 DEFAULT_API_MODEL = "claude-sonnet-4-6"
 DEFAULT_OPENAI_MODEL = "gpt-5"
-MAX_TOKENS = 4096
+MAX_TOKENS = settings.brief_max_tokens
 
 SYSTEM_PROMPT = """Du bist Senior Content Strategist für den deutschen B2B SaaS Markt.
 Spezialgebiet: Personaldienstleistung, Zeitarbeit, Recruiting Software, Compliance.
@@ -387,19 +389,25 @@ def run(provider_name: str = "api", model: str | None = None,
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("--provider", choices=["api", "openai", "max"], default="api",
+    p.add_argument("--provider", choices=["api", "openai", "max"], default=None,
                    help="api: anthropic SDK + ANTHROPIC_API_KEY (CI-safe). "
                         "openai: openai SDK + OPENAI_API_KEY (CI-safe). "
                         "max: claude-agent-sdk + local Claude Code session (Max-Abo, local only). "
-                        "Default: api.")
+                        f"Default from settings: {settings.brief_provider}.")
     p.add_argument("--model", default=None,
                    help=f"model id, valid with --provider api or openai. "
-                        f"Defaults: api={DEFAULT_API_MODEL}, openai={DEFAULT_OPENAI_MODEL}.")
+                        f"Provider defaults: api={DEFAULT_API_MODEL}, openai={DEFAULT_OPENAI_MODEL}. "
+                        f"Settings default: {settings.brief_model or 'provider default'}.")
     p.add_argument("--dry-run", action="store_true",
                    help="skip LLM calls, write stubs (no provider needed).")
     p.add_argument("--cluster", type=int, default=None,
                    help="only generate this cluster id (0-based).")
     args = p.parse_args()
+    # CLI > settings > defaults. If CLI flag is None, fall back to settings.
+    if args.provider is None:
+        args.provider = settings.brief_provider
+    if args.model is None:
+        args.model = settings.brief_model
     run(provider_name=args.provider, model=args.model,
         dry_run=args.dry_run, cluster_filter=args.cluster)
 

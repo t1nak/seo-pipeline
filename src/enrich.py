@@ -29,6 +29,8 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
+from src.config import settings
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DEFAULT_CSV = DATA / "keywords.csv"
@@ -202,11 +204,13 @@ def run(provider: str, in_csv: Path, out_csv: Path) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("--provider", choices=["estimate", "dataforseo"], default="estimate")
+    p.add_argument("--provider", choices=["estimate", "dataforseo"], default=None,
+                   help=f"default from settings: {settings.enrich_provider}")
     p.add_argument("--in", dest="inp", default=str(DEFAULT_CSV))
     p.add_argument("--out", dest="outp", default=str(DEFAULT_CSV))
     args = p.parse_args()
-    run(args.provider, Path(args.inp), Path(args.outp))
+    provider = args.provider or settings.enrich_provider
+    run(provider, Path(args.inp), Path(args.outp))
 
 
 if __name__ == "__main__":

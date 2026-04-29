@@ -3,7 +3,7 @@
 !!! abstract "Was diese Pipeline macht"
     Aus dem zvoove Blog wird ein priorisiertes Keyword Set, daraus thematische Cluster, daraus Content Briefs, daraus ein interaktives Reporting. Fünf entkoppelte Schritte. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo.
 
-![Cluster Übersicht](assets/cluster_overview.png)
+![Pipeline Architektur](landing_diagram.svg)
 
 ## Das Problem in einem Satz
 

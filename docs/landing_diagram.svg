@@ -1,0 +1,112 @@
+<svg width="100%" viewBox="0 0 820 760" role="img" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title>SEO Keyword Pipeline für zvoove: Architektur</title>
+  <desc>Fünf Pipeline-Schritte als gestapelte Karten plus Infrastruktur-Zeile am Fuß.</desc>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+    <filter id="card-shadow" x="-2%" y="-2%" width="104%" height="110%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- Outer frame -->
+  <rect x="20" y="20" width="780" height="720" rx="18" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="42" y="52" font-size="15" font-weight="700" fill="#0f172a">SEO Keyword Pipeline für zvoove</text>
+  <text x="42" y="72" font-size="12" fill="#64748b">Lokale Pipeline plus GitHub Actions, das die Doku-Site automatisch baut und passwortgeschützt deployed</text>
+
+  <!-- ============================================================
+       STEP 1 - DISCOVER
+       ============================================================ -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="100" width="720" height="80" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1"/>
+    <circle cx="80" cy="140" r="14" fill="#2563eb"/>
+    <text x="80" y="146" font-size="13" font-weight="700" fill="white" text-anchor="middle">1</text>
+    <text x="108" y="128" font-size="14" font-weight="700" fill="#1e3a8a">Discover · Keywords ableiten</text>
+    <text x="108" y="148" font-size="12" fill="#1e40af">Blog zvoove.de/wissen/blog ▸ Seed Keywords (Stub, nutzt 504 kuratierte Keywords)</text>
+    <text x="108" y="166" font-size="11" fill="#475569" font-style="italic">Output: data/keywords.csv</text>
+  </g>
+  <line x1="410" y1="180" x2="410" y2="200" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ============================================================
+       STEP 2 - ENRICH
+       ============================================================ -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="200" width="720" height="80" rx="10" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+    <circle cx="80" cy="240" r="14" fill="#ea580c"/>
+    <text x="80" y="246" font-size="13" font-weight="700" fill="white" text-anchor="middle">2</text>
+    <text x="108" y="228" font-size="14" font-weight="700" fill="#7c2d12">Enrich · Suchvolumen, Difficulty, CPC</text>
+    <text x="108" y="248" font-size="12" fill="#9a3412">DataForSEO Labs API (Live) oder deterministische Heuristik (kostenlos, reproduzierbar)</text>
+    <text x="108" y="266" font-size="11" fill="#475569" font-style="italic">Output: data/keywords.csv mit SV, KD, CPC, Priority Score</text>
+  </g>
+  <line x1="410" y1="280" x2="410" y2="300" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ============================================================
+       STEP 3 - CLUSTER
+       ============================================================ -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="300" width="720" height="100" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
+    <circle cx="80" cy="350" r="14" fill="#059669"/>
+    <text x="80" y="356" font-size="13" font-weight="700" fill="white" text-anchor="middle">3</text>
+    <text x="108" y="328" font-size="14" font-weight="700" fill="#064e3b">Cluster · semantische Gruppen finden</text>
+    <text x="108" y="348" font-size="12" fill="#047857">MiniLM Embeddings (mehrsprachig) ▸ UMAP Reduktion ▸ HDBSCAN ▸ 13 Cluster + 71 Ausreißer</text>
+    <text x="108" y="366" font-size="12" fill="#047857">Manuelle DE+EN Labels, statische Reproduzierbarkeit (random_state=42, Silhouette 0,64)</text>
+    <text x="108" y="384" font-size="11" fill="#475569" font-style="italic">Output: 6 Diagnose-Charts, interaktive Plotly-Karte (DE/EN), cluster_profiles.csv</text>
+  </g>
+  <line x1="410" y1="400" x2="410" y2="420" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ============================================================
+       STEP 4 - BRIEF
+       ============================================================ -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="420" width="720" height="80" rx="10" fill="#e9d5ff" stroke="#9333ea" stroke-width="1"/>
+    <circle cx="80" cy="460" r="14" fill="#9333ea"/>
+    <text x="80" y="466" font-size="13" font-weight="700" fill="white" text-anchor="middle">4</text>
+    <text x="108" y="448" font-size="14" font-weight="700" fill="#581c87">Brief · pro Cluster ein Content-Brief</text>
+    <text x="108" y="468" font-size="12" fill="#7c2d92">Claude API (sonnet-4-6) mit Prompt Caching, ungefähr 0,20 USD pro 13-Cluster-Lauf</text>
+    <text x="108" y="486" font-size="11" fill="#475569" font-style="italic">Output: output/briefings/cluster_NN.md, je mit Persona, Outline, Benchmarks, CTA</text>
+  </g>
+  <line x1="410" y1="500" x2="410" y2="520" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ============================================================
+       STEP 5 - REPORT
+       ============================================================ -->
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="520" width="720" height="80" rx="10" fill="#f3f4f6" stroke="#4b5563" stroke-width="1"/>
+    <circle cx="80" cy="560" r="14" fill="#4b5563"/>
+    <text x="80" y="566" font-size="13" font-weight="700" fill="white" text-anchor="middle">5</text>
+    <text x="108" y="548" font-size="14" font-weight="700" fill="#111827">Report · konsolidiertes Dashboard</text>
+    <text x="108" y="568" font-size="12" fill="#374151">KPIs, Cluster-Tabelle, eingebettete Charts, Brief-Links auf einer HTML-Seite</text>
+    <text x="108" y="586" font-size="11" fill="#475569" font-style="italic">Output: output/reporting/index.html, embedbar in Wiki, Slack, Notion</text>
+  </g>
+
+  <!-- ============================================================
+       INFRASTRUCTURE ROW
+       ============================================================ -->
+  <text x="410" y="635" font-size="11" font-weight="600" fill="#94a3b8" text-anchor="middle" letter-spacing="1.5">INFRASTRUKTUR</text>
+
+  <g filter="url(#card-shadow)">
+    <rect x="50" y="650" width="170" height="60" rx="8" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="135" y="676" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">GitHub Actions</text>
+    <text x="135" y="694" font-size="10" fill="#64748b" text-anchor="middle">Build plus Deploy</text>
+  </g>
+
+  <g filter="url(#card-shadow)">
+    <rect x="232" y="650" width="170" height="60" rx="8" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="317" y="676" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">GitHub Pages</text>
+    <text x="317" y="694" font-size="10" fill="#64748b" text-anchor="middle">öffentliche URL</text>
+  </g>
+
+  <g filter="url(#card-shadow)">
+    <rect x="414" y="650" width="170" height="60" rx="8" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="499" y="676" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">StatiCrypt</text>
+    <text x="499" y="694" font-size="10" fill="#64748b" text-anchor="middle">Passwort-Gate</text>
+  </g>
+
+  <g filter="url(#card-shadow)">
+    <rect x="596" y="650" width="170" height="60" rx="8" fill="white" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="681" y="676" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">Snapshots</text>
+    <text x="681" y="694" font-size="10" fill="#64748b" text-anchor="middle">output/_archive/</text>
+  </g>
+</svg>

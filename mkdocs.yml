@@ -14,15 +14,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: amber
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Dark Mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: amber
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Light Mode
@@ -96,5 +96,8 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/t1nak/seo-pipeline
   generator: false
+
+extra_css:
+  - stylesheets/extra.css
 
 copyright: Tina Koziol, Case Study für eine Bewerbung als Revenue AI Architect

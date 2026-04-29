@@ -31,6 +31,11 @@ from typing import Iterable
 
 from src.config import settings
 
+import logging
+from src.logging_config import setup_logging
+
+logger = logging.getLogger(__name__)
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 DEFAULT_CSV = DATA / "keywords.csv"
@@ -167,13 +172,13 @@ def fetch_dataforseo(keywords: Iterable[str]) -> dict[str, dict]:
 
 def run(provider: str, in_csv: Path, out_csv: Path) -> None:
     rows = list(csv.DictReader(open(in_csv, encoding="utf-8")))
-    print(f"[enrich] read {len(rows)} keywords from {in_csv.relative_to(ROOT)}")
+    logger.info(f"read {len(rows)} keywords from {in_csv.relative_to(ROOT)}")
 
     live: dict[str, dict] = {}
     if provider == "dataforseo":
-        print("[enrich] fetching live data from DataForSEO ...")
+        logger.info("fetching live data from DataForSEO ...")
         live = fetch_dataforseo(r["keyword"] for r in rows)
-        print(f"[enrich] enriched {len(live)} keywords from DataForSEO")
+        logger.info(f"enriched {len(live)} keywords from DataForSEO")
 
     fieldnames = list(rows[0].keys())
     new_cols = ["search_volume", "kd", "cpc_eur", "serp_features",
@@ -199,10 +204,11 @@ def run(provider: str, in_csv: Path, out_csv: Path) -> None:
         w = csv.DictWriter(f, fieldnames=fieldnames)
         w.writeheader()
         w.writerows(rows)
-    print(f"[enrich] wrote {out_csv.relative_to(ROOT)}")
+    logger.info(f"wrote {out_csv.relative_to(ROOT)}")
 
 
 def main() -> None:
+    setup_logging()
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--provider", choices=["estimate", "dataforseo"], default=None,
                    help=f"default from settings: {settings.enrich_provider}")

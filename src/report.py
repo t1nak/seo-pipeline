@@ -28,6 +28,11 @@ from pathlib import Path
 
 import pandas as pd
 
+import logging
+from src.logging_config import setup_logging
+
+logger = logging.getLogger(__name__)
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "output"
 REPORTING = OUT / "reporting"
@@ -141,10 +146,11 @@ def run() -> None:
     html_str = build_html(profiles)
     out = REPORTING / "index.html"
     out.write_text(html_str)
-    print(f"[report] wrote {out.relative_to(ROOT)} ({out.stat().st_size / 1024:.1f} KB)")
+    logger.info(f"wrote {out.relative_to(ROOT)} ({out.stat().st_size / 1024:.1f} KB)")
 
 
 def main() -> None:
+    setup_logging()
     argparse.ArgumentParser(description=__doc__.split("\n\n")[0]).parse_args()
     run()
 

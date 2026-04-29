@@ -29,6 +29,11 @@ from pathlib import Path
 
 import pandas as pd
 
+import logging
+from src.logging_config import setup_logging
+
+logger = logging.getLogger(__name__)
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "output"
 BRIEFINGS = OUT / "briefings"
@@ -463,7 +468,7 @@ def run() -> None:
         display_id = cid + 1
         md_path = BRIEFINGS / f"cluster_{display_id:02d}.md"
         if not md_path.exists():
-            print(f"[briefs_html] WARN: brief missing for cluster {cid}, skipping")
+            logger.info(f"WARN: brief missing for cluster {cid}, skipping")
             continue
         md = md_path.read_text(encoding="utf-8")
         title_match = re.match(r"#\s+(.+)", md.strip())
@@ -590,11 +595,12 @@ document.addEventListener('keydown', function(e) {{ if (e.key === 'Escape') clos
     out = BRIEFINGS / "index.html"
     out.write_text(page, encoding="utf-8")
     size_kb = out.stat().st_size / 1024
-    print(f"[briefs_html] wrote {out.relative_to(ROOT)} ({size_kb:.1f} KB, "
+    logger.info(f"wrote {out.relative_to(ROOT)} ({size_kb:.1f} KB, "
           f"{len(cards)} cluster cards)")
 
 
 def main() -> None:
+    setup_logging()
     argparse.ArgumentParser(description=__doc__.split("\n\n")[0]).parse_args()
     run()
 

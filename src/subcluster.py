@@ -21,6 +21,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import logging
+from src.logging_config import setup_logging
+
+logger = logging.getLogger(__name__)
+
 warnings.filterwarnings("ignore")
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -43,7 +48,7 @@ def run(cluster_id: int, mcs: int, ms: int, method: str) -> None:
 
     sub_emb = emb[mask]
     sub_df = df[mask].reset_index(drop=True).copy()
-    print(f"[subcluster] cluster {cluster_id}: {n} keywords, "
+    logger.info(f"cluster {cluster_id}: {n} keywords, "
           f"label={sub_df['hdb_label_de'].iloc[0]}")
 
     # Re-run UMAP on just this slice (different distribution -> different reduction)
@@ -63,16 +68,16 @@ def run(cluster_id: int, mcs: int, ms: int, method: str) -> None:
     noise = int((labs == -1).sum())
     sil = (silhouette_score(red5[labs != -1], labs[labs != -1])
            if n_clu > 1 and (labs != -1).sum() > 10 else float("nan"))
-    print(f"[subcluster] {n_clu} sub-clusters, {noise} noise "
+    logger.info(f"{n_clu} sub-clusters, {noise} noise "
           f"({noise/n*100:.1f}%), silhouette={sil:.3f}")
 
     # Save full slice with sub-cluster label
     out_csv = CLUSTERING / f"sub_cluster_{cluster_id:02d}.csv"
     sub_df.to_csv(out_csv, index=False)
-    print(f"[subcluster] wrote {out_csv.relative_to(ROOT)}")
+    logger.info(f"wrote {out_csv.relative_to(ROOT)}")
 
     # Per sub-cluster top keywords + frequent terms
-    print("\n=== Sub-Cluster Profiles ===")
+    logger.info("\n=== Sub-Cluster Profiles ===")
     rows = []
     for sub_cid in sorted(sub_df["sub_cluster"].unique()):
         s = sub_df[sub_df["sub_cluster"] == sub_cid].sort_values(
@@ -82,9 +87,9 @@ def run(cluster_id: int, mcs: int, ms: int, method: str) -> None:
         terms = _top_terms(s["keyword"].tolist(), 6)
         total_sv = int(s["search_volume"].sum())
         pct_comm = round(float((s["estimated_intent"] == "commercial").mean() * 100), 0)
-        print(f"\n--- {name} (n={len(s)}, SV={total_sv:,}, {int(pct_comm)}% komm) ---")
-        print(f"  top keywords: {'; '.join(top_kw[:5])}")
-        print(f"  frequent terms: {', '.join(terms)}")
+        logger.info(f"\n--- {name} (n={len(s)}, SV={total_sv:,}, {int(pct_comm)}% komm) ---")
+        logger.info(f"  top keywords: {'; '.join(top_kw[:5])}")
+        logger.info(f"  frequent terms: {', '.join(terms)}")
         rows.append({
             "parent_cluster": cluster_id,
             "sub_cluster_id": int(sub_cid),
@@ -100,7 +105,7 @@ def run(cluster_id: int, mcs: int, ms: int, method: str) -> None:
     profiles = pd.DataFrame(rows)
     out_prof = CLUSTERING / f"sub_cluster_{cluster_id:02d}_profiles.csv"
     profiles.to_csv(out_prof, index=False)
-    print(f"\n[subcluster] wrote {out_prof.relative_to(ROOT)}")
+    logger.info(f"\n[subcluster] wrote {out_prof.relative_to(ROOT)}")
 
 
 def _top_terms(keywords: list[str], k: int = 6) -> list[str]:
@@ -117,6 +122,7 @@ def _top_terms(keywords: list[str], k: int = 6) -> list[str]:
 
 
 def main() -> None:
+    setup_logging()
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--cluster", type=int, required=True,
                    help="parent cluster id (0-based) to sub-cluster")

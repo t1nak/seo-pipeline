@@ -37,6 +37,11 @@ import pandas as pd
 
 from src.config import settings
 
+import logging
+from src.logging_config import setup_logging
+
+logger = logging.getLogger(__name__)
+
 warnings.filterwarnings("ignore")
 
 # ---------------------------------------------------------------------------
@@ -118,8 +123,8 @@ def step_clean(input_csv: Path = DATA / "keywords.csv",
     CLUSTERING.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(input_csv)
-    print(f"[clean] loaded {len(df)} rows, {df.shape[1]} cols")
-    print(f"[clean] dupes (keyword): {df.duplicated(subset=['keyword']).sum()}")
+    logger.info(f"loaded {len(df)} rows, {df.shape[1]} cols")
+    logger.info(f"dupes (keyword): {df.duplicated(subset=['keyword']).sum()}")
 
     for col in ("search_volume", "kd", "cpc_eur", "priority_score"):
         df[col] = pd.to_numeric(df[col], errors="coerce")
@@ -132,7 +137,7 @@ def step_clean(input_csv: Path = DATA / "keywords.csv",
         df["orig_cluster_name"] = df["category"].map(names)
 
     df.to_csv(F_CLEAN, index=False)
-    print(f"[clean] wrote {F_CLEAN.relative_to(ROOT)} ({len(df)} rows)")
+    logger.info(f"wrote {F_CLEAN.relative_to(ROOT)} ({len(df)} rows)")
     return df
 
 
@@ -151,12 +156,12 @@ def step_embed() -> np.ndarray:
     from sentence_transformers import SentenceTransformer
 
     df = pd.read_csv(F_CLEAN)
-    print(f"[embed] encoding {len(df)} keywords with {EMBED_MODEL}")
+    logger.info(f"encoding {len(df)} keywords with {EMBED_MODEL}")
     model = SentenceTransformer(EMBED_MODEL)
     emb = model.encode(df["keyword"].tolist(), show_progress_bar=False,
                        normalize_embeddings=True)
     np.save(F_EMB, emb)
-    print(f"[embed] wrote {F_EMB.relative_to(ROOT)}, shape={emb.shape}")
+    logger.info(f"wrote {F_EMB.relative_to(ROOT)}, shape={emb.shape}")
     return emb
 
 
@@ -174,7 +179,7 @@ def step_reduce() -> tuple[np.ndarray, np.ndarray]:
     import umap
 
     emb = np.load(F_EMB)
-    print(f"[reduce] UMAP {emb.shape[1]}D -> 5D (clustering) + 2D (viz)")
+    logger.info(f"UMAP {emb.shape[1]}D -> 5D (clustering) + 2D (viz)")
     red5 = umap.UMAP(n_neighbors=UMAP_N_NEIGHBORS, n_components=5,
                      metric=UMAP_METRIC, min_dist=0.0,
                      random_state=UMAP_RANDOM_STATE).fit_transform(emb)
@@ -183,7 +188,7 @@ def step_reduce() -> tuple[np.ndarray, np.ndarray]:
                      random_state=UMAP_RANDOM_STATE).fit_transform(emb)
     np.save(F_UMAP_5D, red5)
     np.save(F_UMAP_2D, red2)
-    print(f"[reduce] wrote {F_UMAP_5D.relative_to(ROOT)}, {F_UMAP_2D.relative_to(ROOT)}")
+    logger.info(f"wrote {F_UMAP_5D.relative_to(ROOT)}, {F_UMAP_2D.relative_to(ROOT)}")
     return red5, red2
 
 
@@ -203,7 +208,7 @@ def step_sweep() -> pd.DataFrame:
 
     red5 = np.load(F_UMAP_5D)
     rows = []
-    print(f"{'mcs':>4} {'ms':>4} {'method':>6} {'n_clu':>6} {'noise':>6} "
+    logger.info(f"{'mcs':>4} {'ms':>4} {'method':>6} {'n_clu':>6} {'noise':>6} "
           f"{'noise%':>7} {'sil':>7}")
     for mcs in (5, 8, 10, 12, 15, 20):
         for ms in (1, 5):
@@ -220,7 +225,7 @@ def step_sweep() -> pd.DataFrame:
                 rows.append({"mcs": mcs, "ms": ms, "method": method,
                              "n_clusters": n_clu, "noise": noise,
                              "noise_pct": noise / len(labs), "silhouette": sil})
-                print(f"{mcs:>4} {ms:>4} {method:>6} {n_clu:>6} {noise:>6} "
+                logger.info(f"{mcs:>4} {ms:>4} {method:>6} {n_clu:>6} {noise:>6} "
                       f"{noise / len(labs) * 100:>6.1f}% {sil:>7.3f}")
     return pd.DataFrame(rows)
 
@@ -240,7 +245,7 @@ def step_cluster() -> pd.DataFrame:
     red5 = np.load(F_UMAP_5D)
     df = pd.read_csv(F_CLEAN)
 
-    print(f"[cluster] HDBSCAN mcs={HDBSCAN_MIN_CLUSTER_SIZE} "
+    logger.info(f"HDBSCAN mcs={HDBSCAN_MIN_CLUSTER_SIZE} "
           f"ms={HDBSCAN_MIN_SAMPLES} method={HDBSCAN_METHOD}")
     cl = hdbscan.HDBSCAN(min_cluster_size=HDBSCAN_MIN_CLUSTER_SIZE,
                          min_samples=HDBSCAN_MIN_SAMPLES,
@@ -250,30 +255,30 @@ def step_cluster() -> pd.DataFrame:
     df["hdb"] = labs
     n_clu = len(set(labs)) - (1 if -1 in labs else 0)
     noise = int((labs == -1).sum())
-    print(f"[cluster] {n_clu} clusters, {noise} noise points "
+    logger.info(f"{n_clu} clusters, {noise} noise points "
           f"({noise / len(labs) * 100:.1f}%)")
-    print(f"[cluster] sizes: {sorted(Counter(labs).items())}")
+    logger.info(f"sizes: {sorted(Counter(labs).items())}")
 
-    print("[cluster] Ward hierarchical comparison (k=8,10,12)")
+    logger.info("Ward hierarchical comparison (k=8,10,12)")
     Z = linkage(red5, method="ward")
     for k in (8, 10, 12):
         h = fcluster(Z, t=k, criterion="maxclust")
         sil = silhouette_score(red5, h)
-        print(f"          k={k}: silhouette={sil:.3f}")
+        logger.info(f"          k={k}: silhouette={sil:.3f}")
     df["hier10"] = fcluster(Z, t=10, criterion="maxclust")
     df["hier12"] = fcluster(Z, t=12, criterion="maxclust")
 
     mask = df["hdb"] != -1
     orig = df["category"].astype("category").cat.codes
-    print("[cluster] agreement metrics (excluding HDBSCAN noise)")
-    print(f"          HDB vs LLM original  ARI={adjusted_rand_score(orig[mask], df['hdb'][mask]):.3f}, "
+    logger.info("agreement metrics (excluding HDBSCAN noise)")
+    logger.info(f"          HDB vs LLM original  ARI={adjusted_rand_score(orig[mask], df['hdb'][mask]):.3f}, "
           f"NMI={normalized_mutual_info_score(orig[mask], df['hdb'][mask]):.3f}")
-    print(f"          Hier(10) vs LLM      ARI={adjusted_rand_score(orig, df['hier10']):.3f}, "
+    logger.info(f"          Hier(10) vs LLM      ARI={adjusted_rand_score(orig, df['hier10']):.3f}, "
           f"NMI={normalized_mutual_info_score(orig, df['hier10']):.3f}")
-    print(f"          HDB vs Hier(10)      ARI={adjusted_rand_score(df['hier10'][mask], df['hdb'][mask]):.3f}")
+    logger.info(f"          HDB vs Hier(10)      ARI={adjusted_rand_score(df['hier10'][mask], df['hdb'][mask]):.3f}")
 
     df.to_csv(F_LABELED, index=False)
-    print(f"[cluster] wrote {F_LABELED.relative_to(ROOT)}")
+    logger.info(f"wrote {F_LABELED.relative_to(ROOT)}")
     return df
 
 
@@ -289,7 +294,7 @@ def step_label() -> pd.DataFrame:
     df["hdb_label_de"] = df["hdb"].map(CLUSTER_LABELS_DE)
     df.to_csv(F_LABELED, index=False)
     n = df["hdb_label"].notna().sum()
-    print(f"[label] attached labels to {n}/{len(df)} rows")
+    logger.info(f"attached labels to {n}/{len(df)} rows")
     return df
 
 
@@ -335,7 +340,7 @@ def step_profile() -> pd.DataFrame:
         })
     prof = pd.DataFrame(rows)
     prof.to_csv(F_PROFILES, index=False)
-    print(f"[profile] wrote {F_PROFILES.relative_to(ROOT)} ({len(prof)} clusters)")
+    logger.info(f"wrote {F_PROFILES.relative_to(ROOT)} ({len(prof)} clusters)")
     return prof
 
 
@@ -465,7 +470,7 @@ def step_charts() -> None:
     fig.savefig(CLUSTERING / "chart6_method_agreement.png", dpi=140, bbox_inches="tight")
     plt.close(fig)
 
-    print(f"[charts] wrote 6 PNGs to {CLUSTERING.relative_to(ROOT)}")
+    logger.info(f"wrote 6 PNGs to {CLUSTERING.relative_to(ROOT)}")
 
 
 # ---------------------------------------------------------------------------
@@ -484,7 +489,7 @@ def step_viz() -> Path:
                                   labels_de=CLUSTER_LABELS_DE)
     F_VIZ.write_text(html)
     size_kb = F_VIZ.stat().st_size / 1024
-    print(f"[viz] wrote {F_VIZ.relative_to(ROOT)} ({size_kb:.0f} KB)")
+    logger.info(f"wrote {F_VIZ.relative_to(ROOT)} ({size_kb:.0f} KB)")
     return F_VIZ
 
 
@@ -511,6 +516,7 @@ DEFAULT_SEQUENCE = ("clean", "embed", "reduce", "cluster", "label", "profile",
 
 
 def main() -> None:
+    setup_logging()
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--step", default="all",
                    help="comma-separated steps from: " + ", ".join(STEPS) + " (or 'all')")
@@ -523,7 +529,7 @@ def main() -> None:
         raise SystemExit(f"unknown step(s): {unknown}. valid: {list(STEPS)}")
 
     for name in requested:
-        print(f"\n=== {name} ===")
+        logger.info(f"\n=== {name} ===")
         STEPS[name]()
 
 

@@ -14,10 +14,15 @@ Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch
 
 ### Wo Verbesserungspotenzial liegt
 
-- **Keine Tests.** `tests/` enthält nur ein leeres `__init__.py`. In Produktion würde ich mindestens hinzufügen: Smoke-Test für jeden Pipeline-Schritt (mit kleinem Test-Dataset), Reproduzierbarkeits-Test (zweiter Lauf gleiche Hashes), Integrationstest für den vollen Pipeline-Lauf in CI. Backlog-Punkt mit Priorität "vor erstem Production-Deploy".
-- **Keine zentrale Konfiguration.** Hyperparameter sind in `src/cluster.py` als Konstanten, nicht in einer YAML/TOML. Für 5 Parameter ist das pragmatisch, ab 15 Parametern unhandlich. Bei Skalierung: Pydantic-Settings oder `dynaconf` einführen.
-- **Logging fehlt.** Alle Module verwenden `print()` statt `logging`. Für Produktion: strukturiertes JSON-Logging mit Levels, Per-Run-Log-Datei in `output/_archive/<run-id>/run.log`.
 - **Kein Run-Log in einer Datenbank.** Snapshots in `output/_archive/` sind ein dateisystem-basierter Ersatz, skalieren aber nicht über 30 plus Läufe. SQLite mit `run_id, timestamp, step, status, rows_in, rows_out, duration` würde 30 Minuten Aufwand bedeuten und vieles vereinfachen.
+- **JSON-strukturiertes Logging fehlt.** Logging ist zwar via stdlib `logging` zentral konfiguriert (siehe ADR-13), aber das Format ist menschen-lesbar, nicht maschinen-lesbar. Für Aggregator-Tools (Loki, Datadog) wäre JSON besser. Backlog-Punkt für Production-Deploy.
+
+### Was inzwischen gelöst ist
+
+- **Strukturiertes Logging.** Alle Module nutzen `logging.getLogger(__name__)`. Setup zentral in `src/logging_config.py`, Level konfigurierbar via `PIPELINE_LOG_LEVEL`. Library-Logger werden gezielt auf WARNING gesetzt. Siehe ADR-13.
+- **Retry-Wrapper.** Brief-API-Calls sind mit `@with_retry()` (stdlib only) gegen transient errors abgesichert. Exponential Backoff plus Jitter, Cap bei 60 Sekunden, Honor `Retry-After` Header. Konfigurierbar via `PIPELINE_BRIEF_RETRY_*`. Siehe ADR-14.
+- **Pytest-Tests.** `tests/` enthält jetzt 21 Tests in 5 Dateien: Settings (Defaults und env Override), Retry-Decorator (transient + exhaustion + non-retryable), Brief-Helpers (Strip-Preamble, Stub-Detection, Stub-Generation), Enrich-Heuristik (Determinismus, KD-Range, Priority-Score), Smoke-Tests (Report, Briefs Dashboard, Dry-Run-Sicherheit). Run mit `pytest`.
+- **Zentrale Konfiguration.** Pydantic Settings in `src/config.py`, alle Hyperparameter via `PIPELINE_*` env vars konfigurierbar. Siehe ADR-12.
 
 ## 2. Code-Qualität
 
@@ -97,14 +102,24 @@ Skalierungs-Bottleneck: nicht die Pipeline selbst, sondern die Brief-Generierung
 
 ## 6. Testabdeckung
 
-Ist bewusst kein Schwerpunkt dieser Case Study, aber für Produktion würde ich mindestens:
+Aktuell 21 Tests in 5 Dateien, alle unter 0,5 Sekunden Laufzeit:
 
-- **Unit-Tests** für die Hilfsfunktionen in `cluster.py` (z.B. `_top_terms`), `brief.py` (z.B. `_strip_preamble`, `_looks_like_real_brief`), `enrich.py` (Heuristik mit bekanntem Hash-Output).
-- **Integrationstest** für den vollen Pipeline-Lauf auf einem 50-Keyword-Sub-Set, der in unter 30 Sekunden durchläuft.
-- **Smoke-Test in CI** der `python pipeline.py --dry-run` ausführt und prüft dass alle Output-Dateien existieren.
-- **Schema-Test** für `cluster_profiles.csv` und `keywords_labeled.csv` mit `pandera` oder `pydantic`.
+| Datei | Was getestet wird |
+|---|---|
+| `tests/test_config.py` | Settings-Defaults, env-Override, Validation rejects Tippfehler |
+| `tests/test_retry.py` | Retry-Decorator: kein Retry bei nicht-transient, Retry bei transient, Exhaustion, Default-Predicate erkennt Anthropic+OpenAI Klassen |
+| `tests/test_brief_helpers.py` | `_strip_preamble` (Agent-Narration-Schutz), `_stub_brief`, `_looks_like_real_brief` (Safety-Net) |
+| `tests/test_enrich_helpers.py` | Heuristik-Determinismus, Output-Schema, KD-Range-Klemmung, Priority-Score-Formel |
+| `tests/test_smoke.py` | Report-HTML, Briefs-Dashboard, Dry-Run-Safety (Brief-Schutz) |
 
-Aktueller Stand: leeres `tests/` Verzeichnis. Backlog-Punkt mit Priorität "vor erstem Production-Deploy".
+Run: `pytest`. Mit Coverage: `pytest --cov=src`.
+
+Was ich für volle Production-Reife noch ergänzen würde:
+
+- **Schema-Test** für `cluster_profiles.csv` und `keywords_labeled.csv` mit `pandera` (verifiziert Spalten-Typen und Wert-Ranges).
+- **Reproduzierbarkeits-Test** der zwei volle Cluster-Läufe vergleicht: `embeddings.npy`, `umap_*.npy`, `keywords_labeled.csv` müssen byte-identisch sein.
+- **Integrations-Test** auf einem 50-Keyword Sub-Set, der den vollen Cluster-Lauf in unter 30 Sekunden durchführt.
+- **Test in CI** als eigener `test.yml` Workflow, der bei jedem Pull Request läuft.
 
 ## 7. Anbieter-Wechsel und Vendor-Lock
 
@@ -161,14 +176,13 @@ Live-Site mit Suche und Sprache-Switcher unter https://t1nak.github.io/seo-pipel
 
 ## 10. Was würde ich in Produktion zuerst ergänzen
 
-Priorisiert nach Hebel pro Aufwand:
+Stand jetzt sind Tests, Logging, Retry und zentrale Settings bereits implementiert. Was bleibt für volle Production-Reife:
 
-1. **Tests** (4 bis 8 Stunden). Smoke-Tests plus Schema-Tests plus Reproduzierbarkeits-Test.
-2. **Strukturiertes Logging** (2 Stunden). `print()` durch `logging` ersetzen, JSON-Format, Per-Run-Log.
+1. **Discover live machen** (1 bis 2 Tage). Höchste Hebelwirkung auf den Geschäftswert.
+2. **Schema-Validation für CSV-Verträge** (3 Stunden). `pandera` oder Pydantic Models für `keywords.csv`, `cluster_profiles.csv`, `keywords_labeled.csv`.
 3. **Run-Log in SQLite** (3 Stunden). Tabelle mit `run_id, timestamp, step, status, duration, rows_in, rows_out`.
-4. **Discover live machen** (1 bis 2 Tage). Höchste Hebelwirkung auf den Geschäftswert.
-5. **Retry-Wrapper für API-Calls** (2 Stunden). Exponentieller Backoff, max 5 Versuche, Honor `retry-after` Header.
-6. **Schema-Validation** (3 Stunden). Pydantic Models für die CSV-Verträge zwischen Schritten.
-7. **Concurrent Brief-Generierung** (4 Stunden). `asyncio.gather` über die Cluster, Provider-seitiges Rate-Limiting.
+4. **Concurrent Brief-Generierung** (4 Stunden). `asyncio.gather` über die Cluster, Provider-seitiges Rate-Limiting.
+5. **JSON-strukturiertes Logging** (2 Stunden). Format-Wechsel auf JSON für Aggregator-Tools.
+6. **Test-Workflow in CI** (1 Stunde). Eigener `test.yml` der bei Pull Requests läuft.
 
-Zusammen ungefähr 3 Tage Engineering-Aufwand für ein Stand, der "Production-ready" verteidigbar wäre.
+Zusammen ungefähr 2 Tage Engineering-Aufwand für ein Stand, der "Production-ready" verteidigbar wäre. Der größte Brocken ist die Live-Discover-Implementierung, alles andere ist Polish.

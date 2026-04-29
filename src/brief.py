@@ -52,6 +52,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import logging
+from src.logging_config import setup_logging
 import os
 import sys
 from pathlib import Path
@@ -59,6 +61,9 @@ from pathlib import Path
 import pandas as pd
 
 from src.config import settings
+from src.retry import with_retry
+
+logger = logging.getLogger(__name__)
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "output"
@@ -176,6 +181,14 @@ def _looks_like_real_brief(path: Path) -> bool:
             and "Status:** Stub" not in text)
 
 
+def _short_path(path: Path) -> str:
+    """Path relative to ROOT if possible, else just the file name. For logs."""
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return path.name
+
+
 # ---------------------------------------------------------------------------
 # Providers
 # ---------------------------------------------------------------------------
@@ -214,6 +227,7 @@ class ApiKeyProvider(BriefProvider):
         self.model = model
         self._client = Anthropic(api_key=api_key)
 
+    @with_retry()
     def generate(self, system: str, user: str) -> str:
         msg = self._client.messages.create(
             model=self.model,
@@ -252,6 +266,7 @@ class OpenAIProvider(BriefProvider):
         self.model = model
         self._client = OpenAI(api_key=api_key)
 
+    @with_retry()
     def generate(self, system: str, user: str) -> str:
         msg = self._client.chat.completions.create(
             model=self.model,
@@ -342,7 +357,7 @@ def run(provider_name: str = "api", model: str | None = None,
     if not dry_run:
         provider = make_provider(provider_name, model)
         suffix = f" model={model}" if (model and provider.name == "api") else ""
-        print(f"[brief] provider={provider.name}{suffix}")
+        logger.info("provider=%s%s", provider.name, suffix)
 
     n_ok = n_fail = 0
     for _, row in profiles.iterrows():
@@ -361,10 +376,10 @@ def run(provider_name: str = "api", model: str | None = None,
             # Safety: do not overwrite a real, structured brief with a stub.
             # If the user wanted to reset, they can delete the file first.
             if _looks_like_real_brief(out_path):
-                print(f"[brief] (dry-run) skipping {out_path.name}, real brief in place")
+                logger.info("(dry-run) skipping %s, real brief in place", out_path.name)
                 continue
             out_path.write_text(_stub_brief(cid, label_de, top_kw))
-            print(f"[brief] (dry-run) {out_path.relative_to(ROOT)}")
+            logger.info("(dry-run) wrote %s", _short_path(out_path))
             n_ok += 1
             continue
 
@@ -376,18 +391,19 @@ def run(provider_name: str = "api", model: str | None = None,
             )
             text = _strip_preamble(text)
             out_path.write_text(text)
-            print(f"[brief] {out_path.relative_to(ROOT)} "
-                  f"({len(text)} chars, via {provider.name})")
+            logger.info("wrote %s (%d chars, via %s)",
+                        _short_path(out_path), len(text), provider.name)
             n_ok += 1
         except Exception as exc:
-            print(f"[brief] cluster {cid} FAILED: {exc}", file=sys.stderr)
+            logger.error("cluster %d FAILED: %s", cid, exc)
             out_path.write_text(_stub_brief(cid, label_de, top_kw))
             n_fail += 1
 
-    print(f"\n[brief] done. ok={n_ok} failed={n_fail}")
+    logger.info("done. ok=%d failed=%d", n_ok, n_fail)
 
 
 def main() -> None:
+    setup_logging()
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--provider", choices=["api", "openai", "max"], default=None,
                    help="api: anthropic SDK + ANTHROPIC_API_KEY (CI-safe). "

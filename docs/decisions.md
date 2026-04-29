@@ -218,6 +218,76 @@ class MistralProvider(BriefProvider):
 
 Plus eine Zeile in `make_provider()` und ein neuer Choice in den CLIs (`brief.py` und `pipeline.py`). Kein Code in den anderen Pipeline-Modulen ändert sich.
 
+## ADR-13: Strukturiertes Logging über stdlib `logging` statt `print()`
+
+**Kontext.** In der ersten Iteration verwendeten alle Module `print()` mit `[mod] message` Prefixen. Das ist für lokales Debugging OK, aber in Produktion und in CI-Logs unhandlich: keine Levels (kann ich `WARN` von `INFO` nicht trennen), keine Timestamps, keine strukturierten Felder, keine Möglichkeit eine Library zu silencen.
+
+**Entscheidung.** stdlib `logging` mit zentraler Konfiguration in `src/logging_config.py`. Jedes Modul hat sein eigenes `logger = logging.getLogger(__name__)`. Format: `Zeitstempel | Modul-Name | Level | Nachricht`. Verbosity über `PIPELINE_LOG_LEVEL` env var (default INFO).
+
+**Alternativen geprüft.**
+
+- `loguru`: schöne API, aber zusätzliche Abhängigkeit für minimalen Mehrwert.
+- `structlog`: gut für JSON-strukturiertes Logging, aber Overkill für eine Pipeline mit fünf Schritten.
+- `print()` weiter: keine Levels, kein Filter, keine zentrale Steuerung.
+
+**Konsequenzen.**
+
+- Pro: Standard-Werkzeug, jeder Engineer kennt es, kein Lock-in.
+- Pro: Library-Logger lassen sich gezielt silencen (`urllib3`, `httpx`, `transformers` werden auf `WARNING` gesetzt).
+- Pro: Über `PIPELINE_LOG_LEVEL=DEBUG` kann man pro Run die Verbosity erhöhen ohne Code-Änderung.
+- Pro: In CI ist das Format reproduzierbar grep-bar.
+- Contra: Format ist noch nicht JSON. Bei echtem Production-Aggregator (Loki, Datadog) wäre JSON besser. Backlog-Punkt.
+
+**Format-Beispiel.**
+
+```
+2026-04-29 12:34:56 | cluster.embed       | INFO  | encoding 500 keywords with MiniLM-L12
+2026-04-29 12:34:58 | cluster.embed       | INFO  | wrote output/clustering/embeddings.npy, shape=(500, 384)
+2026-04-29 12:35:02 | brief.ApiKeyProvider | WARN  | RateLimitError on attempt 1/5: 429 (retrying in 2.1s)
+2026-04-29 12:35:04 | brief               | INFO  | wrote output/briefings/cluster_05.md (3204 chars, via api)
+```
+
+## ADR-14: Retry-Wrapper mit exponentieller Backoff für API Calls
+
+**Kontext.** Brief-Generierung macht 10 sequentielle API-Calls pro Lauf. Jeder kann mit transient errors (Rate Limit 429, 5xx Status, Connection Timeout) fehlschlagen. Ohne Retry bricht der erste Fehler den ganzen Lauf ab. Das ist in Produktion nicht akzeptabel.
+
+**Entscheidung.** Eigener Retry-Decorator `@with_retry()` in `src/retry.py`. Stdlib only, keine externe Abhängigkeit (`tenacity` wäre einfacher, aber 70 Zeilen eigener Code zeigen den Mechanismus klarer).
+
+Standard-Verhalten:
+- Max 5 Versuche
+- Exponential Backoff: 2s, 4s, 8s, 16s, 32s (plus 25 Prozent Jitter)
+- Cap bei 60 Sekunden pro Wartezeit
+- Honor `Retry-After` Header wenn vorhanden
+- Nicht-transient errors (z.B. ValueError, AuthError) propagieren sofort
+
+Konfigurierbar über `PIPELINE_BRIEF_RETRY_*` env vars (max_attempts, base_delay, max_delay, multiplier).
+
+**Alternativen geprüft.**
+
+- `tenacity`: ausgereift, mehr Features (statistics, conditional retries, async). Aber zusätzliche Abhängigkeit für ein klar abgegrenztes Problem.
+- `urllib3` Retry-Adapter: nur HTTP-Layer, geht nicht durch SDK-Wrapper hindurch.
+- Keine Retry: in Produktion zu fragil.
+
+**Konsequenzen.**
+
+- Pro: Briefs sind robust gegen 429/529 ohne Pipeline-Abbruch.
+- Pro: Stdlib only, ~70 Zeilen, leicht zu reviewen.
+- Pro: Per-Deployment-konfigurierbar via Env Vars (z.B. CI mit weniger aggressivem Retry).
+- Contra: Transient-Klassen-Erkennung ist Klassen-Namen-basiert (`RateLimitError`, `APITimeoutError` etc.). Wenn das SDK seine Klassen umbenennt, müssen wir die Liste anpassen. Akzeptiert weil simpler als harte SDK-Imports.
+
+**Implementierung.**
+
+```python
+@with_retry()
+def generate(self, system: str, user: str) -> str:
+    msg = self._client.messages.create(...)
+    return msg.content[0].text
+```
+
+Der Decorator wrappt jeden API-Call. Bei 429 protokolliert er einen Warning, schläft mit exponentiellem Backoff plus Jitter, versucht es erneut.
+
+**Tests.** `tests/test_retry.py` deckt ab: nicht-transient Fehler propagieren, transient Fehler werden bis zur erfolgreichen Antwort wiederholt, max_attempts wird respektiert, default Predicate erkennt die Anthropic + OpenAI Klassen-Namen.
+
 ## ADR-12: Konfiguration über Environment Variables (Twelve-Factor)
 
 **Kontext.** Pipeline-Settings (Provider, Modell, Hyperparameter, Cap-Werte) waren in der ersten Iteration als Modul-Konstanten (`UMAP_N_NEIGHBORS = 15`) plus CLI-Flags verteilt. Bei Wachstum wäre das chaotisch: Änderung von Hyperparametern bedeutet Code-Edit, kein deklarativer "Diese Konfiguration ist aktiv" Stand.

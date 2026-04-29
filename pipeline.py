@@ -23,6 +23,7 @@ control. See src/cluster.py and src/brief.py for sub-CLIs.
 from __future__ import annotations
 
 import argparse
+import logging
 import sys
 from pathlib import Path
 
@@ -31,6 +32,9 @@ sys.path.insert(0, str(ROOT))
 
 from src import brief, cluster, discover, enrich, report  # noqa: E402
 from src.config import settings  # noqa: E402
+from src.logging_config import setup_logging  # noqa: E402
+
+logger = logging.getLogger(__name__)
 
 ALL_STEPS = ("discover", "enrich", "cluster", "brief", "report")
 
@@ -52,7 +56,7 @@ def step_enrich(args: argparse.Namespace) -> None:
 
 def step_cluster(args: argparse.Namespace) -> None:
     for s in cluster.DEFAULT_SEQUENCE:
-        print(f"\n=== cluster.{s} ===")
+        logger.info(f"\n=== cluster.{s} ===")
         cluster.STEPS[s]()
 
 
@@ -95,7 +99,11 @@ def main() -> None:
                         f"Settings default: {settings.brief_model or 'provider default'}.")
     p.add_argument("--dry-run", action="store_true",
                    help="brief step: write stubs instead of calling the LLM")
+    p.add_argument("--log-level", default=None,
+                   help=f"DEBUG, INFO, WARNING, ERROR. Default from settings: {settings.log_level}.")
     args = p.parse_args()
+
+    setup_logging(level=args.log_level)
 
     requested = (ALL_STEPS if args.step == "all"
                  else tuple(s.strip() for s in args.step.split(",")))
@@ -104,9 +112,9 @@ def main() -> None:
         raise SystemExit(f"unknown step(s): {unknown}. valid: {list(RUNNERS)}")
 
     for name in requested:
-        print(f"\n========== {name.upper()} ==========")
+        logger.info(f"\n========== {name.upper()} ==========")
         RUNNERS[name](args)
-    print("\n========== DONE ==========")
+    logger.info("\n========== DONE ==========")
 
 
 if __name__ == "__main__":

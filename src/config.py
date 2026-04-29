@@ -73,6 +73,15 @@ class Settings(BaseSettings):
     brief_model: str | None = None  # None means "use the provider default"
     brief_max_tokens: int = 4096
 
+    # ----- Brief: Retry policy on transient API errors -----
+    brief_retry_max_attempts: int = 5
+    brief_retry_base_delay: float = 2.0      # first backoff sleep, seconds
+    brief_retry_max_delay: float = 60.0      # cap on backoff, seconds
+    brief_retry_multiplier: float = 2.0      # exponential factor
+
+    # ----- Logging -----
+    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+
 
 # Module-level singleton. Import this where you need pipeline settings.
 settings = Settings()

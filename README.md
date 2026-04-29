@@ -60,6 +60,10 @@ Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der 
 # Abhängigkeiten installieren
 pip install -r requirements.txt
 
+# Optional: Dev-Tools für Tests
+pip install -r requirements-dev.txt
+pytest                                     # 21 Tests, < 1 Sekunde
+
 # Komplette Pipeline ausführen
 python pipeline.py
 

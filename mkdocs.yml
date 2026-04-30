@@ -51,9 +51,9 @@ nav:
     - Technical Review: technical_review.md
   - Example Output:
     - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
-    - Report: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
-    - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
-  - Go to Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
+    - Reporting Dashboard: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
+    - Example Brief: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
+  - Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
   - GitHub: https://github.com/t1nak/seo-pipeline
 
 markdown_extensions:
@@ -114,9 +114,9 @@ plugins:
             Technical Review: Technical Review
             Example Output: Example Output
             Cluster Map: Cluster Map
-            Report: Report
-            Cluster Briefs: Cluster Briefs
-            Go to Pipeline: Go to Pipeline
+            Reporting Dashboard: Reporting Dashboard
+            Example Brief: Example Brief
+            Pipeline: Pipeline
 
 extra:
   social:

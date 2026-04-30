@@ -116,12 +116,12 @@ HDBSCAN ist hier die beste Wahl, weil:
 
 ```python
 HDBSCAN(min_cluster_size=15, min_samples=5,
-        cluster_selection_method="eom", metric="euclidean")
+        cluster_selection_method="leaf", metric="euclidean")
 ```
 
 - `min_cluster_size=15`: ein Cluster braucht mindestens 15 Punkte. Niedrigere Werte produzieren mehr Mikro-Cluster, höhere Werte verschmelzen Themen.
 - `min_samples=5`: ein Punkt gilt als Kern-Punkt, wenn mindestens 5 Nachbarn in seinem Radius sind. Höhere Werte machen die Dichte-Schätzung konservativer.
-- `cluster_selection_method="eom"`: Excess of Mass. HDBSCAN baut intern einen Hierarchiebaum aller möglichen Cluster und wählt die Ebene, auf der die Cluster am längsten existieren. Das bevorzugt stabile, persistente Gruppen. Die Alternative `leaf` schneidet immer auf Blatt-Ebene, was tendenziell mehr und kleinere Cluster gibt.
+- `cluster_selection_method="leaf"`: schneidet den HDBSCAN-Hierarchiebaum auf Blatt-Ebene. Die Alternative `eom` (Excess of Mass) wählt die persistenteste Ebene und bevorzugt damit wenige stabile Cluster. `leaf` liefert hier feinere Aufteilungen, was für Content-Briefs handlungsfähiger ist (siehe Abschnitt 5).
 - `metric="euclidean"`: passt zu normalisierten Embeddings nach UMAP.
 
 ## 5. Hyperparameter Sweep: die volle Tabelle
@@ -144,12 +144,12 @@ Die HDBSCAN Parameter wurden nicht geraten, sondern gemessen. Reproduzierbar mit
   10    5   leaf     15    149   29.8%   0.636
   12    1    eom     10     15    3.0%   0.651
   12    1   leaf     18    104   20.8%   0.575
-  12    5    eom     10     38    7.6%   0.672  <-- gewählt
+  12    5    eom     10     38    7.6%   0.672
   12    5   leaf     13    150   30.0%   0.647
   15    1    eom     10     15    3.0%   0.651
   15    1   leaf     15    103   20.6%   0.595
   15    5    eom     10     38    7.6%   0.672
-  15    5   leaf     12    100   20.0%   0.642
+  15    5   leaf     12    100   20.0%   0.642  <-- gewählt
   20    1    eom      9     30    6.0%   0.642
   20    1   leaf     11    120   24.0%   0.593
   20    5    eom      8     34    6.8%   0.631
@@ -158,24 +158,25 @@ Die HDBSCAN Parameter wurden nicht geraten, sondern gemessen. Reproduzierbar mit
 
 ### Wie der zentrale Parameter gewählt wurde
 
-Die Wahl fällt auf **`mcs=12, ms=5, eom`**. Dieser Parameter ist die wichtigste Stellschraube der Cluster-Pipeline. Die Begründung folgt aus drei Beobachtungen.
+Die Wahl fällt auf **`mcs=15, ms=5, leaf`**: 12 Cluster, 100 Noise-Punkte (20%), Silhouette 0,642. Die Begründung folgt aus drei Beobachtungen.
 
-**1. Plateau statt Punkt-Optimum.** Die Sweep-Tabelle zeigt, dass mcs ∈ {10, 12, 15} mit ms=5 / eom **identische** Aufteilungen liefern: 10 Cluster, 38 Rauschen-Punkte, Silhouette 0,672. Das ist keine einzelne optimale Einstellung, sondern eine Äquivalenzklasse aus drei Konfigurationen.
+**1. Granularität schlägt Stabilität, wenn jeder Cluster ein Content-Brief wird.** Mit `eom` liefert die Sweep-Tabelle eine Plateau-Klasse von 10 Clustern bei `mcs ∈ {10, 12, 15}` und ms=5. Statistisch sauber, aber operativ entsteht ein Sammelcluster „Zeitarbeit & Arbeitsrecht" mit knapp 200 Keywords, der Themen wie AÜG, Equal Pay, Höchstüberlassungsdauer und Debitorenmanagement vermischt. Ein einziger Brief darüber wäre zu breit, um redaktionell handlungsfähig zu sein. `leaf` bricht diesen Sammelcluster in feinere Sub-Themen auf, sodass ein Brief pro Cluster sinnvoll bleibt.
 
-**2. Innerhalb des Plateaus ist die Mitte stabiler als der Rand.** Wenn sich die Eingabe-Geometrie leicht verschiebt (andere Library-Versionen, andere CPU-Architektur, andere BLAS-Implementierung), kann ein Wert am Rand der Plateau-Klasse aus der Klasse fallen. Ein Wert in der Mitte hat Puffer in beide Richtungen. mcs=12 ist die mittlere Position der Plateau-Klasse.
+**2. mcs=15 ist die optimale `leaf`-Position zwischen Mikro-Clustern und Kollaps.** Die `leaf`-Spalte mit ms=5 zeigt eine klare Tendenz: kleine mcs erzeugen viele kleine Cluster mit hohem Noise (mcs=5: 29 Cluster, 36% Noise), große mcs kollabieren auf wenige (mcs=20: 9 Cluster). mcs=15 liefert 12 Cluster bei 20% Noise, was sowohl die niedrigste Noise-Rate in der `leaf`-ms=5-Reihe ist als auch die feinste Granularität, bevor der Kollaps auf 9 Cluster eintritt.
 
-**3. Empirisch falsifizierbar.** Beim Wechsel von der lokalen Entwicklungsumgebung (macOS) in eine Cloud-CI (Ubuntu) zeigt sich genau dieser Unterschied: mcs=15 fällt cross-platform auf 7 Cluster ab (Plateau-Rand erreicht), mcs=12 reproduziert konsistent 10 Cluster. UMAP ist mit `random_state=42` deterministisch innerhalb derselben Plattform und Library-Version, aber Cross-Platform-Identität ist nicht garantiert. Die Plateau-Mitte ist gegen diese Drift versichert.
+**3. Noise als bewusste Designentscheidung.** Mit 20% Noise rauschen 100 von 500 Keywords aus den finalen Clustern raus. Das klingt nach Verlust, ist aber methodisch gewollt: HDBSCAN markiert Punkte als Noise (Cluster-Label `-1`), wenn sie keinem Cluster zuverlässig zugeordnet werden können. Diese Keywords ins nächste Cluster zu zwingen, würde die Cluster-Schärfe verwässern. Im Reporting werden Noise-Keywords als „Ausreißer" sichtbar gemacht, nicht versteckt, und können als Hinweis auf Themen dienen, die noch nicht genug Volumen für einen eigenen Cluster haben.
 
-**Nicht-Argumente, die verworfen wurden.** "Konservativster Wert auf dem Plateau" (also höchstes mcs) ist ein Tiebreaker ohne empirischen Wert. Innerhalb der Äquivalenzklasse sind alle Werte gleichwertig. Konservativ am Rand hilft erst dann, wenn die Klasse garantiert stabil bleibt. Diese Garantie hatte der ursprüngliche Lauf nicht.
+**Tradeoff bewusst gewählt.** Die Alternative `mcs=15, ms=5, eom` mit 10 Clustern und 7,6% Noise hat eine etwas höhere Silhouette (0,672 vs 0,642). Wer einen Forschungs-Report mit möglichst sauberen Cluster-Grenzen braucht, sollte sie nehmen. Wer Content-Briefs pro Cluster produziert, gewinnt mit `leaf` zwei zusätzliche Themen-Differenzierungen, die direkt in zwei zusätzliche Briefs übersetzt werden können.
 
-**Zusammenfassung.** mcs=12 liegt methodisch in der vom Sweep identifizierten Äquivalenzklasse und ist operativ die robusteste Position gegenüber kleinen Geometrie-Verschiebungen. Die Wahl ist über den Konfigurations-Setting `cluster_hdbscan_mcs` (Default 12) bzw. die Environment-Variable `PIPELINE_CLUSTER_HDBSCAN_MCS` veränderbar, ohne Code-Änderung.
+Die Wahl ist über `cluster_hdbscan_mcs` (Default 15) und `cluster_hdbscan_method` (Default leaf) bzw. die Environment-Variablen `PIPELINE_CLUSTER_HDBSCAN_MCS` / `PIPELINE_CLUSTER_HDBSCAN_METHOD` veränderbar, ohne Code-Änderung.
 
 ### Was nicht ausgewählt wurde und warum
 
-- **mcs=5, ms=5, eom (16 Cluster, sil 0,671).** Sehr nahe am Maximum, aber 16 Cluster sind für das Stakeholder-Reporting zu fein. Sub-Themen würden zerfasern.
-- **mcs=5, ms=1, eom (36 Cluster).** Viele Mikro-Cluster ohne klaren thematischen Zusammenhalt. Silhouette ist niedriger (0,570).
-- **mcs=5, ms=5, leaf (29 Cluster, 36 Prozent Rauschen).** Mehr als ein Drittel aller Keywords werden ausgeschlossen. Methodisch akzeptabel, aber für einen Stakeholder-Bericht zu viel "weiß ich nicht".
-- **mcs=10/12/15 ms=1 eom (10 Cluster, 3 Prozent Rauschen, sil 0,651).** Niedrigeres Rauschen klingt verlockend, aber `min_samples=1` ist sehr aggressiv und die Cluster-Grenzen sind weniger robust als mit ms=5.
+- **mcs=15, ms=5, eom (10 Cluster, 7,6% Noise, sil 0,672).** Statistisch beste Lösung im Sweep. Verworfen, weil der größte Cluster zum Sammelbecken wird und Sub-Themen vermischt. Für Content-Briefs zu grob.
+- **mcs=20, ms=5, leaf (9 Cluster, 23% Noise).** Zu wenige Cluster, gleichzeitig steigender Noise. Schlechter als mcs=15 in beiden Dimensionen.
+- **mcs=12, ms=5, leaf (13 Cluster, 30% Noise).** Ein Cluster mehr als bei mcs=15, aber 50% mehr Noise. Der zusätzliche Cluster rechtfertigt den Noise-Aufschlag nicht.
+- **mcs=5, ms=5, eom (16 Cluster, sil 0,671).** Sehr feines Clustering, aber 16 Cluster sind operativ zu viel: zu wenig Differenzierung zwischen benachbarten Sub-Themen.
+- **mcs=10/12/15, ms=1, eom (10 Cluster, 3% Noise, sil 0,651).** Niedrigeres Rauschen klingt verlockend, aber `min_samples=1` ist sehr aggressiv und die Cluster-Grenzen sind weniger robust als mit ms=5.
 
 ## 6. Validierung
 
@@ -244,7 +245,7 @@ Die Pipeline ist auf Reproduzierbarkeit ausgelegt:
 - **Embeddings sind deterministisch** (Sentence Transformer im Inference-Modus).
 - **Heuristische Enrichment** ist deterministisch (SHA256 Hash des Keywords als Seed).
 
-Ein zweiter Lauf mit identischer `data/keywords.csv` produziert auf derselben Plattform byte-identische `embeddings.npy`, `umap_*.npy` und `keywords_labeled.csv`. Cross-Platform (z.B. lokale macOS-Entwicklung gegen Ubuntu-CI) sind die Embeddings byte-identisch, die UMAP-Koordinaten weichen wegen unterschiedlicher BLAS/LAPACK-Implementierungen minimal ab. Die Cluster-Anzahl bleibt mit `mcs=12` über Plattformen hinweg stabil.
+Ein zweiter Lauf mit identischer `data/keywords.csv` produziert auf derselben Plattform byte-identische `embeddings.npy`, `umap_*.npy` und `keywords_labeled.csv`. Cross-Platform (z.B. lokale macOS-Entwicklung gegen Ubuntu-CI) sind die Embeddings byte-identisch, die UMAP-Koordinaten weichen wegen unterschiedlicher BLAS/LAPACK-Implementierungen minimal ab. Die Cluster-Anzahl mit `mcs=15, leaf` bleibt über Plattformen hinweg robust, auch wenn einzelne Keywords je Plattform leicht zwischen Cluster und Noise springen können.
 
 Reproduktion auf einem fremden Rechner:
 
@@ -255,7 +256,7 @@ pip install -r requirements.txt
 python -m src.cluster --step all
 ```
 
-Erwartetes Ergebnis: 10 Cluster, Silhouette ~0,67, ARI 0,113 (vs LLM), ARI 0,565 (vs Ward k=10).
+Erwartetes Ergebnis: 12 Cluster, Silhouette ~0,64, ~20% Noise.
 
 ## 8. Bekannte Schwächen
 

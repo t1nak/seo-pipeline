@@ -6,7 +6,7 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 ![Pipeline Architektur](landing_diagram.svg)
 
-**Beispiel-Demo:** Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Daraus entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
+**Beispiel-Demo:** Im Beispiel ist der Entry Point eine Liste von 500 LLM-erzeugten Keywords. In einer produktiven Pipeline kann dieser Entry Point genauso von externen Anbietern wie Semrush, Ahrefs oder DataForSEO kommen, die Phase ist über die Konfiguration austauschbar. Aus den Keywords entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live-Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
 
 [:material-rocket-launch: Go to Pipeline (GitHub Actions)](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml){ .md-button .md-button--primary target=_blank rel=noopener }
 
@@ -16,7 +16,7 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 - [Wie kann ich Model und Provider ändern?](#wie-kann-ich-model-und-provider-andern)
 - [Was kostet ein Lauf?](#was-kostet-ein-lauf)
 - [Wie viele Cluster werden erkannt?](#wie-viele-cluster-werden-erkannt)
-- [Welche Daten werden lokal gespeichert?](#welche-daten-werden-lokal-gespeichert)
+- [Was ist lokal, und was wäre in einer produktiven Pipeline anders?](#was-ist-lokal-und-was-waere-in-einer-produktiven-pipeline-anders)
 - [Welche Parameter beeinflussen das Ergebnis maßgeblich?](#welche-parameter-beeinflussen-das-ergebnis-massgeblich)
 - [Welche Variablen sind sicherheitskritisch?](#welche-variablen-sind-sicherheitskritisch-wegen-api-kosten-und-berechtigungen)
 
@@ -44,9 +44,9 @@ Bei der aktuellen Konfiguration (10 Cluster, Anthropic API mit Prompt Caching) r
 
 HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Auf der aktuellen 500-Keyword-Baseline: **10 Cluster plus rund 40 Ausreißer** (~8 Prozent als Rauschen markiert). Hyperparameter-Sweep und Wahl von `mcs=12` aus der Plateau-Klasse in der [Methodik](methodology.md).
 
-### Welche Daten werden lokal gespeichert?
+### Was ist lokal, und was wäre in einer produktiven Pipeline anders?
 
-Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
+**Aktuell (Case-Study-Setup):** Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
 
 - `data/keywords.csv` (angereicherte Keyword-Liste)
 - `output/clustering/` (Embeddings, UMAP-Reduktionen, Cluster-Map, Diagnostik-Charts)
@@ -54,6 +54,14 @@ Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
 - `output/reporting/index.html` (konsolidiertes Dashboard)
 
 API-Keys liegen in `.env` (lokal) bzw. GitHub Secrets (CI), nicht im Repo.
+
+**In einer produktiven Pipeline würde sich typischerweise ändern:**
+
+- **Storage:** Artefakte in Object Storage (z. B. S3) statt im Repo, damit Läufe versioniert und teamweit zugänglich sind.
+- **Metadaten und Historie:** Keyword-Tabellen, Cluster-Zuordnungen und Briefing-Stände in einer Datenbank (z. B. Postgres), damit sich Verläufe über Zeit auswerten lassen.
+- **Secrets:** Zentrales Secret-Management (Vault, AWS Secrets Manager, GitHub Actions Environments) statt `.env`-Dateien.
+- **Beobachtbarkeit:** Strukturierte Logs, Cost-Tracking je Lauf und Alerts statt Konsolen-Output.
+- **Trigger:** Geplante Läufe und Event-Trigger (neuer Blog-Post, manuelle Freigabe) statt nur lokalem CLI-Aufruf.
 
 ### Welche Parameter beeinflussen das Ergebnis maßgeblich?
 

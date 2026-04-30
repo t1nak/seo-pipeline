@@ -40,7 +40,7 @@
 
   <!-- Outer container -->
   <rect x="20" y="20" width="640" height="660" rx="16" class="container"/>
-  <text x="40" y="46" class="container-label" dominant-baseline="central">GitHub Actions · Auslöser per Konfiguration: Cron-Schedule, manueller Trigger, Push</text>
+  <text x="40" y="46" class="container-label" dominant-baseline="central">GitHub Actions · Auslöser per Konfiguration: Cron-Schedule oder manueller Trigger</text>
 
   <!-- Step 1 -->
   <rect x="60" y="64" width="560" height="120" rx="10" class="step-blue"/>

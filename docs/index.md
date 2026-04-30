@@ -2,11 +2,28 @@
 
 ## Was ist die SEO Pipeline?
 
-Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. Vier modulare Phasen mit auswechselbaren Providern an jeder Stelle: Keyword-Quelle, LLM für Briefings, Reporting-Ziel. Die Architektur unten zeigt die wählbaren Komponenten je Phase, der Auslöser läuft per Cron, manuellem Trigger oder Push.
+Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. Vier modulare Phasen mit auswechselbaren Providern an jeder Stelle: Keyword-Quelle, LLM für Briefings, Reporting-Ziel. Die Architektur unten zeigt die wählbaren Komponenten je Phase, der Auslöser läuft per Cron-Schedule oder manuellem Trigger.
 
 ![Pipeline Architektur](landing_diagram.svg)
 
-Aus dem zvoove Blog wird ein priorisiertes Keyword Set, daraus thematische Cluster, daraus Content Briefs, daraus ein interaktives Reporting. Vier modulare Phasen, Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo.
+**Beispiel-Demo:** Aus dem zvoove Blog wird ein Keyword Set, daraus thematische Cluster, daraus Content Briefs, daraus ein interaktives Reporting erstellt. Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo.
+
+## Häufige Fragen
+
+### Wie wird die Pipeline getriggert?
+
+GitHub Actions: per Cron-Schedule oder manuellem Trigger (`workflow_dispatch`). Lokal startest du sie mit `python pipeline.py`, einzelne Schritte via `--step cluster|brief|report`.
+
+### Wie kann ich Model und Provider ändern?
+
+Alle Provider sind per CLI-Flag oder `PIPELINE_*` Environment-Variable wählbar.
+
+| Komponente | CLI-Flag | Optionen |
+|---|---|---|
+| Brief-Provider | `--brief-provider` | `api` (Anthropic), `openai`, `max` (Agent SDK) |
+| Brief-Model | `--brief-model` | beliebige Modell-ID, z.B. `claude-sonnet-4-6` |
+| Keyword-Quelle | `--source` | `manual`, `live` |
+| Enrich-Provider | `--provider` | `estimate` (Heuristik), `dataforseo` |
 
 ## Das Problem in einem Satz
 

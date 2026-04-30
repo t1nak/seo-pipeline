@@ -46,10 +46,6 @@ Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
 
 API-Keys liegen in `.env` (lokal) bzw. GitHub Secrets (CI), nicht im Repo.
 
-## Das Problem in einem Satz
-
-Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Traffic zu gewinnen, der echte Kaufinteressenten bringt. Dafür braucht es eine klare Antwort auf die Frage: Welche Themen lohnen sich wirklich, und in welcher Reihenfolge?
-
 ## Schnelle Einstiegspunkte
 
 <div class="grid cards" markdown>
@@ -62,7 +58,7 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 
 -   :material-map-marker-radius: __Interaktive Cluster Karte__
 
-    13 Themengruppen visuell, mit Klick auf jeden Punkt die Details. Sprache umschaltbar.
+    10 Themengruppen visuell, mit Klick auf jeden Punkt die Details. Sprache umschaltbar.
 
     [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html)
 

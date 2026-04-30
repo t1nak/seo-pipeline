@@ -57,13 +57,46 @@
   --seo-table-stripe:              rgba(45, 212, 191, 0.04);
 }
 
-/* Body bg explicitly bound to the variables so the toggle visually
-   changes the canvas, not just accent colors. */
-body[data-md-color-scheme="slate"],
-[data-md-color-scheme="slate"] body,
-[data-md-color-scheme="slate"] .md-main {
-  background-color: var(--md-default-bg-color);
-  color: var(--md-default-fg-color);
+/* Body bg explicitly bound to the variables. Material puts
+   data-md-color-scheme on <body>, so the selectors that target
+   body itself need attribute-on-self syntax (body[data-...]),
+   not descendant ([data-...] body). Use !important to win
+   against any Material default rules. */
+body[data-md-color-scheme="slate"] {
+  background-color: hsla(232, 15%, 14%, 1) !important;
+  color: hsla(232, 75%, 95%, 1) !important;
+}
+
+body[data-md-color-scheme="slate"] .md-main,
+body[data-md-color-scheme="slate"] .md-container,
+body[data-md-color-scheme="slate"] .md-content,
+body[data-md-color-scheme="slate"] .md-content__inner {
+  background-color: hsla(232, 15%, 14%, 1) !important;
+}
+
+body[data-md-color-scheme="slate"] .md-typeset,
+body[data-md-color-scheme="slate"] .md-typeset p,
+body[data-md-color-scheme="slate"] .md-typeset li,
+body[data-md-color-scheme="slate"] .md-typeset td {
+  color: hsla(232, 75%, 95%, 0.92) !important;
+}
+
+body[data-md-color-scheme="slate"] .md-typeset h1,
+body[data-md-color-scheme="slate"] .md-typeset h2,
+body[data-md-color-scheme="slate"] .md-typeset h3,
+body[data-md-color-scheme="slate"] .md-typeset h4 {
+  color: hsla(232, 75%, 95%, 1) !important;
+}
+
+/* Default scheme: explicit too, so the contrast against slate is
+   unambiguous and there's no ambiguity-by-omission. */
+body[data-md-color-scheme="default"] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+body[data-md-color-scheme="default"] .md-main {
+  background-color: #fafafa !important;
 }
 
 /* ============================================================

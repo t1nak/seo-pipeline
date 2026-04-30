@@ -19,6 +19,10 @@ Ich habe die Aufgabe als vier verbundene Probleme gelesen:
 
 Punkt 3 ist der eigentliche Gewinn. Punkt 4 ist das, was den Unterschied zwischen einer Keyword Liste und einem nutzbaren Asset ausmacht.
 
+## Das Problem in einem Satz
+
+Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Traffic zu gewinnen, der echte Kaufinteressenten bringt. Dafür braucht es eine klare Antwort auf die Frage: Welche Themen lohnen sich wirklich, und in welcher Reihenfolge?
+
 ## 2. Ergebnis in zwei Minuten
 
 Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 10 thematische Cluster plus rund 40 Ausreißer (~8 Prozent). Die wichtigsten Zahlen:
@@ -74,21 +78,43 @@ Der Orchestrator `pipeline.py` kann alles in einem Lauf ausführen oder einzelne
 
 ## 4. Schritt 1: Discover
 
-Hier ist der ehrliche Stand zuerst: der Discover Schritt scrapt den Blog noch nicht live. Was die Pipeline aktuell verwendet, ist ein kuratiertes Keyword Set, das in einer früheren Iteration mit Hilfe eines LLM aus den Blog Themen abgeleitet wurde. Die Datei `data/keywords.manual.csv` hält dieses Set frozen.
+Discover beantwortet die Frage „welche Keywords sind überhaupt relevant?". Die Pipeline ist hier bewusst Provider-offen aufgebaut — die Quelle ist austauschbar, das Output-Format `data/keywords.csv` mit den Spalten `keyword, estimated_intent, category, type, notes` ist die Schnittstelle zu Schritt 2.
 
-### Was die Live Variante tun müsste
+### Mögliche Discover-Quellen
 
-Der Workflow für die Live Variante ist klar, fehlt aber als Code:
+| Quelle | Beschreibung | Heute aktiv |
+|---|---|---|
+| **Manual CSV** | Kuratiertes Keyword Set aus früherer Iteration, mit Hilfe eines LLM aus Blog-Themen abgeleitet. Frozen in `data/keywords.manual.csv`. | Ja, Default |
+| **zvoove Blog Scrape** | Live-Crawl der Blog-Übersicht (`zvoove.de/wissen/blog`), pro Artikel H1/H2/H3 plus erste 200 Wörter, anschließend LLM-basierte Umformulierung in Seed-Keywords. | TODO |
+| **SEMrush API** | Abruf von Keyword-Vorschlägen zu einer Domain oder Seed-Liste über die SEMrush Domain Analytics API. Liefert direkt Suchvolumen mit (Schritt 1 und 2 fallen zusammen). | Optional, einbaubar |
+| **DataForSEO Labs API** | Ähnlich wie SEMrush mit alternativem Provider. Ranked Keywords oder Related Keywords Endpoints. | Optional, einbaubar |
+| **Ahrefs Keywords Explorer API** | Weiterer Anbieter mit Suchvolumen-Datenbank, gleiches Discover-Pattern. | Optional, einbaubar |
 
-1. Die Blog Übersicht unter `https://zvoove.de/wissen/blog` paginieren und alle Artikel URLs einsammeln. Robust gegen Pagination Tricks und Lazy Loading.
+Für die Demo hier wird das Manual CSV verwendet, weil es reproduzierbar ist und keine externe API erfordert. Ein Wechsel auf einen der API-Provider wäre eine reine Provider-Implementierung in `discover.py` ohne Schnittstellen-Änderung zu Schritt 2.
+
+### Beispiel: Discover über SEMrush
+
+In der ausgeschriebenen Aufgabe wurde SEMrush als möglicher Provider gezeigt. Die Anbindung wäre eine zweite `Provider`-Klasse in `discover.py` (analog zum Pattern in `brief.py` mit `ApiKeyProvider` / `OpenAIProvider`):
+
+1. SEMrush API-Key als Secret konfigurieren (`SEMRUSH_API_KEY`).
+2. `python pipeline.py --step discover --source semrush --domain zvoove.de` ruft den Domain-Analytics-Endpoint auf.
+3. Resultat: bis zu 500 Top-Keywords, jeweils mit Suchvolumen, Difficulty, CPC. Discover und Enrich kollabieren in einen Schritt — der API-Provider liefert die Anreicherung gleich mit.
+
+Das ist genau der Vorteil der modularen Architektur: Zugriffspfad und Datenquelle ändern sich, das Schnittstellen-Schema zur nächsten Phase bleibt.
+
+### Live-Blog-Scrape: was es bräuchte
+
+Der Workflow für die Live-Scrape-Variante ist konzeptionell klar, fehlt aber als Code:
+
+1. Die Blog-Übersicht unter `https://zvoove.de/wissen/blog` paginieren und alle Artikel-URLs einsammeln. Robust gegen Pagination-Tricks und Lazy Loading.
 2. Pro Artikel die Überschrift (H1, H2, H3) und die ersten 200 Wörter ziehen. Nicht den ganzen Artikel, weil sonst die Themenkonzentration verwässert.
-3. Jeden Artikel mit Claude in Seed Keywords umformulieren. Pattern aus dem Brief: pro Artikel 5 bis 15 Seeds in den Kategorien Head, Body, Longtail. Deutsche Morphologie wird vom Modell selbst gehandhabt.
-4. Ergebnis auf 500 Keywords begrenzen, sortiert nach geschätzter Relevanz für die Zielgruppe (Geschäftsführer und Operations Verantwortliche bei Zeitarbeit und Personaldienstleistung).
-5. Als CSV mit den Spalten `keyword, estimated_intent, category, type, notes` schreiben. Diese Spalten sind das Contract Interface zu `enrich.py`.
+3. Jeden Artikel mit Claude in Seed-Keywords umformulieren. Pattern: pro Artikel 5 bis 15 Seeds in den Kategorien Head, Body, Longtail. Deutsche Morphologie wird vom Modell selbst gehandhabt.
+4. Ergebnis auf 500 Keywords begrenzen, sortiert nach geschätzter Relevanz für die Zielgruppe (Geschäftsführer und Operations-Verantwortliche bei Zeitarbeit und Personaldienstleistung).
+5. Als CSV mit den Spalten `keyword, estimated_intent, category, type, notes` schreiben.
 
 ### Warum nicht jetzt
 
-Der Discover Schritt ist der höchstwertvolle, aber auch der Schritt mit den meisten Fallunterscheidungen (Anti-Bot, JavaScript Rendering, Robustheit gegen Layout Änderungen). Ich habe die Zeit lieber in die anderen vier Schritte gesteckt, weil ein gutes Cluster und ein guter Brief ohne saubere Discovery trotzdem demonstrierbar sind, während eine perfekte Discovery ohne Cluster und Brief wertlos wäre.
+Der Discover-Schritt ist der höchstwertvolle, aber auch der mit den meisten Fallunterscheidungen (Anti-Bot, JavaScript-Rendering, Robustheit gegen Layout-Änderungen). Ich habe die Zeit lieber in die anderen vier Phasen gesteckt, weil ein gutes Cluster und ein guter Brief auch auf einem kuratierten Set demonstrierbar sind, während eine perfekte Discovery ohne Cluster und Brief wertlos wäre.
 
 Dieser Trade-off ist als Architecture Decision in [`decisions.md`](decisions.md) festgehalten.
 

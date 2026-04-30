@@ -287,7 +287,8 @@ def _badge(label: str, kind: str) -> str:
     return f'<span class="badge badge-{kind}">{htmllib.escape(label)}</span>'
 
 
-def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
+def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
+                 brief_prefix: str = "") -> str:
     """Build one cluster card."""
     cid = int(profile_row["cluster_id"])
     display_id = cid + 1
@@ -362,7 +363,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
     # Volume formatted
     sv_fmt = f"{total_sv:,}".replace(",", ".")
 
-    brief_filename = f"cluster_{display_id:02d}.md"
+    brief_filename = f"{brief_prefix}cluster_{display_id:02d}.md"
     map_link = f"../clustering/cluster_map.html#cluster-{display_id}"
 
     return f"""
@@ -468,26 +469,28 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Main
+# Public page builder (used by src.report for the combined dashboard)
 # ---------------------------------------------------------------------------
 
 
-def run() -> None:
-    if not PROFILES_CSV.exists():
-        raise SystemExit(f"missing {PROFILES_CSV}. Run `python -m src.cluster --step profile` first.")
+def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
+               brief_prefix: str = "", extra_section: str = "") -> str:
+    """Assemble the full dashboard HTML and return it as a string.
 
-    profiles = pd.read_csv(PROFILES_CSV)
-    labeled = pd.read_csv(LABELED_CSV)
-
+    brief_prefix: prepended to brief download links (e.g. "../briefings/" when
+                  the page is served from a sibling directory).
+    extra_section: optional HTML block inserted between the mini-grid and the
+                   cluster cards (used by src.report to inject chart PNGs).
+    """
+    real = profiles[profiles["cluster_id"] != -1].sort_values("total_sv", ascending=False)
     cards = []
     titles: dict[int, str] = {}
-    real = profiles[profiles["cluster_id"] != -1].sort_values("total_sv", ascending=False)
     for _, row in real.iterrows():
         cid = int(row["cluster_id"])
         display_id = cid + 1
         md_path = BRIEFINGS / f"cluster_{display_id:02d}.md"
         if not md_path.exists():
-            logger.info(f"WARN: brief missing for cluster {cid}, skipping")
+            logger.info("WARN: brief missing for cluster %d, skipping", cid)
             continue
         md = md_path.read_text(encoding="utf-8")
         title_match = re.match(r"#\s+(.+)", md.strip())
@@ -495,13 +498,13 @@ def run() -> None:
             titles[cid] = title_match.group(1).strip()
         top_kw = labeled.loc[labeled["hdb"] == cid].sort_values(
             "search_volume", ascending=False).head(6)
-        cards.append(_render_card(row, top_kw, md))
+        cards.append(_render_card(row, top_kw, md, brief_prefix=brief_prefix))
 
     summary = _render_summary(profiles)
     minicards = _render_minicards(profiles, titles)
     cards_html = "\n".join(cards)
 
-    page = f"""<!DOCTYPE html>
+    return f"""<!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cluster Briefs · zvoove SEO Pipeline</title>
@@ -607,15 +610,28 @@ document.addEventListener('keydown', function(e) {{ if (e.key === 'Escape') clos
 
 {minicards}
 
+{extra_section}
+
 {cards_html}
 
 </div></body></html>"""
 
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+
+def run() -> None:
+    if not PROFILES_CSV.exists():
+        raise SystemExit(f"missing {PROFILES_CSV}. Run `python -m src.cluster --step profile` first.")
+    profiles = pd.read_csv(PROFILES_CSV)
+    labeled = pd.read_csv(LABELED_CSV)
+    page = build_page(profiles, labeled)
     out = BRIEFINGS / "index.html"
     out.write_text(page, encoding="utf-8")
     size_kb = out.stat().st_size / 1024
-    logger.info(f"wrote {out.relative_to(ROOT)} ({size_kb:.1f} KB, "
-          f"{len(cards)} cluster cards)")
+    logger.info("wrote %s (%.1f KB)", out.relative_to(ROOT), size_kb)
 
 
 def main() -> None:

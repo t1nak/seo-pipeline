@@ -27,31 +27,31 @@ data/keywords.csv  ──▶  clean      ──▶  embed   ──▶  reduce   
 
 Acht Schritte, jeder einzeln re-runnbar. Die zentralen Hyperparameter sind als Konstanten oben in `src/cluster.py` festgehalten, damit Code und Doku übereinstimmen.
 
-## 2. Embeddings: warum `paraphrase-multilingual-MiniLM-L12-v2`
+## 2. Embeddings: warum [`paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
 
 Ein Embedding bildet einen Text auf einen Punkt in einem hochdimensionalen Raum ab, in dem semantisch ähnliche Texte nahe beieinander liegen. Beispiel: `lohnabrechnung software` und `payroll tool` haben fast identische Embedding-Vektoren, obwohl sie kein Wort teilen.
 
 ### Anforderungen
 
-- **Mehrsprachig.** Das Keyword Set ist durchgehend Deutsch. Englische Modelle wie `all-MiniLM-L6-v2` handhaben deutsche Komposita schlechter (zum Beispiel werden `arbeitnehmerüberlassungsgesetz` und `aüg` ungleich gut zugeordnet).
+- **Mehrsprachig.** Das Keyword Set ist durchgehend Deutsch. Englische Modelle wie [`all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) handhaben deutsche Komposita schlechter (zum Beispiel werden `arbeitnehmerüberlassungsgesetz` und `aüg` ungleich gut zugeordnet).
 - **Klein und schnell.** Das Modell muss auf einem normalen Laptop ohne GPU laufen, damit die Pipeline lokal reproduzierbar bleibt.
-- **Etabliert.** Sentence Transformers sind das Standardwerkzeug für semantische Ähnlichkeit. Kein experimentelles Setup, das erklärungsbedürftig wäre.
+- **Etabliert.** [Sentence Transformers](https://www.sbert.net/) sind das Standardwerkzeug für semantische Ähnlichkeit. Kein experimentelles Setup, das erklärungsbedürftig wäre.
 
 ### Auswahl
 
 | Modell | Größe | Mehrsprachig | Note |
 |---|---|---|---|
-| `all-MiniLM-L6-v2` | 80 MB | Englisch only | Verworfen, deutsche Morphologie schwach |
-| `paraphrase-multilingual-MiniLM-L12-v2` | 120 MB | 50 Sprachen | **Gewählt.** Guter Kompromiss aus Qualität, Größe, Geschwindigkeit |
-| `intfloat/multilingual-e5-large` | 2,3 GB | 100+ Sprachen | Wahrscheinlich höhere Qualität, in Backlog für Produktion |
+| [`all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | 80 MB | Englisch only | Verworfen, deutsche Morphologie schwach |
+| [`paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) | 120 MB | 50 Sprachen | **Gewählt.** Guter Kompromiss aus Qualität, Größe, Geschwindigkeit |
+| [`intfloat/multilingual-e5-large`](https://huggingface.co/intfloat/multilingual-e5-large) | 2,3 GB | 100+ Sprachen | Wahrscheinlich höhere Qualität, in Backlog für Produktion |
 
 Embedding Dimension: 384. Bei 500 Keywords also eine 500 × 384 Matrix, ungefähr 770 KB als float32.
 
 Alle Embeddings werden mit `normalize_embeddings=True` erzeugt, damit Cosine Similarity gleichwertig zur Euclidean Distance auf der Einheitssphäre ist. Das vereinfacht die Wahl der Distanz-Metrik im Clustering.
 
-## 3. Dimensionsreduktion: warum UMAP
+## 3. Dimensionsreduktion: warum [UMAP](https://umap-learn.readthedocs.io/)
 
-384 Dimensionen sind für Density-based Clustering zu viel (Curse of Dimensionality, alle Distanzen werden ähnlich). Eine Reduktion auf 5 bis 10 Dimensionen ist Standard.
+384 Dimensionen sind für Density-based Clustering zu viel ([Curse of Dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality), alle Distanzen werden ähnlich). Eine Reduktion auf 5 bis 10 Dimensionen ist Standard.
 
 ### UMAP, PCA, t-SNE im Vergleich
 
@@ -73,9 +73,9 @@ red2 = umap.UMAP(n_neighbors=15, n_components=2, metric="cosine", min_dist=0.1, 
 
 `random_state=42` macht beide Reduktionen reproduzierbar zwischen Läufen.
 
-## 4. Clustering: warum HDBSCAN
+## 4. Clustering: warum [HDBSCAN](https://hdbscan.readthedocs.io/)
 
-HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise) clustert nach Dichte: ein Cluster ist eine Region im Raum, in der Punkte dicht beieinander liegen. Punkte in dünn besiedelten Regionen werden als Rauschen markiert.
+[HDBSCAN](https://hdbscan.readthedocs.io/) (Hierarchical Density-Based Spatial Clustering of Applications with Noise) clustert nach Dichte: ein Cluster ist eine Region im Raum, in der Punkte dicht beieinander liegen. Punkte in dünn besiedelten Regionen werden als Rauschen markiert.
 
 ### Vergleich mit Alternativen
 
@@ -157,7 +157,7 @@ Anders ausgedrückt: mcs=15, ms=5, eom ist eine von mehreren gleichwertig sinnvo
 
 Drei Ebenen, die unabhängig voneinander Vertrauen aufbauen.
 
-### 6.1 Silhouette Score
+### 6.1 [Silhouette Score](https://en.wikipedia.org/wiki/Silhouette_(clustering))
 
 Misst, wie gut Cluster getrennt sind, von -1 bis +1.
 
@@ -172,7 +172,7 @@ Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsäc
 
 ### 6.2 ARI und NMI gegen die LLM Cluster
 
-Adjusted Rand Index (ARI) und Normalized Mutual Information (NMI) messen, wie ähnlich zwei Cluster-Aufteilungen derselben Daten sind.
+[Adjusted Rand Index (ARI)](https://en.wikipedia.org/wiki/Rand_index#Adjusted_Rand_index) und [Normalized Mutual Information (NMI)](https://en.wikipedia.org/wiki/Mutual_information#Normalized_variants) messen, wie ähnlich zwei Cluster-Aufteilungen derselben Daten sind.
 
 | Vergleich | ARI | NMI |
 |---|---|---|
@@ -191,7 +191,7 @@ Das ist eine empirische Erkenntnis, die ohne diese Analyse nicht sichtbar wäre,
 
 ### 6.3 Hierarchischer Vergleich (Ward)
 
-Zusätzlich rechne ich Ward Hierarchical Clustering auf den gleichen UMAP Daten, mit `k=8`, `k=10`, `k=12`. Ward minimiert die Varianz innerhalb der Cluster und produziert kompakte, klar getrennte Gruppen.
+Zusätzlich rechne ich [Ward Hierarchical Clustering](https://en.wikipedia.org/wiki/Ward%27s_method) auf den gleichen UMAP Daten, mit `k=8`, `k=10`, `k=12`. Ward minimiert die Varianz innerhalb der Cluster und produziert kompakte, klar getrennte Gruppen.
 
 | k | Silhouette |
 |---|---|

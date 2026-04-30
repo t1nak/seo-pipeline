@@ -301,7 +301,7 @@ def _safe_label(value, display_id: int) -> str:
 
 
 def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
-                 brief_prefix: str = "") -> str:
+                 brief_prefix: str = "", map_prefix: str = "../clustering/") -> str:
     """Build one cluster card."""
     cid = int(profile_row["cluster_id"])
     display_id = cid + 1
@@ -377,7 +377,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
     sv_fmt = f"{total_sv:,}".replace(",", ".")
 
     brief_filename = f"{brief_prefix}cluster_{display_id:02d}.md"
-    map_link = f"../clustering/cluster_map.html#cluster-{display_id}"
+    map_link = f"{map_prefix}cluster_map.html#cluster-{display_id}"
 
     return f"""
 <section class="card" id="cluster-{display_id}">
@@ -487,7 +487,9 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
 
 
 def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
-               brief_prefix: str = "", extra_section: str = "") -> str:
+               brief_prefix: str = "", extra_section: str = "",
+               map_prefix: str = "../clustering/",
+               briefings_dir: Path | None = None) -> str:
     """Assemble the full dashboard HTML and return it as a string.
 
     brief_prefix: prepended to brief download links (e.g. "../briefings/" when
@@ -496,12 +498,13 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
                    cluster cards (used by src.report to inject chart PNGs).
     """
     real = profiles[profiles["cluster_id"] != -1].sort_values("total_sv", ascending=False)
+    briefs_root = briefings_dir if briefings_dir is not None else BRIEFINGS
     cards = []
     titles: dict[int, str] = {}
     for _, row in real.iterrows():
         cid = int(row["cluster_id"])
         display_id = cid + 1
-        md_path = BRIEFINGS / f"cluster_{display_id:02d}.md"
+        md_path = briefs_root / f"cluster_{display_id:02d}.md"
         if not md_path.exists():
             logger.info("WARN: brief missing for cluster %d, skipping", cid)
             continue
@@ -511,7 +514,8 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
             titles[cid] = title_match.group(1).strip()
         top_kw = labeled.loc[labeled["hdb"] == cid].sort_values(
             "search_volume", ascending=False).head(6)
-        cards.append(_render_card(row, top_kw, md, brief_prefix=brief_prefix))
+        cards.append(_render_card(row, top_kw, md, brief_prefix=brief_prefix,
+                                  map_prefix=map_prefix))
 
     summary = _render_summary(profiles)
     minicards = _render_minicards(profiles, titles)
@@ -531,7 +535,7 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
     Sortiert nach Suchvolumen pro Monat.</p>
   </div>
   <div class="header-actions">
-    <a class="map-cta" href="../clustering/cluster_map.html">Cluster Karte öffnen</a>
+    <a class="map-cta" href="{map_prefix}cluster_map.html">Cluster Karte öffnen</a>
     <button type="button" class="glossar-btn" onclick="openGlossar()">Glossar: was heißen die Zahlen?</button>
   </div>
 </header>

@@ -1,0 +1,9 @@
+{
+  "run_id": "2026-04-30",
+  "date": "2026-04-30",
+  "source": "llm-generated",
+  "n_keywords": 500,
+  "n_clusters": 10,
+  "n_outliers": 38,
+  "total_search_volume": 213302
+}

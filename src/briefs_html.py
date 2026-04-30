@@ -489,13 +489,16 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
 def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
                brief_prefix: str = "", extra_section: str = "",
                map_prefix: str = "../clustering/",
-               briefings_dir: Path | None = None) -> str:
+               briefings_dir: Path | None = None,
+               back_links: list[tuple[str, str]] | None = None) -> str:
     """Assemble the full dashboard HTML and return it as a string.
 
     brief_prefix: prepended to brief download links (e.g. "../briefings/" when
                   the page is served from a sibling directory).
     extra_section: optional HTML block inserted between the mini-grid and the
                    cluster cards (used by src.report to inject chart PNGs).
+    back_links: optional list of (label, href) rendered as small back-buttons
+                above the header (e.g. "Zurück zur Übersicht").
     """
     real = profiles[profiles["cluster_id"] != -1].sort_values("total_sv", ascending=False)
     briefs_root = briefings_dir if briefings_dir is not None else BRIEFINGS
@@ -521,13 +524,25 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
     minicards = _render_minicards(profiles, titles)
     cards_html = "\n".join(cards)
 
+    back_html = ""
+    if back_links:
+        items = "".join(
+            f'<a class="back-link" href="{href}">← {label}</a>'
+            for label, href in back_links
+        )
+        back_html = f'<nav class="back-nav">{items}</nav>'
+
     return f"""<!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cluster Briefs · zvoove SEO Pipeline</title>
-<style>{_PAGE_CSS}</style>
+<style>{_PAGE_CSS}
+.back-nav{{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}}
+.back-link{{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}}
+.back-link:hover{{text-decoration:underline}}
+</style>
 </head><body><div class="wrap">
-
+{back_html}
 <header>
   <div class="header-text">
     <h1>Cluster Briefs</h1>

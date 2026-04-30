@@ -1,12 +1,18 @@
-# Architektur
+# Prozessarchitektur
 
-Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Anbindung an einen Revenue Stack. Ziel: ein Engineering Reviewer soll in 10 Minuten verstehen, wie das Ganze zusammenhängt.
+Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Anbindung an einen Revenue Stack. In 10 Minuten verständlich aufgebaut.
 
-## Pipeline Diagramm
+## Pipeline auf einen Blick
+
+![Pipeline Architektur](landing_diagram.svg)
+
+Vier modulare Phasen, an jeder Stelle sind Provider per Konfiguration austauschbar (Keyword-Quelle, LLM für Briefings, Reporting-Ziel). Auslöser: GitHub Actions per Cron-Schedule oder manueller Trigger.
+
+## Implementierungs-Detail
+
+Die folgende SVG zeigt links die externen Systeme (zvoove Blog, DataForSEO, Anthropic API), in der Mitte die fünf entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese fünf Skripte realisieren die vier modularen Phasen aus dem Diagramm oben; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Markierte Artefakte (gelb) sind über GitHub Pages live deployed. Die Validierungs-Zahlen unten sind der Stand des manuellen Baseline Laufs.
 
 ![Architektur Diagramm](architecture.svg)
-
-Die SVG zeigt links die externen Systeme (zvoove Blog, DataForSEO, Anthropic API), in der Mitte die fünf entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese fünf Skripte realisieren die vier modularen Phasen aus dem Landing-Diagramm; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Markierte Artefakte (gelb) sind über GitHub Pages live deployed. Die Validierungs-Zahlen unten sind der Stand des manuellen Baseline Laufs.
 
 Für eine Mermaid Quelle, die in jedem GitHub Markdown Renderer funktioniert, hier dieselbe Struktur als Code:
 

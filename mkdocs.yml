@@ -9,7 +9,6 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: de
-  logo: assets/cluster_overview.png
   favicon: assets/cluster_overview.png
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -41,6 +40,7 @@ theme:
     - toc.follow
   icon:
     repo: fontawesome/brands/github
+    logo: material/sitemap
 
 nav:
   - Übersicht: index.md

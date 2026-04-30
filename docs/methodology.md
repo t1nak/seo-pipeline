@@ -1,6 +1,6 @@
 # Methodology
 
-Diese Datei erklärt die methodischen Entscheidungen in der Cluster Pipeline mit der Tiefe, die ein technischer Reviewer erwartet. Die [Übersicht](index.md) gibt den Einstieg, die [Case Study](case-study.md) verbindet die Methodik mit dem Geschäftsproblem, hier geht es um das technische Warum.
+Diese Datei erklärt die methodischen Entscheidungen in der Cluster Pipeline mit technischer Tiefe. Die [Übersicht](index.md) gibt den Einstieg, die [Case Study](case-study.md) verbindet die Methodik mit dem Geschäftsproblem, hier geht es um das technische Warum.
 
 ## Inhaltsübersicht
 
@@ -34,8 +34,8 @@ Ein Embedding bildet einen Text auf einen Punkt in einem hochdimensionalen Raum 
 ### Anforderungen
 
 - **Mehrsprachig.** Das Keyword Set ist durchgehend Deutsch. Englische Modelle wie `all-MiniLM-L6-v2` handhaben deutsche Komposita schlechter (zum Beispiel werden `arbeitnehmerüberlassungsgesetz` und `aüg` ungleich gut zugeordnet).
-- **Klein und schnell.** Das Modell muss auf einem normalen Laptop ohne GPU laufen, weil ein Bewerbungs-Reviewer die Pipeline nachvollziehen können soll.
-- **Etabliert.** Sentence Transformers sind das Standardwerkzeug für semantische Ähnlichkeit. Kein experimentelles Setup, das in der Bewertung erklärungsbedürftig ist.
+- **Klein und schnell.** Das Modell muss auf einem normalen Laptop ohne GPU laufen, damit die Pipeline lokal reproduzierbar bleibt.
+- **Etabliert.** Sentence Transformers sind das Standardwerkzeug für semantische Ähnlichkeit. Kein experimentelles Setup, das erklärungsbedürftig wäre.
 
 ### Auswahl
 

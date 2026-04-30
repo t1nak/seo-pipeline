@@ -1,6 +1,6 @@
 # Technical Review
 
-Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch Lücken, was würde ich in Produktion ergänzen. Dieser Bericht ist bewusst ehrlich, nicht werbend, und richtet sich an einen technischen Reviewer, der das Repo in unter 30 Minuten beurteilen will.
+Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch Lücken, was würde ich in Produktion ergänzen. Dieser Bericht ist bewusst ehrlich, nicht werbend, und macht das Repo in unter 30 Minuten technisch beurteilbar.
 
 ## 1. Architektur und Modul-Schnitt
 
@@ -163,7 +163,7 @@ Die Dokumentation ist Teil der Bewerbungs-Lieferung, also bewusst ausführlich:
 
 - `README.md`: Frontdoor mit Hero, Quick Links, Stand, Schnellstart
 - `CASE_STUDY.md`: ausführliche Schreibarbeit, 14 Abschnitte
-- `docs/methodology.md`: Tiefe für technische Reviewer
+- `docs/methodology.md`: technische Tiefe zu Embeddings, UMAP, HDBSCAN, Validierung
 - `docs/results.md`: 10-Cluster-Katalog mit Empfehlungen
 - `docs/architecture.md`: Datenfluss, Kosten, Skalierung
 - `docs/decisions.md`: 11 ADRs mit Trade-offs

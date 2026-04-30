@@ -7,35 +7,47 @@
 body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;
      color:#0f172a;background:#f8fafc;margin:0;padding:32px 24px;line-height:1.5}
 .wrap{max-width:1100px;margin:0 auto}
+.back-nav{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}
+.back-link{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}
+.back-link:hover{text-decoration:underline}
 header{margin-bottom:32px}
 h1{font-size:28px;margin:0 0 8px;letter-spacing:-0.01em}
 .lead{color:#475569;margin:0;max-width:680px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:24px}
 .card{background:white;border:1px solid #e2e8f0;border-radius:10px;padding:20px;
-      text-decoration:none;color:inherit;display:block;transition:border-color .15s,transform .15s}
+      transition:border-color .15s,transform .15s;display:flex;flex-direction:column;gap:10px}
 .card:hover{border-color:#0d9488;transform:translateY(-1px)}
 .card-id{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;
-         letter-spacing:0.04em;margin:0 0 6px}
-.card-title{font-size:18px;font-weight:600;margin:0 0 12px;color:#0f172a}
-.kpi-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+         letter-spacing:0.04em;margin:0}
+.card-title{font-size:18px;font-weight:600;margin:0;color:#0f172a;text-decoration:none}
+.card-title:hover{color:#0d9488}
+.kpi-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 .kpi{font-size:13px}
 .kpi b{display:block;font-size:18px;color:#0f172a}
 .kpi span{color:#64748b;font-size:12px}
 .source-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:4px;
               background:#ecfdf5;color:#047857;font-weight:600;letter-spacing:0.02em}
+.card-actions{display:flex;gap:14px;margin-top:auto;padding-top:12px;
+              border-top:1px solid #f1f5f9;font-size:13px}
+.card-actions a{color:#0d9488;text-decoration:none;font-weight:500}
+.card-actions a:hover{text-decoration:underline}
 .empty{padding:40px;text-align:center;color:#64748b;border:1px dashed #cbd5e1;border-radius:10px}
 </style>
 </head><body><div class="wrap">
+<nav class="back-nav">
+  <a class="back-link" href="../../index.html">← Zurück zur Doku</a>
+</nav>
 <header>
   <h1>Pipeline-Läufe</h1>
   <p class="lead">Übersicht aller Läufe der SEO-Keyword-Pipeline. Jeder Lauf hat seinen eigenen
   Eintrittspunkt (LLM-erzeugte Liste, Semrush-Export, etc.) und ein eigenes Dashboard mit
-  Clustern, Briefs und Diagnose-Charts. Karte anklicken, um den Lauf zu öffnen.</p>
+  Clustern, Briefs, Diagnose-Charts und einer interaktiven Cluster-Karte. Karte anklicken,
+  um den Lauf zu öffnen.</p>
 </header>
 <div class="grid">
-<a class="card" href="runs/2026-04-30/index.html">
+<article class="card">
   <p class="card-id">Lauf 2026-04-30</p>
-  <p class="card-title">500 Keywords · 10 Cluster</p>
+  <a class="card-title" href="runs/2026-04-30/index.html">500 Keywords · 10 Cluster</a>
   <span class="source-badge">llm-generated</span>
   <div class="kpi-row">
     <div class="kpi"><b>500</b><span>Keywords</span></div>
@@ -43,5 +55,9 @@ h1{font-size:28px;margin:0 0 8px;letter-spacing:-0.01em}
     <div class="kpi"><b>38</b><span>Ausreißer</span></div>
     <div class="kpi"><b>213.302</b><span>SV gesamt</span></div>
   </div>
-</a></div>
+  <div class="card-actions">
+    <a href="runs/2026-04-30/index.html">Dashboard öffnen →</a>
+    <a href="runs/2026-04-30/cluster_map.html">Cluster Map öffnen →</a>
+  </div>
+</article></div>
 </div></body></html>

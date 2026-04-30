@@ -44,23 +44,54 @@ BRIEFINGS = OUT / "briefings"
 DEFAULT_SOURCE = "llm-generated"
 
 
+_CHART_MODAL_CSS = """
+.chart-thumb{cursor:zoom-in;display:block;width:100%;border:1px solid #e2e8f0;
+             border-radius:6px;background:white;transition:transform .15s,box-shadow .15s}
+.chart-thumb:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,23,42,0.08)}
+.chart-modal{position:fixed;inset:0;background:rgba(15,23,42,0.85);display:none;
+             align-items:center;justify-content:center;z-index:9999;padding:24px;cursor:zoom-out}
+.chart-modal.open{display:flex}
+.chart-modal img{max-width:100%;max-height:100%;border-radius:8px;background:white;
+                 box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.chart-modal-close{position:absolute;top:16px;right:20px;background:none;border:0;
+                   color:white;font-size:32px;line-height:1;cursor:pointer;padding:8px}
+"""
+
+_CHART_MODAL_JS = """
+(function(){
+  const modal=document.getElementById('chart-modal');
+  const modalImg=modal.querySelector('img');
+  document.querySelectorAll('.chart-thumb').forEach(img=>{
+    img.addEventListener('click',()=>{modalImg.src=img.src;modalImg.alt=img.alt;modal.classList.add('open');});
+  });
+  modal.addEventListener('click',e=>{if(e.target===modal||e.target.classList.contains('chart-modal-close'))modal.classList.remove('open');});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('open');});
+})();
+"""
+
+
 def _charts_section(chart_dir: str = "charts/") -> str:
     imgs = "".join(
-        f"<img src='{chart_dir}{f.name}' alt='{f.name}' "
-        f"style='width:100%;border:1px solid #e2e8f0;border-radius:6px;background:white'>"
+        f"<img class='chart-thumb' src='{chart_dir}{f.name}' alt='{f.name}'>"
         for f in sorted(CLUSTERING.glob("chart*.png"))
     )
     if not imgs:
         return ""
     return (
+        f'<style>{_CHART_MODAL_CSS}</style>'
         '<div style="margin-bottom:40px;border-top:1px solid #e2e8f0;padding-top:28px;">'
         '<p style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;'
         'letter-spacing:0.04em;margin:0 0 12px;">Diagnose Charts</p>'
-        '<p style="font-size:13px;margin:0 0 14px;">'
+        '<p style="font-size:13px;margin:0 0 14px;color:#64748b;">'
         '<a href="cluster_map.html" style="color:#0d9488">'
-        'Interaktive Cluster Map öffnen →</a></p>'
+        'Interaktive Cluster Map öffnen →</a> · '
+        '<span>Klick auf ein Chart öffnet die Großansicht.</span></p>'
         '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px;">'
         f'{imgs}</div></div>'
+        '<div class="chart-modal" id="chart-modal" role="dialog" aria-label="Chart Vollbild">'
+        '<button class="chart-modal-close" aria-label="Schließen">×</button>'
+        '<img src="" alt=""></div>'
+        f'<script>{_CHART_MODAL_JS}</script>'
     )
 
 
@@ -123,22 +154,30 @@ _INDEX_CSS = """
 body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;
      color:#0f172a;background:#f8fafc;margin:0;padding:32px 24px;line-height:1.5}
 .wrap{max-width:1100px;margin:0 auto}
+.back-nav{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}
+.back-link{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}
+.back-link:hover{text-decoration:underline}
 header{margin-bottom:32px}
 h1{font-size:28px;margin:0 0 8px;letter-spacing:-0.01em}
 .lead{color:#475569;margin:0;max-width:680px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:24px}
 .card{background:white;border:1px solid #e2e8f0;border-radius:10px;padding:20px;
-      text-decoration:none;color:inherit;display:block;transition:border-color .15s,transform .15s}
+      transition:border-color .15s,transform .15s;display:flex;flex-direction:column;gap:10px}
 .card:hover{border-color:#0d9488;transform:translateY(-1px)}
 .card-id{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;
-         letter-spacing:0.04em;margin:0 0 6px}
-.card-title{font-size:18px;font-weight:600;margin:0 0 12px;color:#0f172a}
-.kpi-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+         letter-spacing:0.04em;margin:0}
+.card-title{font-size:18px;font-weight:600;margin:0;color:#0f172a;text-decoration:none}
+.card-title:hover{color:#0d9488}
+.kpi-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 .kpi{font-size:13px}
 .kpi b{display:block;font-size:18px;color:#0f172a}
 .kpi span{color:#64748b;font-size:12px}
 .source-badge{display:inline-block;font-size:11px;padding:3px 8px;border-radius:4px;
               background:#ecfdf5;color:#047857;font-weight:600;letter-spacing:0.02em}
+.card-actions{display:flex;gap:14px;margin-top:auto;padding-top:12px;
+              border-top:1px solid #f1f5f9;font-size:13px}
+.card-actions a{color:#0d9488;text-decoration:none;font-weight:500}
+.card-actions a:hover{text-decoration:underline}
 .empty{padding:40px;text-align:center;color:#64748b;border:1px dashed #cbd5e1;border-radius:10px}
 """
 
@@ -150,10 +189,11 @@ def _render_runs_index(runs: list[dict]) -> str:
         cards = []
         for r in runs:
             sv = f"{r.get('total_search_volume', 0):,}".replace(",", ".")
+            run_id = r['run_id']
             cards.append(f"""
-<a class="card" href="runs/{r['run_id']}/index.html">
-  <p class="card-id">Lauf {r['run_id']}</p>
-  <p class="card-title">{r['n_keywords']} Keywords · {r['n_clusters']} Cluster</p>
+<article class="card">
+  <p class="card-id">Lauf {run_id}</p>
+  <a class="card-title" href="runs/{run_id}/index.html">{r['n_keywords']} Keywords · {r['n_clusters']} Cluster</a>
   <span class="source-badge">{r.get('source', DEFAULT_SOURCE)}</span>
   <div class="kpi-row">
     <div class="kpi"><b>{r['n_keywords']}</b><span>Keywords</span></div>
@@ -161,7 +201,11 @@ def _render_runs_index(runs: list[dict]) -> str:
     <div class="kpi"><b>{r['n_outliers']}</b><span>Ausreißer</span></div>
     <div class="kpi"><b>{sv}</b><span>SV gesamt</span></div>
   </div>
-</a>""")
+  <div class="card-actions">
+    <a href="runs/{run_id}/index.html">Dashboard öffnen →</a>
+    <a href="runs/{run_id}/cluster_map.html">Cluster Map öffnen →</a>
+  </div>
+</article>""")
         body = f'<div class="grid">{"".join(cards)}</div>'
 
     return f"""<!DOCTYPE html>
@@ -170,11 +214,15 @@ def _render_runs_index(runs: list[dict]) -> str:
 <title>Pipeline-Läufe · zvoove SEO Pipeline</title>
 <style>{_INDEX_CSS}</style>
 </head><body><div class="wrap">
+<nav class="back-nav">
+  <a class="back-link" href="../../index.html">← Zurück zur Doku</a>
+</nav>
 <header>
   <h1>Pipeline-Läufe</h1>
   <p class="lead">Übersicht aller Läufe der SEO-Keyword-Pipeline. Jeder Lauf hat seinen eigenen
   Eintrittspunkt (LLM-erzeugte Liste, Semrush-Export, etc.) und ein eigenes Dashboard mit
-  Clustern, Briefs und Diagnose-Charts. Karte anklicken, um den Lauf zu öffnen.</p>
+  Clustern, Briefs, Diagnose-Charts und einer interaktiven Cluster-Karte. Karte anklicken,
+  um den Lauf zu öffnen.</p>
 </header>
 {body}
 </div></body></html>"""
@@ -205,6 +253,10 @@ def run(source: str = DEFAULT_SOURCE, run_id: str | None = None) -> None:
         extra_section=charts_html,
         map_prefix="",
         briefings_dir=run_dir / "briefings",
+        back_links=[
+            ("Zurück zur Lauf-Übersicht", "../../index.html"),
+            ("Zurück zur Doku", "../../../../index.html"),
+        ],
     )
     (run_dir / "index.html").write_text(page, encoding="utf-8")
 

@@ -11,8 +11,6 @@ Pipeline:
     5. cluster  final HDBSCAN with the chosen hyperparameters
     6. label    attach human-readable cluster names (DE + EN)
     7. profile  per-cluster stats CSV (size, SV, KD, CPC, intent mix)
-    8. charts   six matplotlib PNGs for the case study report
-    9. viz      interactive bilingual Plotly map (delegated to cluster_viz.py)
 
 The hyperparameter choices (UMAP n_neighbors=15, HDBSCAN mcs=12 / ms=5 / eom)
 are documented in docs/methodology.md, including the parameter sweep result
@@ -23,7 +21,6 @@ change. See docs/developer-guide.md for the full configuration model.
 CLI:
     python -m src.cluster --step all
     python -m src.cluster --step embed,reduce,cluster,label
-    python -m src.cluster --step viz
 """
 from __future__ import annotations
 
@@ -351,155 +348,6 @@ def step_profile() -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
-# Step 8: charts (six PNGs for the report)
-# ---------------------------------------------------------------------------
-
-
-def step_charts() -> None:
-    """Render the six diagnostic charts referenced by docs/results.md."""
-    import matplotlib.pyplot as plt
-    plt.rcParams["font.family"] = "DejaVu Sans"
-
-    df = pd.read_csv(F_LABELED)
-    red2 = np.load(F_UMAP_2D)
-    df["x"], df["y"] = red2[:, 0], red2[:, 1]
-
-    clusters = sorted([c for c in df["hdb"].unique() if c != -1])
-    cmap = plt.cm.tab20(np.linspace(0, 1, len(clusters)))
-
-    # Chart 1: 2D UMAP scatter coloured by cluster
-    fig, ax = plt.subplots(figsize=(13, 9))
-    noise = df[df["hdb"] == -1]
-    ax.scatter(noise["x"], noise["y"], c="#cccccc", s=10, alpha=0.4, label="noise")
-    for i, cid in enumerate(clusters):
-        sub = df[df["hdb"] == cid]
-        ax.scatter(sub["x"], sub["y"], c=[cmap[i]], s=14, alpha=0.85,
-                   label=f"{cid + 1}: {CLUSTER_LABELS_EN.get(int(cid), f'Cluster {int(cid) + 1}')[:30]}")
-        cx, cy = sub["x"].mean(), sub["y"].mean()
-        ax.text(cx, cy, str(cid + 1), fontsize=11, fontweight="bold",
-                ha="center", va="center",
-                bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="black", lw=0.6))
-    ax.set_title("UMAP map of HDBSCAN keyword clusters", fontsize=13)
-    ax.set_xlabel("UMAP-1"); ax.set_ylabel("UMAP-2")
-    ax.legend(loc="lower left", bbox_to_anchor=(1.02, 0), fontsize=8, frameon=False)
-    fig.tight_layout()
-    fig.savefig(CLUSTERING / "chart1_umap_map.png", dpi=140, bbox_inches="tight")
-    plt.close(fig)
-
-    # Chart 2: bubble (KD vs SV, sized by priority)
-    fig, ax = plt.subplots(figsize=(11, 7))
-    for i, cid in enumerate(clusters):
-        sub = df[df["hdb"] == cid]
-        ax.scatter(sub["kd"], sub["search_volume"], c=[cmap[i]], s=sub["priority_score"] * 8,
-                   alpha=0.6, edgecolors="white", linewidths=0.5)
-    ax.set_xlabel("Keyword Difficulty (0-100)"); ax.set_ylabel("Search volume / month")
-    ax.set_yscale("log"); ax.set_title("Per-keyword: difficulty vs. volume (size = priority)")
-    fig.tight_layout()
-    fig.savefig(CLUSTERING / "chart2_bubble.png", dpi=140, bbox_inches="tight")
-    plt.close(fig)
-
-    # Chart 3: cluster volume bars
-    agg = (df[df["hdb"] != -1].groupby(["hdb", "hdb_label"])
-           .agg(n=("keyword", "count"), total_sv=("search_volume", "sum"))
-           .reset_index().sort_values("total_sv", ascending=True))
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.barh(range(len(agg)), agg["total_sv"], color=[cmap[clusters.index(c)] for c in agg["hdb"]])
-    ax.set_yticks(range(len(agg)))
-    ax.set_yticklabels([f"{c + 1}: {l}" for c, l in zip(agg["hdb"], agg["hdb_label"])], fontsize=9)
-    ax.set_xlabel("Total search volume / month")
-    ax.set_title("Cluster size by total search volume")
-    fig.tight_layout()
-    fig.savefig(CLUSTERING / "chart3_cluster_volume.png", dpi=140, bbox_inches="tight")
-    plt.close(fig)
-
-    # Chart 4: priority matrix (mean KD vs total SV per cluster)
-    agg2 = (df[df["hdb"] != -1].groupby(["hdb", "hdb_label"])
-            .agg(mean_kd=("kd", "mean"), tot_sv=("search_volume", "sum"))
-            .reset_index())
-    fig, ax = plt.subplots(figsize=(10, 7))
-    for _, r in agg2.iterrows():
-        i = clusters.index(int(r["hdb"]))
-        ax.scatter(r["mean_kd"], r["tot_sv"], c=[cmap[i]], s=400, alpha=0.7,
-                   edgecolors="white", linewidths=1.5)
-        ax.annotate(f"{int(r['hdb']) + 1}: {r['hdb_label'][:22]}",
-                    (r["mean_kd"], r["tot_sv"]), fontsize=8.5, ha="center", va="center")
-    ax.set_xlabel("Mean Keyword Difficulty"); ax.set_ylabel("Total search volume / month")
-    ax.set_yscale("log"); ax.set_title("Cluster priority matrix: difficulty vs. opportunity")
-    ax.axvline(50, color="grey", linestyle="--", alpha=0.4)
-    fig.tight_layout()
-    fig.savefig(CLUSTERING / "chart4_priority_matrix.png", dpi=140, bbox_inches="tight")
-    plt.close(fig)
-
-    # Chart 5: intent mix per cluster
-    mix = (df[df["hdb"] != -1]
-           .pivot_table(index=["hdb", "hdb_label"], columns="estimated_intent",
-                        values="keyword", aggfunc="count", fill_value=0)
-           .reset_index())
-    fig, ax = plt.subplots(figsize=(11, 6))
-    y = np.arange(len(mix))
-    intent_cols = [c for c in mix.columns if c not in ("hdb", "hdb_label")]
-    bottoms = np.zeros(len(mix))
-    intent_colors = {"commercial": "#e8965e", "informational": "#5e8de8"}
-    for col in intent_cols:
-        ax.barh(y, mix[col], left=bottoms,
-                color=intent_colors.get(col, "#888888"), label=col)
-        bottoms += mix[col].values
-    ax.set_yticks(y)
-    ax.set_yticklabels([f"{int(c) + 1}: {l[:30]}" for c, l in zip(mix["hdb"], mix["hdb_label"])], fontsize=9)
-    ax.set_xlabel("Number of keywords"); ax.set_title("Intent mix per cluster")
-    ax.legend()
-    fig.tight_layout()
-    fig.savefig(CLUSTERING / "chart5_intent_mix.png", dpi=140, bbox_inches="tight")
-    plt.close(fig)
-
-    # Chart 6: method agreement (HDBSCAN vs hierarchical vs LLM)
-    from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
-    mask = df["hdb"] != -1
-    orig = df["category"].astype("category").cat.codes
-    pairs = [
-        ("HDBSCAN vs LLM", orig[mask], df["hdb"][mask]),
-        ("Hier(10) vs LLM", orig, df["hier10"]),
-        ("Hier(12) vs LLM", orig, df["hier12"]),
-        ("HDB vs Hier(10)", df["hier10"][mask], df["hdb"][mask]),
-    ]
-    labels = [p[0] for p in pairs]
-    aris = [adjusted_rand_score(a, b) for _, a, b in pairs]
-    nmis = [normalized_mutual_info_score(a, b) for _, a, b in pairs]
-    fig, ax = plt.subplots(figsize=(9, 4.5))
-    x = np.arange(len(labels))
-    ax.bar(x - 0.2, aris, 0.4, label="ARI", color="#5e8de8")
-    ax.bar(x + 0.2, nmis, 0.4, label="NMI", color="#e8965e")
-    ax.set_xticks(x); ax.set_xticklabels(labels, rotation=15, ha="right", fontsize=9)
-    ax.set_ylim(0, 1); ax.set_title("Cluster method agreement (higher = more agreement)")
-    ax.legend()
-    fig.tight_layout()
-    fig.savefig(CLUSTERING / "chart6_method_agreement.png", dpi=140, bbox_inches="tight")
-    plt.close(fig)
-
-    logger.info(f"wrote 6 PNGs to {CLUSTERING.relative_to(ROOT)}")
-
-
-# ---------------------------------------------------------------------------
-# Step 9: viz (interactive Plotly map)
-# ---------------------------------------------------------------------------
-
-
-def step_viz() -> Path:
-    """Build the interactive bilingual cluster map. Heavy lifting in cluster_viz."""
-    from src.cluster_viz import build_cluster_map_html
-
-    df = pd.read_csv(F_LABELED)
-    red2 = np.load(F_UMAP_2D)
-    html = build_cluster_map_html(df, red2,
-                                  labels_en=CLUSTER_LABELS_EN,
-                                  labels_de=CLUSTER_LABELS_DE)
-    F_VIZ.write_text(html)
-    size_kb = F_VIZ.stat().st_size / 1024
-    logger.info(f"wrote {F_VIZ.relative_to(ROOT)} ({size_kb:.0f} KB)")
-    return F_VIZ
-
-
-# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -512,13 +360,10 @@ STEPS = {
     "cluster": step_cluster,
     "label": step_label,
     "profile": step_profile,
-    "charts": step_charts,
-    "viz": step_viz,
 }
 
 # Default --all sequence (sweep is diagnostic, not part of all)
-DEFAULT_SEQUENCE = ("clean", "embed", "reduce", "cluster", "label", "profile",
-                    "charts", "viz")
+DEFAULT_SEQUENCE = ("clean", "embed", "reduce", "cluster", "label", "profile")
 
 
 def main() -> None:

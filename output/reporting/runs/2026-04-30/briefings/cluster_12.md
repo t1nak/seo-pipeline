@@ -1,56 +1,54 @@
-# Zeiterfassung in der Zeitarbeit: Anforderungen, Compliance und die richtige Software
+# Zeiterfassung in der Zeitarbeit: Branchen, Compliance und manipulationssichere Systeme im Vergleich
 
-**Hauptkeyword:** zeiterfassungssystem zeitarbeit
-**Nebenkeywords:** zeiterfassung dsgvo, zeiterfassung manipulationssicher, personalcontrolling zeitarbeit, zeiterfassung baustelle, zeiterfassung biometrisch, zeiterfassung kostenlos, zeiterfassung pflege
-**Suchintention:** mixed, Nutzer vergleichen Lösungen und informieren sich gleichzeitig über gesetzliche Pflichten rund um Zeiterfassung im Zeitarbeitskontext.
+**Hauptkeyword:** Zeiterfassungssystem Zeitarbeit
+**Nebenkeywords:** Zeiterfassung Pflege, Zeiterfassung Handwerk, Zeiterfassung Baustelle, Zeiterfassung DSGVO, Zeiterfassung manipulationssicher, Zeiterfassung biometrisch, Personalcontrolling Zeitarbeit
+**Suchintention:** mixed, überwiegend kommerzielle Kaufabsicht bei Branchenanfragen, kombiniert mit regulatorischen Informationsbedürfnissen zu DSGVO und Manipulationssicherheit
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Niederlassungsleiter oder HR-Verantwortlicher in einem mittelgroßen Zeitarbeitsunternehmen mit 50 bis 500 aktiven Zeitarbeitnehmern, der eine neue oder ersetzende Zeiterfassungslösung evaluiert.
+Geschäftsführer oder Niederlassungsleiter einer Zeitarbeitsfirma mit 50 bis 500 Mitarbeitern, die Leiharbeitnehmer in Pflege, Handwerk oder Bau einsetzen und aktuell mit Excel, Stempelkarten oder einer veralteten Insellösung arbeiten.
 
 ## Schmerzpunkt
 
-Die korrekte Erfassung von Arbeitszeiten bei Zeitarbeitnehmern ist juristisch heikel: Einsatzzeiten liegen beim Kundenunternehmen, Abrechnungspflichten beim Verleiher, und Fehler kosten bares Geld bei Prüfungen durch den Zoll oder die Rentenversicherung. Manuelle Stundenzettel oder Excel-Listen sind fehleranfällig, manipulierbar und erfüllen weder die DSGVO-Anforderungen noch das Urteil des EuGH zur Arbeitszeiterfassung. Gleichzeitig drückt die Marge: jede Stunde, die falsch erfasst oder zu spät abgerechnet wird, ist direkter Umsatzverlust.
+Jede falsch erfasste Stunde ist ein Haftungsrisiko: Zu viel abgerechnet schadet der Kundenbeziehung, zu wenig erfasst kostet bares Geld und kann bei Betriebsprüfungen durch Zoll oder Rentenversicherung zur Nachzahlung führen. Branchenspezifische Anforderungen wie Schichtdienste in der Pflege, wechselnde Baustellen oder gesetzliche Ruhezeiten nach AÜG und ArbZG lassen sich mit Standardsoftware nicht rechtssicher abbilden. Gleichzeitig wächst der Druck durch DSGVO, den EuGH-Beschluss zur Arbeitszeiterfassung und steigende Prüfungsintensität der Behörden.
 
 ## Ziel des Artikels
 
-Der Leser soll verstehen, welche gesetzlichen Anforderungen an ein Zeiterfassungssystem in der Zeitarbeit gestellt werden, wie er die richtige Lösung auswählt, und warum er eine branchenspezifische Software gegenüber einer Generallösung bevorzugen sollte.
+Der Leser soll verstehen, welche technischen und rechtlichen Anforderungen ein Zeiterfassungssystem für Zeitarbeit erfüllen muss, und konkrete Kriterien für die Softwareauswahl in der Hand haben, damit er im nächsten Schritt eine Produktdemonstration anfragen kann.
 
 ## Outline
 
-- H1: Zeiterfassung in der Zeitarbeit: Anforderungen, Compliance und die richtige Software
-- H2: Warum Zeiterfassung in der Zeitarbeit kein einfaches Thema ist
-  - H3: Dreiecksverhältnis zwischen Verleiher, Entleiher und Zeitarbeitnehmer
-  - H3: Wo die Verantwortung wirklich liegt
-- H2: Gesetzliche Pflichten im Überblick
-  - H3: EuGH-Urteil und die Folgen für deutsche Arbeitgeber
-  - H3: AEntG, MiLoG und Zollprüfungen: was wirklich geprüft wird
-  - H3: DSGVO-konforme Zeiterfassung: Datensparsamkeit, Zugriffsrechte, Speicherfristen
-- H2: Besondere Anforderungen in typischen Einsatzbranchen
-  - H3: Zeiterfassung Baustelle: mobile Erfassung ohne stabiles WLAN
-  - H3: Zeiterfassung Pflege: Schichtdienst, Zuschläge und Nachweispflichten
-  - H3: Zeiterfassung Handwerk: Projektzuordnung und Fahrtzeiten
-- H2: Manipulationssichere Zeiterfassung: Was das konkret bedeutet
-  - H3: Technische Anforderungen an Manipulationssicherheit
-  - H3: Biometrische Zeiterfassung: Möglichkeiten und DSGVO-Grenzen
-  - H3: Audit-Trails und revisionssichere Archivierung
-- H2: Personalcontrolling in der Zeitarbeit: Zeiterfassung als Datenbasis
-  - H3: Kennzahlen, die Niederlassungsleiter wirklich brauchen
-  - H3: Wie Zeiterfassungsdaten in die Lohnabrechnung fließen
-- H2: Kostenlose Zeiterfassung: Wann sie reicht und wann sie zum Risiko wird
-  - H3: Typische Einschränkungen kostenloser Tools
-  - H3: Versteckte Kosten durch manuelle Nacharbeit und Compliance-Lücken
-- H2: Checkliste: So wählen Sie das richtige Zeiterfassungssystem für Ihre Zeitarbeitsbranche
-  - H3: Must-have-Funktionen für Zeitarbeitsunternehmen
-  - H3: Integrationsfähigkeit mit ERP und Lohnsystemen
+- H1: Zeiterfassung in der Zeitarbeit: Anforderungen, Branchen und Compliance auf einen Blick
+- H2: Warum Standard-Zeiterfassung in der Zeitarbeit nicht funktioniert
+  - H3: Dezentrale Einsatzorte und wechselnde Kundenbetriebe als Kernproblem
+  - H3: AÜG, ArbZG und tarifliche Sonderregelungen als Pflichtspalten im System
+- H2: Branchenanforderungen im Detail
+  - H3: Zeiterfassung Pflege: Schichtdienst, Nachtarbeit und Dokumentationspflicht
+  - H3: Zeiterfassung Baustelle: GPS, Offline-Fähigkeit und wechselnde Projekte
+  - H3: Zeiterfassung Handwerk: Auftragszuordnung, Fahrtzeiten und Regiestunden
+- H2: Rechtliche Pflichten und Compliance
+  - H3: Was der EuGH-Beschluss und das deutsche Arbeitszeitgesetz konkret verlangen
+  - H3: DSGVO-konforme Zeiterfassung: Datensparsamkeit, Zugriffsrechte und Aufbewahrungsfristen
+  - H3: Manipulationssichere Zeiterfassung: Was das bedeutet und warum Zoll und Rentenversicherung darauf achten
+- H2: Technische Merkmale eines geeigneten Systems
+  - H3: Biometrische Zeiterfassung: Fingerabdruck oder Gesichtserkennung rechtssicher einsetzen
+  - H3: Mobile Erfassung per App versus Terminal: Vor- und Nachteile im Vergleich
+  - H3: Schnittstellen zur Lohnabrechnung und zum AÜG-Nachweis
+- H2: Personalcontrolling in der Zeitarbeit
+  - H3: Welche Kennzahlen aus der Zeiterfassung direkt in den Deckungsbeitrag einfließen
+  - H3: Auswertungen, die Niederlassungsleiter täglich brauchen
+- H2: Auswahlkriterien und typische Fehler beim Systemwechsel
+  - H3: Fünf Fragen, die jeder Anbieter beantworten muss
+  - H3: Datenmigration, Pilotbetrieb und Mitbestimmung des Betriebsrats
+- H2: Fazit und nächste Schritte
 
 ## Benchmark URLs
 
-1. https://www.sage.com/de-de/blog/zeiterfassung-pflicht/ — rankt auf breite Zeiterfassungs-Keywords, behandelt EuGH-Urteil und gesetzliche Grundlagen, zeigt welche Tiefe Google hier erwartet
-2. https://www.clockodo.com/de/zeiterfassung/dsgvo/ — direkter Wettbewerber im Keyword "zeiterfassung dsgvo", gut strukturiert aber ohne Zeitarbeitsfokus
-3. https://www.gfos.com/zeiterfassung/branchen/zeitarbeit/ — branchenspezifischer Ansatz ähnlich wie zvoove, zeigt wie eine Konkurrenzlösung das Thema positioniert
+1. https://www.sage.com/de-de/blog/zeiterfassung-pflicht/ — hoch rankender Informationsartikel zur gesetzlichen Pflicht, zeigt welche Fragen Einkäufer zuerst stellen
+2. https://www.rexx-systems.com/hr-lexikon/zeiterfassung/ — HR-Software-Anbieter mit breitem Lexikonartikel, schwach bei Branchenspezifik und AÜG-Kontext
+3. https://www.clockodo.com/de/ratgeber/zeiterfassung-baustelle/ — guter Praxisartikel zur Baustelle, fehlt aber der Zeitarbeitsbezug und Compliance-Tiefe
 
 ## Call to Action
 
-Demo buchen für zvoove Workforce: Leser werden eingeladen, live zu sehen, wie zvoove die Zeiterfassung für Zeitarbeitnehmer in verschiedenen Einsatzbranchen manipulationssicher, DSGVO-konform und direkt mit der Lohnabrechnung verbunden abbildet.
+Demo anfragen: Zeig mir, wie zvoove die Zeiterfassung für meine Branche und meine Entleiher abbildet, inklusive DSGVO-Protokoll, Manipulationsschutz und direkter Übergabe an die Lohnabrechnung.

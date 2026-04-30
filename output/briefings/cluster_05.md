@@ -1,59 +1,54 @@
-# Lohnabrechnung, Multiposting, AÜG: Was zvoove als All-in-One-Lösung für Personaldienstleister leistet
+# Lohnabrechnung und Candidate Sourcing für Zeitarbeit: Ein System statt zwei Baustellen
 
 **Hauptkeyword:** lohnabrechnung erstellen
-**Nebenkeywords:** AÜG, bewerber finden, multiposting jobbörsen, stellenanzeige schalten, indeed alternative, lohnabrechnung sage, lohnabrechnung addison, lizenzmodell saas
-**Suchintention:** mixed, Nutzer suchen teils nach konkreten Tools und Anbietern (kommerziell), teils nach Erklärungen zu Prozessen wie Lohnabrechnung oder AÜG-Compliance (informational).
+**Nebenkeywords:** bewerber finden, stellenanzeige schalten, multiposting jobbörsen, indeed alternative, lohnabrechnung muster, aüg, lizenzmodell saas
+**Suchintention:** mixed, Nutzer suchen teils nach konkreten Anleitungen zur Lohnabrechnung, teils nach Tools für Kandidatengewinnung, was auf einen Entscheider hindeutet, der beides gerade operativ lösen muss.
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer oder Niederlassungsleiter eines mittelgroßen Zeitarbeitsunternehmens (20 bis 200 Mitarbeitende intern) mit gewachsener Softwarelandschaft aus Insellösungen, die einen konsolidierten Überblick über moderne Alternativen suchen.
+Geschäftsführer oder Niederlassungsleiter einer Zeitarbeitsfirma mit 5 bis 50 internen Mitarbeitern, die aktuell mit Insellösungen für Lohn und Recruiting arbeiten und merken, dass das nicht mehr skaliert.
 
 ## Schmerzpunkt
 
-Lohnabrechnung läuft noch über Addison oder Sage, Stellenanzeigen werden manuell auf jede Jobbörse einzeln hochgeladen, und AÜG-Fristen werden per Excel überwacht. Jede dieser Baustellen kostet Zeit und birgt Fehlerrisiken, die im Prüffall teuer werden. Der Anbieter weiß, dass er modernisieren muss, aber er sieht keinen klaren Weg, der nicht monatelange Migrationsprojekte bedeutet.
+Jeden Monat kostet die Lohnabrechnung für gewerbliche Zeitarbeitnehmer unverhältnismäßig viel Zeit, weil Daten zwischen Systemen hin und her kopiert werden. Gleichzeitig läuft das Bewerbergeschäft über Indeed, ein paar Jobbörsen und eine Excel-Liste, während Aufträge liegen bleiben, weil passende Kandidaten zu langsam gefunden werden. Wer beides separat löst, zahlt doppelt und hat trotzdem keine sauberen Prozesse.
 
 ## Ziel des Artikels
 
-Der Leser soll verstehen, welche Kernprozesse eine moderne Personaldienstleister-Software abdecken muss, warum Insellösungen bei Lohn, Recruiting und Compliance langfristig teurer sind als eine integrierte Plattform, und warum zvoove als konkreter Anbieter in die engere Auswahl gehört.
+Der Leser soll verstehen, warum eine integrierte Plattform für Lohnabrechnung und Candidate Sourcing in der Zeitarbeit wirtschaftlicher ist als zwei getrennte Tools, und soll danach eine Demo oder ein Beratungsgespräch mit zvoove anfragen.
 
 ## Outline
 
-- H1: Lohnabrechnung, Multiposting, AÜG: Warum Personaldienstleister ihre Softwareinseln aufgeben
-- H2: Was Personaldienstleister heute wirklich unter einen Hut bringen müssen
-  - H3: Lohnabrechnung nach Tarifvertrag und Branchenzuschlag
-  - H3: AÜG-Compliance ohne manuelles Fristenmanagement
-  - H3: Bewerber finden und Stellen schalten ohne Doppelarbeit
-- H2: Das Problem mit gewachsenen Insellösungen
-  - H3: Lohnabrechnung in Sage oder Addison: Was gut war und was heute fehlt
-  - H3: Schnittstellenprobleme, Datenverluste, Pflegeaufwand
-  - H3: Was ein Wechsel wirklich kostet, und was er spart
-- H2: Multiposting: Stellenanzeigen einmal erstellen, überall schalten
-  - H3: Wie Multiposting in modernen Systemen funktioniert
-  - H3: Indeed-Alternativen und eigene Jobbörsenanbindung
-  - H3: Conversion-Tracking und Budgetkontrolle auf Anzeigenebene
-- H2: Lohnabrechnung erstellen im Zeitarbeitskontext: Besonderheiten und Fallstricke
-  - H3: Branchenzuschläge, Equal Pay und variable Vergütung
-  - H3: Was ein Lohnabrechnung-Muster im Zeitarbeitsumfeld abdecken muss
-  - H3: Prüfungssichere Dokumentation für Betriebsprüfungen
-- H2: AÜG-Anforderungen: Welche Softwarefunktionen wirklich helfen
-  - H3: Überlassungshöchstdauer automatisch überwachen
-  - H3: Dokumentationspflichten und digitale Personalakte
-- H2: SaaS-Lizenzmodelle im Vergleich: Was Personaldienstleister wissen müssen
-  - H3: Per-User, Per-Mitarbeiter, Flat-Rate: Welches Modell passt wann
-  - H3: Kalkulierbare Kosten vs. versteckte Implementierungskosten
-  - H3: Was ein SaaS-Lizenzmodell von klassischer On-Premise-Software unterscheidet
-- H2: zvoove im Überblick: Was die Plattform konkret abdeckt
-  - H3: Lohn, Disposition, Recruiting und Compliance in einer Oberfläche
-  - H3: Anbindung an Jobbörsen, Lohnarten und Behörden
-  - H3: Migrationspfad für Bestandskunden aus Sage, Addison und Co.
+- H1: Lohnabrechnung und Candidate Sourcing in der Zeitarbeit: Warum zwei getrennte Tools Sie jeden Monat Geld kosten
+- H2: Was Zeitarbeitsfirmen bei der Lohnabrechnung wirklich aufhält
+  - H3: Die typischen Fehlerquellen bei der Lohnabrechnung für Leiharbeitnehmer
+  - H3: AÜG-Konformität als laufendes Compliance-Risiko
+  - H3: Warum Lohnabrechnung Muster aus dem Netz in der Zeitarbeit nicht funktionieren
+- H2: Candidate Sourcing ohne System: Wie Aufträge verloren gehen, bevor sie beginnen
+  - H3: Bewerber finden über Jobbörsen: Reichweite gegen Aufwand
+  - H3: Multiposting auf Jobbörsen: Was es bringt und wo es hakt
+  - H3: Indeed Alternative oder Indeed ergänzen: Was rechnet sich wirklich
+- H2: Stellenanzeige schalten in der Zeitarbeit: Besonderheiten, die viele übersehen
+  - H3: Equal Pay, Branchenzuschläge und was in die Anzeige muss
+  - H3: Wie schnelle Schaltung über Multiposting den Time-to-Fill senkt
+- H2: Lohnabrechnung mit Sage oder Addison: Was diese Tools können und wo ihre Grenzen liegen
+  - H3: Lohnabrechnung Sage im Zeitarbeitskontext
+  - H3: Lohnabrechnung Addison: Stärken und typische Integrationsprobleme
+  - H3: Wann eine spezialisierte Zeitarbeitssoftware mehr Sinn ergibt
+- H2: Das Lizenzmodell SaaS in der Zeitarbeit: Was auf den Preis folgt
+  - H3: Per-User oder Per-Abrechnung: Welches Modell zu welcher Firmengröße passt
+  - H3: Versteckte Kosten bei Schnittstellenpflege und Datenmigration
+- H2: Integrierte Plattform vs. Best-of-Breed: Ein ehrlicher Vergleich
+  - H3: Was eine All-in-One-Lösung in der Zeitarbeit leisten muss
+  - H3: Checkliste: Wann lohnt sich der Wechsel
+- H2: Fazit: Ein Prozess, ein System, eine Fehlerquelle weniger
 
 ## Benchmark URLs
 
-1. https://www.sage.com/de-de/blog/lohnabrechnung-erstellen/ — rankt auf Kernbegriff "lohnabrechnung erstellen", zeigt welche Tiefe Google für dieses Keyword erwartet
-2. https://www.haufe.de/personal/hr-management/zeitarbeit-aeug-ueberlassungshoechstdauer_80_425764.html — hohe Autorität bei AÜG-Themen, direkte Konkurrenz um informational Traffic im Compliance-Segment
-3. https://www.stellenanzeigen.de/ratgeber/multiposting/ — rankstarker Ratgeberartikel zum Thema Multiposting, zeigt Nutzererwartung an Erklärtiefe und Formatierung
+1. https://www.sage.com/de-de/blog/lohnabrechnung-erstellen/ — rankt auf generische Lohnabrechnung-Keywords, zeigt welche Tiefe Google für dieses Thema erwartet
+2. https://www.haufe.de/personal/entgelt/lohnabrechnung_80_476.html — hohe Autorität, deckt Compliance-Aspekte ab, direkter Konkurrent um informationelle Klicks
+3. https://www.stellenanzeigen.de/arbeitgeber/ratgeber/multiposting/ — erklärt Multiposting aus Arbeitgebersicht, relevant für den Sourcing-Teil des Artikels
 
 ## Call to Action
 
-Demo anfordern: Leser werden am Artikelende eingeladen, sich eine Live-Demo von zvoove zeigen zu lassen, mit Fokus auf den eigenen Engpassbereich (Lohn, Recruiting oder Compliance), wählbar über ein kurzes Kontaktformular mit drei Optionsfeldern.
+Leser werden aufgefordert, eine kostenlose Demo von zvoove zu buchen, bei der gezeigt wird, wie Lohnabrechnung nach AÜG und Multiposting-Schaltung in einem System ohne Systembrüche funktionieren.

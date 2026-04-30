@@ -1,0 +1,58 @@
+{
+  "0": {
+    "de": "Factoring Geschäftsmodelle und Genehmigung",
+    "en": "Factoring Business Models and Licensing"
+  },
+  "1": {
+    "de": "Zeiterfassungs- und Zeitarbeitssoftware",
+    "en": "Time Tracking and Temp Work Software"
+  },
+  "2": {
+    "de": "KI-gestützte Recruiting-Automatisierung",
+    "en": "AI-Powered Recruiting Automation"
+  },
+  "3": {
+    "de": "Zvoove Produktfeatures und Preise",
+    "en": "Zvoove Product Features and Pricing"
+  },
+  "4": {
+    "de": "Lohnabrechnung und Candidate Sourcing",
+    "en": "Payroll Processing and Candidate Sourcing"
+  },
+  "5": {
+    "de": "Personalakte und Einsatzplanung",
+    "en": "Personnel File and Shift Planning"
+  },
+  "6": {
+    "de": "Digitalisierung in Personaldienstleistung",
+    "en": "Digital Transformation in HR Services"
+  },
+  "7": {
+    "de": "Debitorenmanagement und Equal Pay",
+    "en": "Receivables Management and Equal Pay"
+  },
+  "8": {
+    "de": "Gebäudereinigung Software und Disposition",
+    "en": "Facility Cleaning Software and Dispatch"
+  },
+  "9": {
+    "de": "HR- und Bewerbermanagementsoftware KMU",
+    "en": "HR and Applicant Tracking for SMEs"
+  },
+  "10": {
+    "de": "Arbeitnehmerüberlassung Regulierung und Onboarding",
+    "en": "Employee Leasing Regulations and Onboarding"
+  },
+  "11": {
+    "de": "Zeiterfassung Spezialbranche und Compliance",
+    "en": "Time Tracking Niche Industries and Compliance"
+  },
+  "12": {
+    "de": "Zeitarbeit Branchentrends und Einsatzplanung",
+    "en": "Temp Work Industry Trends and Scheduling"
+  },
+  "-1": {
+    "de": "Rauschen / Ausreißer",
+    "en": "Noise / outliers"
+  }
+}

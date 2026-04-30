@@ -84,18 +84,29 @@ jobs:
             ~/.cache/torch/sentence_transformers
           key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
 
-      - name: Run pipeline (discover, enrich, cluster, report)
-        # Bei push-Trigger sind inputs.* leere Strings, nicht absent.
-        # Pydantic sieht '' und kann es nicht parsen. Fallback-Werte mit ||
-        # stellen sicher, dass auf dem push-Pfad immer valide Werte ankommen.
+      # Bei push-Trigger sind inputs.* leere Strings, nicht absent.
+      # Pydantic sieht '' und kann es nicht parsen. Fallback-Werte mit ||
+      # stellen sicher, dass auf dem push-Pfad immer valide Werte ankommen.
+      - name: Step 1 -- Discover keywords
+        env:
+          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords || '500' }}
+        run: python pipeline.py --step discover
+
+      - name: Step 2 -- Enrich (Search Volume, Keyword Difficulty)
         env:
           DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
           DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
           PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider || 'estimate' }}
-          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords || '500' }}
+        run: python pipeline.py --step enrich
+
+      - name: Step 3 -- Cluster keywords
+        env:
           PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs || '15' }}
           PIPELINE_CLUSTER_HDBSCAN_METHOD: ${{ inputs.cluster_method || 'leaf' }}
-        run: python pipeline.py --step discover,enrich,cluster,report
+        run: python pipeline.py --step cluster
+
+      - name: Step 4 -- Build report
+        run: python pipeline.py --step report
 
       - name: Show run summary
         run: |

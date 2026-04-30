@@ -115,23 +115,34 @@ jobs:
             ~/.cache/torch/sentence_transformers
           key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
 
-      - name: Run pipeline (5 steps incl. brief)
-        # Pipeline-Settings als PIPELINE_* env vars. Pydantic Settings in
-        # src/config.py liest sie automatisch. CLI-Flags würden die env
-        # Werte überschreiben, aber wir passen alles über env.
+      - name: Step 1 -- Discover keywords
+        env:
+          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
+        run: python pipeline.py --step discover
+
+      - name: Step 2 -- Enrich (Search Volume, Keyword Difficulty)
+        env:
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
+        run: python pipeline.py --step enrich
+
+      - name: Step 3 -- Cluster keywords
+        env:
+          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
+          PIPELINE_CLUSTER_HDBSCAN_METHOD: ${{ inputs.cluster_method }}
+        run: python pipeline.py --step cluster
+
+      - name: Step 4 -- Generate content briefs (LLM)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
-          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
           PIPELINE_BRIEF_PROVIDER: ${{ inputs.brief_provider }}
           PIPELINE_BRIEF_MODEL: ${{ inputs.model }}
-          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
-          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
-          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
-          PIPELINE_CLUSTER_HDBSCAN_METHOD: ${{ inputs.cluster_method }}
-        run: |
-          python pipeline.py ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: python pipeline.py --step brief ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Step 5 -- Build report
+        run: python pipeline.py --step report
 
       - name: Show run summary
         run: |

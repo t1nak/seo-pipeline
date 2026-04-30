@@ -27,18 +27,25 @@ Diese Seite erklärt die methodischen Entscheidungen in der Cluster Pipeline mit
 ## 1. Pipeline auf einen Blick
 
 ```
-keywords.manual.csv
+Entry-Point Optionen (austauschbar):
+  ┌─ keywords.manual.csv      (LLM-erzeugte Liste, aktueller Demo-Lauf)
+  ├─ Semrush Export (CSV)
+  ├─ Ahrefs Export (CSV)
+  ├─ DataForSEO API
+  └─ Blog-Scrape (geplant, siehe Entscheidungen)
         │
         ▼
     discover ──▶ enrich ──▶ cluster ──▶ brief ──▶ report
                    │            │          │          │
                    ▼            ▼          ▼          ▼
               keywords.csv  cluster_map briefings/ reporting/
-              SV · KD · CPC charts/     *.md      index.html
-              priority       profiles.csv
+              SV · KD · CPC charts/     *.md      runs/<id>/
+              priority       profiles.csv         + index.html
 ```
 
-Fünf Schritte, jeder einzeln re-runnbar via `python pipeline.py --step <name>`. Der `cluster`-Schritt enthält acht interne Teilschritte (clean, embed, reduce, cluster, label, profile, charts, viz). Die zentralen Hyperparameter stehen als Konstanten in `src/cluster.py`, damit Code und Doku übereinstimmen.
+Der **Entry Point** ist über die Konfiguration austauschbar. Im Demo-Lauf liest `discover` eine LLM-erzeugte Liste aus `keywords.manual.csv`. Produktiv kann derselbe Schritt einen Semrush- oder Ahrefs-Export laden, eine DataForSEO-Abfrage absetzen oder den zvoove-Blog scrapen. Die nachfolgenden Schritte sind quellunabhängig.
+
+Fünf Schritte, jeder einzeln re-runnbar via `python pipeline.py --step <name>`. Der `cluster`-Schritt enthält acht interne Teilschritte (clean, embed, reduce, cluster, label, profile, charts, viz). Die zentralen Hyperparameter stehen als Konstanten in `src/cluster.py`, damit Code und Doku übereinstimmen. Der `report`-Schritt akzeptiert `--source <label>` und `--run-id <id>`, damit Läufe mit unterschiedlichen Entry Points im Reporting-Index nebeneinander sichtbar sind.
 
 ## 2. Embeddings: warum [`paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
 

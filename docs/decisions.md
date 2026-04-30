@@ -1,7 +1,5 @@
 # Architecture Decisions (ADRs)
 
-Knappe Architecture Decision Records für die wichtigsten Entscheidungen in dieser Pipeline. Jede ADR folgt dem gleichen Muster: Kontext, Entscheidung, Alternativen, Konsequenzen.
-
 ## ADR-1: HDBSCAN statt k-means für das Clustering
 
 **Kontext.** 500 deutsche SEO Keywords sollen thematisch gruppiert werden. Die Anzahl der Cluster ist nicht vorab bekannt. Manche Keywords passen zu keinem Thema klar.

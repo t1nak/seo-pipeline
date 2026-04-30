@@ -42,6 +42,16 @@ on:
           - "500"
           - "1000"
         default: "500"
+      cluster_mcs:
+        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Default 15."
+        type: choice
+        options:
+          - "8"
+          - "10"
+          - "12"
+          - "15"
+          - "20"
+        default: "15"
 
 permissions:
   contents: read
@@ -111,6 +121,7 @@ jobs:
           PIPELINE_BRIEF_MODEL: ${{ inputs.model }}
           PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
           PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
+          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
         run: |
           python pipeline.py ${{ inputs.dry_run && '--dry-run' || '' }}
 

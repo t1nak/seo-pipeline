@@ -18,14 +18,15 @@ GitHub Actions: per Cron-Schedule oder manuellem Trigger via [`workflow_dispatch
 
 ### Wie kann ich Model und Provider ändern?
 
-Alle Provider sind per CLI-Flag oder `PIPELINE_*` Environment-Variable wählbar.
+Der einfachste Weg ist die GitHub Actions UI: beim manuellen Auslösen von [`pipeline-full.yml`](https://github.com/t1nak/seo-pipeline/blob/main/.github/workflows/pipeline-full.yml) erscheinen Dropdowns für Provider und Modell-ID direkt im Browser, kein Code-Edit nötig.
 
-| Komponente | CLI-Flag | Optionen |
+| Eingabefeld | Optionen | Default |
 |---|---|---|
-| Brief-Provider | `--brief-provider` | `api` (Anthropic), `openai`, `max` (Agent SDK) |
-| Brief-Model | `--brief-model` | beliebige Modell-ID, z.B. `claude-sonnet-4-6` |
-| Keyword-Quelle | `--source` | `manual`, `live` |
-| Enrich-Provider | `--provider` | `estimate` (Heuristik), `dataforseo` |
+| **Brief-Provider** | `api` (Anthropic), `openai` | `api` |
+| **Modell-ID** | beliebige ID, z.B. `claude-sonnet-4-6`, `gpt-5` | leer = Provider-Default |
+| **Enrich-Provider** | `estimate` (kostenlos), `dataforseo` | `estimate` |
+
+Lokal lassen sich dieselben Einstellungen als `PIPELINE_*` Environment-Variable oder CLI-Flag übergeben. Die vollständige Referenz aller Variablen, die Präzedenz-Reihenfolge und Beispiele für CI und lokale `.env` Dateien stehen im [Developer Guide](developer-guide.md#3-konfigurations-modell).
 
 ### Was kostet ein Lauf?
 

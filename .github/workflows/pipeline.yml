@@ -78,15 +78,15 @@ jobs:
           key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
 
       - name: Run pipeline (discover, enrich, cluster, report)
-        # Pipeline-Settings als PIPELINE_* env vars. Bei push-Trigger
-        # sind die inputs leer und Pydantic Settings nutzt die Defaults
-        # aus src/config.py.
+        # Bei push-Trigger sind inputs.* leere Strings, nicht absent.
+        # Pydantic sieht '' und kann es nicht parsen. Fallback-Werte mit ||
+        # stellen sicher, dass auf dem push-Pfad immer valide Werte ankommen.
         env:
           DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
           DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
-          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
-          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
-          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
+          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider || 'estimate' }}
+          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords || '500' }}
+          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs || '12' }}
         run: python pipeline.py --step discover,enrich,cluster,report
 
       - name: Show run summary

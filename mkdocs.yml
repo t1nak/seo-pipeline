@@ -52,7 +52,6 @@ nav:
     - Technical Review: technical_review.md
   - Beispiel-Output:
     - Übersicht: example-output.md
-    - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
     - Reporting Dashboard: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
   - Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
   - GitHub: https://github.com/t1nak/seo-pipeline

@@ -6,7 +6,7 @@ Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch
 
 ### Was solide ist
 
-- **Vier modulare Phasen, fünf entkoppelte Skripte mit klaren Verträgen.** Jedes Skript liest und schreibt explizite Dateien (`data/keywords.csv`, `output/clustering/keywords_labeled.csv`, etc). Kein Skript importiert Funktionen aus einem anderen Skript zur Laufzeit. Jedes lässt sich isoliert testen, re-runnen, ersetzen.
+- **Vier modulare Phasen, fünf entkoppelte Skripte mit klaren Schnittstellen.** Jedes Skript liest und schreibt explizite Dateien (`data/keywords.csv`, `output/clustering/keywords_labeled.csv`, etc). Kein Skript importiert Funktionen aus einem anderen Skript zur Laufzeit. Jedes lässt sich isoliert testen, re-runnen, ersetzen.
 - **Zentrale Konstanten.** Alle Hyperparameter (Embedding-Modell, UMAP-Parameter, HDBSCAN-Parameter) sind als Modul-Konstanten oben in `src/cluster.py` festgehalten. Code und Doku referenzieren dieselbe Quelle.
 - **Pluggable LLM-Provider.** `BriefProvider` als abstrakte Basis, drei Implementierungen (`ApiKeyProvider`, `OpenAIProvider`, `AgentSdkProvider`), Auswahl per CLI-Flag. Provider-Wechsel ist einzeilig, kein Refactoring.
 - **Determinismus durchgängig.** `random_state=42` in beiden UMAP-Aufrufen, HDBSCAN deterministisch, Heuristik via SHA256-Seed, Embeddings im Inference-Modus deterministisch. Ein zweiter Lauf produziert byte-identische Artefakte.
@@ -35,7 +35,7 @@ Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch
 
 ### Schwächen
 
-- **Keine Pydantic-Models** für die CSV-Schemas. Spalten werden in mehreren Modulen als Strings annotiert. Bei 6 CSV-Verträgen (zwischen den 5 Skripten) ist das aktuell überschaubar, aber bei Wachstum eine Quelle für stille Bugs.
+- **Keine Pydantic-Models** für die CSV-Schemas. Spalten werden in mehreren Modulen als Strings annotiert. Bei 6 CSV-Schnittstellen (zwischen den 5 Skripten) ist das aktuell überschaubar, aber bei Wachstum eine Quelle für stille Bugs.
 - **Imports innerhalb von Funktionen** in `cluster.py` und `brief.py` (z.B. `import hdbscan` in `step_cluster`). Das ist Absicht (lazy load schwerer Deps), aber ohne Kommentar nicht offensichtlich. In Produktion würde ich das in einen `__init__` der jeweiligen Klasse ziehen oder explizit kommentieren.
 - **Keine Dataclasses für Cluster-Profile.** `cluster_profiles.csv` Zeilen werden als pandas Series herumgereicht. In Produktion wäre `@dataclass class ClusterProfile` sauberer und IDE-freundlicher.
 
@@ -179,7 +179,7 @@ Live-Site mit Suche und Sprache-Switcher unter https://t1nak.github.io/seo-pipel
 Stand jetzt sind Tests, Logging, Retry und zentrale Settings bereits implementiert. Was bleibt für volle Production-Reife:
 
 1. **Discover live machen** (1 bis 2 Tage). Höchste Hebelwirkung auf den Geschäftswert.
-2. **Schema-Validation für CSV-Verträge** (3 Stunden). `pandera` oder Pydantic Models für `keywords.csv`, `cluster_profiles.csv`, `keywords_labeled.csv`.
+2. **Schema-Validation für CSV-Schnittstellen** (3 Stunden). `pandera` oder Pydantic Models für `keywords.csv`, `cluster_profiles.csv`, `keywords_labeled.csv`.
 3. **Run-Log in SQLite** (3 Stunden). Tabelle mit `run_id, timestamp, step, status, duration, rows_in, rows_out`.
 4. **Concurrent Brief-Generierung** (4 Stunden). `asyncio.gather` über die Cluster, Provider-seitiges Rate-Limiting.
 5. **JSON-strukturiertes Logging** (2 Stunden). Format-Wechsel auf JSON für Aggregator-Tools.

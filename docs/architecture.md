@@ -1,6 +1,6 @@
 # Prozessarchitektur
 
-Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Anbindung an einen Revenue Stack. In 10 Minuten verständlich aufgebaut.
+Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Anbindung an einen Revenue Stack.
 
 ## Pipeline auf einen Blick
 
@@ -12,73 +12,9 @@ Vier modulare Phasen, an jeder Stelle sind Provider per Konfiguration austauschb
 
 Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute aktiven und alternativen Optionen), in der Mitte die fünf entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese fünf Skripte realisieren die vier modularen Phasen aus dem Diagramm oben; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Markierte Artefakte (★ gelb) sind über GitHub Pages live deployed.
 
-[![Architektur Diagramm](architecture.svg)](architecture.svg){target=_blank title="Klick öffnet das Diagramm in voller Größe"}
+![Architektur Diagramm](architecture.svg){ .zoomable }
 
-*Klick auf das Diagramm öffnet es in voller Auflösung in einem neuen Tab.*
-
-Für eine Mermaid Quelle, die in jedem GitHub Markdown Renderer funktioniert, hier dieselbe Struktur als Code:
-
-```mermaid
-flowchart LR
-    Blog[zvoove.de/wissen/blog]:::ext
-    GSC[Google Search Console]:::ext
-    DataForSEO[DataForSEO API]:::ext
-    Anthropic[Anthropic API]:::ext
-
-    subgraph Pipeline
-      direction TB
-      Discover[discover.py<br>Blog -&gt; Seed Keywords]:::stub
-      Enrich[enrich.py<br>SV/KD/CPC/Priority]
-      Cluster[cluster.py<br>Embed/UMAP/HDBSCAN]
-      Brief[brief.py<br>Content Brief pro Cluster]
-      Report[report.py<br>HTML Dashboard]
-
-      Discover --> Enrich --> Cluster --> Brief --> Report
-    end
-
-    subgraph Daten
-      direction TB
-      Manual[(data/keywords.manual.csv<br>frozen baseline)]
-      Canonical[(data/keywords.csv<br>aktuelle Eingabe)]
-      Embeddings[(embeddings.npy)]
-      Umap2D[(umap_2d.npy)]
-      Umap5D[(umap_5d.npy)]
-      Labeled[(keywords_labeled.csv)]
-      Profiles[(cluster_profiles.csv)]
-      Briefings[(output/briefings/cluster_NN.md)]
-      Index[(output/reporting/index.html)]
-      Map[(output/clustering/cluster_map.html)]
-    end
-
-    Blog -.-> Discover
-    Discover --> Canonical
-    Manual -. fallback .-> Canonical
-    Canonical --> Enrich
-    DataForSEO -.-> Enrich
-
-    Enrich --> Canonical
-    Canonical --> Cluster
-    Cluster --> Embeddings
-    Cluster --> Umap2D
-    Cluster --> Umap5D
-    Cluster --> Labeled
-    Cluster --> Profiles
-    Cluster --> Map
-
-    Profiles --> Brief
-    Labeled --> Brief
-    Anthropic -.-> Brief
-    Brief --> Briefings
-
-    Profiles --> Report
-    Briefings --> Report
-    Report --> Index
-
-    classDef ext fill:#f4f0ff,stroke:#8b5cf6
-    classDef stub fill:#fff7ed,stroke:#f97316,stroke-dasharray:5 3
-```
-
-Legende: violett umrandet sind externe APIs, orange gestrichelt ist der Discover Stub, der noch nicht live ist.
+*Klick auf das Diagramm öffnet eine Vollbild-Ansicht zum Zoomen.*
 
 ## Schichten und Verantwortlichkeiten
 
@@ -97,7 +33,7 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 
 ### Discover -> Enrich
 
-**Vertrag:** `data/keywords.csv` mit Spalten `keyword, estimated_intent, category, type, notes`.
+**Schnittstelle:** `data/keywords.csv` mit Spalten `keyword, estimated_intent, category, type, notes`.
 
 | Spalte | Werte | Pflicht |
 |---|---|---|
@@ -109,7 +45,7 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 
 ### Enrich -> Cluster
 
-**Vertrag:** `data/keywords.csv` plus die neuen Spalten.
+**Schnittstelle:** `data/keywords.csv` plus die neuen Spalten.
 
 | Neue Spalte | Werte |
 |---|---|
@@ -122,7 +58,7 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 
 ### Cluster -> Brief
 
-**Vertrag:** `output/clustering/cluster_profiles.csv` plus `output/clustering/keywords_labeled.csv`.
+**Schnittstelle:** `output/clustering/cluster_profiles.csv` plus `output/clustering/keywords_labeled.csv`.
 
 `cluster_profiles.csv` ist die aggregierte Sicht: eine Zeile pro Cluster mit Stats, Top Keywords, Labels.
 `keywords_labeled.csv` ist die per-Keyword Sicht mit `hdb` (Cluster ID), `hdb_label` (EN), `hdb_label_de`, `hier10`, `hier12`.
@@ -140,9 +76,8 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 
 | Phase | Wer löst aus | Was wird neu berechnet | Was bleibt |
 |---|---|---|---|
-| Erstinstallation | Manuell | Alles | Nichts |
-| Wöchentliche Aktualisierung | Cron | `enrich` (für SV/KD Updates), `report` | Cluster, Briefs (zu teuer für wöchentlich) |
-| Quartalsmäßiges Re-Clustering | Manuell | Alles | Nichts (mit Snapshot in `output/_archive/`) |
+| Wöchentliche Aktualisierung | Cron | `enrich` (für SV/KD Updates), `report` | Cluster, Briefs |
+| Re-Clustering | Manuell oder geplant | Alles | Nichts (mit Snapshot in `output/_archive/`) |
 | Brief Update für einen Cluster | Manuell | nur ein Brief | Alles andere |
 
 Der Snapshot-Mechanismus in `output/_archive/` schützt vor unbeabsichtigtem Datenverlust: vor jedem `cluster --step all` wird der aktuelle Output Stand pinned.
@@ -151,7 +86,7 @@ Der Snapshot-Mechanismus in `output/_archive/` schützt vor unbeabsichtigtem Dat
 
 Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes System. Pro Schritt gibt es eine klare Andockung an externe Systeme:
 
-| Pipeline Output | Zielsystem | Anbindung |
+| Pipeline Output | Beispiel | Anbindung |
 |---|---|---|
 | `data/keywords.csv` | Google Ads | Direkter CSV Import in Keyword Planner für Search Kampagnen |
 | `data/keywords.csv` | Ahrefs / Semrush | CSV Import für Rank Tracking auf den 500 Keywords |
@@ -161,15 +96,9 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | `output/clustering/cluster_map.html` | Slack, Notion, Confluence | Embed in Marketing Wiki oder wöchentliche Stand-up Updates |
 | `output/reporting/index.html` | Internes Wiki | Self-service Dashboard, Stakeholder können selbst nachschauen |
 
-### Was bewusst nicht eingebaut ist
-
-- **Auto-Publishing in CMS.** Briefs sind explizit eine Übergabe an die Redaktion. Eine Maschine-zu-Maschine Verbindung würde diese Schnittstelle entwerten.
-- **Direkte CRM Anbindung.** Cluster mit MQL Daten zu joinen ist ein sinnvoller nächster Schritt, aber konzeptionell eine eigene Pipeline. `revenue_attribution.py` als separater Service.
-- **Real-time Recompute.** Embeddings, UMAP, HDBSCAN sind teuer. Re-clustering einmal pro Quartal reicht.
-
 ## Cost und Performance
 
-### Zeit pro Schritt (lokaler Lauf, 500 Keywords, MacBook Air M2)
+### Zeit pro Schritt (lokaler Lauf, 500 Keywords)
 
 | Schritt | Zeit | Wovon abhängig |
 |---|---|---|
@@ -186,17 +115,20 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 
 Voller Lauf ohne Briefs (Demo): ungefähr 25 Sekunden. Voller Lauf mit Briefs: ungefähr 2 Minuten.
 
-### Kosten pro Lauf
+### Kosten pro Lauf, je Provider-Kombination
 
-| Posten | Kosten |
-|---|---|
-| Embeddings (lokal) | 0 EUR |
-| UMAP / HDBSCAN (lokal) | 0 EUR |
-| DataForSEO Search Volume (500 Keywords, optional) | ~0,75 USD |
-| Claude Briefs (10 Cluster, sonnet-4-6 mit Caching) | ~0,12 bis 0,20 USD |
-| **Gesamt** | **~1 USD pro vollem Lauf** |
+Embeddings, UMAP und HDBSCAN laufen lokal (0 USD). Variabel sind nur Enrichment- und Brief-Provider.
 
-Bei wöchentlich nur Enrich plus Report (ohne neue Cluster und Briefs): null Cent für die lokalen Schritte, optional 0,75 USD wenn DataForSEO mitläuft. Quartalsweise voller Lauf: 1 USD.
+| Enrichment | Brief-Provider | Enrichment-Kosten | Brief-Kosten | Gesamt pro Lauf |
+|---|---|---|---|---|
+| Heuristik | Stub (`--dry-run`) | 0 USD | 0 USD | **0 USD** |
+| Heuristik | Anthropic API (sonnet-4-6, Caching) | 0 USD | ~0,15 USD | **~0,15 USD** |
+| Heuristik | OpenAI (gpt-5) | 0 USD | ~0,30 USD | **~0,30 USD** |
+| DataForSEO | Anthropic API | ~0,75 USD | ~0,15 USD | **~0,90 USD** |
+| DataForSEO | OpenAI | ~0,75 USD | ~0,30 USD | **~1,05 USD** |
+| SEMrush / Ahrefs | je nach Provider | abhängig vom Plan | je Brief-Provider | abhängig |
+
+Annahmen: 500 Keywords, 10 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl.
 
 ## Skalierung
 

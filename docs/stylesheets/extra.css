@@ -25,18 +25,45 @@
 }
 
 [data-md-color-scheme="slate"] {
+  /* Primary + accent (custom palette) */
   --md-primary-fg-color:           #2dd4bf;
   --md-primary-fg-color--light:    #5eead4;
   --md-primary-fg-color--dark:     #0f766e;
+  --md-primary-bg-color:           hsla(232, 15%, 14%, 1);
+  --md-primary-bg-color--light:    hsla(232, 15%, 18%, 1);
 
   --md-accent-fg-color:            #fbbf24;
   --md-accent-fg-color--transparent: rgba(251, 191, 36, 0.12);
+
+  /* Explicit body/text colors for slate. Material's defaults can get
+     shadowed when primary: custom is set, so we define them here. */
+  --md-default-bg-color:           hsla(232, 15%, 14%, 1);
+  --md-default-bg-color--light:    hsla(232, 15%, 18%, 1);
+  --md-default-bg-color--lighter:  hsla(232, 15%, 22%, 1);
+  --md-default-bg-color--lightest: hsla(232, 15%, 28%, 1);
+  --md-default-fg-color:           hsla(232, 75%, 95%, 1);
+  --md-default-fg-color--light:    hsla(232, 75%, 95%, 0.7);
+  --md-default-fg-color--lighter:  hsla(232, 75%, 95%, 0.45);
+  --md-default-fg-color--lightest: hsla(232, 75%, 95%, 0.18);
+  --md-code-bg-color:              hsla(232, 15%, 18%, 1);
+  --md-code-fg-color:              hsla(232, 75%, 95%, 0.87);
+  --md-typeset-color:              hsla(232, 75%, 95%, 0.87);
+  --md-typeset-a-color:            #2dd4bf;
 
   --seo-card-border:               rgba(45, 212, 191, 0.22);
   --seo-card-shadow:               0 1px 2px rgba(0, 0, 0, 0.20), 0 4px 12px rgba(0, 0, 0, 0.20);
   --seo-card-shadow-hover:         0 2px 4px rgba(45, 212, 191, 0.16), 0 8px 24px rgba(45, 212, 191, 0.12);
   --seo-code-bg:                   rgba(45, 212, 191, 0.08);
   --seo-table-stripe:              rgba(45, 212, 191, 0.04);
+}
+
+/* Body bg explicitly bound to the variables so the toggle visually
+   changes the canvas, not just accent colors. */
+body[data-md-color-scheme="slate"],
+[data-md-color-scheme="slate"] body,
+[data-md-color-scheme="slate"] .md-main {
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
 }
 
 /* ============================================================
@@ -229,20 +256,43 @@
    Links: amber on hover for nice contrast against teal primary
    ============================================================ */
 
-.md-typeset a {
+.md-typeset a:not(.md-button) {
   color: var(--md-primary-fg-color--dark);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: color 0.15s, border-color 0.15s;
 }
 
-.md-typeset a:hover {
+.md-typeset a:not(.md-button):hover {
   color: var(--md-accent-fg-color);
   border-bottom-color: var(--md-accent-fg-color);
 }
 
-[data-md-color-scheme="slate"] .md-typeset a {
+[data-md-color-scheme="slate"] .md-typeset a:not(.md-button) {
   color: var(--md-primary-fg-color);
+}
+
+/* CTA buttons: white text on the colored fill, regardless of scheme */
+.md-typeset a.md-button {
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+.md-typeset a.md-button--primary,
+.md-typeset a.md-button--primary:focus,
+.md-typeset a.md-button--primary:hover {
+  color: #ffffff !important;
+  background-color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
+}
+
+.md-typeset a.md-button--primary:hover {
+  background-color: var(--md-primary-fg-color--dark);
+  border-color: var(--md-primary-fg-color--dark);
+}
+
+.md-typeset a.md-button--primary svg {
+  fill: currentColor;
 }
 
 /* ============================================================
@@ -255,6 +305,96 @@
   box-shadow: var(--seo-card-shadow);
   margin-top: 1em;
   margin-bottom: 2em;
+}
+
+/* ============================================================
+   Lightbox: click any img.zoomable to open a full-screen view
+   ============================================================ */
+
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.94);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  animation: lb-fadein 0.18s ease;
+  cursor: zoom-out;
+}
+
+@keyframes lb-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lb-overlay .lb-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.10);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+  z-index: 10001;
+  transition: background 0.15s, border-color 0.15s;
+}
+.lb-overlay .lb-close:hover {
+  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.40);
+}
+
+.lb-overlay .lb-stage {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: auto;
+  cursor: zoom-out;
+}
+
+.lb-overlay .lb-img {
+  max-width: 95vw;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.50);
+  cursor: default;
+  transform-origin: center center;
+  transition: transform 0.15s ease;
+}
+
+.lb-overlay .lb-hint {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.70);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: zoom-out;
+}
+
+img.zoomable {
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+img.zoomable:hover {
+  opacity: 0.92;
 }
 
 /* ============================================================

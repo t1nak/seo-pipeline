@@ -53,6 +53,7 @@ nav:
     - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
     - Report: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
     - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
+  - Go to Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
   - GitHub: https://github.com/t1nak/seo-pipeline
 
 markdown_extensions:
@@ -115,6 +116,7 @@ plugins:
             Cluster Map: Cluster Map
             Report: Report
             Cluster Briefs: Cluster Briefs
+            Go to Pipeline: Go to Pipeline
 
 extra:
   social:
@@ -124,5 +126,8 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/lightbox.js
 
 copyright: Tina Koziol, Case Study für eine Bewerbung als Revenue AI Architect

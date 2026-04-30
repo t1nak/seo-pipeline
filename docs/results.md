@@ -19,7 +19,7 @@ Diese Datei ist als Arbeitsdokument für Marketing und Redaktion gedacht. Zahlen
 | 1 | Factoring-Grundlagen | 15 | 3.516 | 39 | 27 | Top / Mid |
 | 9 | Digitalisierung praktisch | 16 | 3.281 | 29 | 44 | Top / Mid |
 
-Plus 38 Keywords als Rauschen (7,6 Prozent). Diese werden nicht bearbeitet, weil sie semantisch isoliert sind und kein klares Pillar Thema bilden.
+Plus rund 40 Keywords als Rauschen (~8 Prozent, je nach Plattform leicht variabel). Diese werden nicht bearbeitet, weil sie semantisch isoliert sind und kein klares Pillar Thema bilden.
 
 ## Cluster 2: Branche & Arbeitsrecht (Sammelbecken)
 

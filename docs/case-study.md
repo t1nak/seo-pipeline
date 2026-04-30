@@ -21,20 +21,20 @@ Punkt 3 ist der eigentliche Gewinn. Punkt 4 ist das, was den Unterschied zwische
 
 ## 2. Ergebnis in zwei Minuten
 
-Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 10 thematische Cluster plus 38 Ausreißer (7,6 Prozent). Die wichtigsten Zahlen:
+Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 10 thematische Cluster plus rund 40 Ausreißer (~8 Prozent). Die wichtigsten Zahlen:
 
 | Metrik | Wert |
 |---|---|
 | Keywords gesamt | 500 |
-| Cluster (HDBSCAN) | 10 plus 38 Ausreißer |
+| Cluster (HDBSCAN, `mcs=12, ms=5, eom`) | 10 plus 40 Ausreißer |
 | Gesamt Suchvolumen pro Monat | 213.302 (ohne Rauschen) |
 | Größter Cluster nach SV | B2B-SaaS Kategorie-Heads (47.989 SV, 44 Keywords) |
 | Größter Cluster nach Anzahl | Branche & Arbeitsrecht Sammelbecken (189 Keywords) |
 | Höchste kommerzielle Dichte | Marke zvoove (97 Prozent kommerziell, 23.604 SV) |
-| Silhouette Score (ohne Rauschen) | 0,67 |
-| Silhouette Score (inkl Rauschen) | 0,59 |
-| ARI gegen LLM Cluster | 0,10 |
-| ARI gegen Ward(k=10) | 0,54 |
+| Silhouette Score (ohne Rauschen) | ~0,67 |
+| Silhouette Score (inkl Rauschen) | ~0,59 |
+| ARI gegen LLM Cluster | 0,11 |
+| ARI gegen Ward(k=10) | 0,57 |
 
 Die fünf größten Cluster nach Suchvolumen:
 
@@ -228,10 +228,10 @@ Silhouette misst, wie gut Cluster getrennt sind, von -1 (schlecht) bis +1 (perfe
 
 | Setup | Silhouette |
 |---|---|
-| HDBSCAN ohne Rauschen | 0,67 |
-| HDBSCAN inklusive Rauschen als Cluster -1 | 0,59 |
+| HDBSCAN ohne Rauschen | ~0,67 |
+| HDBSCAN inklusive Rauschen als Cluster -1 | ~0,59 |
 
-0,67 ist für reale Textdaten sehr gut. Zur Einordnung: Werte über 0,5 gelten als belastbare Cluster. Der Unterschied zwischen 0,67 und 0,59 zeigt, dass das HDBSCAN Rauschen tatsächlich Rauschen ist, also Punkte, die keinem dichten Cluster zugehören. Mit nur 7,6 Prozent Rauschen ist der Effekt diesmal kleiner als beim 504-Keyword Lauf, was als Verbesserung gegen das Set ohne Cap zu lesen ist.
+0,67 ist für reale Textdaten sehr gut. Zur Einordnung: Werte über 0,5 gelten als belastbare Cluster. Der Unterschied zwischen 0,67 und 0,59 zeigt, dass das HDBSCAN Rauschen tatsächlich Rauschen ist, also Punkte, die keinem dichten Cluster zugehören. Mit rund 8 Prozent Rauschen ist der Effekt diesmal kleiner als beim 504-Keyword Lauf, was als Verbesserung gegen das Set ohne Cap zu lesen ist.
 
 ### Quantitativ: Übereinstimmung mit Alternative
 
@@ -239,8 +239,8 @@ Wie ähnlich sind die HDBSCAN Cluster den ursprünglich vom LLM kuratierten Clus
 
 | Vergleich | ARI | NMI |
 |---|---|---|
-| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,10 | 0,30 |
-| HDBSCAN gegen Ward Hierarchical (k=10, ohne Rauschen) | 0,54 | (nicht erhoben) |
+| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,11 | 0,32 |
+| HDBSCAN gegen Ward Hierarchical (k=10, ohne Rauschen) | 0,57 | (nicht erhoben) |
 
 Diese Werte sind erwartet niedrig und erwartet im Verhältnis. ARI ist konservativer als NMI, also ARI < NMI ist normal. Dass die Übereinstimmung niedrig ist, ist methodisch interessant: HDBSCAN findet andere Cluster Grenzen als die LLM Klassifikation, was nicht heißt, dass eine der beiden falsch ist. Beide sind gültige Sichten auf die Daten.
 

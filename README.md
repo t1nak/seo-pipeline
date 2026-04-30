@@ -34,12 +34,12 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 ## Ergebnisse aus dem aktuellen Lauf
 
-- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 10 thematische Cluster plus 38 Ausreißer (7,6 Prozent Rauschen)
+- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 10 thematische Cluster plus rund 40 Ausreißer (~8 Prozent Rauschen)
 - Gesamt Suchvolumen: 213.302 pro Monat (geschätzt, ohne Rauschen)
 - Größter Cluster nach Keyword-Anzahl: Branche & Arbeitsrecht Sammelbecken (189 Keywords, 64.264 SV)
 - Größter Cluster nach SV: B2B-SaaS Kategorie-Heads (47.989 SV / Monat, 44 Keywords)
 - Höchste kommerzielle Dichte: Marke zvoove (97 Prozent kommerziell, 23.604 SV)
-- Methodische Validierung: Silhouette Score 0,67 auf der 5D UMAP (ohne Rauschen), 0,59 inklusive Rauschen. ARI gegen die ursprünglichen LLM Cluster bei 0,10, NMI bei 0,30, ARI gegen Ward(k=10) bei 0,54. Details in [`docs/methodology.md`](docs/methodology.md)
+- Methodische Validierung: Silhouette Score ~0,67 auf der 5D UMAP (ohne Rauschen), ~0,59 inklusive Rauschen. ARI gegen die ursprünglichen LLM Cluster bei 0,11, NMI bei 0,32, ARI gegen Ward(k=10) bei 0,57. Details in [`docs/methodology.md`](docs/methodology.md)
 - Vorheriger Lauf ohne Cap (504 Keywords, 13 Cluster) ist als Snapshot pinned unter `output/_archive/2026-04-27_manual/`
 
 ## Aktueller Stand

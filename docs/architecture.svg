@@ -110,7 +110,7 @@
       <text x="590" y="505" fill="#6b7280" font-size="10">UMAP · 5D (cluster) + 2D (viz)</text>
 
       <text x="374" y="525" font-weight="600">3d</text><text x="412" y="525">cluster</text>
-      <text x="590" y="525" fill="#6b7280" font-size="10">HDBSCAN · mcs=15, ms=5, eom</text>
+      <text x="590" y="525" fill="#6b7280" font-size="10">HDBSCAN · mcs=12, ms=5, eom</text>
 
       <text x="374" y="545" font-weight="600">3e</text><text x="412" y="545">label</text>
       <text x="590" y="545" fill="#6b7280" font-size="10">DE + EN labels manuell kuratiert</text>
@@ -234,12 +234,12 @@
       <text x="60" y="1073" fill="#6b7280">Keywords</text>
 
       <text x="200" y="1055" font-size="20" font-weight="700" fill="#111827">10</text>
-      <text x="200" y="1073" fill="#6b7280">Cluster + 38 Ausreißer</text>
+      <text x="200" y="1073" fill="#6b7280">Cluster + 40 Ausreißer</text>
 
       <text x="430" y="1055" font-size="20" font-weight="700" fill="#059669">0,67</text>
       <text x="430" y="1073" fill="#6b7280">Silhouette (ohne Rauschen)</text>
 
-      <text x="650" y="1055" font-size="20" font-weight="700" fill="#2563eb">0,54</text>
+      <text x="650" y="1055" font-size="20" font-weight="700" fill="#2563eb">0,57</text>
       <text x="650" y="1073" fill="#6b7280">ARI vs Ward(k=10)</text>
 
       <text x="850" y="1055" font-size="20" font-weight="700" fill="#f59e0b">~25 s</text>

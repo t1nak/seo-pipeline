@@ -33,7 +33,7 @@ Bei der aktuellen Konfiguration (10 Cluster, Anthropic API mit Prompt Caching) r
 
 ### Wie viele Cluster werden erkannt?
 
-HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Auf der aktuellen 500-Keyword-Baseline: **10 Cluster plus 38 Ausreißer** (7,6 Prozent als Rauschen markiert). Hyperparameter-Sweep und Validierung in der [Methodik](methodology.md).
+HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Auf der aktuellen 500-Keyword-Baseline: **10 Cluster plus rund 40 Ausreißer** (~8 Prozent als Rauschen markiert). Hyperparameter-Sweep und Wahl von `mcs=12` aus der Plateau-Klasse in der [Methodik](methodology.md).
 
 ### Welche Daten werden lokal gespeichert?
 
@@ -111,13 +111,13 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 `500` Keywords (Cap aus 504 Baseline)
 { .annotate }
 
-`10` Cluster plus 38 Ausreißer (7,6 Prozent)
+`10` Cluster plus 40 Ausreißer (8,0 Prozent)
 
 `213.302` SV pro Monat (geschätzt, ohne Rauschen)
 
 `0,67` Silhouette Score (ohne Rauschen)
 
-`0,54` ARI gegen Ward Hierarchical (k=10)
+`0,57` ARI gegen Ward Hierarchical (k=10)
 
 `~25 s` voller Lauf ohne Briefs
 

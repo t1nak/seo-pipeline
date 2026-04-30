@@ -21,7 +21,7 @@ Usage:
 
     from src.config import settings
     print(settings.brief_provider)         # api | openai | max
-    print(settings.cluster_hdbscan_mcs)    # 15
+    print(settings.cluster_hdbscan_mcs)    # 12
 """
 from __future__ import annotations
 

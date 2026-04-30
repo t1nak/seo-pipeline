@@ -124,11 +124,11 @@ Die Wahl der HDBSCAN Parameter habe ich nicht geraten, sondern gemessen. Reprodu
   10    5   leaf     15    149   29.8%   0.636
   12    1    eom     10     15    3.0%   0.651
   12    1   leaf     18    104   20.8%   0.575
-  12    5    eom     10     38    7.6%   0.672
+  12    5    eom     10     38    7.6%   0.672  <-- gewählt
   12    5   leaf     13    150   30.0%   0.647
   15    1    eom     10     15    3.0%   0.651
   15    1   leaf     15    103   20.6%   0.595
-  15    5    eom     10     38    7.6%   0.672  <-- gewählt
+  15    5    eom     10     38    7.6%   0.672
   15    5   leaf     12    100   20.0%   0.642
   20    1    eom      9     30    6.0%   0.642
   20    1   leaf     11    120   24.0%   0.593
@@ -136,15 +136,19 @@ Die Wahl der HDBSCAN Parameter habe ich nicht geraten, sondern gemessen. Reprodu
   20    5   leaf      9    115   23.0%   0.604
 ```
 
-### Wie ich die Wahl getroffen habe
+### Wie der zentrale Parameter gewählt wurde
 
-Drei Kriterien, in dieser Reihenfolge:
+Die Wahl fällt auf **`mcs=12, ms=5, eom`**. Dieser Parameter ist die wichtigste Stellschraube der Cluster-Pipeline; die Begründung folgt aus drei Beobachtungen.
 
-1. **Silhouette Score am Maximum oder nahe dran.** Die mehrere Konfigurationen mit ms=5 und mcs zwischen 10 und 15 erreichen alle 0,672 bei genau 10 Clustern und 7,6 Prozent Rauschen. Das ist eine sehr stabile Kombination.
-2. **Kommunikative Cluster-Anzahl.** 8 Cluster sind zu wenig, um Themen wie Recruiting und HR-Mid-Funnel zu trennen. 30 sind zu viele für eine Stakeholder-Tabelle. Die 10 Cluster bei mcs=15 / ms=5 sind genau im Sweet Spot.
-3. **Robustheit.** Konfigurationen mcs=10/12/15 mit ms=5 / eom liefern alle identische Ergebnisse (10 Cluster, 38 noise, sil=0,672). Diese Plateau-Eigenschaft zeigt, dass die Cluster-Struktur unabhängig vom genauen Cut-off stabil ist, was Vertrauen in das Resultat gibt.
+**1. Plateau statt Punkt-Optimum.** Die Sweep-Tabelle zeigt, dass mcs ∈ {10, 12, 15} mit ms=5 / eom **identische** Aufteilungen liefern: 10 Cluster, 38 Rauschen-Punkte, Silhouette 0,672. Das ist kein einzelnes Optimum, sondern eine Äquivalenzklasse aus drei Konfigurationen.
 
-Anders ausgedrückt: mcs=15, ms=5, eom ist eine von mehreren gleichwertig sinnvollen Konfigurationen. Sie wurde gewählt, weil sie konservativer ist (höherer min_cluster_size) und weniger zu Mikro-Clustern neigt.
+**2. Innerhalb des Plateaus ist die Mitte stabiler als der Rand.** Wenn sich die Eingabe-Geometrie leicht verschiebt — andere Library-Versionen, andere CPU-Architektur, andere BLAS-Implementation — kann ein Wert am Rand der Plateau-Klasse aus der Klasse fallen. Ein Wert in der Mitte hat Puffer in beide Richtungen. mcs=12 ist die mittlere Position der Plateau-Klasse.
+
+**3. Empirisch falsifizierbar.** Beim Wechsel von der lokalen Entwicklungsumgebung (macOS) in eine Cloud-CI (Ubuntu) zeigt sich der Unterschied: mcs=15 fällt cross-platform auf 7 Cluster ab (Plateau-Rand erreicht), mcs=12 reproduziert konsistent 10 Cluster. UMAP ist mit `random_state=42` deterministisch innerhalb derselben Plattform und Library-Version, aber Cross-Platform-Identität ist nicht garantiert. Die Plateau-Mitte ist gegen genau diese Drift versichert.
+
+**Nicht-Argumente, die ich verworfen habe.** „Konservativster Wert auf dem Plateau" (also höchstes mcs) ist ein Tiebreaker ohne empirischen Wert — innerhalb der Äquivalenzklasse sind alle Werte gleichwertig. Konservativ am Rand bringt erst dann etwas, wenn man garantiert auf dem Plateau bleibt. Diese Garantie hatte der ursprüngliche Lauf nicht.
+
+**Zusammenfassend.** mcs=12 wird gewählt, weil es methodisch innerhalb der vom Sweep identifizierten Äquivalenzklasse liegt, und operativ die robusteste Position dieser Klasse gegenüber kleinen Geometrie-Verschiebungen darstellt. Die Wahl ist über den Konfigurations-Setting `cluster_hdbscan_mcs` (Default 12) bzw. die Environment-Variable `PIPELINE_CLUSTER_HDBSCAN_MCS` veränderbar, ohne Code-Änderung.
 
 ### Was nicht ausgewählt wurde und warum
 
@@ -161,14 +165,14 @@ Drei Ebenen, die unabhängig voneinander Vertrauen aufbauen.
 
 Misst, wie gut Cluster getrennt sind, von -1 bis +1.
 
-| Setup | Silhouette |
-|---|---|
-| HDBSCAN ohne Rauschen | 0,672 |
-| HDBSCAN inklusive Rauschen | 0,592 |
+| Setup | Silhouette (lokal) | Silhouette (CI Ubuntu) |
+|---|---|---|
+| HDBSCAN ohne Rauschen | 0,672 | ~0,67 (geringfügig variabel je Plattform) |
+| HDBSCAN inklusive Rauschen | 0,592 | ~0,59 |
 
 0,672 ist für reale Textdaten sehr gut. Werte über 0,5 gelten als belastbare Cluster.
 
-Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsächlich Rauschen ist (also Punkte, die wirklich keinem Cluster zugehören), drückt es den Silhouette stark, weil es als pseudo-Cluster mitgemessen wird. 0,672 vs 0,592 zeigt, dass HDBSCAN die Rauschen-Klassifikation gut trifft. Der Unterschied ist beim aktuellen Lauf kleiner als beim 504-Keyword-Lauf, was zur kleineren Rauschen-Quote (7,6 statt 14,1 Prozent) passt.
+Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsächlich Rauschen ist (also Punkte, die wirklich keinem Cluster zugehören), drückt es den Silhouette stark, weil es als pseudo-Cluster mitgemessen wird. ~0,67 vs ~0,59 zeigt, dass HDBSCAN die Rauschen-Klassifikation gut trifft. Der Unterschied ist beim aktuellen Lauf kleiner als beim 504-Keyword-Lauf, was zur kleineren Rauschen-Quote (~8 statt 14,1 Prozent) passt.
 
 ### 6.2 ARI und NMI gegen die LLM Cluster
 
@@ -176,7 +180,7 @@ Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsäc
 
 | Vergleich | ARI | NMI |
 |---|---|---|
-| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,105 | 0,301 |
+| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,113 | 0,321 |
 
 ARI ist konservativer als NMI, deshalb ARI < NMI normal.
 
@@ -199,9 +203,9 @@ Zusätzlich rechne ich [Ward Hierarchical Clustering](https://en.wikipedia.org/w
 | 10 | 0,531 |
 | 12 | 0,579 |
 
-Ward erreicht 0,58 bei k=12, HDBSCAN liegt bei 0,672. HDBSCAN ist also klar besser. Der wichtigere Vorteil von HDBSCAN ist die Rauschen-Klasse: Ward muss alle 500 Keywords einem Cluster zuordnen, auch die 38 Ausreißer.
+Ward erreicht 0,59 bei k=12, HDBSCAN liegt bei 0,672. HDBSCAN ist also klar besser. Der wichtigere Vorteil von HDBSCAN ist die Rauschen-Klasse: Ward muss alle 500 Keywords einem Cluster zuordnen, auch die 38 bis 40 Ausreißer.
 
-ARI HDBSCAN gegen Ward(k=10) auf den nicht-Rauschen Punkten: 0,538. Die beiden Methoden stimmen auf einem Großteil der Cluster-Zuordnungen überein (über die Hälfte), aber bei diesem Lauf weniger als beim 504-Keyword-Lauf zuvor. Das liegt am großen Catch-all Cluster (Cluster 2 mit 189 Keywords), den Ward feiner aufteilt als HDBSCAN bei dieser Konfiguration. Die methodische Aussage bleibt: zwei unabhängige Verfahren finden ähnliche Cluster-Grenzen, das stärkt das Vertrauen in die Struktur.
+ARI HDBSCAN gegen Ward(k=10) auf den nicht-Rauschen Punkten: 0,565. Die beiden Methoden stimmen auf einem Großteil der Cluster-Zuordnungen überein (über die Hälfte). Das liegt am großen Catch-all Cluster (Cluster 2 mit 189 Keywords), den Ward feiner aufteilt als HDBSCAN bei dieser Konfiguration. Die methodische Aussage bleibt: zwei unabhängige Verfahren finden ähnliche Cluster-Grenzen, das stärkt das Vertrauen in die Struktur.
 
 ### 6.4 Manuelle Spot Checks
 
@@ -222,7 +226,7 @@ Die Pipeline ist auf Reproduzierbarkeit ausgelegt:
 - **Embeddings sind deterministisch** (Sentence Transformer in Inference Modus).
 - **Heuristische Enrichment** ist deterministisch (SHA256 Hash des Keywords als Seed).
 
-Ein zweiter Lauf mit identischer `data/keywords.csv` produziert byte-identische `embeddings.npy`, `umap_*.npy` und `keywords_labeled.csv`.
+Ein zweiter Lauf mit identischer `data/keywords.csv` produziert auf derselben Plattform byte-identische `embeddings.npy`, `umap_*.npy` und `keywords_labeled.csv`. Cross-Platform (z.B. lokale macOS-Entwicklung gegen Ubuntu-CI) sind die Embeddings byte-identisch, die UMAP-Koordinaten weichen wegen unterschiedlicher BLAS/LAPACK-Implementierungen minimal ab. Die Cluster-Anzahl bleibt mit `mcs=12` über Plattformen hinweg stabil.
 
 Reproduktion auf einem fremden Rechner:
 
@@ -233,7 +237,7 @@ pip install -r requirements.txt
 python -m src.cluster --step all
 ```
 
-Erwartetes Ergebnis: 10 Cluster, Silhouette 0,672, ARI 0,105 (vs LLM), ARI 0,538 (vs Ward k=10).
+Erwartetes Ergebnis: 10 Cluster, Silhouette ~0,67, ARI 0,113 (vs LLM), ARI 0,565 (vs Ward k=10).
 
 ## 8. Bekannte Schwächen
 

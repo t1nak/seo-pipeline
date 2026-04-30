@@ -147,7 +147,7 @@ Speicher: Embeddings sind 384 float32 pro Keyword, also 1,5 KB pro Keyword. 5000
 
 ## Reproduktion
 
-Die Pipeline ist deterministisch (siehe `docs/methodology.md`). Ein zweiter Lauf produziert byte-identische Artefakte.
+Die Pipeline ist deterministisch innerhalb derselben Plattform und Library-Version (siehe `docs/methodology.md`). Ein zweiter Lauf auf derselben Maschine produziert byte-identische Artefakte.
 
 ```bash
 git clone https://github.com/t1nak/seo-pipeline.git

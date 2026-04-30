@@ -12,26 +12,35 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Skip LLM call (write stubs only, useful for wiring tests)"
+        description: "Test-Modus: kein LLM-Call, Stubs schreiben (kostenlos, gut für Verkabelungs-Test)"
         type: boolean
         default: false
       brief_provider:
-        description: "Brief LLM provider"
+        description: "Brief-Provider (LLM für Content-Briefings) — api: Anthropic, openai: GPT-5. max (Agent SDK) ist lokal-only und in CI nicht verfügbar."
         type: choice
-        options: [api, openai]
+        options:
+          - api
+          - openai
         default: api
       model:
-        description: "Override brief model id (defaults: api=claude-sonnet-4-6, openai=gpt-5). Only used if dry_run=false."
+        description: "Modell-ID überschreiben (leer = Default je Provider: api -> claude-sonnet-4-6, openai -> gpt-5). Nur relevant wenn dry_run=false."
         type: string
         default: ""
       enrich_provider:
-        description: "Enrich provider"
+        description: "Enrich-Provider (Suchvolumen, Difficulty) — estimate: Heuristik kostenlos, dataforseo: ~0.75 USD pro 500 Keywords"
         type: choice
-        options: [estimate, dataforseo]
+        options:
+          - estimate
+          - dataforseo
         default: estimate
       max_keywords:
-        description: "Maximum keyword count after discover"
-        type: string
+        description: "Cap der Keyword-Anzahl nach Discover"
+        type: choice
+        options:
+          - "100"
+          - "250"
+          - "500"
+          - "1000"
         default: "500"
 
 permissions:

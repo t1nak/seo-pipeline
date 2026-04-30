@@ -6,7 +6,7 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 ![Pipeline Architektur](landing_diagram.svg)
 
-**Beispiel-Demo:** Aus dem zvoove Blog wird ein Keyword Set, daraus thematische Cluster, daraus Content Briefs, daraus ein interaktives Reporting erstellt. Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo.
+**Beispiel-Demo:** Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Daraus entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
 
 ## Häufige Fragen
 
@@ -138,8 +138,6 @@ Plus der Catch-all Cluster 2 mit 189 Keywords (Branche & Arbeitsrecht), nach Anz
 | Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, 6 Charts, interaktive Karte |
 | Brief | Vollständig. Claude API mit Prompt Caching |
 | Report | Vollständig. Konsolidiertes HTML Dashboard |
-
-Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der Discover Schritt scrapt den Blog noch nicht live. Das ist transparent dokumentiert in [Entscheidungen](decisions.md) und der nächste hochwertvolle Arbeitsblock.
 
 ## Schnellstart
 

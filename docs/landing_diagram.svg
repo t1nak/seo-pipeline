@@ -95,7 +95,7 @@
   <!-- Step 4 -->
   <rect x="60" y="490" width="560" height="120" rx="10" class="step-purple"/>
   <text x="340" y="516" class="title title-purple mid">Step 4 · Reporting</text>
-  <text x="340" y="540" class="desc mid">Konsolidiertes Dashboard plus Status-Push. Lieferziele austauschbar.</text>
+  <text x="340" y="540" class="desc mid">Konsolidiertes Dashboard plus Status-Push. Outputformate und Plattformen austauschbar.</text>
   <g>
     <rect x="168" y="556" width="80" height="24" rx="12" class="chip-purple"/>
     <text x="208" y="568" class="chip-text mid">GitHub Pages</text>

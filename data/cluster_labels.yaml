@@ -1,0 +1,35 @@
+# Cluster labels keyed by 0-based HDBSCAN cluster ID.
+# -1 is the noise / outlier class.
+#
+# Edit this file to rename clusters without touching Python code.
+# Any cluster ID not listed here falls back to "Cluster N" automatically,
+# so runs with non-default mcs values never raise a KeyError.
+#
+# After a material keyword change, re-run the sweep, inspect the new
+# cluster profiles, and update the labels here.
+
+en:
+  -1: "Noise / outliers"
+  0: "Factoring fundamentals"
+  1: "Industry & labour law catch-all"
+  2: "Commercial Zeit/Software heads"
+  3: "Recruiting & AI tooling"
+  4: "Brand: zvoove product names"
+  5: "Operational how-to (mixed)"
+  6: "Mid-funnel HR ops"
+  7: "Gebäudereinigung vertical"
+  8: "Digitalisation in practice"
+  9: "B2B SaaS category heads"
+
+de:
+  -1: "Rauschen / Ausreißer"
+  0: "Factoring-Grundlagen"
+  1: "Branche & Arbeitsrecht (Sammelbecken)"
+  2: "Kommerzielle Zeit/Software-Heads"
+  3: "Recruiting & KI-Tools"
+  4: "Marke: zvoove Produktnamen"
+  5: "Operative Anleitungen (gemischt)"
+  6: "HR-Mid-Funnel"
+  7: "Gebäudereinigung-Vertikale"
+  8: "Digitalisierung praktisch"
+  9: "B2B-SaaS Kategorie-Heads"

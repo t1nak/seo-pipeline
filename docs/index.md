@@ -10,7 +10,15 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 [:material-rocket-launch: Go to Pipeline (GitHub Actions)](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml){ .md-button .md-button--primary target=_blank rel=noopener }
 
-## Häufige Fragen
+## Grundlagen
+
+- [Wie wird die Pipeline getriggert?](#wie-wird-die-pipeline-getriggert)
+- [Wie kann ich Model und Provider ändern?](#wie-kann-ich-model-und-provider-andern)
+- [Was kostet ein Lauf?](#was-kostet-ein-lauf)
+- [Wie viele Cluster werden erkannt?](#wie-viele-cluster-werden-erkannt)
+- [Welche Daten werden lokal gespeichert?](#welche-daten-werden-lokal-gespeichert)
+- [Welche Parameter beeinflussen das Ergebnis maßgeblich?](#welche-parameter-beeinflussen-das-ergebnis-massgeblich)
+- [Welche Variablen sind sicherheitskritisch?](#welche-variablen-sind-sicherheitskritisch-wegen-api-kosten-und-berechtigungen)
 
 ### Wie wird die Pipeline getriggert?
 
@@ -18,14 +26,15 @@ GitHub Actions: per Cron-Schedule oder manuellem Trigger via [`workflow_dispatch
 
 ### Wie kann ich Model und Provider ändern?
 
-Alle Provider sind per CLI-Flag oder `PIPELINE_*` Environment-Variable wählbar.
+Der einfachste Weg ist die GitHub Actions UI: beim manuellen Auslösen von [`pipeline-full.yml`](https://github.com/t1nak/seo-pipeline/blob/main/.github/workflows/pipeline-full.yml) erscheinen Dropdowns für Provider und Modell-ID direkt im Browser, kein Code-Edit nötig.
 
-| Komponente | CLI-Flag | Optionen |
+| Eingabefeld | Optionen | Default |
 |---|---|---|
-| Brief-Provider | `--brief-provider` | `api` (Anthropic), `openai`, `max` (Agent SDK) |
-| Brief-Model | `--brief-model` | beliebige Modell-ID, z.B. `claude-sonnet-4-6` |
-| Keyword-Quelle | `--source` | `manual`, `live` |
-| Enrich-Provider | `--provider` | `estimate` (Heuristik), `dataforseo` |
+| **Brief-Provider** | `api` (Anthropic), `openai` | `api` |
+| **Modell-ID** | beliebige ID, z.B. `claude-sonnet-4-6`, `gpt-5` | leer = Provider-Default |
+| **Enrich-Provider** | `estimate` (kostenlos), `dataforseo` | `estimate` |
+
+Lokal lassen sich dieselben Einstellungen als `PIPELINE_*` Environment-Variable oder CLI-Flag übergeben. Die vollständige Referenz aller Variablen, die Präzedenz-Reihenfolge und Beispiele für CI und lokale `.env` Dateien stehen im [Developer Guide](developer-guide.md#3-konfigurations-modell).
 
 ### Was kostet ein Lauf?
 

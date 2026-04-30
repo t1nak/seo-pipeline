@@ -77,23 +77,25 @@ Backlog: Vergleichslauf mit `multilingual-e5-large` zur Quantifizierung des Qual
 
 In Produktion würde `data_source` ein Filter sein: wenn alle Daten DataForSEO sind, ist die Priorisierung verlässlicher.
 
-## ADR-5: Manuelle Cluster Labels statt LLM-generiert
+## ADR-5: Manuelle Cluster Labels in YAML statt LLM-generiert oder hardcoded
 
 **Kontext.** Pro Cluster braucht es ein menschenlesbares Label.
 
-**Entscheidung.** Manuelle Labels, abgelegt als Dictionary in `src/cluster.py`. EN und DE.
+**Entscheidung.** Manuelle Labels in [`data/cluster_labels.yaml`](https://github.com/t1nak/seo-pipeline/blob/main/data/cluster_labels.yaml). EN und DE. `src/cluster.py` lädt sie zur Laufzeit; jede unbekannte Cluster-ID fällt auf "Cluster N" zurück, sodass auch nicht-default `mcs`-Werte nie einen KeyError auslösen.
 
 **Alternativen geprüft.**
 
 - LLM-generiert pro Lauf: skaliert, aber Labels variieren zwischen Läufen, was die Reproduzierbarkeit von Reports erschwert
 - Top-Term basiert (häufigste Wörter): schwach, weil die Top Terms oft stoppwort-ähnlich sind
+- Hardcoded als Python Dict: kein Code-Edit für Label-Änderungen nötig, aber KeyError bei unbekannten Cluster-IDs (Bug in Pipeline-5, behoben mit diesem ADR)
 
 **Konsequenzen.**
 
-- Pro: stabil zwischen Läufen, kuratiert auf zvoove Geschäfts-Logik, qualitativ deutlich besser als Auto-Labeling.
-- Contra: skaliert nicht über 50 Cluster.
+- Pro: stabil zwischen Läufen, kuratiert auf zvoove Geschäfts-Logik, editierbar ohne Code-Änderung.
+- Pro: Pipeline läuft mit beliebigem `mcs` durch, auch wenn mehr Cluster entstehen als Labels definiert sind.
+- Contra: skaliert nicht über 50 Cluster (dann Hybrid mit LLM-Vorschlag sinnvoller).
 
-Backlog: bei Skalierung Hybrid-Ansatz mit LLM-Vorschlag und manueller Korrektur in einem `cluster_labels.yaml`.
+Backlog: bei Skalierung Hybrid-Ansatz mit LLM-Vorschlag und manueller Korrektur in `cluster_labels.yaml`.
 
 ## ADR-6: Discover Schritt als Stub, nicht als Live Scraper
 

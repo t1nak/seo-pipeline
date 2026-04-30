@@ -1,6 +1,9 @@
 # Configuration via environment variables (Pydantic Settings + .env support)
 pydantic-settings>=2.0,<3.0
 
+# Cluster labels loaded from data/cluster_labels.yaml (edit without code change)
+pyyaml>=6.0,<7.0
+
 # Core data and ML
 # Versions pinned to the local baseline that produces the documented
 # 10-cluster result (sil 0.672, 38 noise). UMAP's random_state only

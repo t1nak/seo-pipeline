@@ -129,13 +129,16 @@ _HTML_TEMPLATE = """<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>HDBSCAN keyword clusters: zvoove</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;padding:16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f4f4f6;color:#222}
-.toolbar{max-width:1620px;margin:0 auto 12px;display:flex;justify-content:flex-end;gap:8px}
-.lang-switch{display:inline-flex;background:white;border:1px solid #d0d0d0;border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
-.lang-switch button{background:white;border:none;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:600;color:#555;font-family:inherit}
-.lang-switch button:not(:last-child){border-right:1px solid #e0e0e0}
-.lang-switch button.active{background:#2563eb;color:white}
-.lang-switch button:not(.active):hover{background:#f0f0f0}
+*{box-sizing:border-box}html{background:#0f172a;min-height:100%}body{margin:0;padding:16px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0f172a;color:#e2e8f0}
+.toolbar{max-width:1620px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.back-link{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);color:#e2e8f0;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 14px;font-size:13px;font-weight:600;text-decoration:none;transition:background .15s,border-color .15s}
+.back-link:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.30)}
+.back-link::before{content:"\\2190";font-size:14px}
+.lang-switch{display:inline-flex;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;overflow:hidden;box-shadow:none}
+.lang-switch button{background:transparent;border:none;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:600;color:#cbd5e1;font-family:inherit}
+.lang-switch button:not(:last-child){border-right:1px solid rgba(255,255,255,0.15)}
+.lang-switch button.active{background:#2dd4bf;color:#0f172a}
+.lang-switch button:not(.active):hover{background:rgba(255,255,255,0.06)}
 .wrap{display:flex;gap:16px;align-items:flex-start;max-width:1620px;margin:0 auto}
 .chart-card,.table-card{background:white;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.04);padding:8px}
 .chart-card{flex:0 0 auto}
@@ -160,7 +163,7 @@ table.kws tr.hl td{background:#fff7d6;font-weight:700;color:#111;box-shadow:inse
 table.kws tr.hl td.kw{color:#000}
 .muted{color:#999;font-style:italic}
 </style></head><body>
-<div class="toolbar"><div class="lang-switch"><button id="lang-en" class="active">EN</button><button id="lang-de">DE</button></div></div>
+<div class="toolbar"><a class="back-link" href="../../">Zur&#252;ck zur Doku</a><div class="lang-switch"><button id="lang-en" class="active">EN</button><button id="lang-de">DE</button></div></div>
 <div class="wrap">
 <div class="chart-card"><div id="chart"></div></div>
 <div class="table-card">

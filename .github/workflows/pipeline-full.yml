@@ -61,7 +61,7 @@ on:
         default: leaf
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: pipeline-full
@@ -158,3 +158,24 @@ jobs:
             output/reporting/
           retention-days: 14
           if-no-files-found: error
+
+      - name: Commit pipeline output back to main
+        # Output ins Repo committen, damit GitHub Pages den frischen Lauf
+        # zeigt (Dashboard, Charts, Cluster Map, Briefs). Der Push triggert
+        # docs.yml fuer das Pages-Deployment. pipeline.yml hat einen
+        # paths-Filter ohne output/, wird also nicht erneut ausgeloest.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/keywords.csv output/clustering/ output/briefings/ output/reporting/
+          if git diff --cached --quiet; then
+            echo "No output changes to commit."
+            exit 0
+          fi
+          git commit -m "ci(pipeline-full): update output from run ${{ github.run_id }}
+
+Pipeline-Lauf abgeschlossen: ${{ inputs.brief_provider }} provider,
+mcs=${{ inputs.cluster_mcs }}/${{ inputs.cluster_method }}, ${{ inputs.max_keywords }} keywords.
+
+Co-Authored-By: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          git push

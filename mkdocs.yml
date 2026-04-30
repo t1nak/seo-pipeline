@@ -11,20 +11,9 @@ theme:
   language: de
   favicon: assets/cluster_overview.png
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: Dark Mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: Light Mode
+    scheme: default
+    primary: custom
+    accent: custom
   features:
     - navigation.tracking
     - navigation.tabs
@@ -52,9 +41,10 @@ nav:
       - Entscheidungen: decisions.md
     - Ergebnisse: results.md
     - Technical Review: technical_review.md
-  - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
-  - Report: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
-  - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
+  - Example Output:
+    - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
+    - Report: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
+    - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
   - GitHub: https://github.com/t1nak/seo-pipeline
 
 markdown_extensions:
@@ -113,6 +103,7 @@ plugins:
             Entscheidungen: Decisions
             Ergebnisse: Results
             Technical Review: Technical Review
+            Example Output: Example Output
             Cluster Map: Cluster Map
             Report: Report
             Cluster Briefs: Cluster Briefs

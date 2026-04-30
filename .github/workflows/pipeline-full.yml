@@ -43,7 +43,7 @@ on:
           - "1000"
         default: "500"
       cluster_mcs:
-        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Plateau-Mitte 12, siehe Methodik."
+        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Default 15 (kombiniert mit method=leaf -> 12 Cluster), siehe Methodik."
         type: choice
         options:
           - "8"
@@ -51,7 +51,14 @@ on:
           - "12"
           - "15"
           - "20"
-        default: "12"
+        default: "15"
+      cluster_method:
+        description: "HDBSCAN cluster_selection_method. eom = wenige stabile Cluster, leaf = mehr feinere Cluster. Default leaf (mit mcs=15 -> 12 Cluster)."
+        type: choice
+        options:
+          - eom
+          - leaf
+        default: leaf
 
 permissions:
   contents: read
@@ -122,6 +129,7 @@ jobs:
           PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
           PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
           PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
+          PIPELINE_CLUSTER_HDBSCAN_METHOD: ${{ inputs.cluster_method }}
         run: |
           python pipeline.py ${{ inputs.dry_run && '--dry-run' || '' }}
 

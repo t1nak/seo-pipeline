@@ -99,22 +99,24 @@ Backlog: bei Skalierung Hybrid-Ansatz mit LLM-Vorschlag und manueller Korrektur 
 
 ## ADR-6: Discover Schritt als Stub, nicht als Live Scraper
 
-**Kontext.** Der Aufgaben-Brief verlangt Ableitung aus dem zvoove Blog. Ein robuster Live Scraper für `zvoove.de/wissen/blog` ist Engineering-Aufwand mit vielen Fallunterscheidungen (Pagination, Bot Detection, Layout-Änderungen).
+**Kontext.** Der Discover-Schritt soll Keywords aus dem zvoove Blog ableiten. Das klingt einfach, ist aber ein eigenständiges Engineering-Problem: der Blog unter `zvoove.de/wissen/blog` hat Pagination, rendert Teile per JavaScript, und könnte sich jederzeit im Layout ändern. Ein Scraper, der das zuverlässig und wartbar abbildet, braucht mehr Aufwand als der Rest der Pipeline zusammen.
 
-**Entscheidung.** Discover als Stub mit `--source manual` und kuratierter `data/keywords.manual.csv`. `--source live` ist explizit nicht implementiert.
+**Was stattdessen passiert ist.** Die 500 Keywords in `data/keywords.manual.csv` wurden manuell kuratiert auf Basis einer Analyse der Blog-Themen, der zvoove Produktpalette und typischer Suchanfragen im DACH-Personaldienstleistungsmarkt. Das Ergebnis ist inhaltlich nah an dem, was ein automatisierter Lauf produzieren würde, aber die Ableitung aus dem Blog-Text selbst wurde nicht automatisiert.
+
+**Entscheidung.** `src/discover.py` liest mit `--source manual` direkt aus `data/keywords.manual.csv`. Der Code-Pfad `--source live` existiert als Interface, ist aber nicht implementiert.
 
 **Alternativen geprüft.**
 
-- Schnell-Scraper mit BeautifulSoup, der bei jeder Layout-Änderung bricht: nicht produktionswürdig
-- Headless Browser (Playwright): robust, aber Engineering-Aufwand für Demo zu hoch
+- BeautifulSoup-Scraper: schnell gebaut, bricht bei jeder Layout-Änderung. Für eine Demo, die stabil laufen soll, nicht geeignet.
+- Headless Browser (Playwright): deutlich robuster gegen JavaScript-Rendering und Layout-Änderungen, aber der Aufwand für eine Case Study zu hoch.
 
 **Konsequenzen.**
 
-- Pro: Pipeline läuft heute end-to-end auf einem realistischen Datensatz, der nahe an dem ist, was ein Live-Lauf produzieren würde.
-- Pro: Transparenz. README und CASE_STUDY benennen den Stub klar.
-- Contra: das Hauptthema (Ableitung aus dem Blog) ist nicht live demonstriert. Genau dieser Trade-off ist Teil der Bewerbungs-Geschichte.
+- Pro: Die Pipeline läuft heute vollständig durch auf einem realistischen, fachlich kuratierten Datensatz.
+- Pro: Der Stub ist klar als solcher markiert. Wer den Code liest, sieht sofort, wo der Live-Pfad anfangen würde.
+- Contra: Die automatische Ableitung aus Blog-Inhalten, also der eigentliche erste Schritt der Idee, ist nicht implementiert. Das ist der größte offene Punkt dieser Pipeline.
 
-Backlog: höchste Priorität für die nächste Iteration.
+Backlog: höchste Priorität für die nächste Iteration. Konkret: Playwright-Scraper für `zvoove.de/wissen/blog`, Extraktion von Überschriften und Ankertexten, daraus LLM-gestützte Keyword-Generierung pro Artikel.
 
 ## ADR-7: Briefs als Markdown statt HTML
 

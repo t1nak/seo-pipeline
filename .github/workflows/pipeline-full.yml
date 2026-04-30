@@ -43,7 +43,7 @@ on:
           - "1000"
         default: "500"
       cluster_mcs:
-        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Default 15."
+        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Plateau-Mitte 12, siehe Methodik."
         type: choice
         options:
           - "8"
@@ -51,7 +51,7 @@ on:
           - "12"
           - "15"
           - "20"
-        default: "15"
+        default: "12"
 
 permissions:
   contents: read

@@ -46,6 +46,38 @@ Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
 
 API-Keys liegen in `.env` (lokal) bzw. GitHub Secrets (CI), nicht im Repo.
 
+### Welche Parameter beeinflussen das Ergebnis maßgeblich?
+
+Sortiert nach Hebelwirkung auf das Cluster-Ergebnis:
+
+| Parameter | Wirkung | Empfohlen |
+|---|---|---|
+| **`cluster_hdbscan_mcs`** | Steuert Cluster-Anzahl direkt. Kleiner = mehr (kleinere) Cluster. | 12 (Plateau-Mitte) |
+| **`cluster_hdbscan_method`** | `eom` für stabile, größere Cluster · `leaf` für viele kleine Sub-Cluster | `eom` |
+| **`cluster_hdbscan_ms`** | Wie streng die Dichte-Definition ist (höher = restriktiver) | 5 |
+| **`cluster_umap_neighbors`** | Lokale vs globale Struktur in der Reduktion (UMAP) | 15 |
+| **Embedding-Modell** | Semantische Qualität, mehrsprachig vs einsprachig | `paraphrase-multilingual-MiniLM-L12-v2` |
+| **`discover_max_keywords`** | Cap auf Eingabe-Größe; beeinflusst Dichte-Verteilung | 500 |
+
+Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in der [Methodik](methodology.md#5-hyperparameter-sweep-die-volle-tabelle).
+
+### Welche Variablen sind sicherheitskritisch wegen API-Kosten und Berechtigungen?
+
+| Variable | Sensibilität | Wo gespeichert |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | API-Kosten (~0,15 USD pro Brief-Lauf, Rate-Limits) | GitHub Secrets (CI) · `.env` (lokal, gitignored) |
+| `OPENAI_API_KEY` | API-Kosten (~0,30 USD pro Brief-Lauf) | dito |
+| `DATAFORSEO_LOGIN` + `_PASSWORD` | API-Kosten (~0,75 USD pro 500-Keyword Enrichment) | dito |
+| `SEMRUSH_API_KEY` (falls Discover-Provider) | API-Kosten + Quota-Limit | dito |
+
+**Schutz-Mechanismen:**
+
+- **`dry_run=true`** im `pipeline-full.yml` Workflow überspringt alle LLM-Calls und schreibt Stubs. Default ist `false` (echter Lauf), aber zum Testen explizit umstellbar.
+- **`workflow_dispatch`** ist die einzige Trigger-Option für `pipeline-full.yml` — kein versehentliches Auslösen über Push.
+- **Secrets sind `null` bei fehlender Konfiguration**; der Workflow bricht früh ab mit `::error::ANTHROPIC_API_KEY secret missing` statt blind zu starten.
+- **API-Keys nie in Logs** — der Workflow prüft nur die Länge (`${#ANTHROPIC_API_KEY}`), nicht den Wert.
+- **Rate-Limit-Schutz** in `brief.py` über Retry-Wrapper mit Exponential Backoff plus Jitter.
+
 ## Schnelle Einstiegspunkte
 
 <div class="grid cards" markdown>

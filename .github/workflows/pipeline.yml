@@ -7,6 +7,33 @@ name: Pipeline (4 steps, no brief)
 
 on:
   workflow_dispatch:
+    inputs:
+      enrich_provider:
+        description: "Enrich-Provider: estimate (Heuristik, kostenlos) oder dataforseo (~0.75 USD pro 500 Keywords)"
+        type: choice
+        options:
+          - estimate
+          - dataforseo
+        default: estimate
+      max_keywords:
+        description: "Cap der Keyword-Anzahl nach Discover"
+        type: choice
+        options:
+          - "100"
+          - "250"
+          - "500"
+          - "1000"
+        default: "500"
+      cluster_mcs:
+        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Plateau-Mitte 12, siehe Methodik."
+        type: choice
+        options:
+          - "8"
+          - "10"
+          - "12"
+          - "15"
+          - "20"
+        default: "12"
   push:
     branches: [main]
     paths:
@@ -51,6 +78,15 @@ jobs:
           key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
 
       - name: Run pipeline (discover, enrich, cluster, report)
+        # Pipeline-Settings als PIPELINE_* env vars. Bei push-Trigger
+        # sind die inputs leer und Pydantic Settings nutzt die Defaults
+        # aus src/config.py.
+        env:
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
+          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
+          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
         run: python pipeline.py --step discover,enrich,cluster,report
 
       - name: Show run summary

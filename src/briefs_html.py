@@ -239,6 +239,18 @@ header .glossar-btn::before { content: "ⓘ"; font-size: 14px; opacity: 0.85; }
 .cluster-title { font-size: 18px; font-weight: 600; margin: 0 0 6px; color: var(--text); letter-spacing: -0.005em; }
 .cluster-id { font-size: 11px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.04em;
               text-transform: uppercase; }
+.brief-actions { display: flex; gap: 10px; margin: 12px 0 0; flex-wrap: wrap; }
+.action-link { display: inline-flex; align-items: center; gap: 6px;
+               font-size: 12px; font-weight: 500; padding: 6px 12px;
+               background: var(--bg-row); color: var(--text-secondary);
+               border: 1px solid var(--border); border-radius: 6px;
+               text-decoration: none;
+               transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.action-link:hover { background: var(--bg-card); color: var(--primary-dark);
+                     border-color: var(--primary); }
+.action-link::before { font-weight: 700; font-size: 13px; }
+.action-link.download::before { content: "↓"; }
+.action-link.map::before { content: "→"; }
 .badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 4px;
          font-weight: 600; margin-right: 4px; margin-bottom: 4px; letter-spacing: 0.01em; }
 .badge-info { background: var(--badge-info-bg); color: var(--badge-info-fg); }
@@ -350,6 +362,9 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
     # Volume formatted
     sv_fmt = f"{total_sv:,}".replace(",", ".")
 
+    brief_filename = f"cluster_{display_id:02d}.md"
+    map_link = f"../clustering/cluster_map.html#cluster-{display_id}"
+
     return f"""
 <section class="card" id="cluster-{display_id}">
   <p class="cluster-id">Cluster {display_id}</p>
@@ -360,6 +375,10 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
     {_badge(f"Difficulty: {median_kd}", "info")}
     {_badge(f"{n_kw} Keywords", "info")}
     {_badge(f"{pct_comm}% kommerziell", "info" if pct_comm < 70 else "ok")}
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="{brief_filename}" download>Markdown herunterladen</a>
+    <a class="action-link map" href="{map_link}" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
   </div>
 
   <hr class="divider">

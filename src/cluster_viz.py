@@ -235,6 +235,12 @@ chartDiv.on('plotly_legendclick', ev=>{const cid=cidFromTraceName(ev.fullData[ev
 chartDiv.on('plotly_legenddoubleclick', ev=>{const cid=cidFromTraceName(ev.fullData[ev.curveNumber].name);if(cid!==null) showCluster(cid,null);return true;});
 document.getElementById('lang-en').addEventListener('click',()=>applyLanguage('en'));
 document.getElementById('lang-de').addEventListener('click',()=>applyLanguage('de'));
+function applyHashSelection(){
+ const m=window.location.hash.match(/^#cluster-(\\d+)$/);
+ if(m){const cid=parseInt(m[1])-1; if(cid>=0) showCluster(cid, null);}
+}
+applyHashSelection();
+window.addEventListener('hashchange', applyHashSelection);
 </script></body></html>"""
 
 

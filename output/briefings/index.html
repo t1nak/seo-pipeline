@@ -136,6 +136,18 @@ header .glossar-btn::before { content: "ⓘ"; font-size: 14px; opacity: 0.85; }
 .cluster-title { font-size: 18px; font-weight: 600; margin: 0 0 6px; color: var(--text); letter-spacing: -0.005em; }
 .cluster-id { font-size: 11px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.04em;
               text-transform: uppercase; }
+.brief-actions { display: flex; gap: 10px; margin: 12px 0 0; flex-wrap: wrap; }
+.action-link { display: inline-flex; align-items: center; gap: 6px;
+               font-size: 12px; font-weight: 500; padding: 6px 12px;
+               background: var(--bg-row); color: var(--text-secondary);
+               border: 1px solid var(--border); border-radius: 6px;
+               text-decoration: none;
+               transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.action-link:hover { background: var(--bg-card); color: var(--primary-dark);
+                     border-color: var(--primary); }
+.action-link::before { font-weight: 700; font-size: 13px; }
+.action-link.download::before { content: "↓"; }
+.action-link.map::before { content: "→"; }
 .badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 4px;
          font-weight: 600; margin-right: 4px; margin-bottom: 4px; letter-spacing: 0.01em; }
 .badge-info { background: var(--badge-info-bg); color: var(--badge-info-fg); }
@@ -282,6 +294,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">189 Keywords</span>
     <span class="badge badge-info">22% kommerziell</span>
   </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_02.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-2" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
 
   <hr class="divider">
 
@@ -333,6 +349,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">Difficulty: 49</span>
     <span class="badge badge-info">44 Keywords</span>
     <span class="badge badge-ok">82% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_10.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-10" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
   </div>
 
   <hr class="divider">
@@ -386,6 +406,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">47 Keywords</span>
     <span class="badge badge-ok">94% kommerziell</span>
   </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_03.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-3" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
 
   <hr class="divider">
 
@@ -437,6 +461,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">Difficulty: 51</span>
     <span class="badge badge-info">34 Keywords</span>
     <span class="badge badge-ok">97% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_05.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-5" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
   </div>
 
   <hr class="divider">
@@ -490,6 +518,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">30 Keywords</span>
     <span class="badge badge-info">23% kommerziell</span>
   </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_06.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-6" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
 
   <hr class="divider">
 
@@ -540,6 +572,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">Difficulty: 38</span>
     <span class="badge badge-info">34 Keywords</span>
     <span class="badge badge-info">44% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_04.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-4" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
   </div>
 
   <hr class="divider">
@@ -593,6 +629,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">29 Keywords</span>
     <span class="badge badge-info">24% kommerziell</span>
   </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_07.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-7" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
 
   <hr class="divider">
 
@@ -644,6 +684,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">Difficulty: 38</span>
     <span class="badge badge-info">24 Keywords</span>
     <span class="badge badge-info">50% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_08.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-8" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
   </div>
 
   <hr class="divider">
@@ -697,6 +741,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">15 Keywords</span>
     <span class="badge badge-info">27% kommerziell</span>
   </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_01.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-1" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
 
   <hr class="divider">
 
@@ -748,6 +796,10 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
     <span class="badge badge-info">Difficulty: 29</span>
     <span class="badge badge-info">16 Keywords</span>
     <span class="badge badge-info">44% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="cluster_09.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="../clustering/cluster_map.html#cluster-9" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
   </div>
 
   <hr class="divider">

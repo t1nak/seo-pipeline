@@ -2,7 +2,7 @@
 
 ## Was ist die SEO Pipeline?
 
-Eine entkoppelte Daten-Pipeline für SEO-Strategie. Vier Phasen mit auswechselbaren Providern an jeder Stelle: Keyword-Quelle, LLM für Briefings, Reporting-Ziel. Die Architektur unten zeigt die wählbaren Komponenten je Phase, der Auslöser läuft per Cron, manuellem Trigger oder Push.
+Eine modulare Daten-Pipeline für SEO-Strategie. Vier Phasen mit auswechselbaren Providern an jeder Stelle: Keyword-Quelle, LLM für Briefings, Reporting-Ziel. Die Architektur unten zeigt die wählbaren Komponenten je Phase, der Auslöser läuft per Cron, manuellem Trigger oder Push.
 
 ![Pipeline Architektur](landing_diagram.svg)
 

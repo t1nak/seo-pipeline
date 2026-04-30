@@ -321,50 +321,6 @@ Bei wöchentlicher Ausführung: ungefähr 50 USD pro Jahr. Vernachlässigbar geg
 
 Lauf Frequenz Empfehlung: einmal pro Quartal voll, zwischendrin nur `enrich` (für aktualisierte SV Daten) und `report`. Embeddings und Cluster ändern sich nur, wenn das Keyword Set sich substantiell ändert.
 
-## 13. Limits und nächste Schritte
-
-Ehrlich, was fehlt oder schwach ist:
-
-### Schwächen im aktuellen Stand
-
-- **Discover ist Stub.** Das Live Scraping fehlt. Aktuell läuft die Pipeline auf einem kuratierten Keyword Set.
-- **Sentence Transformer ist nicht das beste Modell für Deutsch.** Multilingual MiniLM ist gut, aber nicht state of the art. Für ein Produktionsprojekt wäre `intfloat/multilingual-e5-large` oder ein deutsches Modell wie `aari1995/German_Sentiment_BERT` einen Test wert.
-- **Cluster Labels sind manuell.** 13 Labels habe ich nach Inspektion vergeben. Skaliert nicht über 50 Cluster.
-- **Keine Persistenz Schicht.** Pipeline Läufe leben als Snapshots im Dateisystem. Kein SQLite, kein Postgres. Für Produktion fehlt das.
-- **Keine Retry Logik.** Wenn die Anthropic API einen Rate Limit zurückgibt, versuche ich es nicht erneut.
-- **Keine Tests.** Es gibt einen leeren `tests/` Ordner. Pytest fehlt.
-
-### Nächste Schritte (priorisiert)
-
-1. **Discover live machen.** Scraper für `zvoove.de/wissen/blog`, plus Claude basierte Keyword Expansion. Höchste Hebelwirkung, weil es die Pipeline von "demonstriert das Konzept" zu "tatsächlich für zvoove einsetzbar" hebt.
-2. **Search Console Anbindung.** Statt Heuristik echte Click und Impression Daten aus der zvoove GSC ziehen. Das macht die Priorisierung empirisch verifizierbar.
-3. **Retry Wrapper für Claude API.** Exponentielle Backoff, max 5 Versuche, in `brief.py` einhängen.
-4. **Cluster Label Automatisierung.** Pro Cluster die Top 10 Keywords an Claude geben und ein Label generieren lassen. Macht das System auf größere Keyword Sets skalierbar.
-5. **CI mit Stub Lauf.** GitHub Actions, das `pipeline.py --step report` durchlaufen lässt und auf "schreibt es ein gültiges HTML" testet.
-6. **CMS Integration.** Sanity Studio Schema für Content Briefs, plus ein einfacher Sync, der jeden Brief als Draft in Sanity legt.
-
-## 14. Reflektion
-
-### Was lief gut
-
-Die Pipeline ist von Anfang an als entkoppelte Schritte gebaut. Das hat sich mehrfach ausgezahlt, weil ich Cluster Parameter mehrmals verändern konnte, ohne Embeddings neu rechnen zu müssen, und weil ich Briefs auf alten Cluster Daten generieren konnte, während ich am Reporting arbeitete.
-
-Der Ansatz, einen kuratierten Manual Datensatz als frozen Baseline zu behalten, war wichtig. Er gibt mir und einem Reviewer einen klaren Bezugspunkt für "wenn die Pipeline neu rechnet, ist das Ergebnis besser oder schlechter als die Baseline". Ohne diese Baseline wäre jede Iteration eine subjektive Bewertung.
-
-### Was ich anders machen würde
-
-Bei einer zweiten Iteration würde ich Discover zuerst bauen, nicht zuletzt. Der Schritt ist konzeptionell der schwierigste (echtes HTML im echten Web ist immer ein Wundertüten-Problem), und ihn zuletzt zu bauen heißt, ihn unter Zeitdruck zu bauen.
-
-Weiter: ich würde eher als Teil der ersten Iteration einen einfachen Run Log einbauen. Aktuell rate ich rückwärts aus Dateinamen, welcher Lauf welcher war. Eine SQLite Datei mit `run_id, timestamp, step, status, rows_in, rows_out` würde 30 Minuten kosten und vieles vereinfachen.
-
-### Was die Bewerbung adressieren soll
-
-Diese Case Study soll drei Dinge zeigen:
-
-- **Architektur Denken statt Skript Denken.** Eine Pipeline ist nicht ein Bündel von Skripten, sondern ein definiertes Datenmodell mit klaren Schnittstellen. Die vier Phasen hier sind so geschnitten, dass jede einzeln ersetzt werden kann.
-- **Pragmatismus über Polish.** Heuristische Schätzwerte für SV / KD / CPC sind klar als geschätzt markiert und werden durch DataForSEO ersetzt, wenn echte Daten verfügbar sind. Manuelle Cluster Labels sind heute manuell und Backlog-Punkt für Automatisierung. Beides bewusste Entscheidungen, nicht Lücken.
-- **Revenue Lens.** Die Cluster werden nicht nur ausgegeben, sondern jede Empfehlung wird in eine Revenue Hypothese übersetzt (Cluster X führt zu Y MQLs pro Monat). Das ist die Übersetzungsleistung, die ein Revenue AI Architect leisten muss.
-
 ## Anhang: weitere Dokumente
 
 - [`methodology.md`](methodology.md): Parameter Sweep Tabelle, Reproduktion, statistische Validierung

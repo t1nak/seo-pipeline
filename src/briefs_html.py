@@ -126,7 +126,7 @@ _PAGE_CSS = """
   --badge-ok-bg: #d1fae5;
   --badge-ok-fg: #065f46;
 }
-html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; background: var(--bg); min-height: 100%; }
 * { box-sizing: border-box; }
 body { margin: 0; padding: 32px 24px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
        background: var(--bg); color: var(--text); line-height: 1.6; }

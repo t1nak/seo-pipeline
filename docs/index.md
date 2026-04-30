@@ -12,7 +12,7 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 ### Wie wird die Pipeline getriggert?
 
-GitHub Actions: per Cron-Schedule oder manuellem Trigger (`workflow_dispatch`). Lokal startest du sie mit `python pipeline.py`, einzelne Schritte via `--step cluster|brief|report`.
+GitHub Actions: per Cron-Schedule oder manuellem Trigger via [`workflow_dispatch`](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml). Lokal startest du sie mit `python pipeline.py`, einzelne Schritte via `--step cluster|brief|report`.
 
 ### Wie kann ich Model und Provider ändern?
 
@@ -51,6 +51,12 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 ## Schnelle Einstiegspunkte
 
 <div class="grid cards" markdown>
+
+-   :material-rocket-launch: __Pipeline jetzt starten__
+
+    Workflow-Dispatch in GitHub Actions: Provider und Modell wählen, Lauf starten. Status, Logs und Artefakte direkt im Run.
+
+    [:octicons-arrow-right-24: Pipeline ausführen](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml)
 
 -   :material-map-marker-radius: __Interaktive Cluster Karte__
 

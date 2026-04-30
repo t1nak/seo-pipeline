@@ -46,10 +46,11 @@ nav:
   - Übersicht: index.md
   - Dokumentation:
     - Case Study: case-study.md
-    - Methodik: methodology.md
+    - Prozessarchitektur: architecture.md
+    - Methodik:
+      - methodology.md
+      - Entscheidungen: decisions.md
     - Ergebnisse: results.md
-    - Architektur: architecture.md
-    - Entscheidungen: decisions.md
     - Technical Review: technical_review.md
   - Live Demo:
     - Cluster Karte: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
@@ -108,10 +109,10 @@ plugins:
             Übersicht: Overview
             Dokumentation: Documentation
             Case Study: Case Study
+            Prozessarchitektur: Process Architecture
             Methodik: Methodology
-            Ergebnisse: Results
-            Architektur: Architecture
             Entscheidungen: Decisions
+            Ergebnisse: Results
             Technical Review: Technical Review
             Live Demo: Live Demo
             Cluster Karte: Cluster Map

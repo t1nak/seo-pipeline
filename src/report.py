@@ -41,7 +41,7 @@ BRIEFINGS = OUT / "briefings"
 CLUSTERING = OUT / "clustering"
 
 
-CSS = """*{box-sizing:border-box}body{margin:0;padding:32px 24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f4f4f6;color:#222;line-height:1.55}
+CSS = """*{box-sizing:border-box}html{background:#f4f4f6;min-height:100%}body{margin:0;padding:32px 24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f4f4f6;color:#222;line-height:1.55}
 .wrap{max-width:1200px;margin:0 auto}
 h1{font-size:28px;margin:0 0 6px}h2{font-size:20px;margin:36px 0 12px;border-top:1px solid #e0e0e0;padding-top:24px}
 .lead{color:#555;margin:0 0 28px}

@@ -21,7 +21,7 @@ Usage:
 
     from src.config import settings
     print(settings.brief_provider)         # api | openai | max
-    print(settings.cluster_hdbscan_mcs)    # 12
+    print(settings.cluster_hdbscan_mcs)    # 15
 """
 from __future__ import annotations
 
@@ -63,16 +63,17 @@ class Settings(BaseSettings):
     cluster_umap_metric: str = "cosine"
 
     # ----- Cluster: HDBSCAN -----
-    # mcs=12 reproduces the documented 10-cluster baseline on both
-    # macOS local (sil 0.672, 38 noise) and Ubuntu CI (sil ~0.59,
-    # 40 noise). UMAP cross-platform drift is real even with
-    # random_state=42; the parameter sweep showed mcs ∈ {10, 12, 15}
-    # all hit the plateau at 10 clusters locally, so picking 12
-    # gives one buffer on each side. Override per run via the env
-    # var PIPELINE_CLUSTER_HDBSCAN_MCS or the workflow input.
-    cluster_hdbscan_mcs: int = 12
+    # mcs=15, ms=5, leaf is the sweep row that lands on exactly 12 clusters
+    # (sil 0.642, 20% noise) — see the table in docs/methodology.md. The
+    # leaf selection method walks down to the leaves of the condensed tree
+    # and so splits the broad themes (e.g. Zeitarbeit & Arbeitsrecht, which
+    # dominated the eom baseline at 189/500 keywords) into more focused
+    # sub-themes. Trade-off vs. mcs=12/eom: noise rises from ~8% to ~20%.
+    # Override per run via PIPELINE_CLUSTER_HDBSCAN_MCS /
+    # PIPELINE_CLUSTER_HDBSCAN_METHOD or the workflow inputs.
+    cluster_hdbscan_mcs: int = 15
     cluster_hdbscan_ms: int = 5
-    cluster_hdbscan_method: Literal["eom", "leaf"] = "eom"
+    cluster_hdbscan_method: Literal["eom", "leaf"] = "leaf"
     cluster_hdbscan_metric: str = "euclidean"
 
     # ----- Brief -----

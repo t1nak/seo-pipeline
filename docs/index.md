@@ -16,7 +16,7 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 - [Wie kann ich Model und Provider ändern?](#wie-kann-ich-model-und-provider-andern)
 - [Was kostet ein Lauf?](#was-kostet-ein-lauf)
 - [Wie viele Cluster werden erkannt?](#wie-viele-cluster-werden-erkannt)
-- [Was ist lokal, und was wäre in einer produktiven Pipeline anders?](#was-ist-lokal-und-was-waere-in-einer-produktiven-pipeline-anders)
+- [Was ist lokal, und was wäre in einer produktiven Pipeline anders?](#was-ist-lokal-und-was-ware-in-einer-produktiven-pipeline-anders)
 - [Welche Parameter beeinflussen das Ergebnis maßgeblich?](#welche-parameter-beeinflussen-das-ergebnis-massgeblich)
 - [Welche Variablen sind sicherheitskritisch?](#welche-variablen-sind-sicherheitskritisch-wegen-api-kosten-und-berechtigungen)
 

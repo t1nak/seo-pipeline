@@ -16,32 +16,32 @@ Knappe Architecture Decision Records für die wichtigsten Entscheidungen in dies
 
 **Konsequenzen.**
 
-- Pro: 10 Cluster aus den Daten heraus, 38 echte Ausreißer als Rauschen markiert.
-- Pro: Variable Cluster-Dichte handhaben (zvoove Marken-Cluster ist eng, Branche-Sammelcluster ist breit).
+- Pro: 10 Cluster aus den Daten heraus. 38 (lokal) bis 40 (CI) echte Ausreißer als Rauschen markiert. Die kleine Abweichung zwischen Plattformen liegt an unterschiedlichen BLAS-Implementierungen, nicht an einem Fehler. Begründung in [`methodology.md`](methodology.md).
+- Pro: Variable Cluster-Dichte wird verarbeitet (zvoove Marken-Cluster ist eng, Branche-Sammelcluster ist breit).
 - Contra: Hyperparameter `min_cluster_size` und `min_samples` müssen gesweept werden.
 
 Sweep Ergebnis dokumentiert in [`methodology.md`](methodology.md).
 
 ## ADR-2: UMAP statt PCA oder t-SNE
 
-**Kontext.** 384-dimensionale Embeddings müssen für density-based Clustering reduziert werden.
+**Kontext.** 384-dimensionale Embeddings müssen für Density-based Clustering reduziert werden. Density-based Clustering funktioniert in hohen Dimensionen schlecht, weil alle Abstände ähnlich groß werden.
 
-**Entscheidung.** UMAP, mit zwei separaten Reduktionen (5D fürs Clustering, 2D für die Karte).
+**Entscheidung.** UMAP, mit zwei separaten Reduktionen: 5D fürs Clustering, 2D für die Karte.
 
 **Alternativen geprüft.**
 
 - PCA: schnell, deterministisch, aber verliert lokale Struktur (optimiert globale Varianz)
-- t-SNE: gut für Visualisierung, aber Distanzen sind nicht interpretierbar, und nicht-deterministisch ohne aufwendige Initialisierung
+- t-SNE: gut für Visualisierung, aber Abstände sind nicht interpretierbar; der Algorithmus ist nicht-deterministisch ohne aufwendige Initialisierung
 
 **Konsequenzen.**
 
-- Pro: erhält lokale plus globale Struktur, deterministisch mit `random_state`, distanzen interpretierbar.
-- Pro: zwei Reduktionen erlauben jeweils optimale Parameter (`min_dist` unterschiedlich).
+- Pro: erhält lokale plus globale Struktur, deterministisch mit `random_state`, Abstände sind lokal interpretierbar.
+- Pro: zwei Reduktionen erlauben jeweils optimale Parameter (`min_dist` unterschiedlich für Clustering vs. Karte).
 - Contra: etwas langsamer als PCA, mehr Hyperparameter.
 
 ## ADR-3: Multilingual MiniLM L12 statt L6 oder größere Modelle
 
-**Kontext.** Embedding Modell für deutsche Keywords.
+**Kontext.** Embedding-Modell für deutsche Keywords.
 
 **Entscheidung.** `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` (120 MB, 384 Dimensionen).
 
@@ -54,7 +54,7 @@ Sweep Ergebnis dokumentiert in [`methodology.md`](methodology.md).
 
 - Pro: läuft auf jedem Laptop ohne GPU in Sekunden.
 - Pro: ausreichend für Cluster-Bildung, validiert über Silhouette und Spot Checks.
-- Contra: nicht state of the art. Bei Skalierung auf 5000 Keywords oder mehrsprachigem Kontext (Englisch plus Deutsch) lohnt sich Upgrade.
+- Contra: nicht state of the art. Bei Skalierung auf 5000 Keywords oder mehrsprachigem Kontext lohnt sich ein Upgrade.
 
 Backlog: Vergleichslauf mit `multilingual-e5-large` zur Quantifizierung des Qualitätsunterschieds.
 
@@ -66,13 +66,13 @@ Backlog: Vergleichslauf mit `multilingual-e5-large` zur Quantifizierung des Qual
 
 **Alternativen geprüft.**
 
-- DataForSEO als Default: zu teuer für die Iteration, weil jeder Lauf ungefähr 0,75 USD kostet
-- Reine LLM Schätzung: nicht reproduzierbar, schwierig zu validieren
+- DataForSEO als Default: zu teuer für die Iteration; jeder Lauf kostet ungefähr 0,75 USD
+- Reine LLM-Schätzung: nicht reproduzierbar, schwierig zu validieren
 
 **Konsequenzen.**
 
 - Pro: kostenfreie, reproduzierbare Pipeline. Spalte `data_source` markiert klar, was geschätzt ist.
-- Pro: Live Daten optional verfügbar für die finale Lieferung.
+- Pro: Live-Daten optional verfügbar für die finale Lieferung.
 - Contra: Heuristik-Werte sind nicht real, was bei der Priorisierung zu Verzerrung führen kann.
 
 In Produktion würde `data_source` ein Filter sein: wenn alle Daten DataForSEO sind, ist die Priorisierung verlässlicher.
@@ -86,7 +86,7 @@ In Produktion würde `data_source` ein Filter sein: wenn alle Daten DataForSEO s
 **Alternativen geprüft.**
 
 - LLM-generiert pro Lauf: skaliert, aber Labels variieren zwischen Läufen, was die Reproduzierbarkeit von Reports erschwert
-- Top-Term basiert (häufigste Wörter): schwach, weil die Top Terms oft stoppwörter-ähnlich sind
+- Top-Term basiert (häufigste Wörter): schwach, weil die Top Terms oft stoppwort-ähnlich sind
 
 **Konsequenzen.**
 
@@ -97,14 +97,14 @@ Backlog: bei Skalierung Hybrid-Ansatz mit LLM-Vorschlag und manueller Korrektur 
 
 ## ADR-6: Discover Schritt als Stub, nicht als Live Scraper
 
-**Kontext.** Aufgaben-Brief verlangt Ableitung aus dem zvoove Blog. Ein robuster Live Scraper für `zvoove.de/wissen/blog` ist Engineering Aufwand mit vielen Fallunterscheidungen (Pagination, Bot Detection, Layout Änderungen).
+**Kontext.** Der Aufgaben-Brief verlangt Ableitung aus dem zvoove Blog. Ein robuster Live Scraper für `zvoove.de/wissen/blog` ist Engineering-Aufwand mit vielen Fallunterscheidungen (Pagination, Bot Detection, Layout-Änderungen).
 
 **Entscheidung.** Discover als Stub mit `--source manual` und kuratierter `data/keywords.manual.csv`. `--source live` ist explizit nicht implementiert.
 
 **Alternativen geprüft.**
 
 - Schnell-Scraper mit BeautifulSoup, der bei jeder Layout-Änderung bricht: nicht produktionswürdig
-- Headless Browser (Playwright): robust aber Engineering Aufwand für Demo zu hoch
+- Headless Browser (Playwright): robust, aber Engineering-Aufwand für Demo zu hoch
 
 **Konsequenzen.**
 
@@ -133,55 +133,72 @@ Backlog: höchste Priorität für die nächste Iteration.
 
 ## ADR-8: Snapshot Mechanismus statt Datenbank für Persistenz
 
-**Kontext.** Pipeline Läufe produzieren Artefakte (CSVs, HTMLs). Mehrere Läufe sollen dokumentiert sein.
+**Kontext.** Pipeline-Läufe produzieren Artefakte (CSVs, HTMLs). Mehrere Läufe sollen dokumentiert sein.
 
 **Entscheidung.** `output/_archive/<run-id>/` mit gepinnten Snapshots. Pro Lauf wird der vorherige Output kopiert, bevor er überschrieben wird.
 
 **Alternativen geprüft.**
 
-- SQLite für Run Log: einfacher, aber bricht das "alles im Dateisystem" Pattern und braucht zusätzliche Tooling
+- SQLite für Run Log: einfacher, aber bricht das "alles im Dateisystem" Pattern und braucht zusätzliches Tooling
 - Postgres mit Alembic: zu schwer für eine Demo
 
 **Konsequenzen.**
 
-- Pro: keine zusätzliche Abhängigkeit, alles git-bar, alles in einem Browser durchklickbar.
+- Pro: keine zusätzliche Abhängigkeit, alles git-bar, alles im Browser durchklickbar.
 - Pro: Snapshot-Historie ist Teil des Repos und damit Teil der Bewerbungs-Geschichte (rekonstruierter manueller Lauf von 2026-04-27 ist gepinnt).
-- Contra: skaliert nicht über 20 oder 30 Läufe (Repo wird zu groß).
+- Contra: skaliert nicht über 20 bis 30 Läufe (Repo wird zu groß).
 
 In Produktion würde nur der aktuelle Stand im Git landen, Snapshots würden in einen S3 Bucket umziehen.
 
-## ADR-9: Prompt Caching für Brief Generation
+## ADR-9: Prompt Caching für Brief-Generierung
 
-**Kontext.** Pro Lauf werden 10 Briefs generiert, jeweils mit einem ungefähr 800-Token System Prompt, der das Brief Format beschreibt. Das ist 10x derselbe System Prompt.
+**Kontext.** Pro Lauf werden 10 Briefs generiert, jeweils mit einem ungefähr 800-Token System Prompt, der das Brief-Format beschreibt. Das ist 10-mal derselbe System Prompt.
 
-**Entscheidung.** Anthropic Prompt Caching auf dem System Block (`cache_control: ephemeral`).
+**Entscheidung.** Anthropic Prompt Caching auf dem System Block. Das technische Mittel dafür ist ein zusätzliches Feld `cache_control: ephemeral` im API Request. Es signalisiert dem Modell: "Dieser Block soll im Cache gehalten werden." Ab dem zweiten Aufruf wird der System Prompt aus dem Cache gelesen statt neu tokenisiert.
 
 **Alternativen geprüft.**
 
-- Kein Caching: jeder Aufruf zahlt vollen System Prompt
+- Kein Caching: jeder Aufruf zahlt den vollen System Prompt
 - Eigener Cache (Datei oder Redis): unnötig, Anthropic bietet das nativ
 
 **Konsequenzen.**
 
-- Pro: 90 Prozent Token Ersparnis auf den gecachten Anteil. Bei 10 Cluster ungefähr 6000 gecachte Tokens.
-- Pro: schnellere Responses auf Folge-Aufrufe.
+- Pro: ungefähr 90 Prozent Token-Ersparnis auf den gecachten Anteil. Bei 10 Clustern ungefähr 6000 gecachte Tokens.
+- Pro: schnellere Antworten auf Folge-Aufrufe.
 - Contra: minimale Komplexität (ein zusätzliches Feld im Request).
+
+## ADR-10: Plotly für interaktive Karte, matplotlib für PNG Charts
+
+**Kontext.** Visualisierung muss sowohl interaktiv (für Stakeholder) als auch statisch (für Reports und Slides) verfügbar sein.
+
+**Entscheidung.** Plotly für die interaktive HTML-Karte, matplotlib für die 6 PNG-Diagnosecharts.
+
+**Alternativen geprüft.**
+
+- Nur Plotly: PNGs aus Plotly haben unzuverlässige Schriftgrößen über Plattformen
+- Nur matplotlib: keine native Interaktivität ohne Bokeh oder Streamlit
+
+**Konsequenzen.**
+
+- Pro: jedes Tool für seinen Zweck. Plotly liefert die Klick-Karte, matplotlib liefert die saubere statische Visualisierung.
+- Pro: keine zusätzliche Server-Komponente nötig (Plotly HTML ist self-contained, matplotlib speichert direkt PNG).
+- Contra: zwei Plotting-Bibliotheken in der Pipeline.
 
 ## ADR-11: Pluggable LLM Provider mit drei Implementierungen
 
 **Kontext.** Die Brief-Generierung braucht einen Sprachmodell-Aufruf. Es gibt drei realistische Wege:
 
-1. **Anthropic API Key.** Anthropic SDK plus `ANTHROPIC_API_KEY` aus `console.anthropic.com`, separate pay-per-token Abrechnung.
-2. **OpenAI API Key.** OpenAI SDK plus `OPENAI_API_KEY` aus `platform.openai.com`, separate pay-per-token Abrechnung.
-3. **Claude Subscription.** `claude-agent-sdk` nutzt eine lokale Claude Code Installation als Subprocess, authentifiziert über das Max- oder Pro-Abo des Entwicklers, keine separate Abrechnung.
+1. **Anthropic API Key.** Anthropic SDK plus `ANTHROPIC_API_KEY`, separate pay-per-token Abrechnung.
+2. **OpenAI API Key.** OpenAI SDK plus `OPENAI_API_KEY`, separate pay-per-token Abrechnung.
+3. **Claude Subscription.** Das `claude-agent-sdk` nutzt eine lokale Claude Code Installation als Subprocess, authentifiziert über ein Max- oder Pro-Abo, keine separate Abrechnung.
 
-**Entscheidung.** Pluggable Provider-Abstraktion. `BriefProvider` als Basis-Klasse, drei konkrete Implementierungen (`ApiKeyProvider`, `OpenAIProvider`, `AgentSdkProvider`), Auswahl per CLI-Flag `--provider {api,openai,max}`.
+**Entscheidung.** Pluggable Provider-Abstraktion. `BriefProvider` als Basisklasse, drei konkrete Implementierungen (`ApiKeyProvider`, `OpenAIProvider`, `AgentSdkProvider`), Auswahl per CLI-Flag `--provider {api,openai,max}`.
 
-Default: `api` (Anthropic). Begründung: in der DACH B2B SaaS Welt ist Anthropic für Inhalts-Erzeugung etabliert, und Claude generiert insbesondere deutsche Texte mit der gewünschten pragmatischen Tonalität.
+Default: `api` (Anthropic). In der DACH B2B SaaS Welt ist Anthropic für Inhalts-Erzeugung etabliert, und Claude generiert deutsche Texte mit der gewünschten pragmatischen Tonalität.
 
 **Alternativen geprüft.**
 
-- Nur Anthropic API Key: einfacher, aber Lock-in. Falls zvoove intern OpenAI bereits einsetzt, will man nicht doppelt zahlen. Falls ein neues Modell von OpenAI später besser für deutsche Marketing-Texte ist, muss man die Pipeline erweitern.
+- Nur Anthropic API Key: Lock-in. Falls zvoove intern OpenAI bereits einsetzt, will man nicht doppelt zahlen.
 - Nur Subscription: nicht in CI nutzbar.
 - LangChain als Universal-Wrapper: zu schwer für ein Case Study Projekt, zusätzliche Abhängigkeit, weniger Kontrolle über Prompt-Caching-Spezifika.
 
@@ -189,38 +206,51 @@ Default: `api` (Anthropic). Begründung: in der DACH B2B SaaS Welt ist Anthropic
 
 | | Anthropic API | OpenAI API | Claude Subscription |
 |---|---|---|---|
-| Abrechnung | pay-per-token, console.anthropic.com | pay-per-token, platform.openai.com | Bestehendes Max/Pro-Abo |
+| Abrechnung | pay-per-token | pay-per-token | Bestehendes Max/Pro-Abo |
 | CI-tauglich | Ja | Ja | Nein (braucht CLI Session) |
 | Serverless-tauglich | Ja | Ja | Nein |
-| Prompt Caching | explizit über `cache_control: ephemeral` | automatisch ab 1024 Tokens Prefix | nicht im SDK exponiert |
-| Modell-Auswahl | per `--model claude-opus-4-7` etc. | per `--model gpt-5` etc. | Inherits aktive CC Session, nicht setzbar |
-| Kosten pro 10-Cluster Lauf | ungefähr 0,15 USD | ungefähr 0,12 USD | 0 USD (im Abo) |
-| Sprache Deutsch | sehr gut | sehr gut | sehr gut (gleiche Modell-Familie wie API) |
+| Prompt Caching | explizit über `cache_control: ephemeral` | automatisch ab 1024 Token Prefix | nicht im SDK exponiert |
+| Kosten pro 10-Cluster Lauf | ca. 0,15 USD | ca. 0,12 USD | 0 USD (im Abo) |
 
-**Empfehlung für Produktion bei zvoove.** API Key (Anthropic ODER OpenAI je nach internem Stack). Drei Gründe:
+**Empfehlung für Produktion.** API Key (Anthropic oder OpenAI je nach internem Stack). Drei Gründe: CI/CD-Reproduzierbarkeit (ein GitHub Actions Runner kann keine CLI Session halten), Kosten-Transparenz (pay-per-token ist linear prognostizierbar) und Provider-Wechsel ohne Code-Änderung (ein CLI-Flag plus neuer API Key reicht).
 
-1. **CI/CD-Reproduzierbarkeit.** Ein GitHub Actions Runner oder ein zvoove-internes CI-System kann keine Claude Code CLI-Session halten. API Key ist das einzige Pattern, das in Build-Pipelines funktioniert.
-2. **Kosten-Transparenz.** Per-Token-Abrechnung skaliert linear mit Nutzung und ist im Provider-Console Tag-genau nachvollziehbar. Eine Subscription mit "Unlimited" Charakter ist schwerer zu prognostizieren oder umzulegen.
-3. **Provider-Wechsel ist möglich.** Sollte sich ein Provider verschlechtern oder seine Preise erhöhen, ist der Switch eine Zeile CLI-Flag plus ein neuer API Key. Kein Code-Refactoring.
+**Hinweis zur Lieferung.** Die 10 Briefs in `output/briefings/` wurden über die Subscription-Variante erzeugt (Claude Code Session des Autors). Der Inhalt ist identisch mit dem, was ein API-Aufruf produziert hätte, weil derselbe System Prompt verwendet wurde. Im Code bleibt die API-Key-Variante der dokumentierte Default.
 
-**Empfehlung für die Wahl Anthropic vs OpenAI.** Hängt vom internen Stack ab. Wenn zvoove bereits OpenAI für andere Use Cases nutzt, dort weitermachen (gemeinsame Abrechnung, gemeinsamer Audit-Trail). Sonst Anthropic, weil deren Modelle in DACH B2B SaaS Content gut etabliert sind und Prompt Caching explizit steuerbar ist.
+Ein neuer Provider (z.B. Mistral) braucht eine Klasse mit drei Methoden (`__init__`, `generate`, `name`) plus eine Zeile in `make_provider()`. Kein anderes Modul ändert sich.
 
-**Hinweis zur Lieferung dieser Case Study.** Die 10 Briefs in `output/briefings/` sind während der Entwicklung über die Subscription-Variante erzeugt worden (über die Claude Code Session des Autors), nicht über einen API Key. Inhaltlich identisch mit dem, was der API-Aufruf produziert hätte, weil derselbe System Prompt verwendet wurde. Im Code-Pfad bleibt die API-Key-Variante der dokumentierte Default, weil das die Empfehlung für die produktive Nutzung ist.
+## ADR-12: Konfiguration über Environment Variables (Twelve-Factor)
 
-**Provider hinzufügen.** Falls ein neuer Provider gebraucht wird (zum Beispiel Mistral, Gemini, lokales Llama), reicht eine neue Klasse:
+**Kontext.** Pipeline-Settings (Provider, Modell, Hyperparameter) waren als Modul-Konstanten (`UMAP_N_NEIGHBORS = 15`) plus CLI-Flags verteilt. Jede Hyperparameter-Änderung bedeutete einen Code-Edit.
 
-```python
-class MistralProvider(BriefProvider):
-    name = "mistral"
-    def __init__(self, model: str): ...
-    def generate(self, system: str, user: str) -> str: ...
+**Entscheidung.** Zentrale `Settings`-Klasse in `src/config.py` via Pydantic. Werte kommen aus dem Environment mit Prefix `PIPELINE_`. Lokal per `.env` Datei, in CI per GitHub Actions Secrets und Workflow-Inputs, in Produktion über die Plattform-Mechanik (Docker, Kubernetes, Lambda).
+
+Secrets (API Keys) bleiben davon getrennt und werden direkt von den Modulen gelesen, die sie brauchen. Sie landen damit nie in einem versehentlichen Settings-Dump.
+
+**Alternativen geprüft.**
+
+- YAML/TOML Konfigurationsdatei: natürliche Hierarchie, Inline-Kommentare, aber nicht 12-Factor-konform für Cloud-Deployments und unhandlich für Per-Deployment-Overrides.
+- CLI-Flags als einzige Schnittstelle: funktioniert lokal, aber unhandlich in CI.
+
+**Konsequenzen.**
+
+| | ENV (gewählt) | YAML/TOML | CLI nur |
+|---|---|---|---|
+| Cloud-Native | sehr gut | Volume-Mount nötig | nicht praktikabel |
+| GitHub Secrets | trivial | umständlich | trivial |
+| Per-Deployment-Overrides | trivial | extra Mechanismus | bei jedem Aufruf nötig |
+| Inline-Kommentare | nein, in `.env.example` | ja | nicht relevant |
+
+**Präzedenz-Reihenfolge** (höchste zuerst):
+
+```
+CLI-Flag  >  Shell-Env  >  .env Datei  >  Code-Default in src/config.py
 ```
 
-Plus eine Zeile in `make_provider()` und ein neuer Choice in den CLIs (`brief.py` und `pipeline.py`). Kein Code in den anderen Pipeline-Modulen ändert sich.
+`PIPELINE_BRIEF_PROVIDER=openai` in `.env` gilt, kann von einer Shell-Umgebung übersteuert werden, kann von einem CLI-Flag `--brief-provider api` übersteuert werden.
 
 ## ADR-13: Strukturiertes Logging über stdlib `logging` statt `print()`
 
-**Kontext.** In der ersten Iteration verwendeten alle Module `print()` mit `[mod] message` Prefixen. Das ist für lokales Debugging OK, aber in Produktion und in CI-Logs unhandlich: keine Levels (kann ich `WARN` von `INFO` nicht trennen), keine Timestamps, keine strukturierten Felder, keine Möglichkeit eine Library zu silencen.
+**Kontext.** In der ersten Iteration verwendeten alle Module `print()` mit `[mod] message` Prefixen. Das ist für lokales Debugging OK, aber in Produktion und in CI-Logs unhandlich: keine Log Levels (WARN von INFO nicht trennbar), keine Timestamps, keine strukturierten Felder, keine Möglichkeit, eine Library zu silencen.
 
 **Entscheidung.** stdlib `logging` mit zentraler Konfiguration in `src/logging_config.py`. Jedes Modul hat sein eigenes `logger = logging.getLogger(__name__)`. Format: `Zeitstempel | Modul-Name | Level | Nachricht`. Verbosity über `PIPELINE_LOG_LEVEL` env var (default INFO).
 
@@ -234,22 +264,22 @@ Plus eine Zeile in `make_provider()` und ein neuer Choice in den CLIs (`brief.py
 
 - Pro: Standard-Werkzeug, jeder Engineer kennt es, kein Lock-in.
 - Pro: Library-Logger lassen sich gezielt silencen (`urllib3`, `httpx`, `transformers` werden auf `WARNING` gesetzt).
-- Pro: Über `PIPELINE_LOG_LEVEL=DEBUG` kann man pro Run die Verbosity erhöhen ohne Code-Änderung.
+- Pro: `PIPELINE_LOG_LEVEL=DEBUG` erhöht die Verbosity pro Run ohne Code-Änderung.
 - Pro: In CI ist das Format reproduzierbar grep-bar.
-- Contra: Format ist noch nicht JSON. Bei echtem Production-Aggregator (Loki, Datadog) wäre JSON besser. Backlog-Punkt.
+- Contra: Format ist noch nicht JSON. Bei einem Production-Log-Aggregator (Loki, Datadog) wäre JSON besser. Backlog-Punkt.
 
-**Format-Beispiel.**
+**Beispiel.**
 
 ```
-2026-04-29 12:34:56 | cluster.embed       | INFO  | encoding 500 keywords with MiniLM-L12
-2026-04-29 12:34:58 | cluster.embed       | INFO  | wrote output/clustering/embeddings.npy, shape=(500, 384)
+2026-04-29 12:34:56 | cluster.embed        | INFO  | encoding 500 keywords with MiniLM-L12
+2026-04-29 12:34:58 | cluster.embed        | INFO  | wrote output/clustering/embeddings.npy, shape=(500, 384)
 2026-04-29 12:35:02 | brief.ApiKeyProvider | WARN  | RateLimitError on attempt 1/5: 429 (retrying in 2.1s)
-2026-04-29 12:35:04 | brief               | INFO  | wrote output/briefings/cluster_05.md (3204 chars, via api)
+2026-04-29 12:35:04 | brief                | INFO  | wrote output/briefings/cluster_05.md (3204 chars, via api)
 ```
 
 ## ADR-14: Retry-Wrapper mit exponentieller Backoff für API Calls
 
-**Kontext.** Brief-Generierung macht 10 sequentielle API-Calls pro Lauf. Jeder kann mit transient errors (Rate Limit 429, 5xx Status, Connection Timeout) fehlschlagen. Ohne Retry bricht der erste Fehler den ganzen Lauf ab. Das ist in Produktion nicht akzeptabel.
+**Kontext.** Brief-Generierung macht 10 sequentielle API Calls pro Lauf. Jeder kann mit transienten Fehlern scheitern (Rate Limit 429, 5xx Status, Connection Timeout). Ohne Retry bricht der erste Fehler den ganzen Lauf ab.
 
 **Entscheidung.** Eigener Retry-Decorator `@with_retry()` in `src/retry.py`. Stdlib only, keine externe Abhängigkeit (`tenacity` wäre einfacher, aber 70 Zeilen eigener Code zeigen den Mechanismus klarer).
 
@@ -258,24 +288,24 @@ Standard-Verhalten:
 - Exponential Backoff: 2s, 4s, 8s, 16s, 32s (plus 25 Prozent Jitter)
 - Cap bei 60 Sekunden pro Wartezeit
 - Honor `Retry-After` Header wenn vorhanden
-- Nicht-transient errors (z.B. ValueError, AuthError) propagieren sofort
+- Nicht-transiente Fehler (z.B. `ValueError`, `AuthError`) propagieren sofort
 
 Konfigurierbar über `PIPELINE_BRIEF_RETRY_*` env vars (max_attempts, base_delay, max_delay, multiplier).
 
 **Alternativen geprüft.**
 
-- `tenacity`: ausgereift, mehr Features (statistics, conditional retries, async). Aber zusätzliche Abhängigkeit für ein klar abgegrenztes Problem.
+- `tenacity`: ausgereift, mehr Features. Aber zusätzliche Abhängigkeit für ein klar abgegrenztes Problem.
 - `urllib3` Retry-Adapter: nur HTTP-Layer, geht nicht durch SDK-Wrapper hindurch.
 - Keine Retry: in Produktion zu fragil.
 
 **Konsequenzen.**
 
 - Pro: Briefs sind robust gegen 429/529 ohne Pipeline-Abbruch.
-- Pro: Stdlib only, ~70 Zeilen, leicht zu reviewen.
-- Pro: Per-Deployment-konfigurierbar via Env Vars (z.B. CI mit weniger aggressivem Retry).
-- Contra: Transient-Klassen-Erkennung ist Klassen-Namen-basiert (`RateLimitError`, `APITimeoutError` etc.). Wenn das SDK seine Klassen umbenennt, müssen wir die Liste anpassen. Akzeptiert weil simpler als harte SDK-Imports.
+- Pro: Stdlib only, ca. 70 Zeilen, leicht zu reviewen.
+- Pro: Per-Deployment-konfigurierbar via Env Vars.
+- Contra: Transient-Klassen-Erkennung ist Klassen-Namen-basiert (`RateLimitError`, `APITimeoutError` etc.). Wenn das SDK seine Klassen umbenennt, muss die Liste angepasst werden.
 
-**Implementierung.**
+**Verwendung.**
 
 ```python
 @with_retry()
@@ -284,81 +314,4 @@ def generate(self, system: str, user: str) -> str:
     return msg.content[0].text
 ```
 
-Der Decorator wrappt jeden API-Call. Bei 429 protokolliert er einen Warning, schläft mit exponentiellem Backoff plus Jitter, versucht es erneut.
-
-**Tests.** `tests/test_retry.py` deckt ab: nicht-transient Fehler propagieren, transient Fehler werden bis zur erfolgreichen Antwort wiederholt, max_attempts wird respektiert, default Predicate erkennt die Anthropic + OpenAI Klassen-Namen.
-
-## ADR-12: Konfiguration über Environment Variables (Twelve-Factor)
-
-**Kontext.** Pipeline-Settings (Provider, Modell, Hyperparameter, Cap-Werte) waren in der ersten Iteration als Modul-Konstanten (`UMAP_N_NEIGHBORS = 15`) plus CLI-Flags verteilt. Bei Wachstum wäre das chaotisch: Änderung von Hyperparametern bedeutet Code-Edit, kein deklarativer "Diese Konfiguration ist aktiv" Stand.
-
-**Entscheidung.** Konfiguration zentral in `src/config.py` als Pydantic Settings Klasse. Werte kommen aus dem Environment (mit Prefix `PIPELINE_`). Lokal mit `.env` Datei, in CI über GitHub Actions Secrets und Workflow-Inputs, in Produktion über die Mechanik der jeweiligen Plattform (Docker, Kubernetes, Lambda).
-
-Secrets (API Keys) bleiben getrennt davon. Sie werden direkt von den Modulen gelesen, die sie brauchen, NICHT typsicher in das Settings-Objekt geladen. Damit landen sie nie in einem versehentlichen Settings-Dump.
-
-**Alternativen geprüft.**
-
-- **YAML/TOML Konfigurationsdatei** (`pipeline.yaml`): natürliche Hierarchie, Inline-Kommentare, aber unhandlich für Per-Deployment-Overrides und nicht 12-Factor-konform für Cloud-Deployments.
-- **Mehrere Config-Files plus ENV-Overrides**: zu komplex für ein Case Study Projekt.
-- **CLI-Flags als einzige Schnittstelle**: funktioniert für lokal, aber unhandlich in CI.
-
-**Konsequenzen.**
-
-| | ENV (gewählt) | YAML/TOML | CLI nur |
-|---|---|---|---|
-| Cloud-Native | sehr gut | Volume-Mount nötig | nicht praktikabel |
-| GitHub Secrets | trivial | umständlich | trivial |
-| Hierarchie | über Prefixe (PIPELINE\_BRIEF\_PROVIDER) | natürlich | flach |
-| Inline-Kommentare | nein, separates `.env.example` | ja | nicht relevant |
-| Per-Deployment-Overrides | trivial | extra Mechanismus | bei jedem Aufruf nötig |
-
-**Präzedenz-Reihenfolge** (höchste zuerst):
-
-```
-CLI-Flag  >  Shell-Env  >  .env Datei  >  Code-Default in src/config.py
-```
-
-`PIPELINE_BRIEF_PROVIDER=openai` in `.env` gilt, kann von einer Shell-Umgebung übersteuert werden, kann von einem CLI-Flag `--brief-provider api` übersteuert werden.
-
-**Implementierung.**
-
-`src/config.py` definiert eine `Settings`-Klasse mit Pydantic Validation. Module importieren `from src.config import settings` und lesen `settings.brief_provider` etc. CLI-Flags in `pipeline.py` und den Sub-Modulen sind alle `default=None` und fallen auf `settings.*` zurück, wenn nicht gesetzt.
-
-`.env` ist gitignored, `.env.example` ist die Vorlage. In CI ersetzt das Workflow-`env:` Block beides: GitHub Secrets liefern die Secrets, Workflow-Inputs liefern die Pipeline-Settings als `PIPELINE_*` env vars.
-
-**Beispiel.** Brief-Generierung mit OpenAI in CI:
-
-```yaml
-- run: python pipeline.py --step brief
-  env:
-    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-    PIPELINE_BRIEF_PROVIDER: openai
-    PIPELINE_BRIEF_MODEL: gpt-5
-```
-
-Lokal äquivalent in `.env`:
-
-```bash
-OPENAI_API_KEY=sk-...
-PIPELINE_BRIEF_PROVIDER=openai
-PIPELINE_BRIEF_MODEL=gpt-5
-```
-
-Dann: `python pipeline.py --step brief`. Das Verhalten ist identisch.
-
-## ADR-10: Plotly für interaktive Karte, matplotlib für PNG Charts
-
-**Kontext.** Visualisierung muss sowohl interaktiv (für die Stakeholder) als auch statisch (für Reports und Slides) verfügbar sein.
-
-**Entscheidung.** Plotly für die interaktive HTML Karte, matplotlib für die 6 PNG Diagnose Charts.
-
-**Alternativen geprüft.**
-
-- Nur Plotly: PNGs aus Plotly haben unzuverlässige Schriftgrößen über Plattformen
-- Nur matplotlib: keine native Interaktivität ohne Bokeh oder Streamlit
-
-**Konsequenzen.**
-
-- Pro: jedes Tool für seinen Zweck. Plotly liefert die Klick-Karte, matplotlib liefert die saubere statische Visualisierung.
-- Pro: keine zusätzliche Server-Komponente nötig (Plotly HTML ist self-contained, matplotlib speichert direkt PNG).
-- Contra: zwei Plotting Bibliotheken in der Pipeline. Eine zusätzliche Abhängigkeit.
+`tests/test_retry.py` deckt ab: nicht-transiente Fehler propagieren, transiente Fehler werden bis zur erfolgreichen Antwort wiederholt, `max_attempts` wird respektiert, das Default-Predicate erkennt die Anthropic- und OpenAI-Klassennamen.

@@ -14,9 +14,11 @@ Pipeline:
     8. charts   six matplotlib PNGs for the case study report
     9. viz      interactive bilingual Plotly map (delegated to cluster_viz.py)
 
-The hyperparameter choices (UMAP n_neighbors=15, HDBSCAN mcs=15 / ms=5 / eom)
+The hyperparameter choices (UMAP n_neighbors=15, HDBSCAN mcs=12 / ms=5 / eom)
 are documented in docs/methodology.md, including the parameter sweep result
-that justifies them.
+that justifies them. All values live in `src.config.Settings` so a
+deployment can override them via `PIPELINE_CLUSTER_*` env vars without code
+change. See docs/developer-guide.md for the full configuration model.
 
 CLI:
     python -m src.cluster --step all
@@ -200,8 +202,9 @@ def step_reduce() -> tuple[np.ndarray, np.ndarray]:
 def step_sweep() -> pd.DataFrame:
     """HDBSCAN hyperparameter sweep. Prints a table, returns it as a DataFrame.
 
-    Diagnostic only. The chosen final params (mcs=15, ms=5, eom) were picked
-    from this sweep on the recovered manual run. See docs/methodology.md.
+    Diagnostic only. The chosen final params (mcs=12, ms=5, eom) were picked
+    from the plateau region of this sweep on the recovered manual run.
+    See docs/methodology.md and docs/developer-guide.md.
     """
     import hdbscan
     from sklearn.metrics import silhouette_score

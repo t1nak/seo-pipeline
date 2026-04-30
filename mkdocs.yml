@@ -48,6 +48,7 @@ nav:
       - methodology.md
       - Entscheidungen: decisions.md
     - Ergebnisse: results.md
+    - Developer Guide: developer-guide.md
     - Technical Review: technical_review.md
   - Example Output:
     - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
@@ -111,6 +112,7 @@ plugins:
             Methodik: Methodology
             Entscheidungen: Decisions
             Ergebnisse: Results
+            Developer Guide: Developer Guide
             Technical Review: Technical Review
             Example Output: Example Output
             Cluster Map: Cluster Map

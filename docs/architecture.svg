@@ -33,8 +33,8 @@
     <rect x="40" y="135" width="180" height="100" rx="10" fill="#fae8ff" stroke="#c026d3" stroke-width="0.8"/>
     <text x="50" y="155" font-size="12" font-weight="700" fill="#7e22ce">Keyword-Quellen</text>
     <line x1="50" y1="163" x2="210" y2="163" stroke="#c026d3" stroke-width="0.5" opacity="0.4"/>
-    <text x="50" y="182" font-size="10" fill="#7e22ce">• Manual CSV (heute aktiv)</text>
-    <text x="50" y="200" font-size="10" fill="#a855f7">• zvoove Blog (Scraping TODO)</text>
+    <text x="50" y="182" font-size="10" fill="#7e22ce">• Manual CSV</text>
+    <text x="50" y="200" font-size="10" fill="#a855f7">• zvoove Blog</text>
     <text x="50" y="218" font-size="10" fill="#a855f7">• SEMrush · LLM-Set · etc.</text>
   </g>
   <line x1="220" y1="185" x2="355" y2="185" stroke="#c026d3" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)" opacity="0.6"/>
@@ -65,8 +65,8 @@
     <rect x="40" y="255" width="180" height="100" rx="10" fill="#fae8ff" stroke="#c026d3" stroke-width="0.8"/>
     <text x="50" y="275" font-size="12" font-weight="700" fill="#7e22ce">Enrichment-Provider</text>
     <line x1="50" y1="283" x2="210" y2="283" stroke="#c026d3" stroke-width="0.5" opacity="0.4"/>
-    <text x="50" y="302" font-size="10" fill="#7e22ce">• Heuristik (default, free)</text>
-    <text x="50" y="320" font-size="10" fill="#a855f7">• DataForSEO Labs (~0.75 USD)</text>
+    <text x="50" y="302" font-size="10" fill="#7e22ce">• Heuristik</text>
+    <text x="50" y="320" font-size="10" fill="#a855f7">• DataForSEO Labs</text>
     <text x="50" y="338" font-size="10" fill="#a855f7">• SEMrush · Ahrefs · etc.</text>
   </g>
   <line x1="220" y1="305" x2="355" y2="305" stroke="#c026d3" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)" opacity="0.6"/>
@@ -176,7 +176,7 @@
     <line x1="50" y1="743" x2="210" y2="743" stroke="#c026d3" stroke-width="0.5" opacity="0.4"/>
     <text x="50" y="762" font-size="10" fill="#7e22ce">• Anthropic API · sonnet-4-6</text>
     <text x="50" y="780" font-size="10" fill="#a855f7">• OpenAI · gpt-5</text>
-    <text x="50" y="798" font-size="10" fill="#a855f7">• Agent SDK (Claude Code, lokal)</text>
+    <text x="50" y="798" font-size="10" fill="#a855f7">• Agent SDK · Claude Code, lokal</text>
   </g>
   <line x1="220" y1="745" x2="355" y2="745" stroke="#c026d3" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.7"/>
 

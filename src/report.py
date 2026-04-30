@@ -48,6 +48,15 @@ DEFAULT_SOURCE = "llm-generated"
 
 
 def _load_cluster_labels() -> tuple[dict[int, str], dict[int, str]]:
+    """LLM-generated labels (output/clustering/cluster_labels.json) win over
+    the curated YAML if present. The JSON is produced by `src.labels_llm`."""
+    import json as _json
+    json_path = CLUSTERING / "cluster_labels.json"
+    if json_path.exists():
+        data = _json.loads(json_path.read_text(encoding="utf-8"))
+        en = {int(k): v["en"] for k, v in data.items()}
+        de = {int(k): v["de"] for k, v in data.items()}
+        return en, de
     import yaml
     with open(ROOT / "data" / "cluster_labels.yaml") as f:
         data = yaml.safe_load(f)

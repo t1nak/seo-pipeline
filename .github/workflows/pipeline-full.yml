@@ -133,6 +133,12 @@ jobs:
           PIPELINE_CLUSTER_HDBSCAN_METHOD: ${{ inputs.cluster_method }}
         run: python pipeline.py --step cluster
 
+      - name: Step 3b -- Generate cluster labels (LLM)
+        if: ${{ !inputs.dry_run }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m src.labels_llm
+
       - name: Step 4 -- Generate content briefs (LLM)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

@@ -1,9 +1,12 @@
 # SEO Keyword Pipeline für zvoove
 
-!!! abstract "Was diese Pipeline macht"
-    Aus dem zvoove Blog wird ein priorisiertes Keyword Set, daraus thematische Cluster, daraus Content Briefs, daraus ein interaktives Reporting. Vier modulare Phasen, Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo.
+## Was ist die SEO Pipeline?
+
+Eine entkoppelte Daten-Pipeline für SEO-Strategie. Vier Phasen mit auswechselbaren Providern an jeder Stelle: Keyword-Quelle, LLM für Briefings, Reporting-Ziel. Die Architektur unten zeigt die wählbaren Komponenten je Phase, der Auslöser läuft per Cron, manuellem Trigger oder Push.
 
 ![Pipeline Architektur](landing_diagram.svg)
+
+Aus dem zvoove Blog wird ein priorisiertes Keyword Set, daraus thematische Cluster, daraus Content Briefs, daraus ein interaktives Reporting. Vier modulare Phasen, Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo.
 
 ## Das Problem in einem Satz
 

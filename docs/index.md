@@ -10,7 +10,15 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 [:material-rocket-launch: Go to Pipeline (GitHub Actions)](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml){ .md-button .md-button--primary target=_blank rel=noopener }
 
-## Häufige Fragen
+## Grundlagen
+
+- [Wie wird die Pipeline getriggert?](#wie-wird-die-pipeline-getriggert)
+- [Wie kann ich Model und Provider ändern?](#wie-kann-ich-model-und-provider-andern)
+- [Was kostet ein Lauf?](#was-kostet-ein-lauf)
+- [Wie viele Cluster werden erkannt?](#wie-viele-cluster-werden-erkannt)
+- [Welche Daten werden lokal gespeichert?](#welche-daten-werden-lokal-gespeichert)
+- [Welche Parameter beeinflussen das Ergebnis maßgeblich?](#welche-parameter-beeinflussen-das-ergebnis-massgeblich)
+- [Welche Variablen sind sicherheitskritisch?](#welche-variablen-sind-sicherheitskritisch-wegen-api-kosten-und-berechtigungen)
 
 ### Wie wird die Pipeline getriggert?
 

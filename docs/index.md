@@ -8,6 +8,8 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 **Beispiel-Demo:** Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Daraus entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
 
+[:material-rocket-launch: Go to Pipeline (GitHub Actions)](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml){ .md-button .md-button--primary target=_blank rel=noopener }
+
 ## Häufige Fragen
 
 ### Wie wird die Pipeline getriggert?

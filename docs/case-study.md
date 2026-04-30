@@ -52,7 +52,7 @@ Die interaktive Karte zum Klicken liegt unter [`output/clustering/cluster_map.ht
 
 ## 3. Lösungsansatz
 
-Die Pipeline besteht aus fünf entkoppelten Schritten. Jeder Schritt liest klar definierte Eingaben und schreibt klar definierte Ausgaben. Das macht die Pipeline einzeln testbar und einzeln re-runnbar.
+Die Pipeline besteht aus vier modularen Phasen, in der aktuellen Umsetzung als fünf entkoppelte Skripte implementiert (Discover und Enrich liegen heute getrennt vor, würden bei Providern wie SEMrush oder DataForSEO aber zusammenfallen). Jeder Schritt liest klar definierte Eingaben und schreibt klar definierte Ausgaben. Das macht die Pipeline einzeln testbar und einzeln re-runnbar.
 
 ```
                     ┌─ scrapt ──→  data/blog_topics.csv (TODO)

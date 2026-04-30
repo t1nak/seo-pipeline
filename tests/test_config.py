@@ -14,7 +14,7 @@ def test_defaults_are_sensible():
     assert s.brief_provider == "api"
     assert s.brief_model is None
     assert s.brief_max_tokens == 4096
-    assert s.cluster_hdbscan_mcs == 12
+    assert s.cluster_hdbscan_mcs == 8
     assert s.cluster_hdbscan_ms == 5
     assert s.cluster_hdbscan_method == "eom"
     assert s.cluster_umap_neighbors == 15

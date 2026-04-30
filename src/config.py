@@ -21,7 +21,7 @@ Usage:
 
     from src.config import settings
     print(settings.brief_provider)         # api | openai | max
-    print(settings.cluster_hdbscan_mcs)    # 12
+    print(settings.cluster_hdbscan_mcs)    # 8
 """
 from __future__ import annotations
 
@@ -63,14 +63,13 @@ class Settings(BaseSettings):
     cluster_umap_metric: str = "cosine"
 
     # ----- Cluster: HDBSCAN -----
-    # mcs=12 reproduces the documented 10-cluster baseline on both
-    # macOS local (sil 0.672, 38 noise) and Ubuntu CI (sil ~0.59,
-    # 40 noise). UMAP cross-platform drift is real even with
-    # random_state=42; the parameter sweep showed mcs ∈ {10, 12, 15}
-    # all hit the plateau at 10 clusters locally, so picking 12
-    # gives one buffer on each side. Override per run via the env
-    # var PIPELINE_CLUSTER_HDBSCAN_MCS or the workflow input.
-    cluster_hdbscan_mcs: int = 12
+    # mcs=8 sits one step below the 10-cluster plateau (mcs ∈ {10, 12, 15})
+    # identified by the parameter sweep, producing more, smaller clusters
+    # so that broad themes like "Zeitarbeit & Arbeitsrecht" (which dominated
+    # the mcs=12 baseline at 189/500 keywords) split into more focused
+    # sub-themes. Override per run via the env var
+    # PIPELINE_CLUSTER_HDBSCAN_MCS or the workflow input.
+    cluster_hdbscan_mcs: int = 8
     cluster_hdbscan_ms: int = 5
     cluster_hdbscan_method: Literal["eom", "leaf"] = "eom"
     cluster_hdbscan_metric: str = "euclidean"

@@ -385,16 +385,14 @@ def run(source: str = DEFAULT_SOURCE, run_id: str | None = None) -> None:
     run_dir = RUNS_DIR / run_id
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    _render_charts()
     _render_cluster_map()
     _copy_assets(run_dir)
 
-    charts_html = _charts_section(chart_dir="charts/")
     page = build_page(
         profiles,
         labeled,
         brief_prefix="briefings/",
-        extra_section=charts_html,
+        extra_section="",
         map_prefix="",
         briefings_dir=run_dir / "briefings",
         back_links=[

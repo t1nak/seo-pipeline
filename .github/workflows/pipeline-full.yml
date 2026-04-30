@@ -172,10 +172,5 @@ jobs:
             echo "No output changes to commit."
             exit 0
           fi
-          git commit -m "ci(pipeline-full): update output from run ${{ github.run_id }}
-
-Pipeline-Lauf abgeschlossen: ${{ inputs.brief_provider }} provider,
-mcs=${{ inputs.cluster_mcs }}/${{ inputs.cluster_method }}, ${{ inputs.max_keywords }} keywords.
-
-Co-Authored-By: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          git commit -m "ci(pipeline-full): update output from run ${{ github.run_id }} (provider=${{ inputs.brief_provider }}, mcs=${{ inputs.cluster_mcs }}/${{ inputs.cluster_method }}, n=${{ inputs.max_keywords }})"
           git push

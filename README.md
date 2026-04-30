@@ -4,7 +4,7 @@ Eine Pipeline, die aus dem zvoove Blog ein priorisiertes Keyword Set, thematisch
 
 ![Pipeline Architektur](docs/architecture.svg)
 
-> Fünf entkoppelte Schritte. Externe Systeme links, lokale ML in der Mitte, Datenartefakte rechts. Die markierten Artefakte sind über GitHub Pages live verfügbar. Detail in [`docs/architecture.md`](docs/architecture.md).
+> Vier modulare Phasen, in fünf entkoppelten Skripten implementiert. Externe Systeme links, lokale ML in der Mitte, Datenartefakte rechts. Die markierten Artefakte sind über GitHub Pages live verfügbar. Detail in [`docs/architecture.md`](docs/architecture.md).
 
 ## Das Problem in einem Satz
 
@@ -99,7 +99,7 @@ python pipeline.py --step enrich --provider dataforseo
 seo-pipeline/
 ├── README.md              dieses Dokument
 ├── CASE_STUDY.md          ausführliche Schreibarbeit zum Vorgehen
-├── pipeline.py            Orchestrator für alle 5 Schritte
+├── pipeline.py            Orchestrator für alle 5 Skripte
 ├── requirements.txt
 ├── data/
 │   ├── keywords.csv             aktueller Stand (überschreibbar durch discover)

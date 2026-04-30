@@ -227,7 +227,7 @@ Plus eine Zeile in `make_provider()` und ein neuer Choice in den CLIs (`brief.py
 **Alternativen geprüft.**
 
 - `loguru`: schöne API, aber zusätzliche Abhängigkeit für minimalen Mehrwert.
-- `structlog`: gut für JSON-strukturiertes Logging, aber Overkill für eine Pipeline mit fünf Schritten.
+- `structlog`: gut für JSON-strukturiertes Logging, aber Overkill für eine Pipeline mit fünf Skripten.
 - `print()` weiter: keine Levels, kein Filter, keine zentrale Steuerung.
 
 **Konsequenzen.**

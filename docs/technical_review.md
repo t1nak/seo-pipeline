@@ -6,7 +6,7 @@ Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch
 
 ### Was solide ist
 
-- **Fünf entkoppelte Schritte mit klaren Verträgen.** Jeder Schritt liest und schreibt explizite Dateien (`data/keywords.csv`, `output/clustering/keywords_labeled.csv`, etc). Kein Schritt importiert Funktionen aus einem anderen Schritt zur Laufzeit. Jeder lässt sich isoliert testen, re-runnen, ersetzen.
+- **Vier modulare Phasen, fünf entkoppelte Skripte mit klaren Verträgen.** Jedes Skript liest und schreibt explizite Dateien (`data/keywords.csv`, `output/clustering/keywords_labeled.csv`, etc). Kein Skript importiert Funktionen aus einem anderen Skript zur Laufzeit. Jedes lässt sich isoliert testen, re-runnen, ersetzen.
 - **Zentrale Konstanten.** Alle Hyperparameter (Embedding-Modell, UMAP-Parameter, HDBSCAN-Parameter) sind als Modul-Konstanten oben in `src/cluster.py` festgehalten. Code und Doku referenzieren dieselbe Quelle.
 - **Pluggable LLM-Provider.** `BriefProvider` als abstrakte Basis, drei Implementierungen (`ApiKeyProvider`, `OpenAIProvider`, `AgentSdkProvider`), Auswahl per CLI-Flag. Provider-Wechsel ist einzeilig, kein Refactoring.
 - **Determinismus durchgängig.** `random_state=42` in beiden UMAP-Aufrufen, HDBSCAN deterministisch, Heuristik via SHA256-Seed, Embeddings im Inference-Modus deterministisch. Ein zweiter Lauf produziert byte-identische Artefakte.
@@ -35,7 +35,7 @@ Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch
 
 ### Schwächen
 
-- **Keine Pydantic-Models** für die CSV-Schemas. Spalten werden in mehreren Modulen als Strings annotiert. Bei 6 CSV-Verträgen (zwischen den 5 Schritten) ist das aktuell überschaubar, aber bei Wachstum eine Quelle für stille Bugs.
+- **Keine Pydantic-Models** für die CSV-Schemas. Spalten werden in mehreren Modulen als Strings annotiert. Bei 6 CSV-Verträgen (zwischen den 5 Skripten) ist das aktuell überschaubar, aber bei Wachstum eine Quelle für stille Bugs.
 - **Imports innerhalb von Funktionen** in `cluster.py` und `brief.py` (z.B. `import hdbscan` in `step_cluster`). Das ist Absicht (lazy load schwerer Deps), aber ohne Kommentar nicht offensichtlich. In Produktion würde ich das in einen `__init__` der jeweiligen Klasse ziehen oder explizit kommentieren.
 - **Keine Dataclasses für Cluster-Profile.** `cluster_profiles.csv` Zeilen werden als pandas Series herumgereicht. In Produktion wäre `@dataclass class ClusterProfile` sauberer und IDE-freundlicher.
 

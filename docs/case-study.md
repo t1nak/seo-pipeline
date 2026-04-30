@@ -361,7 +361,7 @@ Weiter: ich würde eher als Teil der ersten Iteration einen einfachen Run Log ei
 
 Diese Case Study soll drei Dinge zeigen:
 
-- **Architektur Denken statt Skript Denken.** Eine Pipeline ist nicht ein Bündel von Skripten, sondern ein definiertes Datenmodell mit klaren Schnittstellen. Die fünf Schritte hier sind so geschnitten, dass jeder einzeln ersetzt werden kann.
+- **Architektur Denken statt Skript Denken.** Eine Pipeline ist nicht ein Bündel von Skripten, sondern ein definiertes Datenmodell mit klaren Schnittstellen. Die vier Phasen hier sind so geschnitten, dass jede einzeln ersetzt werden kann.
 - **Pragmatismus über Polish.** Heuristische Schätzwerte für SV / KD / CPC sind klar als geschätzt markiert und werden durch DataForSEO ersetzt, wenn echte Daten verfügbar sind. Manuelle Cluster Labels sind heute manuell und Backlog-Punkt für Automatisierung. Beides bewusste Entscheidungen, nicht Lücken.
 - **Revenue Lens.** Die Cluster werden nicht nur ausgegeben, sondern jede Empfehlung wird in eine Revenue Hypothese übersetzt (Cluster X führt zu Y MQLs pro Monat). Das ist die Übersetzungsleistung, die ein Revenue AI Architect leisten muss.
 

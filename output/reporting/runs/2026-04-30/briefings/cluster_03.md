@@ -1,59 +1,54 @@
-# Zeitarbeitssoftware 2026: Anforderungen, Anbieter, ROI
+# KI-Recruiting-Software für Zeitarbeit: So automatisieren Sie Ihren Recruiting-Prozess
 
-**Hauptkeyword:** zeitarbeitssoftware
-**Nebenkeywords:** zeiterfassung software, mobile zeiterfassung, zeitarbeit software, roi zeitarbeit software, lohnabrechnung software zeitarbeit, payroll software zeitarbeit, hr software zeitarbeit
-**Suchintention:** kommerziell. 94 Prozent der Cluster-Keywords sind kommerziell, klar Bottom-of-Funnel Anbietersuche.
-**Empfohlene Wortanzahl:** 3000
+**Hauptkeyword:** recruiting software
+**Nebenkeywords:** ki recruiting, recruiting plattform, automatisierung recruiting prozess, active sourcing tools, recruiting tool zeitarbeit, applicant tracking system deutsch, recruiting funnel
+**Suchintention:** mixed, kommerzielle Kaufabsicht trifft auf Informationsbedarf bei Entscheidern, die KI-Einsatz im Recruiting erst bewerten, bevor sie eine Plattform auswählen
+**Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer und IT-Verantwortliche bei Personaldienstleistern mit 5 bis 20 Niederlassungen und 100 bis 1500 Zeitarbeitnehmern. Aktuelles Setup ist meist eine Mischung aus älterer On-Premise-Software (Landwehr, Prosoft) plus Excel-Inseln plus DATEV. Such-Auslöser: Skalierungs-Schmerz, Equal-Pay-Compliance-Druck, bevorstehendes AÜG-Audit.
+Niederlassungsleiter oder Head of Recruiting in einem mittelständischen Zeitarbeitsunternehmen mit 5 bis 50 Mitarbeitern, der täglich offene Stellen nicht besetzen kann und weiß, dass seine aktuellen Prozesse zu langsam sind.
 
 ## Schmerzpunkt
 
-Die alte Software ist nicht mehr wartbar oder skaliert nicht über die nächsten zwei Niederlassungen. Disponenten kämpfen täglich mit Excel-Reibung, Lohnfehler kosten Vertrauen bei den Mitarbeitern, und ein bevorstehendes Bundesagentur-Audit erinnert daran, dass AÜG-Compliance ohne Software-Unterstützung fragil ist. Die Software-Auswahl ist gleichzeitig komplex (10 plus Anbieter, intransparente Pricing-Modelle, lange Implementierungszeiten) und politisch (IT, HR und Geschäftsführung müssen sich einig werden).
+Offene Stellen bleiben wochenlang unbesetzt, weil Bewerbungen manuell in Excel verwaltet werden und Active Sourcing auf LinkedIn ad hoc passiert statt systematisch. Gleichzeitig wächst der Druck von Kunden, die Besetzungszeiten als KPI messen und bei Nichterfüllung den Rahmenvertrag kündigen. Der Entscheider weiß nicht, welche Recruiting-Software wirklich für Zeitarbeit gebaut ist und welche nur behauptet, es zu sein.
 
 ## Ziel des Artikels
 
-Der Leser hat nach dem Lesen ein klares Bewertungsraster für Zeitarbeitssoftware (sieben Kernfunktionen plus drei Querschnitts-Kriterien), kennt die fünf bis sieben relevantesten Anbieter im DACH-Raum strukturiert, und versteht welche Fragen er vor dem ersten Demo-Termin stellen muss.
+Der Leser soll verstehen, welche Funktionen eine Recruiting-Software für Zeitarbeit zwingend mitbringen muss, und zvoove als konkrete Lösung in Betracht ziehen.
 
 ## Outline
 
-- H1: Zeitarbeitssoftware 2026: Anforderungen, Anbieter, ROI
-- H2: Was Zeitarbeitssoftware leisten muss
-  - H3: Die sieben Kernfunktionen einer modernen Branchenlösung
-  - H3: Warum Standard-ERPs wie SAP oder DATEV nicht reichen
-  - H3: Cloud-only versus Hybrid-Setup, TCO über fünf Jahre
-- H2: Mobile Zeiterfassung als Sonderfall
-  - H3: Was eine mobile App leisten muss
-  - H3: Offline-Fähigkeit und GPS-Verifikation
-  - H3: Akzeptanz bei Zeitarbeitnehmern
-- H2: Anbieter im Markt
-  - H3: zvoove One
-  - H3: Landwehr
-  - H3: Prosoft
-  - H3: weitere Spieler (sclever, Gevitas, Aktivit)
-- H2: Auswahlkriterien für KMU
-  - H3: Schnittstellen DATEV, Indeed, Bundesagentur
-  - H3: Skalierbarkeit von einer auf 20 Niederlassungen
-  - H3: Implementierungsdauer und Schulungsaufwand
-  - H3: Datenschutz und deutsche Serverstandorte
-- H2: ROI rechnen
-  - H3: Zeitersparnis in der Disposition quantifizieren
-  - H3: Fehlerquoten und Nacharbeit reduzieren
-  - H3: Beispielrechnung für 200 Zeitarbeitnehmer
-- H2: Pricing und Lizenzmodelle 2026
-  - H3: Pro-User versus Pro-Zeitarbeitnehmer
-  - H3: Was in einer ehrlichen TCO-Rechnung wirklich auftaucht
-- H2: Sieben Fragen vor dem ersten Demo-Termin
-- H2: FAQ
+- H1: KI-Recruiting-Software für Zeitarbeit: So automatisieren Sie Ihren Recruiting-Prozess
+- H2: Warum Standard-Recruiting-Software in der Zeitarbeit scheitert
+  - H3: Der Unterschied zwischen klassischem HR-Recruiting und Zeitarbeits-Recruiting
+  - H3: Welche Prozesse besonders viel manuelle Zeit kosten
+- H2: Was moderne Recruiting-Plattformen leisten können
+  - H3: Automatisierter Recruiting-Funnel von der Anzeige bis zum Vertrag
+  - H3: Applicant Tracking System auf Deutsch: Pflicht, kein Nice-to-have
+  - H3: Active Sourcing Tools integriert oder extern?
+- H2: KI im Recruiting: konkrete Anwendungsfälle statt Buzzwords
+  - H3: KI-gestütztes Matching von Bewerbern und offenen Stellen
+  - H3: Automatische Kommunikation entlang des Recruiting-Funnels
+  - H3: Wo KI heute noch an Grenzen stößt
+- H2: Checkliste: Diese Funktionen muss ein Recruiting-Tool für Zeitarbeit haben
+  - H3: Pflichtfunktionen (ohne diese nicht kaufen)
+  - H3: Nützliche Extras je nach Unternehmensgröße
+- H2: Recruiting automatisieren: Schritt-für-Schritt-Einführung ohne Projektstau
+  - H3: Bestandsdaten migrieren und Prozesse vor Go-Live definieren
+  - H3: Typische Fehler bei der Einführung und wie man sie vermeidet
+- H2: Marktüberblick: Recruiting-Plattformen im Vergleich für Zeitarbeit
+  - H3: Speziallösungen versus All-in-one-Plattformen
+  - H3: Warum eine Lösung mit Zeitarbeits-DNA anders kalkuliert als eine Generallösung
+- H2: Fazit: Was eine gute Recruiting-Software in der Zeitarbeit wirklich bringt
+  - H3: ROI-Rechnung: Besetzungszeit, Aufwand, Kundenbindung
 
 ## Benchmark URLs
 
-1. https://www.landwehr-software.de/branchensoftware/zeitarbeit/, direkter Wettbewerber, zeigt die Vergleichsmatrix-Struktur, die zvoove übertreffen muss.
-2. https://www.prosoft.net/personaldienstleister/, Wettbewerber, gutes Beispiel wie ein klassischer Anbieter Branchen-Authority aufbaut.
-3. https://www.omr.com/de/reviews/category/zeitarbeit-software, neutraler Vergleichs-Hub, der bei Suchen wie `zeitarbeitssoftware test` rankt. zvoove muss sich dazu klar positionieren.
+1. https://www.softgarden.com/ressourcen/blog/recruiting-software/ — hohe Sichtbarkeit bei generischen Recruiting-Software-Keywords, zeigt welche Tiefe Google für dieses Keyword belohnt
+2. https://www.personio.de/hr-lexikon/recruiting-software/ — rankt auf Lexikon-Keywords rund um ATS und Recruiting-Funnel, relevanter Wettbewerber im deutschen Markt
+3. https://www.stepstone.de/magazine/artikel/active-sourcing-tools — deckt Active-Sourcing-Teilcluster ab und wird häufig verlinkt, zeigt Themenbreite die Google erwartet
 
 ## Call to Action
 
-Wer einen konkreten Vergleich zwischen zvoove One und einer bestehenden Lösung wünscht, kann eine 60-Minuten Live-Demo mit individuellem Use Case anfordern. Vorbereitung: kurzes Briefing zu Niederlassungs-Setup, Mitarbeiter-Anzahl und aktuellen Pain Points im Vorfeld per Mail.
+Demo buchen: Zeigen Sie Ihren Recruiting-Prozess einem zvoove-Berater und erhalten Sie eine konkrete Einschätzung, wie viele Stunden Ihr Team pro Woche mit der richtigen Software einspart.

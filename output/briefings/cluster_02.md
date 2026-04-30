@@ -1,58 +1,54 @@
-# AÜG, Equal Pay und Höchstüberlassungsdauer: Compliance-Hub für Personaldienstleister
+# Zeitarbeit Software im Vergleich: Worauf Personaldienstleister bei Zeiterfassung, Lohn und Compliance wirklich achten müssen
 
-**Hauptkeyword:** arbeitnehmerüberlassung
-**Nebenkeywords:** arbeitnehmerüberlassungsgesetz, höchstüberlassungsdauer, equal pay zeitarbeit, debitorenmanagement, zeitarbeit programm, factoring zeitarbeit
-**Suchintention:** mixed mit Schwerpunkt informational. Compliance-Recherche zieht Geschäftsführer in den Funnel, Software-Begriffe schaffen den Übergang zu kommerziellen Themen.
-**Empfohlene Wortanzahl:** 3500
-
-> **Hinweis Strategie:** Dieser Cluster ist mit 189 Keywords der Sammelbecken-Cluster und thematisch heterogen (AÜG-Wissen, Equal Pay, Software-Begriffe, Cashflow). Per [`docs/results.md`](../../docs/results.md) ist Sub-Clustering die wichtigste Empfehlung vor Vollausarbeitung. Dieser Brief deckt das stärkste Sub-Thema (AÜG-Compliance plus Equal Pay) ab. Weitere Sub-Themen wie Software-Heads, Lohn-Themen, Branchen-Trends brauchen eigene Briefs nach dem Sub-Clustering.
+**Hauptkeyword:** zeitarbeit software
+**Nebenkeywords:** zeiterfassung software, mobile zeiterfassung app, lohnabrechnung software zeitarbeit, payroll software zeitarbeit, hr software zeitarbeit, zeitarbeitssoftware, preismodell zeitarbeit software
+**Suchintention:** commercial / mixed, Nutzer vergleichen aktiv Softwarelösungen für ihren Betrieb und suchen Entscheidungshilfe vor dem Kauf.
+**Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer und Compliance-Verantwortliche in Personaldienstleistungsbetrieben mit 50 bis 500 Zeitarbeitnehmern. Suchen klare Antworten vor einem Audit, einer Mitarbeiter-Klage oder einer Tarif-Runde. Sekundäre Zielgruppe: Steuerberater und Anwälte, die für die Branche beraten.
+Geschäftsführer oder Operations-Leiter eines mittelständischen Personaldienstleisters mit 3 bis 25 internen Mitarbeitern und 50 bis 500 aktiven Zeitarbeitnehmern, der sein Wachstum nicht mehr mit Excel und Insellösungen stemmen kann.
 
 ## Schmerzpunkt
 
-Das AÜG ist ein technisches Gesetz mit hoher Konsequenz: Verstöße können den Verlust der Erlaubnis bedeuten und damit die Geschäftsgrundlage. Equal Pay nach 9 Monaten plus Höchstüberlassungsdauer 18 Monate plus Tarif-Erweiterungen plus Sanktionen ergeben eine Kombinatorik, die ohne Software-Unterstützung manuell kaum sicher zu führen ist.
+Die manuelle Zeiterfassung über Stundenzettel kostet jede Woche Stunden, die niemand hat, und produziert trotzdem Fehler in der Lohnabrechnung. Gleichzeitig wächst der Druck durch BAP-Tarifprüfungen, Equal-Pay-Fristen und die gesetzliche Pflicht zur lückenlosen Arbeitszeitdokumentation. Wer die falsche Software kauft oder zu lange wartet, zahlt doppelt: einmal für das Chaos im Betrieb und einmal für Nachforderungen beim Prüftermin.
 
 ## Ziel des Artikels
 
-Der Leser bekommt einen vollständigen, strukturierten Überblick über das AÜG mit Fokus auf die zwei wichtigsten Compliance-Hebel (Equal Pay und Höchstüberlassungsdauer), kann das Risiko für sein Unternehmen quantifizieren, und hat eine Checkliste für ein audit-sicheres System.
+Der Leser soll verstehen, welche Funktionen eine Zeitarbeit-Software zwingend abdecken muss, wie er Angebote sachlich vergleicht und warum er eine Demo bei zvoove anfragen sollte.
 
 ## Outline
 
-- H1: AÜG, Equal Pay und Höchstüberlassungsdauer, der Compliance-Hub für Personaldienstleister
-- H2: Was das AÜG regelt und wer betroffen ist
-  - H3: Geltungsbereich und Erlaubnispflicht
-  - H3: Was unter Werkvertrag fällt und was nicht
-- H2: Höchstüberlassungsdauer 18 Monate
-  - H3: Die Grundregel und die Tarif-Erweiterungen
-  - H3: Was bei Tarifwechsel mitten in einer Überlassung passiert
-  - H3: Beispielrechnung verlängerte Überlassungsdauer mit iGZ-Tarif
-- H2: Equal Pay nach 9 Monaten
-  - H3: Vergleichsentgelt korrekt ermitteln
-  - H3: Branchenzuschlagstarifverträge als Equal-Pay-Surrogat
-  - H3: Beispielrechnung Helfer-Vermittlung über 12 Monate
-- H2: Cashflow-Effekt von Equal Pay
-  - H3: Liquiditätsplanung mit Equal-Pay-Sprung
-  - H3: Wann Factoring den Effekt absichert
-- H2: Sanktionen bei Verstößen
-  - H3: Bußgeldkatalog und Verfahren
-  - H3: Risiko Verlust der Erlaubnis
-- H2: Praxis-Tipps für audit-sichere Compliance
-  - H3: Was eine Software automatisch tracken sollte
-  - H3: Welche Dokumente bei einer Bundesagentur-Prüfung parat sein müssen
-- H2: Aktuelle Entwicklungen 2026
-  - H3: Tarif-Veränderungen iGZ und BAP
-  - H3: Aktuelle BAG-Urteile
-- H2: FAQ
+- H1: Zeitarbeit Software im Vergleich: Worauf Personaldienstleister bei Zeiterfassung, Lohn und Compliance wirklich achten müssen
+- H2: Warum Standard-HR-Software für Zeitarbeit nicht funktioniert
+  - H3: Die besonderen Anforderungen der Arbeitnehmerüberlassung
+  - H3: Wo Insellösungen und Excel zuerst versagen
+- H2: Kernfunktionen, die jede Zeitarbeit Software mitbringen muss
+  - H3: Digitale Zeiterfassung und mobile Zeiterfassung App für gewerbliche Mitarbeiter
+  - H3: Automatisierte Lohnabrechnung nach iGZ- und BAP-Tarif
+  - H3: Integriertes Rechnungsmanagement und Kundenselbstbedienung
+  - H3: Compliance-Funktionen: Equal Pay, Branchenzuschläge, AÜG-Fristen
+- H2: Mobile Zeiterfassung in der Zeitarbeit: Praxisanforderungen vs. App-Versprechen
+  - H3: Offline-Fähigkeit und Geofencing für Baustelle und Produktion
+  - H3: Digitale Unterschrift und revisionssichere Stundenzettel
+- H2: Lohnabrechnung und Payroll: Was wirklich automatisiert werden kann
+  - H3: Tarif-Updates und gesetzliche Änderungen ohne manuelle Pflege
+  - H3: Schnittstellen zu DATEV, Agenda und anderen Lohnsystemen
+- H2: Preismodelle bei Zeitarbeit Software verstehen und richtig vergleichen
+  - H3: Pro-Kopf-Modell vs. Flatrate vs. modularer Aufbau
+  - H3: Versteckte Kosten: Implementierung, Support, Updates
+  - H3: ROI-Rechnung: Ab wann amortisiert sich die Investition
+- H2: Auswahlkriterien und roter Faden für die Entscheidung
+  - H3: Checkliste: 10 Fragen vor dem Demo-Termin
+  - H3: Worauf beim Anbietervergleich besonders zu achten ist
+- H2: Fazit und nächster Schritt
 
 ## Benchmark URLs
 
-1. https://www.arbeitsagentur.de/unternehmen/arbeitnehmerueberlassung, Behörden-Autorität für Grundlagen-Suchen. zvoove muss komplementär ranken: praxis-näher, mit konkreten Beispielen statt Gesetzestext.
-2. https://www.haufe.de/personal/arbeitsrecht/aueg-arbeitnehmerueberlassungsgesetz, Standard-Wissens-Hub für Personaler. Stärke: gute FAQ und Verbindung zu Tarif-Themen.
-3. https://www.ig-zeitarbeit.de/, iGZ-Verband, Tarif-Autorität bei Tarif-Suchen. zvoove kann hier nicht direkt überholen, aber sich als Praxis-Brücke positionieren.
+1. https://www.sage.com/de-de/blog/zeiterfassung-zeitarbeit/ — Hohe Domain-Authority, rangiert auf generische Zeiterfassungs-Keywords und spricht Entscheider in Personaldienstleistung direkt an
+2. https://www.lexware.de/wissen/personalwirtschaft/zeitarbeit-software/ — Direkt konkurrierendes Themenfeld, gut strukturierte Funktionsübersicht, schwach bei Compliance-Tiefe
+3. https://www.findhr.de/magazin/zeitarbeit-software-vergleich/ — Vergleichsartikel mit Keyword-Dichte auf Cluster-Keywords, schwach bei ROI-Argumentation und ohne Produktbezug
 
 ## Call to Action
 
-Compliance-Verantwortliche können zwei Lead-Magneten herunterladen: AÜG-Compliance-Checkliste für KMU und Whitepaper zu den drei häufigsten Audit-Findings. Wer eine integrierte Lösung mit automatischer AÜG-Compliance sucht, bucht eine zvoove One Demo.
+Leser werden eingeladen, eine persönliche Demo von zvoove zu buchen, in der ein Berater live zeigt, wie Zeiterfassung, Lohnabrechnung und AÜG-Compliance in einer Plattform zusammenlaufen, inklusive einer individuellen ROI-Schätzung auf Basis der eigenen Mitarbeiterzahl.

@@ -1,56 +1,54 @@
-# Gebäudereinigung Software 2026: Disposition, Kalkulation, Compliance
+# Gleiches Geld, echte Kosten, sichere Zahlungen: Was Gebäudereiniger in der Zeitarbeit wirklich kalkulieren müssen
 
-**Hauptkeyword:** gebäudereinigung software
-**Nebenkeywords:** disposition gebäudereinigung, auftragsverwaltung gebäudereinigung, reinigungskalkulation software, unterhaltsreinigung kalkulation, zeiterfassung gebäudereinigung, qualitätsmanagement gebäudereinigung, revierplanung reinigung
-**Suchintention:** kommerziell mit Mid-Funnel Wissens-Hooks. 50 Prozent der Cluster-Keywords sind kommerziell.
-**Empfohlene Wortanzahl:** 2500
+**Hauptkeyword:** equal pay zeitarbeit
+**Nebenkeywords:** equal pay nach 9 monaten, equal pay berechnen, bap tarif aktuell, debitorenmanagement, zahlungsausfall absichern, aüg erlaubnis kosten, factoring gebühren
+**Suchintention:** mixed, Betreiber von Reinigungsunternehmen mit eigenem Zeitarbeitsbereich suchen nach konkreten Berechnungsgrundlagen und prüfen gleichzeitig Softwarelösungen für Abrechnung und Compliance.
+**Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer und Operations-Leads in Gebäudereinigungsbetrieben mit 50 bis 500 Reinigungskräften. Mehrere Kunden-Standorte, oft mit unterschiedlichen Anforderungen (Unterhaltsreinigung, Glasreinigung, Bauendreinigung). Aktuelles Setup meist Mischung aus alter Branchen-Software, Excel-Kalkulation und manueller Disposition.
+Geschäftsführer oder kaufmännische Leiterin eines mittelständischen Gebäudereinigungsunternehmens mit 50 bis 300 Mitarbeitern, das eigene Zeitarbeitnehmer einsetzt oder eine AÜ-Erlaubnis beantragt hat.
 
 ## Schmerzpunkt
 
-Gebäudereinigung ist Schichtbetrieb mit Mehrkundeneinsatz: 20 Reinigungskräfte rotieren über 50 Objekte, jede Schicht hat andere Zugänge, andere Reinigungs-Standards, andere Tarif-Bedingungen. Die Disposition kostet täglich Stunden, die Kalkulation für Neuangebote ist häufig Kopf-Schätzung, und Tarif-Compliance (Mindestlohn Gebäudereiniger-Tarif, Pausen-Regeln) wird oft nur grob nachverfolgt. Bei einer Audit-Anfrage oder einer Kunden-Reklamation fehlen die Daten.
+Nach 9 Monaten Einsatz greift Equal Pay, aber viele Kalkulationen wurden nie auf diesen Zeitpunkt hin durchgerechnet, sodass Margen plötzlich wegbrechen. Dazu kommen Kunden im Niedrigpreissegment, die Zahlungsziele bis 60 Tage durchsetzen, während Löhne wöchentlich oder vierzehntägig fällig sind. Wer dann noch keine klare Übersicht über offene Forderungen hat, sitzt auf einem Liquiditätsproblem, das er oft zu spät bemerkt.
 
 ## Ziel des Artikels
 
-Der Leser bekommt einen klaren Überblick über die fünf Kernfunktionen einer Gebäudereinigungs-Software (Revierplanung, Disposition, Zeiterfassung, Kalkulation, Qualitätsmanagement), versteht welche Anbieter im DACH-Markt relevant sind, und kann einen Auswahl-Prozess für sein Unternehmen aufsetzen.
+Der Leser soll nach dem Lesen verstehen, wie Equal Pay die tatsächlichen Lohnkosten in der Gebäudereinigung verändert, welche Zusatzkosten (AÜG-Erlaubnis, Factoring, ERP) die Kalkulation belasten, und wie ein strukturiertes Debitorenmanagement Zahlungsausfälle verhindert, damit er seine Zeitarbeitssparte profitabel betreibt.
 
 ## Outline
 
-- H1: Gebäudereinigung Software 2026, Disposition, Kalkulation, Compliance
-- H2: Was Gebäudereinigung als Branche besonders macht
-  - H3: Schichtbetrieb mit Mehrkundeneinsatz
-  - H3: Tarif-Compliance Mindestlohn Gebäudereiniger
-  - H3: Saisonale Schwankungen (Glasreinigung, Bauendreinigung)
-- H2: Die fünf Kernfunktionen einer Branchen-Software
-  - H3: Revierplanung und Routenoptimierung
-  - H3: Disposition und Schichtplan
-  - H3: Mobile Zeiterfassung mit Standort-Verifikation
-  - H3: Kalkulation für Angebote und Aufträge
-  - H3: Qualitätsmanagement und Audit-Dokumentation
-- H2: Reinigungskalkulation im Detail
-  - H3: Unterhaltsreinigung kalkulieren
-  - H3: Glasreinigung und Sonderaufträge
-  - H3: Was eine gute Kalkulationssoftware automatisch berücksichtigt
-- H2: Anbieter im DACH-Markt
-  - H3: zvoove One für Gebäudedienstleister
-  - H3: weitere Spieler (Greta, Allmayer, Cleansoft)
-- H2: Auswahl-Kriterien für KMU
-  - H3: Schnittstellen zu Buchhaltung und CRM
-  - H3: Mobile App für Reinigungskräfte
-  - H3: Datenschutz und GPS-Standortverifikation
-- H2: Pricing und Implementierungs-Aufwand
-- H2: Häufige Stolpersteine bei der Einführung
-- H2: FAQ
+- H1: Equal Pay in der Gebäudereinigung: Kosten richtig kalkulieren und Zahlungsausfälle absichern
+- H2: Warum die Gebäudereinigung bei Zeitarbeit besonders aufpassen muss
+  - H3: Niedrige Margen treffen auf hohe Compliance-Anforderungen
+  - H3: Typische Einsatzdauer und wann Equal Pay greift
+- H2: Equal Pay nach 9 Monaten: Was sich konkret ändert
+  - H3: BAP-Tarif als Ausgangsgröße und was aktuell gilt
+  - H3: So berechnen Sie den Equal-Pay-Zuschlag Schritt für Schritt
+  - H3: Häufige Kalkulationsfehler und ihre Folgen
+- H2: Weitere Kostenblöcke, die die Kalkulation belasten
+  - H3: AÜG-Erlaubnis: einmalige und laufende Kosten
+  - H3: ERP und Software: Total Cost of Ownership realistisch einschätzen
+  - H3: Factoring als Liquiditätspuffer: Gebühren und Nutzen abwägen
+- H2: Debitorenmanagement in der Praxis
+  - H3: Zahlungsziele verhandeln oder akzeptieren?
+  - H3: Frühwarnsystem für drohende Zahlungsausfälle aufbauen
+  - H3: Mahnprozesse automatisieren statt manuell nachfassen
+- H2: Zahlungsausfall absichern: Welche Instrumente wirklich helfen
+  - H3: Warenkreditversicherung vs. Factoring im Vergleich
+  - H3: Bonitätsprüfung von Reinigungskunden als Standardprozess
+- H2: Wie Software Kalkulation und Debitorenmanagement verbindet
+  - H3: Was eine Branchenlösung für Zeitarbeit leisten muss
+  - H3: Schnittstellen zu Lohn, DATEV und Factoring-Anbietern
+- H2: Fazit und Checkliste: Profitabler Zeitarbeitsbereich in der Gebäudereinigung
 
 ## Benchmark URLs
 
-1. https://www.greta-software.de/, spezialisierter Anbieter im Gebäudereinigungs-Markt, etablierte Hub-Struktur.
-2. https://www.gebaeudereiniger.de/, Bundesinnungsverband, Branchen-Autorität für Tarif-Themen.
-3. https://www.haufe.de/sozialwesen/sgb-office-professional/gebaeudereiniger-tarif/, rankt für Tarif-Compliance-Suchen, gute Verbindung zwischen Recht und Praxis.
+1. https://www.haufe.de/personal/arbeitsrecht/equal-pay-in-der-arbeitnehmerueberlassung — Ausführliche rechtliche Erklärung zu Equal Pay, hohe Autorität, wird oft zitiert, zeigt Informationsbedarf.
+2. https://www.ig-zeitarbeit.de/tarifvertraege/bap — Aktueller BAP-Tarifvertrag direkt bei der Branchenquelle, für Keywords rund um BAP-Tarif aktuell unvermeidlich.
+3. https://www.factoring.de/factoring-wissen/factoring-gebuehren — Erklärt Factoring-Gebühren verständlich, rankt für mehrere Nebenkeywords, schwache Verbindung zur Zeitarbeitsbranche, hier liegt eine Lücke.
 
 ## Call to Action
 
-Wer aktuell Disposition und Kalkulation getrennt fährt, kann zvoove One für Gebäudedienstleister anschauen, das beides plus Zeiterfassung in einem Workflow integriert. 30-Minuten Demo zeigt zuerst die Revierplanung mit drei Objekten, dann die Kalkulation für ein Neuangebot.
+Demo von zvoove buchen: Zeigen Sie sich live, wie zvoove Equal-Pay-Fristen automatisch überwacht, Lohnkostensteigerungen in die Kundenpreise durchrechnet und offene Forderungen im Debitorenmanagement sichtbar macht, bevor ein Zahlungsausfall entsteht.

@@ -1,56 +1,55 @@
-# KI Recruiting in der Personaldienstleistung: Was 2026 wirklich funktioniert
+# zvoove im Vergleich: Was die Software wirklich kann und wann sie zur Personaldienstleistung passt
 
-**Hauptkeyword:** ki recruiting
-**Nebenkeywords:** automatisierung recruiting prozess, recruiting software, active sourcing tools, applicant tracking system deutsch, recruiting tool zeitarbeit, recruiting automatisieren, recruiting funnel
-**Suchintention:** mixed. Top-of-Funnel Awareness (`ki recruiting`, `ki im recruiting`) zieht Recherche-Traffic, Mid-Funnel (`recruiting software`, `recruiting tool zeitarbeit`) zieht Anbietersuche.
+**Hauptkeyword:** zvoove alternative
+**Nebenkeywords:** zvoove referenzen, zvoove kunden, zvoove one, zvoove recruit, zvoove payroll, zvoove integration datev, zvoove cockpit
+**Suchintention:** commercial, Nutzer vergleichen aktiv Softwarelösungen für Personaldienstleistung und Zeitarbeit und stehen kurz vor einer Kaufentscheidung.
 **Empfohlene Wortanzahl:** 2500
 
 ## Zielgruppe
 
-HR-Verantwortliche und Senior Recruiter bei Personaldienstleistern mit 100 bis 500 Zeitarbeitnehmern. Im Tagesgeschäft viel Sourcing über Indeed und LinkedIn, aktuell unter Druck wegen Fachkräftemangel und steigender Time-to-Hire.
+Geschäftsführer oder IT-verantwortliche Niederlassungsleiter in Personaldienstleistungsunternehmen mit 10 bis 200 Mitarbeitern, die ihre bestehende Software ablösen oder erstmals eine All-in-One-Lösung einführen wollen.
 
 ## Schmerzpunkt
 
-Bewerber-Mangel kostet Aufträge: Kunden buchen Schichten, der Disponent kann sie nicht besetzen, Umsatz fehlt. Gleichzeitig sind Recruiter im Sourcing-Modus mit Lebensläufen, die manuell gegen Stellenprofile gematcht werden, was bei 50 offenen Positionen pro Woche nicht skaliert. KI-Tools versprechen Abhilfe, aber das Markt-Angebot ist unübersichtlich, und die meisten Pilotprojekte enttäuschen, weil entweder die Datenqualität schlecht ist oder die Integration in den Disposition-Workflow fehlt.
+Die aktuelle Software wächst nicht mit, Schnittstellen zu DATEV fehlen oder funktionieren nicht zuverlässig, und am Monatsende wird die Lohnabrechnung zur manuellen Fehlerquelle. Der Markt ist unübersichtlich, Anbieter werben alle mit denselben Features, und Referenzen von echten Zeitarbeitsunternehmen sind schwer zu finden. Ein Wechsel kostet Zeit und Geld, ein Nicht-Wechsel kostet Fehler und Personal.
 
 ## Ziel des Artikels
 
-Der Leser kann nach dem Lesen unterscheiden, welche Recruiting-Probleme KI heute praktisch löst und welche nicht, kennt die drei oder vier Tool-Kategorien (Matching, Chatbots, Active Sourcing, ATS-Erweiterungen), und hat ein Bewertungsraster, um Anbieter strukturiert zu prüfen.
+Der Leser soll verstehen, für welche Unternehmensgrößen und Prozesse zvoove konkret geeignet ist, welche Module zusammenspielen und ob ein Wechsel oder eine Alternative sinnvoller ist.
 
 ## Outline
 
-- H1: KI Recruiting in der Personaldienstleistung, was 2026 wirklich funktioniert
-- H2: Was KI im Recruiting konkret tut, und was nicht
-  - H3: Matching, wie Embeddings Lebensläufe gegen Stellenprofile vergleichen
-  - H3: Chatbots, 24-7 Bewerbervorqualifizierung, Vorteile und Grenzen
-  - H3: Active Sourcing, KI-gestützte Talentpool-Suche
-- H2: Die vier Tool-Kategorien im Markt
-  - H3: ATS mit KI-Add-on (Personio, Workday)
-  - H3: Spezialisierte Matching-Engines (hellohire, Beewise)
-  - H3: Chatbot-Lösungen (Mya, Ohne)
-  - H3: Sourcing-Plattformen mit KI (hireEZ, SeekOut)
-- H2: Was in der Personaldienstleistung anders ist
-  - H3: Hohes Bewerbungsvolumen pro Disponent
-  - H3: Schnelle Vermittlung statt langer Onboarding-Prozesse
-  - H3: Tarif- und AÜG-Compliance bei der Vermittlung
-- H2: Recruiting-Funnel optimieren
-  - H3: Top of Funnel, automatisiertes Multiposting
-  - H3: Middle of Funnel, Vorqualifizierung ohne manuellen Aufwand
-  - H3: Bottom of Funnel, schnellere Entscheidungen durch Daten
-- H2: Bewertungsraster für KI-Recruiting-Tools
-  - H3: DSGVO-Konformität und Bias-Risiko
-  - H3: Integration in Disposition und ERP
-  - H3: Trainings-Daten und Sprach-Unterstützung Deutsch
-- H2: Drei Sofort-Maßnahmen ohne neue Tools
-- H2: Wann ein Pilot Sinn ergibt und wie er aufgesetzt wird
-- H2: FAQ
+- H1: zvoove im Vergleich: Was die Software wirklich kann und wann sie zur Personaldienstleistung passt
+- H2: Was ist zvoove und für wen ist es gebaut?
+  - H3: Herkunft und Positionierung im Markt für Zeitarbeitssoftware
+  - H3: Welche Unternehmensgrößen profitieren am meisten?
+- H2: Die wichtigsten Module im Überblick
+  - H3: zvoove Recruit: Bewerbermanagement und KI-gestütztes Matching
+  - H3: zvoove Payroll: Lohnabrechnung und Abrechnungssicherheit
+  - H3: zvoove One: Zusammenspiel der Module auf einer Plattform
+  - H3: zvoove Cockpit: Kennzahlen und operative Steuerung
+  - H3: zvoove DMS und zvoove Cashlink: Dokumente und Zahlungsverkehr
+- H2: Integration in bestehende Systeme
+  - H3: zvoove und DATEV: Was die Schnittstelle leistet und wo sie Grenzen hat
+  - H3: Weitere Integrationen und API-Möglichkeiten
+- H2: Was sagen echte Kunden?
+  - H3: zvoove Referenzen aus der Zeitarbeit und Personaldienstleistung
+  - H3: Typische Kritikpunkte aus Nutzerbewertungen
+- H2: zvoove Alternativen im direkten Vergleich
+  - H3: Wann macht ein Wechsel zu zvoove Sinn?
+  - H3: Wann ist eine andere Lösung besser geeignet?
+  - H3: Vergleichstabelle: zvoove vs. Wettbewerber nach Kriterien
+- H2: Entscheidungshilfe: So gehen Sie die Softwareauswahl strukturiert an
+  - H3: Checkliste vor dem Anbietergespräch
+  - H3: Worauf Personaldienstleister bei der Implementierung achten sollten
+- H2: Fazit und nächste Schritte
 
 ## Benchmark URLs
 
-1. https://www.personio.de/blog/ki-recruiting/, rankt für `ki recruiting` im DACH, gutes Vorbild für Tool-Kategorien plus Bewertungskriterien.
-2. https://www.haufe.de/personal/hr-management/ki-im-recruiting/, Wissens-Standard mit gutem DSGVO-Bias-Abschnitt.
-3. https://join.com/blog/ki-recruiting-tools, ATS-Wettbewerber, zeigt wie kommerzielle Hooks in einen Wissensartikel eingearbeitet werden.
+1. https://www.capterra.com.de/software/159633/zvoove — Nutzerbewertungen mit konkreten Vor- und Nachteilen, direkt relevant für den Referenzen-Teil
+2. https://www.softwareadvice.de/zeitarbeit-software/ — Kategorieseite mit Alternativen und Vergleichsfunktion, zeigt Wettbewerbsumfeld
+3. https://www.zvoove.com/referenzen — Eigene Referenzseite des Anbieters, Benchmark für Trust-Elemente und Kundenstimmen
 
 ## Call to Action
 
-Recruiter, die ihre KI-Strategie für Zeitarbeit konkret machen wollen, können zvoove Recruit als Beispiel anschauen, wie ATS, Sourcing und Disposition in einem Workflow zusammenlaufen. Demo unter zvoove.de oder ein 15-Minuten-Gespräch mit Vertrieb für eine Kategorisierung des eigenen Setups.
+Demo-Termin für zvoove One anfragen, verbunden mit dem Hinweis auf eine kostenlose Erstberatung zur Modulkonfiguration für Personaldienstleister ab 20 Mitarbeitern.

@@ -1,51 +1,56 @@
-# Operative Anleitungen für Personaldienstleister: AÜG, Bewerber finden, Lohn
+# Personaldienstleister Softwarestack: Einsatzplanung, Lohnabrechnung und Kennzahlen in einem System
 
-**Hauptkeyword:** aüg
-**Nebenkeywords:** bewerber finden, lohnabrechnung sage, indeed alternative, lohnabrechnung erstellen, lohnabrechnung muster, stellenanzeige schalten, multiposting jobbörsen
-**Suchintention:** mixed mit Schwerpunkt informational. Operative Tagesfragen, die in Tool-Auswahl münden können.
-**Empfohlene Wortanzahl:** 2200
-
-> **Hinweis Strategie:** Dieser Cluster ist heterogen (drei Sub-Themen: AÜG-Wissen, Recruiting-Praxis, Lohnabrechnung). Per [`docs/results.md`](../../docs/results.md) ist die Empfehlung, die Top 3 Keywords nach Priority einzeln zu bearbeiten statt einen einzelnen Pillar zu schreiben. Dieser Brief konsolidiert die drei stärksten Sub-Themen in einem Rahmen-Artikel mit klaren Verlinkungen zu den Einzel-Themen.
+**Hauptkeyword:** saas personaldienstleister
+**Nebenkeywords:** personaleinsatzplanung, lohnabrechnung personaldienstleister, kennzahlen personaldienstleister, erp personaldienstleister, api personaldienstleister, personalakte führen, factoring personaldienstleister
+**Suchintention:** mixed, Leser suchen sowohl nach Orientierung beim Softwarekauf als auch nach konkreten Anleitungen für operative Prozesse wie Lohnabrechnung, Einsatzplanung und Personalaktenpflege.
+**Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Disponenten und Personalreferenten in Zeitarbeitsfirmen mit 50 bis 300 Zeitarbeitnehmern. Aktuelles Setup: Indeed plus eigene Karriereseite plus DATEV oder Sage für Lohn. Tagesfragen drehen sich um konkrete Aufgaben (Stellenanzeige schalten, Lohnabrechnung erstellen, AÜG-Vorgaben einhalten).
+Geschäftsführer oder Niederlassungsleiter eines mittelständischen Personaldienstleisters mit 3 bis 15 internen Mitarbeitern, der aktuell mit einer Mischung aus Excel, einer veralteten Branchensoftware und externem Lohnbüro arbeitet.
 
 ## Schmerzpunkt
 
-Drei Schmerzpunkte parallel: Recruiter-Mangel (Indeed wird teurer, Qualität sinkt), Lohnabrechnung kostet jeden Monat Stunden mit hoher Fehler-Quote, AÜG-Compliance ist im Tagesgeschäft schwer einzuhalten. Jede dieser drei Aufgaben hat eigene Tool-Welt, was zu fragmentierter IT-Landschaft führt.
+Daten liegen in drei verschiedenen Systemen, die nicht miteinander sprechen, was zu Doppelerfassung, Abrechnungsfehlern und verzögerten Kundenrechnungen führt. Der Geschäftsführer verliert jede Woche mehrere Stunden damit, Zahlen aus verschiedenen Quellen zusammenzuführen, bevor er überhaupt weiß, ob der Monat profitabel war. Gleichzeitig wächst der Compliance-Druck rund um Personalakten und Arbeitnehmerüberlassungsgesetz, ohne dass das bestehende System dabei hilft.
 
 ## Ziel des Artikels
 
-Der Leser versteht nach dem Lesen, wie diese drei operativen Themen zusammenhängen und wo ein integriertes System (statt drei separater Tools) Sinn macht. Verweise auf vertiefende Artikel zu jedem Sub-Thema.
+Der Leser soll verstehen, welche Kernprozesse eine moderne SaaS-Lösung für Personaldienstleister abdecken muss, und gezielt einschätzen können, ob sein aktueller Softwarestack diese Anforderungen erfüllt oder nicht.
 
 ## Outline
 
-- H1: Operative Anleitungen für Personaldienstleister, AÜG, Bewerber finden, Lohnabrechnung
-- H2: AÜG im Tagesgeschäft
-  - H3: Höchstüberlassungsdauer, was Disponenten wissen müssen
-  - H3: Equal Pay, was die Lohnbuchhaltung berechnen muss
-  - H3: Verlinkung auf den AÜG Pillar (Cluster 2)
-- H2: Bewerber finden 2026
-  - H3: Indeed Alternativen
-  - H3: Multiposting in Jobbörsen
-  - H3: Stellenanzeigen schalten, Pflicht-Inhalte und Optimierung
-- H2: Lohnabrechnung in der Praxis
-  - H3: Lohnabrechnung erstellen, Schritt für Schritt
-  - H3: Tools im Vergleich, Sage, DATEV, integrierte Lösungen
-  - H3: Lohnabrechnung-Muster zum Download
-- H2: Wo die drei Themen zusammenkommen
-  - H3: Warum fragmentierte Tools die Compliance gefährden
-  - H3: Integrierte Lösungen als Alternative
-- H2: Drei konkrete Sofort-Maßnahmen
-- H2: FAQ
+- H1: Personaldienstleister Softwarestack: Einsatzplanung, Lohnabrechnung und Kennzahlen in einem System
+- H2: Warum der typische Softwaremix in Personaldienstleistungsunternehmen scheitert
+  - H3: Das Excel-plus-Insellösung-Problem
+  - H3: Was ein fehlender Datenverbund wirklich kostet
+- H2: Personaleinsatzplanung: Grundlage für alles Weitere
+  - H3: Was eine brauchbare Einsatzplanung leisten muss
+  - H3: Verbindung zwischen Disposition, Zeiterfassung und Abrechnung
+- H2: Lohnabrechnung für Personaldienstleister: Sonderanforderungen gegenüber normalen Unternehmen
+  - H3: Branchenzuschläge, Equal Pay und tarifliche Besonderheiten
+  - H3: Lohnabrechnung intern oder über externen Dienstleister: Was rechnet sich ab welcher Größe
+  - H3: Schnittstellen zu DATEV und anderen Lohnsystemen per API
+- H2: Personalakte führen: gesetzliche Pflicht und operativer Nutzen
+  - H3: Pflichtinhalt einer Personalakte für gewerbliche Mitarbeiter in der Zeitarbeit
+  - H3: Digitale Personalakte und Datenschutz nach DSGVO
+- H2: Kennzahlen, die Personaldienstleister wirklich brauchen
+  - H3: Operative Kennzahlen: Auslastungsquote, Rekrutierungszeit, Fluktuationsrate
+  - H3: Finanzielle Kennzahlen: Deckungsbeitrag pro Mitarbeiter, DSO, Factoringquote
+  - H3: Warum Echtzeit-Reporting den Unterschied macht
+- H2: Factoring für Personaldienstleister: Integration in den Softwarestack
+  - H3: Wie Factoring den Liquiditätsdruck bei schnell wachsenden Unternehmen reduziert
+  - H3: Was eine gute ERP-Lösung bei der Factoringanbindung leisten sollte
+- H2: Worauf bei der Auswahl einer SaaS-Lösung für Personaldienstleister zu achten ist
+  - H3: Branchenspezifisch versus generische HR-Software: Ein direkter Vergleich
+  - H3: API-Fähigkeit als Entscheidungskriterium
+  - H3: Checkliste: 10 Fragen vor dem Softwarekauf
 
 ## Benchmark URLs
 
-1. https://www.haufe.de/personal/arbeitsrecht/aueg/, hohe Domain Authority für AÜG-Suchen, gute Verbindung zwischen Recht und Praxis.
-2. https://www.personio.de/blog/bewerber-finden/, gut rankender Recruiting-Artikel mit Cost-per-Hire-Schätzungen.
-3. https://www.datev.de/web/de/lohnabrechnung/, Marktführer für Lohnabrechnung, dominiert die SERP. zvoove muss komplementär ranken: Branchen-spezifisch für Zeitarbeit.
+1. https://www.haufe.de/personal/hr-management/personaleinsatzplanung_80_501376.html — stark bei Einsatzplanung, generisch, kein Branchenfokus Zeitarbeit, zeigt Lücke für spezialisierten Artikel
+2. https://www.sage.com/de-de/blog/lohnabrechnung-outsourcing/ — rankt für "lohnabrechnung externer dienstleister", behandelt aber nicht die spezifischen Tarifanforderungen der Zeitarbeit
+3. https://www.gmbh-chef.de/kennzahlen-personaldienstleister/ — relevantes Thema, aber oberflächlich und ohne Bezug zu Softwareintegration oder Echtzeit-Reporting
 
 ## Call to Action
 
-Wer im Tagesgeschäft mit drei oder mehr Tools jongliert (ATS plus Lohnabrechnung plus Compliance-Tracking), kann zvoove One als integrierte Lösung kennenlernen. Audit-Termin: 30 Minuten, Output ist eine Übersicht der aktuellen Tool-Landschaft plus die zvoove-Konsolidierungs-Sicht.
+Demo von zvoove buchen: Leser sieht in einem 30-minütigen Live-Walkthrough, wie Einsatzplanung, Lohnabrechnung, digitale Personalakte und Kennzahlen-Dashboard in zvoove ohne Schnittstellenbrüche zusammenspielen.

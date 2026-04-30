@@ -1,55 +1,59 @@
-# zvoove im Überblick: Module, Erfahrungen, Integration
+# Lohnabrechnung, Multiposting, AÜG: Was zvoove als All-in-One-Lösung für Personaldienstleister leistet
 
-**Hauptkeyword:** zvoove referenzen
-**Nebenkeywords:** zvoove dms, zvoove cockpit, zvoove payroll, zvoove cashlink, zvoove recruit, zvoove one, zvoove kunden, zvoove alternative
-**Suchintention:** kommerziell. 97 Prozent der Cluster-Keywords sind kommerziell, klassische Brand-Suchen im späten Funnel.
-**Empfohlene Wortanzahl:** 2500
+**Hauptkeyword:** lohnabrechnung erstellen
+**Nebenkeywords:** AÜG, bewerber finden, multiposting jobbörsen, stellenanzeige schalten, indeed alternative, lohnabrechnung sage, lohnabrechnung addison, lizenzmodell saas
+**Suchintention:** mixed, Nutzer suchen teils nach konkreten Tools und Anbietern (kommerziell), teils nach Erklärungen zu Prozessen wie Lohnabrechnung oder AÜG-Compliance (informational).
+**Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer und IT-Verantwortliche, die in der Software-Auswahl für Zeitarbeit oder Gebäudereinigung sind und zvoove als Kandidaten-Anbieter prüfen. Wollen Substanz vor dem ersten Demo-Termin: Erfahrungen anderer Kunden, Modul-Übersicht, Integrationen, Preisindikation.
+Geschäftsführer oder Niederlassungsleiter eines mittelgroßen Zeitarbeitsunternehmens (20 bis 200 Mitarbeitende intern) mit gewachsener Softwarelandschaft aus Insellösungen, die einen konsolidierten Überblick über moderne Alternativen suchen.
 
 ## Schmerzpunkt
 
-Vor einem Demo-Termin wollen Interessenten nicht den vollen Vertriebs-Pitch durchlaufen, sondern selbst beurteilen, ob zvoove zu ihrem Setup passt. Wer ist Kunde? Was macht jedes Modul konkret? Wie integriert sich das in DATEV oder die bestehende ERP? Was kostet es ungefähr? Aktuell sind diese Antworten verstreut über Produktseiten, Kunden-Cases und Marketing-Material. Brand-KD von 51 deutet darauf hin, dass Wettbewerber-Vergleichsseiten und Bewertungsplattformen die SERP belegen.
+Lohnabrechnung läuft noch über Addison oder Sage, Stellenanzeigen werden manuell auf jede Jobbörse einzeln hochgeladen, und AÜG-Fristen werden per Excel überwacht. Jede dieser Baustellen kostet Zeit und birgt Fehlerrisiken, die im Prüffall teuer werden. Der Anbieter weiß, dass er modernisieren muss, aber er sieht keinen klaren Weg, der nicht monatelange Migrationsprojekte bedeutet.
 
 ## Ziel des Artikels
 
-Der Leser bekommt eine zentrale, klar strukturierte Hub-Seite, die alle zvoove-Module mit ihren Funktionen, typischen Kunden und Integrationen zusammenführt. Nach dem Lesen weiß er, welche Module für ihn relevant sind und welche zwei oder drei er im Demo-Termin tiefer besprechen will.
+Der Leser soll verstehen, welche Kernprozesse eine moderne Personaldienstleister-Software abdecken muss, warum Insellösungen bei Lohn, Recruiting und Compliance langfristig teurer sind als eine integrierte Plattform, und warum zvoove als konkreter Anbieter in die engere Auswahl gehört.
 
 ## Outline
 
-- H1: zvoove im Überblick, Module, Erfahrungen, Integration
-- H2: Wer ist zvoove
-  - H3: Geschichte und Marktposition in DACH
-  - H3: Branchenfokus Zeitarbeit und Gebäudereinigung
-  - H3: Kundengrößen, von KMU bis Großbetrieb
-- H2: Die zvoove Module im Detail
-  - H3: zvoove One als integrierte Branchen-ERP
-  - H3: zvoove Cockpit für ATS und CRM
-  - H3: zvoove Payroll für tarif-konforme Lohnabrechnung
-  - H3: zvoove Recruit für Bewerbermanagement und Multiposting
-  - H3: zvoove CashLink für Factoring
-  - H3: zvoove DMS Plus für Dokumentenmanagement
-- H2: Wer arbeitet mit zvoove
-  - H3: Drei Kunden-Cases (Zeitarbeit KMU, Großbetrieb, Gebäudereinigung)
-  - H3: Aggregierte Kundenbewertungen
-- H2: Integrationen und Schnittstellen
-  - H3: DATEV, Bundesagentur für Arbeit, Indeed
-  - H3: Eigene REST-API für individuelle Anbindungen
-- H2: Preis-Indikation
-  - H3: Was zvoove One für eine Niederlassung mit 50 ZAN ungefähr kostet
-  - H3: Typische Implementierungskosten
-- H2: Wie der Auswahl-Prozess mit zvoove abläuft
-- H2: zvoove vs Alternativen, Worauf es ankommt
-- H2: Häufige Fragen vor dem Demo-Termin
+- H1: Lohnabrechnung, Multiposting, AÜG: Warum Personaldienstleister ihre Softwareinseln aufgeben
+- H2: Was Personaldienstleister heute wirklich unter einen Hut bringen müssen
+  - H3: Lohnabrechnung nach Tarifvertrag und Branchenzuschlag
+  - H3: AÜG-Compliance ohne manuelles Fristenmanagement
+  - H3: Bewerber finden und Stellen schalten ohne Doppelarbeit
+- H2: Das Problem mit gewachsenen Insellösungen
+  - H3: Lohnabrechnung in Sage oder Addison: Was gut war und was heute fehlt
+  - H3: Schnittstellenprobleme, Datenverluste, Pflegeaufwand
+  - H3: Was ein Wechsel wirklich kostet, und was er spart
+- H2: Multiposting: Stellenanzeigen einmal erstellen, überall schalten
+  - H3: Wie Multiposting in modernen Systemen funktioniert
+  - H3: Indeed-Alternativen und eigene Jobbörsenanbindung
+  - H3: Conversion-Tracking und Budgetkontrolle auf Anzeigenebene
+- H2: Lohnabrechnung erstellen im Zeitarbeitskontext: Besonderheiten und Fallstricke
+  - H3: Branchenzuschläge, Equal Pay und variable Vergütung
+  - H3: Was ein Lohnabrechnung-Muster im Zeitarbeitsumfeld abdecken muss
+  - H3: Prüfungssichere Dokumentation für Betriebsprüfungen
+- H2: AÜG-Anforderungen: Welche Softwarefunktionen wirklich helfen
+  - H3: Überlassungshöchstdauer automatisch überwachen
+  - H3: Dokumentationspflichten und digitale Personalakte
+- H2: SaaS-Lizenzmodelle im Vergleich: Was Personaldienstleister wissen müssen
+  - H3: Per-User, Per-Mitarbeiter, Flat-Rate: Welches Modell passt wann
+  - H3: Kalkulierbare Kosten vs. versteckte Implementierungskosten
+  - H3: Was ein SaaS-Lizenzmodell von klassischer On-Premise-Software unterscheidet
+- H2: zvoove im Überblick: Was die Plattform konkret abdeckt
+  - H3: Lohn, Disposition, Recruiting und Compliance in einer Oberfläche
+  - H3: Anbindung an Jobbörsen, Lohnarten und Behörden
+  - H3: Migrationspfad für Bestandskunden aus Sage, Addison und Co.
 
 ## Benchmark URLs
 
-1. https://www.omr.com/de/reviews/product/zvoove-one, OMR Reviews rankt für `zvoove erfahrungen`. zvoove eigene Erfahrungen-Seite muss die Plattform-Bewertung kontextualisieren.
-2. https://www.landwehr-software.de/, Wettbewerber, klassische Hub-Seiten-Struktur (Module-Überblick plus Kunden-Cases) als Format-Vorbild.
-3. https://www.personio.de/produkt/, B2B SaaS Gold-Standard für Modul-Übersichts-Seiten (klare Hierarchie, Tour, Integrationen).
+1. https://www.sage.com/de-de/blog/lohnabrechnung-erstellen/ — rankt auf Kernbegriff "lohnabrechnung erstellen", zeigt welche Tiefe Google für dieses Keyword erwartet
+2. https://www.haufe.de/personal/hr-management/zeitarbeit-aeug-ueberlassungshoechstdauer_80_425764.html — hohe Autorität bei AÜG-Themen, direkte Konkurrenz um informational Traffic im Compliance-Segment
+3. https://www.stellenanzeigen.de/ratgeber/multiposting/ — rankstarker Ratgeberartikel zum Thema Multiposting, zeigt Nutzererwartung an Erklärtiefe und Formatierung
 
 ## Call to Action
 
-Konkrete Module direkt erleben, mit den eigenen Daten als Sandbox. Persönliche Demo unter zvoove.de buchen. Alternativ ein Lead-Magnet in Form eines Modul-Vergleichs-PDFs, der zwei zvoove Module in 5 Minuten gegenüberstellt.
+Demo anfordern: Leser werden am Artikelende eingeladen, sich eine Live-Demo von zvoove zeigen zu lassen, mit Fokus auf den eigenen Engpassbereich (Lohn, Recruiting oder Compliance), wählbar über ein kurzes Kontaktformular mit drei Optionsfeldern.

@@ -81,7 +81,6 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
 **Schutz-Mechanismen:**
 
-- **`dry_run=true`** im `pipeline-full.yml` Workflow überspringt alle LLM-Calls und schreibt Stubs. Default ist `false` (echter Lauf), aber zum Testen explizit umstellbar.
 - **`workflow_dispatch`** ist die einzige Trigger-Option für `pipeline-full.yml` — kein versehentliches Auslösen über Push.
 - **Secrets sind `null` bei fehlender Konfiguration**; der Workflow bricht früh ab mit `::error::ANTHROPIC_API_KEY secret missing` statt blind zu starten.
 - **API-Keys nie in Logs** — der Workflow prüft nur die Länge (`${#ANTHROPIC_API_KEY}`), nicht den Wert.

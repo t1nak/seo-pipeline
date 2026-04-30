@@ -9,7 +9,7 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: de
-  favicon: assets/cluster_overview.png
+  favicon: assets/favicon.svg
   palette:
     - scheme: default
       primary: custom

@@ -25,6 +25,25 @@ Alle Provider sind per CLI-Flag oder `PIPELINE_*` Environment-Variable wählbar.
 | Keyword-Quelle | `--source` | `manual`, `live` |
 | Enrich-Provider | `--provider` | `estimate` (Heuristik), `dataforseo` |
 
+### Was kostet ein Lauf?
+
+Bei der aktuellen Konfiguration (10 Cluster, Anthropic API mit Prompt Caching) rund **0,15 bis 0,25 USD pro Lauf** für die Brief-Generierung. Optionaler DataForSEO Live-Lookup für 500 Keywords: ~0,75 USD. Gesamt **~1 USD pro voller Lauf**, bei wöchentlicher Ausführung etwa 50 USD pro Jahr. Detail in §12 der [Case Study](case-study.md).
+
+### Wie viele Cluster werden erkannt?
+
+HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Auf der aktuellen 500-Keyword-Baseline: **10 Cluster plus 38 Ausreißer** (7,6 Prozent als Rauschen markiert). Hyperparameter-Sweep und Validierung in der [Methodik](methodology.md).
+
+### Welche Daten werden lokal gespeichert?
+
+Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
+
+- `data/keywords.csv` (angereicherte Keyword-Liste)
+- `output/clustering/` (Embeddings, UMAP-Reduktionen, Cluster-Map, Diagnostik-Charts)
+- `output/briefings/cluster_*.md` (Content-Briefings je Cluster)
+- `output/reporting/index.html` (konsolidiertes Dashboard)
+
+API-Keys liegen in `.env` (lokal) bzw. GitHub Secrets (CI), nicht im Repo.
+
 ## Das Problem in einem Satz
 
 Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Traffic zu gewinnen, der echte Kaufinteressenten bringt. Dafür braucht es eine klare Antwort auf die Frage: Welche Themen lohnen sich wirklich, und in welcher Reihenfolge?

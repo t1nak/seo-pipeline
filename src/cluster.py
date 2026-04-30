@@ -71,37 +71,22 @@ HDBSCAN_MIN_SAMPLES = settings.cluster_hdbscan_ms
 HDBSCAN_METHOD = settings.cluster_hdbscan_method
 HDBSCAN_METRIC = settings.cluster_hdbscan_metric
 
-# Manual cluster labels, derived once from inspection of the recovered run.
-# Keeping them stable means re-runs with random_state=42 produce the same
-# IDs and the labels still apply. If keywords change materially, regenerate
-# (see docs/decisions.md).
-CLUSTER_LABELS_EN = {
-    -1: "Noise / outliers",
-    0: "Factoring fundamentals",
-    1: "Industry & labour law catch-all",
-    2: "Commercial Zeit/Software heads",
-    3: "Recruiting & AI tooling",
-    4: "Brand: zvoove product names",
-    5: "Operational how-to (mixed)",
-    6: "Mid-funnel HR ops",
-    7: "Gebäudereinigung vertical",
-    8: "Digitalisation in practice",
-    9: "B2B SaaS category heads",
-}
+def _load_cluster_labels() -> tuple[dict[int, str], dict[int, str]]:
+    """Load EN and DE cluster labels from data/cluster_labels.yaml.
 
-CLUSTER_LABELS_DE = {
-    -1: "Rauschen / Ausreißer",
-    0: "Factoring-Grundlagen",
-    1: "Branche & Arbeitsrecht (Sammelbecken)",
-    2: "Kommerzielle Zeit/Software-Heads",
-    3: "Recruiting & KI-Tools",
-    4: "Marke: zvoove Produktnamen",
-    5: "Operative Anleitungen (gemischt)",
-    6: "HR-Mid-Funnel",
-    7: "Gebäudereinigung-Vertikale",
-    8: "Digitalisierung praktisch",
-    9: "B2B-SaaS Kategorie-Heads",
-}
+    Keys are integers (cluster IDs, -1 = noise). Missing IDs are handled
+    by .get() fallbacks at every call site, so non-default mcs values that
+    produce extra clusters never raise a KeyError.
+    """
+    import yaml
+    with open(ROOT / "data" / "cluster_labels.yaml") as f:
+        data = yaml.safe_load(f)
+    en = {int(k): v for k, v in data.get("en", {}).items()}
+    de = {int(k): v for k, v in data.get("de", {}).items()}
+    return en, de
+
+
+CLUSTER_LABELS_EN, CLUSTER_LABELS_DE = _load_cluster_labels()
 
 # Files written by each step. Keep a single source of truth so docs and code
 # agree on what lives where.

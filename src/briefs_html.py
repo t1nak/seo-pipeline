@@ -287,12 +287,25 @@ def _badge(label: str, kind: str) -> str:
     return f'<span class="badge badge-{kind}">{htmllib.escape(label)}</span>'
 
 
+def _safe_label(value, display_id: int) -> str:
+    """Return a string label, falling back when the cell is missing/NaN/empty.
+
+    pandas reads empty CSV cells as float NaN, and `NaN or fallback`
+    evaluates to NaN (NaN is truthy), so the bare `or` pattern leaks NaN
+    into htmllib.escape and crashes. This helper coerces both NaN and
+    empty strings to the generic "Cluster N" fallback.
+    """
+    if isinstance(value, str) and value.strip():
+        return value
+    return f"Cluster {display_id}"
+
+
 def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
                  brief_prefix: str = "") -> str:
     """Build one cluster card."""
     cid = int(profile_row["cluster_id"])
     display_id = cid + 1
-    label = profile_row["label_de"] or f"Cluster {display_id}"
+    label = _safe_label(profile_row["label_de"], display_id)
     n_kw = int(profile_row["n_keywords"])
     total_sv = int(profile_row["total_sv"])
     median_kd = int(profile_row["median_kd"])
@@ -437,7 +450,7 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
     for _, r in real.iterrows():
         cid = int(r["cluster_id"])
         display_id = cid + 1
-        title = titles.get(cid, r["label_de"] or f"Cluster {display_id}")
+        title = titles.get(cid, _safe_label(r["label_de"], display_id))
         sv = int(r["total_sv"])
         pct_comm = int(r["pct_commercial"])
 

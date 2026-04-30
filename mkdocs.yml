@@ -52,10 +52,9 @@ nav:
       - Entscheidungen: decisions.md
     - Ergebnisse: results.md
     - Technical Review: technical_review.md
-  - Live Demo:
-    - Cluster Karte: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
-    - Reporting: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
-    - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
+  - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
+  - Report: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
+  - Cluster Briefs: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
   - GitHub: https://github.com/t1nak/seo-pipeline
 
 markdown_extensions:
@@ -114,9 +113,8 @@ plugins:
             Entscheidungen: Decisions
             Ergebnisse: Results
             Technical Review: Technical Review
-            Live Demo: Live Demo
-            Cluster Karte: Cluster Map
-            Reporting: Reporting
+            Cluster Map: Cluster Map
+            Report: Report
             Cluster Briefs: Cluster Briefs
 
 extra:

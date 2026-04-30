@@ -1,128 +1,123 @@
-<svg width="100%" viewBox="0 0 680 660" role="img" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<svg width="100%" viewBox="0 0 680 700" role="img" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
   <title>SEO Keyword Pipeline · Architektur</title>
-  <desc>Vier modulare Pipeline-Schritte mit auswechselbaren Provider-Optionen, plus Infrastruktur-Zeile am Fuß.</desc>
+  <desc>Vier modulare Pipeline-Phasen mit auswechselbaren Provider-Optionen, plus Infrastruktur-Zeile am Fuß.</desc>
 
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M2 1L8 5L2 9" fill="none" stroke="#9c9a92" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#cfcdc4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </marker>
     <style>
+      text { fill: #f5f5f0; }
       .container { fill: #444441; stroke: #b4b2a9; stroke-width: 0.5; }
-      .container-label { fill: #b4b2a9; font-size: 12px; }
-      .step-blue   { fill: #0c447c; stroke: #85b7eb; stroke-width: 0.5; }
-      .step-orange { fill: #633806; stroke: #ef9f27; stroke-width: 0.5; }
-      .step-green  { fill: #085041; stroke: #5dcaa5; stroke-width: 0.5; }
-      .step-purple { fill: #3c3489; stroke: #afa9ec; stroke-width: 0.5; }
-      .title-blue   { fill: #b5d4f4; font-size: 14px; font-weight: 500; }
-      .title-orange { fill: #fac775; font-size: 14px; font-weight: 500; }
-      .title-green  { fill: #9fe1cb; font-size: 14px; font-weight: 500; }
-      .title-purple { fill: #cecbf6; font-size: 14px; font-weight: 500; }
-      .desc-blue   { fill: #85b7eb; font-size: 12px; }
-      .desc-orange { fill: #ef9f27; font-size: 12px; }
-      .desc-green  { fill: #5dcaa5; font-size: 12px; }
-      .desc-purple { fill: #afa9ec; font-size: 12px; }
-      .out { font-size: 11px; font-style: italic; }
-      .out-blue   { fill: #85b7eb; }
-      .out-orange { fill: #ef9f27; }
-      .out-green  { fill: #5dcaa5; }
-      .out-purple { fill: #afa9ec; }
-      .chip-blue   { fill: #0c447c; stroke: #85b7eb; stroke-width: 0.7; }
-      .chip-orange { fill: #633806; stroke: #ef9f27; stroke-width: 0.7; }
-      .chip-green  { fill: #085041; stroke: #5dcaa5; stroke-width: 0.7; }
-      .chip-purple { fill: #3c3489; stroke: #afa9ec; stroke-width: 0.7; }
-      .chip-text { font-size: 10px; font-weight: 500; }
-      .chip-text-blue   { fill: #b5d4f4; }
-      .chip-text-orange { fill: #fac775; }
-      .chip-text-green  { fill: #9fe1cb; }
-      .chip-text-purple { fill: #cecbf6; }
-      .arrow-line { stroke: #9c9a92; stroke-width: 1.5; opacity: 0.5; fill: none; }
-      .infra-label { fill: #c2c0b6; font-size: 12px; opacity: 0.45; }
-      .infra-box { fill: #444441; stroke: #b4b2a9; stroke-width: 0.5; }
-      .infra-text { fill: #d3d1c7; font-size: 13px; font-weight: 500; }
+      .container-label { fill: #d6d4ca; font-size: 13px; font-weight: 500; }
+      .step-blue   { fill: #0c447c; stroke: #85b7eb; stroke-width: 0.8; }
+      .step-orange { fill: #633806; stroke: #ef9f27; stroke-width: 0.8; }
+      .step-green  { fill: #085041; stroke: #5dcaa5; stroke-width: 0.8; }
+      .step-purple { fill: #3c3489; stroke: #afa9ec; stroke-width: 0.8; }
+      .title       { font-size: 15px; font-weight: 600; }
+      .title-blue   { fill: #e1edfb; }
+      .title-orange { fill: #fde2b8; }
+      .title-green  { fill: #d8f1e6; }
+      .title-purple { fill: #e6e3fa; }
+      .desc { font-size: 13px; fill: #ffffff; }
+      .chip-blue   { fill: #1a5494; stroke: #cfe1f6; stroke-width: 0.8; }
+      .chip-orange { fill: #7c4708; stroke: #fac775; stroke-width: 0.8; }
+      .chip-green  { fill: #0a6852; stroke: #b5e3d0; stroke-width: 0.8; }
+      .chip-purple { fill: #4a40a3; stroke: #d3cff5; stroke-width: 0.8; }
+      .chip-text   { font-size: 11px; font-weight: 600; fill: #ffffff; }
+      .out         { font-size: 12px; font-weight: 500; }
+      .out-blue    { fill: #cfe1f6; }
+      .out-orange  { fill: #fac775; }
+      .out-green   { fill: #b5e3d0; }
+      .out-purple  { fill: #d3cff5; }
+      .arrow-line  { stroke: #cfcdc4; stroke-width: 1.6; opacity: 0.7; fill: none; }
+      .infra-label { fill: #d6d4ca; font-size: 13px; font-weight: 500; opacity: 0.65; }
+      .infra-box   { fill: #444441; stroke: #b4b2a9; stroke-width: 0.5; }
+      .infra-text  { fill: #f0eee2; font-size: 13px; font-weight: 600; }
       .mid { text-anchor: middle; dominant-baseline: central; }
     </style>
   </defs>
 
-  <!-- Outer container: GitHub Actions -->
-  <rect x="20" y="20" width="640" height="620" rx="16" class="container"/>
-  <text x="40" y="44" class="container-label" dominant-baseline="central">GitHub Actions · Auslöser per Konfiguration: Cron-Schedule, manueller Trigger, Push</text>
+  <!-- Outer container -->
+  <rect x="20" y="20" width="640" height="660" rx="16" class="container"/>
+  <text x="40" y="46" class="container-label" dominant-baseline="central">GitHub Actions · Auslöser per Konfiguration: Cron-Schedule, manueller Trigger, Push</text>
 
-  <!-- Step 1: Get + Enrich Keywords -->
-  <rect x="60" y="60" width="560" height="110" rx="8" class="step-blue"/>
-  <text x="340" y="84" class="title-blue mid">Step 1 · Keywords holen und anreichern</text>
-  <text x="340" y="108" class="desc-blue mid">Eine Quelle wählen. Liefert Volumen, Difficulty und SERP-Merkmale je Keyword.</text>
+  <!-- Step 1 -->
+  <rect x="60" y="64" width="560" height="120" rx="10" class="step-blue"/>
+  <text x="340" y="90"  class="title title-blue mid">Step 1 · Keywords holen und anreichern</text>
+  <text x="340" y="114" class="desc mid">Eine Quelle wählen. Liefert Volumen, Difficulty und SERP-Merkmale je Keyword.</text>
   <g>
-    <rect x="168" y="124" width="80" height="22" rx="11" class="chip-blue"/>
-    <text x="208" y="135" class="chip-text chip-text-blue mid">SEMrush API</text>
-    <rect x="256" y="124" width="80" height="22" rx="11" class="chip-blue"/>
-    <text x="296" y="135" class="chip-text chip-text-blue mid">DataForSEO</text>
-    <rect x="344" y="124" width="80" height="22" rx="11" class="chip-blue"/>
-    <text x="384" y="135" class="chip-text chip-text-blue mid">LLM-Set</text>
-    <rect x="432" y="124" width="80" height="22" rx="11" class="chip-blue"/>
-    <text x="472" y="135" class="chip-text chip-text-blue mid">Manuelle Liste</text>
+    <rect x="168" y="130" width="80" height="24" rx="12" class="chip-blue"/>
+    <text x="208" y="142" class="chip-text mid">SEMrush API</text>
+    <rect x="256" y="130" width="80" height="24" rx="12" class="chip-blue"/>
+    <text x="296" y="142" class="chip-text mid">DataForSEO</text>
+    <rect x="344" y="130" width="80" height="24" rx="12" class="chip-blue"/>
+    <text x="384" y="142" class="chip-text mid">LLM-Set</text>
+    <rect x="432" y="130" width="80" height="24" rx="12" class="chip-blue"/>
+    <text x="472" y="142" class="chip-text mid">Manuelle Liste</text>
   </g>
-  <text x="340" y="160" class="out out-blue mid">Output: keywords.json</text>
+  <text x="340" y="172" class="out out-blue mid">Output: keywords.json</text>
 
-  <line x1="340" y1="170" x2="340" y2="190" marker-end="url(#arrow)" class="arrow-line"/>
+  <line x1="340" y1="184" x2="340" y2="206" marker-end="url(#arrow)" class="arrow-line"/>
 
-  <!-- Step 2: Clustering -->
-  <rect x="60" y="190" width="560" height="110" rx="8" class="step-orange"/>
-  <text x="340" y="214" class="title-orange mid">Step 2 · Semantisches Clustering</text>
-  <text x="340" y="238" class="desc-orange mid">Embeddings, Dimensionsreduktion, Dichte-Clustering. Anzahl ergibt sich aus den Daten.</text>
+  <!-- Step 2 -->
+  <rect x="60" y="206" width="560" height="120" rx="10" class="step-orange"/>
+  <text x="340" y="232" class="title title-orange mid">Step 2 · Semantisches Clustering</text>
+  <text x="340" y="256" class="desc mid">Embeddings, Dimensionsreduktion, Dichte-Clustering. Anzahl ergibt sich aus den Daten.</text>
   <g>
-    <rect x="212" y="254" width="80" height="22" rx="11" class="chip-orange"/>
-    <text x="252" y="265" class="chip-text chip-text-orange mid">MiniLM</text>
-    <rect x="300" y="254" width="80" height="22" rx="11" class="chip-orange"/>
-    <text x="340" y="265" class="chip-text chip-text-orange mid">UMAP</text>
-    <rect x="388" y="254" width="80" height="22" rx="11" class="chip-orange"/>
-    <text x="428" y="265" class="chip-text chip-text-orange mid">HDBSCAN</text>
+    <rect x="212" y="272" width="80" height="24" rx="12" class="chip-orange"/>
+    <text x="252" y="284" class="chip-text mid">MiniLM</text>
+    <rect x="300" y="272" width="80" height="24" rx="12" class="chip-orange"/>
+    <text x="340" y="284" class="chip-text mid">UMAP</text>
+    <rect x="388" y="272" width="80" height="24" rx="12" class="chip-orange"/>
+    <text x="428" y="284" class="chip-text mid">HDBSCAN</text>
   </g>
-  <text x="340" y="290" class="out out-orange mid">Output: clusters.json (Name, Keywords, Intent)</text>
+  <text x="340" y="314" class="out out-orange mid">Output: clusters.json (Name, Keywords, Intent)</text>
 
-  <line x1="340" y1="300" x2="340" y2="320" marker-end="url(#arrow)" class="arrow-line"/>
+  <line x1="340" y1="326" x2="340" y2="348" marker-end="url(#arrow)" class="arrow-line"/>
 
-  <!-- Step 3: Briefings -->
-  <rect x="60" y="320" width="560" height="110" rx="8" class="step-green"/>
-  <text x="340" y="344" class="title-green mid">Step 3 · Content-Briefings</text>
-  <text x="340" y="368" class="desc-green mid">Pro Cluster: Intention, Persona, Seitenstruktur, SERP-Lücken, CTA. Provider auswechselbar.</text>
+  <!-- Step 3 -->
+  <rect x="60" y="348" width="560" height="120" rx="10" class="step-green"/>
+  <text x="340" y="374" class="title title-green mid">Step 3 · Content-Briefings</text>
+  <text x="340" y="398" class="desc mid">Pro Cluster: Intention, Persona, Seitenstruktur, SERP-Lücken, CTA. Provider auswechselbar.</text>
   <g>
-    <rect x="212" y="384" width="80" height="22" rx="11" class="chip-green"/>
-    <text x="252" y="395" class="chip-text chip-text-green mid">Anthropic</text>
-    <rect x="300" y="384" width="80" height="22" rx="11" class="chip-green"/>
-    <text x="340" y="395" class="chip-text chip-text-green mid">OpenAI</text>
-    <rect x="388" y="384" width="80" height="22" rx="11" class="chip-green"/>
-    <text x="428" y="395" class="chip-text chip-text-green mid">Stub (Dry-Run)</text>
+    <rect x="212" y="414" width="80" height="24" rx="12" class="chip-green"/>
+    <text x="252" y="426" class="chip-text mid">Anthropic</text>
+    <rect x="300" y="414" width="80" height="24" rx="12" class="chip-green"/>
+    <text x="340" y="426" class="chip-text mid">OpenAI</text>
+    <rect x="388" y="414" width="80" height="24" rx="12" class="chip-green"/>
+    <text x="428" y="426" class="chip-text mid">Stub (Dry-Run)</text>
   </g>
-  <text x="340" y="420" class="out out-green mid">Output: briefing_[cluster].md, versioniert in Git</text>
+  <text x="340" y="456" class="out out-green mid">Output: briefing_[cluster].md, versioniert in Git</text>
 
-  <line x1="340" y1="430" x2="340" y2="450" marker-end="url(#arrow)" class="arrow-line"/>
+  <line x1="340" y1="468" x2="340" y2="490" marker-end="url(#arrow)" class="arrow-line"/>
 
-  <!-- Step 4: Reporting -->
-  <rect x="60" y="450" width="560" height="110" rx="8" class="step-purple"/>
-  <text x="340" y="474" class="title-purple mid">Step 4 · Reporting</text>
-  <text x="340" y="498" class="desc-purple mid">Konsolidiertes Dashboard plus Status-Push. Lieferziele austauschbar.</text>
+  <!-- Step 4 -->
+  <rect x="60" y="490" width="560" height="120" rx="10" class="step-purple"/>
+  <text x="340" y="516" class="title title-purple mid">Step 4 · Reporting</text>
+  <text x="340" y="540" class="desc mid">Konsolidiertes Dashboard plus Status-Push. Lieferziele austauschbar.</text>
   <g>
-    <rect x="168" y="514" width="80" height="22" rx="11" class="chip-purple"/>
-    <text x="208" y="525" class="chip-text chip-text-purple mid">GitHub Pages</text>
-    <rect x="256" y="514" width="80" height="22" rx="11" class="chip-purple"/>
-    <text x="296" y="525" class="chip-text chip-text-purple mid">Notion</text>
-    <rect x="344" y="514" width="80" height="22" rx="11" class="chip-purple"/>
-    <text x="384" y="525" class="chip-text chip-text-purple mid">Airtable</text>
-    <rect x="432" y="514" width="80" height="22" rx="11" class="chip-purple"/>
-    <text x="472" y="525" class="chip-text chip-text-purple mid">Slack</text>
+    <rect x="168" y="556" width="80" height="24" rx="12" class="chip-purple"/>
+    <text x="208" y="568" class="chip-text mid">GitHub Pages</text>
+    <rect x="256" y="556" width="80" height="24" rx="12" class="chip-purple"/>
+    <text x="296" y="568" class="chip-text mid">Notion</text>
+    <rect x="344" y="556" width="80" height="24" rx="12" class="chip-purple"/>
+    <text x="384" y="568" class="chip-text mid">Airtable</text>
+    <rect x="432" y="556" width="80" height="24" rx="12" class="chip-purple"/>
+    <text x="472" y="568" class="chip-text mid">Slack</text>
   </g>
-  <text x="340" y="550" class="out out-purple mid">Output: HTML-Dashboard, API-Push, Notification</text>
+  <text x="340" y="598" class="out out-purple mid">Output: HTML-Dashboard, API-Push, Notification</text>
 
   <!-- Infrastructure row -->
-  <text x="340" y="582" class="infra-label mid" dominant-baseline="auto">Infrastruktur · unsichtbar aber überall</text>
+  <text x="340" y="630" class="infra-label mid" dominant-baseline="auto">Infrastruktur · unsichtbar aber überall</text>
   <g>
-    <rect x="60"  y="592" width="130" height="32" rx="8" class="infra-box"/>
-    <text x="125" y="608" class="infra-text mid">Secrets</text>
-    <rect x="205" y="592" width="130" height="32" rx="8" class="infra-box"/>
-    <text x="270" y="608" class="infra-text mid">Run-Logs</text>
-    <rect x="350" y="592" width="130" height="32" rx="8" class="infra-box"/>
-    <text x="415" y="608" class="infra-text mid">Retry-Logik</text>
-    <rect x="495" y="592" width="125" height="32" rx="8" class="infra-box"/>
-    <text x="557" y="608" class="infra-text mid">Git-Versionierung</text>
+    <rect x="60"  y="640" width="130" height="32" rx="8" class="infra-box"/>
+    <text x="125" y="656" class="infra-text mid">Secrets</text>
+    <rect x="205" y="640" width="130" height="32" rx="8" class="infra-box"/>
+    <text x="270" y="656" class="infra-text mid">Run-Logs</text>
+    <rect x="350" y="640" width="130" height="32" rx="8" class="infra-box"/>
+    <text x="415" y="656" class="infra-text mid">Retry-Logik</text>
+    <rect x="495" y="640" width="125" height="32" rx="8" class="infra-box"/>
+    <text x="557" y="656" class="infra-text mid">Git-Versionierung</text>
   </g>
 </svg>

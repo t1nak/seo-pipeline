@@ -288,13 +288,31 @@ def step_cluster() -> pd.DataFrame:
 
 
 def step_label() -> pd.DataFrame:
-    """Attach human-readable EN and DE labels by joining on cluster id."""
+    """Attach human-readable EN and DE labels by joining on cluster id.
+
+    Curated labels in CLUSTER_LABELS_EN/DE only cover the 10-cluster
+    baseline. If the active HDBSCAN config produces additional clusters
+    (e.g. mcs=10 yields 13), fall back to a generic "Cluster N" label
+    so downstream steps don't break with KeyError.
+    """
     df = pd.read_csv(F_LABELED)
-    df["hdb_label"] = df["hdb"].map(CLUSTER_LABELS_EN)
-    df["hdb_label_de"] = df["hdb"].map(CLUSTER_LABELS_DE)
+
+    def _label_en(cid: int) -> str:
+        if cid == -1:
+            return ""
+        return CLUSTER_LABELS_EN.get(int(cid), f"Cluster {int(cid) + 1}")
+
+    def _label_de(cid: int) -> str:
+        if cid == -1:
+            return ""
+        return CLUSTER_LABELS_DE.get(int(cid), f"Cluster {int(cid) + 1}")
+
+    df["hdb_label"] = df["hdb"].apply(_label_en)
+    df["hdb_label_de"] = df["hdb"].apply(_label_de)
     df.to_csv(F_LABELED, index=False)
-    n = df["hdb_label"].notna().sum()
-    logger.info(f"attached labels to {n}/{len(df)} rows")
+    curated = sum(1 for cid in df["hdb"].unique() if cid != -1 and int(cid) in CLUSTER_LABELS_EN)
+    total = sum(1 for cid in df["hdb"].unique() if cid != -1)
+    logger.info(f"attached labels to {len(df)} rows ({curated}/{total} clusters use curated labels)")
     return df
 
 
@@ -368,7 +386,7 @@ def step_charts() -> None:
     for i, cid in enumerate(clusters):
         sub = df[df["hdb"] == cid]
         ax.scatter(sub["x"], sub["y"], c=[cmap[i]], s=14, alpha=0.85,
-                   label=f"{cid + 1}: {CLUSTER_LABELS_EN[cid][:30]}")
+                   label=f"{cid + 1}: {CLUSTER_LABELS_EN.get(int(cid), f'Cluster {int(cid) + 1}')[:30]}")
         cx, cy = sub["x"].mean(), sub["y"].mean()
         ax.text(cx, cy, str(cid + 1), fontsize=11, fontweight="bold",
                 ha="center", va="center",

@@ -1,6 +1,6 @@
 # Prozessarchitektur
 
-Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Anbindung an einen Revenue Stack.
+Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Einbindung in externe Systeme.
 
 ## Pipeline auf einen Blick
 
@@ -16,7 +16,7 @@ Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute ak
 
 *Klick auf das Diagramm öffnet eine Vollbild-Ansicht zum Zoomen.*
 
-## Schichten und Verantwortlichkeiten
+## Module und Aufgaben
 
 | Schicht | Modul | Verantwortlich für |
 |---|---|---|
@@ -82,7 +82,7 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 
 Der Snapshot-Mechanismus in `output/_archive/` schützt vor unbeabsichtigtem Datenverlust: vor jedem `cluster --step all` wird der aktuelle Output Stand pinned.
 
-## Anbindung an einen Revenue Stack
+## Einbindung in externe Systeme
 
 Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes System. Pro Schritt gibt es eine klare Andockung an externe Systeme:
 

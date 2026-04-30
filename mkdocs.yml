@@ -9,7 +9,7 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: de
-  favicon: assets/cluster_overview.png
+  favicon: assets/favicon.svg
   palette:
     - scheme: default
       primary: custom
@@ -50,10 +50,10 @@ nav:
     - Ergebnisse: results.md
     - Developer Guide: developer-guide.md
     - Technical Review: technical_review.md
-  - Example Output:
+  - Beispiel-Output:
+    - Übersicht: example-output.md
     - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
     - Reporting Dashboard: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
-    - Example Brief: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
   - Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
   - GitHub: https://github.com/t1nak/seo-pipeline
 

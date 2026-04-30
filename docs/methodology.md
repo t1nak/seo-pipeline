@@ -27,16 +27,18 @@ Diese Seite erklärt die methodischen Entscheidungen in der Cluster Pipeline mit
 ## 1. Pipeline auf einen Blick
 
 ```
-data/keywords.csv  ──▶  clean      ──▶  embed   ──▶  reduce   ──▶  cluster
-                                                            │            │
-                                                            ▼            ▼
-                                                       umap_2d.npy   keywords_labeled.csv
-                                                            │
-                                                            ▼
-                                          label  ──▶  profile  ──▶  charts  ──▶  viz
+keywords.manual.csv
+        │
+        ▼
+    discover ──▶ enrich ──▶ cluster ──▶ brief ──▶ report
+                   │            │          │          │
+                   ▼            ▼          ▼          ▼
+              keywords.csv  cluster_map briefings/ reporting/
+              SV · KD · CPC charts/     *.md      index.html
+              priority       profiles.csv
 ```
 
-Acht Schritte, jeder einzeln re-runnbar. Die zentralen Hyperparameter sind als Konstanten oben in `src/cluster.py` festgehalten, damit Code und Doku übereinstimmen.
+Fünf Schritte, jeder einzeln re-runnbar via `python pipeline.py --step <name>`. Der `cluster`-Schritt enthält acht interne Teilschritte (clean, embed, reduce, cluster, label, profile, charts, viz). Die zentralen Hyperparameter stehen als Konstanten in `src/cluster.py`, damit Code und Doku übereinstimmen.
 
 ## 2. Embeddings: warum [`paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
 
@@ -170,7 +172,7 @@ Die Wahl fällt auf **`mcs=12, ms=5, eom`**. Dieser Parameter ist die wichtigste
 
 ## 6. Validierung
 
-Drei Ebenen, die unabhängig voneinander Vertrauen aufbauen.
+Die Cluster-Qualität wird auf drei unabhängigen Wegen geprüft.
 
 ### 6.1 [Silhouette Score](https://en.wikipedia.org/wiki/Silhouette_(clustering))
 

@@ -2,29 +2,7 @@
 
 Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch Lücken, was würde ich in Produktion ergänzen. Dieser Bericht ist bewusst ehrlich, nicht werbend, und macht das Repo in unter 30 Minuten technisch beurteilbar.
 
-## 1. Architektur und Modul-Schnitt
-
-### Was solide ist
-
-- **Vier modulare Phasen, fünf entkoppelte Skripte mit klaren Schnittstellen.** Jedes Skript liest und schreibt explizite Dateien (`data/keywords.csv`, `output/clustering/keywords_labeled.csv`, etc). Kein Skript importiert Funktionen aus einem anderen Skript zur Laufzeit. Jedes lässt sich isoliert testen, re-runnen, ersetzen.
-- **Zentrale Konstanten.** Alle Hyperparameter (Embedding-Modell, UMAP-Parameter, HDBSCAN-Parameter) sind als Modul-Konstanten oben in `src/cluster.py` festgehalten. Code und Doku referenzieren dieselbe Quelle.
-- **Pluggable LLM-Provider.** `BriefProvider` als abstrakte Basis, drei Implementierungen (`ApiKeyProvider`, `OpenAIProvider`, `AgentSdkProvider`), Auswahl per CLI-Flag. Provider-Wechsel ist einzeilig, kein Refactoring.
-- **Determinismus durchgängig (innerhalb einer Plattform).** `random_state=42` in beiden UMAP-Aufrufen, HDBSCAN deterministisch, Heuristik via SHA256-Seed, Embeddings im Inference-Modus deterministisch. Ein zweiter Lauf auf derselben Maschine produziert byte-identische Artefakte. Cross-Platform (macOS lokal vs Ubuntu CI) weichen die UMAP-Koordinaten wegen unterschiedlicher BLAS-Implementations minimal ab; durch Wahl des HDBSCAN `mcs` aus der Plateau-Mitte ist die Cluster-Anzahl trotzdem stabil.
-- **Transparente Daten-Quellen-Markierung.** `data_source` Spalte in `keywords.csv` markiert jeden Wert als `estimated` oder `dataforseo`, also ist immer sichtbar was geschätzt und was live ist.
-
-### Wo Verbesserungspotenzial liegt
-
-- **Kein Run-Log in einer Datenbank.** Snapshots in `output/_archive/` sind ein dateisystem-basierter Ersatz, skalieren aber nicht über 30 plus Läufe. SQLite mit `run_id, timestamp, step, status, rows_in, rows_out, duration` würde 30 Minuten Aufwand bedeuten und vieles vereinfachen.
-- **JSON-strukturiertes Logging fehlt.** Logging ist zwar via stdlib `logging` zentral konfiguriert (siehe ADR-13), aber das Format ist menschen-lesbar, nicht maschinen-lesbar. Für Aggregator-Tools (Loki, Datadog) wäre JSON besser. Backlog-Punkt für Production-Deploy.
-
-### Was inzwischen gelöst ist
-
-- **Strukturiertes Logging.** Alle Module nutzen `logging.getLogger(__name__)`. Setup zentral in `src/logging_config.py`, Level konfigurierbar via `PIPELINE_LOG_LEVEL`. Library-Logger werden gezielt auf WARNING gesetzt. Siehe ADR-13.
-- **Retry-Wrapper.** Brief-API-Calls sind mit `@with_retry()` (stdlib only) gegen transient errors abgesichert. Exponential Backoff plus Jitter, Cap bei 60 Sekunden, Honor `Retry-After` Header. Konfigurierbar via `PIPELINE_BRIEF_RETRY_*`. Siehe ADR-14.
-- **Pytest-Tests.** `tests/` enthält jetzt 21 Tests in 5 Dateien: Settings (Defaults und env Override), Retry-Decorator (transient + exhaustion + non-retryable), Brief-Helpers (Strip-Preamble, Stub-Detection, Stub-Generation), Enrich-Heuristik (Determinismus, KD-Range, Priority-Score), Smoke-Tests (Report, Briefs Dashboard, Dry-Run-Sicherheit). Run mit `pytest`.
-- **Zentrale Konfiguration.** Pydantic Settings in `src/config.py`, alle Hyperparameter via `PIPELINE_*` env vars konfigurierbar. Siehe ADR-12.
-
-## 2. Code-Qualität
+## 1. Code-Qualität
 
 ### Stärken
 

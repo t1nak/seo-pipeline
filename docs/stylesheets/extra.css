@@ -46,8 +46,8 @@
   --md-default-fg-color--lighter:  hsla(232, 75%, 95%, 0.45);
   --md-default-fg-color--lightest: hsla(232, 75%, 95%, 0.18);
   --md-code-bg-color:              hsla(232, 15%, 18%, 1);
-  --md-code-fg-color:              hsla(232, 75%, 95%, 0.87);
-  --md-typeset-color:              hsla(232, 75%, 95%, 0.87);
+  --md-code-fg-color:              hsla(232, 75%, 95%, 1);
+  --md-typeset-color:              hsla(232, 75%, 95%, 1);
   --md-typeset-a-color:            #2dd4bf;
 
   --seo-card-border:               rgba(45, 212, 191, 0.22);
@@ -123,10 +123,12 @@ body[data-md-color-scheme="slate"],
   box-shadow: none;
 }
 
-/* Subtle highlight on the active tab so the unified bar still
-   communicates "you are here" */
+/* Tabs always-readable: white text on the deep navy bar, no
+   translucency tricks. Active gets the accent underline. */
 .md-tabs__link {
-  opacity: 0.78;
+  color: #ffffff !important;
+  opacity: 0.92;
+  font-weight: 500;
 }
 
 .md-tabs__link:hover {
@@ -138,6 +140,39 @@ body[data-md-color-scheme="slate"],
   font-weight: 600;
   border-bottom: 2px solid var(--md-accent-fg-color);
   padding-bottom: 0.5em;
+}
+
+/* Header bar (top): site title, logo, search, repo block must read
+   clearly against the gradient in BOTH schemes. */
+.md-header__title,
+.md-header__topic,
+.md-header__topic .md-ellipsis,
+.md-header__title .md-ellipsis {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.md-header__button,
+.md-header__button.md-logo,
+.md-header__button.md-logo svg,
+.md-header__button svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.md-search__form,
+.md-search__input {
+  color: #ffffff;
+}
+
+.md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.md-source,
+.md-source__repository,
+.md-source__fact {
+  color: #ffffff !important;
 }
 
 /* ============================================================

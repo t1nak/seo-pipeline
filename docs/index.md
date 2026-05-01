@@ -47,7 +47,7 @@ Hängt vom gewählten Modell und Provider ab. Beispielwerte für 13 Cluster, 500
 | Anthropic Sonnet plus DataForSEO Live | ~0,18 bis 0,25 USD | ~0,01 USD | ~0,75 USD | **~1,00 USD** |
 | Claude Subscription (Max/Pro) plus Heuristik | 0 USD (im Abo) | ~0,01 USD | 0 USD | **~0,01 USD** |
 
-Bei wöchentlicher Ausführung mit Anthropic API plus Heuristik also ungefähr 10 USD pro Jahr, mit DataForSEO eher 50 USD. Vollständige Tabelle und Annahmen in §12 der [Case Study](case-study.md) und [Architektur](architecture.md#kosten-pro-lauf-je-provider-kombination).
+Bei wöchentlicher Ausführung mit Anthropic API plus Heuristik also ungefähr 10 USD pro Jahr, mit DataForSEO eher 50 USD. Vollständige Tabelle und Annahmen in §12 der [Case Study](case-study.md).
 
 ### Wie viele Cluster werden erkannt?
 
@@ -186,11 +186,11 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster | Keywords | SV / Monat | Ø KD | % komm. |
 |---|---|---|---|---|---|
-| 10 | HR Software Dokumenten- und Mitarbeiterverwaltung | 45 | 45.567 | 52 | 89 |
-| 12 | Sammelthemen Zeitarbeit Software und Finanzierung | 97 | 28.301 | 36 | 34 |
-| 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
-| 7 | Digitalisierung Personaldienstleistung und KI | 37 | 23.984 | 36 | 35 |
-| 3 | Zvoove Produkte und Features | 34 | 23.604 | 52 | 97 |
+| 10 | HR-Verwaltungssoftware für KMU | 45 | 45.567 | 53 | 89 |
+| 12 | Zeitarbeit Software und Prozessmanagement | 97 | 28.301 | 37 | 34 |
+| 1 | Zeiterfassungs- und Arbeitszeitverwaltung | 47 | 26.159 | 48 | 94 |
+| 7 | Digitalisierung Personaldienstleistungen und KI | 37 | 23.984 | 36 | 35 |
+| 8 | Liquidität und Tarifkosten Zeitarbeit | 34 | 15.571 | 33 | 18 |
 
 HDBSCAN findet 13 Cluster aus den Daten heraus (`mcs=10, eom`). 72 Rand-Keywords werden per Soft-Assignment ihrem nächsten Cluster-Centroid zugeordnet ([ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) — alle 500 Keywords haben einen Pillar. Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Zwei Cluster sind vom LLM transparent als „Sammelthemen" markiert und benötigen Sub-Clustering vor redaktioneller Bearbeitung.
 

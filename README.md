@@ -66,7 +66,7 @@ pip install -r requirements.txt
 
 # Optional: Dev-Tools für Tests
 pip install -r requirements-dev.txt
-pytest                                     # 21 Tests, < 1 Sekunde
+pytest                                     # 42 Tests, < 1 Sekunde
 
 # Komplette Pipeline ausführen
 python pipeline.py

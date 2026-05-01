@@ -165,7 +165,7 @@ HDBSCAN gegenüber k-means hat drei Vorteile, die für SEO Keywords zentral sind
 
 Für die finalen Parameter habe ich eine Grid Search über `min_cluster_size`, `min_samples` und `cluster_selection_method` gefahren. Der Sweep ist als `cluster.step_sweep()` reproduzierbar.
 
-Ergebnis: `min_cluster_size=15, min_samples=5, cluster_selection_method='eom'`.
+Ergebnis: `min_cluster_size=10, min_samples=5, cluster_selection_method='eom'`.
 
 Begründung in [`docs/methodology.md`](docs/methodology.md). Kurz: bei dieser Kombination ist der Silhouette Score am höchsten, das Rauschen ist plausibel niedrig (14 Prozent), die Clusteranzahl ist mit 13 für die Stakeholder Kommunikation ideal (klein genug für eine Tabelle, groß genug, um Sub-Themen zu unterscheiden).
 
@@ -210,7 +210,7 @@ Pro Brief ungefähr 2500 Output Tokens, also pro vollem Lauf ungefähr 35.000 Ou
 
 Wenn ein einzelner API Call fehlschlägt (Network, Rate Limit, etc.), schreibt das Skript einen Stub in die Datei und macht weiter. Die Pipeline bricht nicht ab, weil ein einzelner Brief fehlt. Ein Status Reporting am Ende sagt, wie viele OK und wie viele Fehler waren.
 
-In Produktion würde ich hier einen Retry Wrapper mit exponentieller Backoff Strategie ergänzen, was im aktuellen Stand fehlt.
+`brief.py` nutzt `src.retry.with_retry` — einen Wrapper mit exponentieller Backoff Strategie und Jitter — für alle API Calls, sodass einzelne Rate-Limit-Antworten automatisch wiederholt werden.
 
 ### Dry Run
 
@@ -263,7 +263,7 @@ Wie ähnlich sind die HDBSCAN Cluster den ursprünglich vom LLM kuratierten Clus
 | HDBSCAN gegen LLM Cluster (HDBSCAN-Kern) | 0,143 | 0,342 |
 | HDBSCAN gegen Ward Hierarchical (k=10, alle 500) | 0,811 | (nicht erhoben) |
 
-ARI ist konservativer als NMI, also ARI < NMI ist normal. Die LLM-vs-HDBSCAN-Werte sind erwartet niedrig: HDBSCAN findet andere Cluster-Grenzen als die LLM-Klassifikation, das ist methodisch interessant und keineswegs ein Fehler. Beide sind gültige Sichten auf die Daten. Der ARI von 0,786 zwischen HDBSCAN und Ward(k=10) zeigt zugleich, dass zwei mathematisch unabhängige Verfahren auf großer Mehrheit übereinstimmen.
+ARI ist konservativer als NMI, also ARI < NMI ist normal. Die LLM-vs-HDBSCAN-Werte sind erwartet niedrig: HDBSCAN findet andere Cluster-Grenzen als die LLM-Klassifikation, das ist methodisch interessant und keineswegs ein Fehler. Beide sind gültige Sichten auf die Daten. Der ARI von 0,811 zwischen HDBSCAN und Ward(k=10) zeigt zugleich, dass zwei mathematisch unabhängige Verfahren auf großer Mehrheit übereinstimmen.
 
 Ein Beispiel: Der ursprüngliche LLM Cluster `cluster_03` („Recruiting & Bewerbermanagement") wird von HDBSCAN in zwei Cluster aufgeteilt („KI-gestützte Recruiting-Automatisierung" und „HR- und Bewerbermanagementsoftware KMU"), weil ATS- und SaaS-Begriffe semantisch näher an Software-Kategorien liegen als an Recruiting-Workflows. Das ist eine empirische Erkenntnis, die ohne diese Analyse nicht sichtbar wäre.
 
@@ -351,19 +351,14 @@ Ehrlich, was fehlt oder schwach ist:
 
 - **Discover ist Stub.** Das Live Scraping fehlt. Aktuell läuft die Pipeline auf einem kuratierten Keyword Set.
 - **Sentence Transformer ist nicht das beste Modell für Deutsch.** Multilingual MiniLM ist gut, aber nicht state of the art. Für ein Produktionsprojekt wäre `intfloat/multilingual-e5-large` oder ein deutsches Modell wie `aari1995/German_Sentiment_BERT` einen Test wert.
-- **Cluster Labels sind manuell.** 13 Labels habe ich nach Inspektion vergeben. Skaliert nicht über 50 Cluster.
 - **Keine Persistenz Schicht.** Pipeline Läufe leben als Snapshots im Dateisystem. Kein SQLite, kein Postgres. Für Produktion fehlt das.
-- **Keine Retry Logik.** Wenn die Anthropic API einen Rate Limit zurückgibt, versuche ich es nicht erneut.
-- **Keine Tests.** Es gibt einen leeren `tests/` Ordner. Pytest fehlt.
 
 ### Nächste Schritte (priorisiert)
 
 1. **Discover live machen.** Scraper für `zvoove.de/wissen/blog`, plus Claude basierte Keyword Expansion. Höchste Hebelwirkung, weil es die Pipeline von "demonstriert das Konzept" zu "tatsächlich für zvoove einsetzbar" hebt.
 2. **Search Console Anbindung.** Statt Heuristik echte Click und Impression Daten aus der zvoove GSC ziehen. Das macht die Priorisierung empirisch verifizierbar.
-3. **Retry Wrapper für Claude API.** Exponentielle Backoff, max 5 Versuche, in `brief.py` einhängen.
-4. **Cluster Label Automatisierung.** Pro Cluster die Top 10 Keywords an Claude geben und ein Label generieren lassen. Macht das System auf größere Keyword Sets skalierbar.
-5. **CI mit Stub Lauf.** GitHub Actions, das `pipeline.py --step report` durchlaufen lässt und auf "schreibt es ein gültiges HTML" testet.
-6. **CMS Integration.** Sanity Studio Schema für Content Briefs, plus ein einfacher Sync, der jeden Brief als Draft in Sanity legt.
+3. **Persistenz Schicht.** Eine SQLite Datei mit `run_id, timestamp, step, status, rows_in, rows_out` würde Lauf-Vergleiche erheblich vereinfachen.
+4. **CMS Integration.** Sanity Studio Schema für Content Briefs, plus ein einfacher Sync, der jeden Brief als Draft in Sanity legt.
 
 ## 15. Reflektion
 
@@ -384,7 +379,7 @@ Weiter: ich würde eher als Teil der ersten Iteration einen einfachen Run Log ei
 Diese Case Study soll drei Dinge zeigen:
 
 - **Architektur Denken statt Skript Denken.** Eine Pipeline ist nicht ein Bündel von Skripten, sondern ein definiertes Datenmodell mit klaren Schnittstellen. Die fünf Schritte hier sind so geschnitten, dass jeder einzeln ersetzt werden kann.
-- **Pragmatismus über Polish.** Heuristische Schätzwerte für SV / KD / CPC sind klar als geschätzt markiert und werden durch DataForSEO ersetzt, wenn echte Daten verfügbar sind. Manuelle Cluster Labels sind heute manuell und Backlog-Punkt für Automatisierung. Beides bewusste Entscheidungen, nicht Lücken.
+- **Pragmatismus über Polish.** Heuristische Schätzwerte für SV / KD / CPC sind klar als geschätzt markiert und werden durch DataForSEO ersetzt, wenn echte Daten verfügbar sind. Discover fehlt als Live-Schritt. Beides bewusste Entscheidungen, nicht Lücken.
 - **Revenue Lens.** Die Cluster werden nicht nur ausgegeben, sondern jede Empfehlung wird in eine Revenue Hypothese übersetzt (Cluster X führt zu Y MQLs pro Monat). Das ist die Übersetzungsleistung, die ein Revenue AI Architect leisten muss.
 
 ## Anhang: weitere Dokumente

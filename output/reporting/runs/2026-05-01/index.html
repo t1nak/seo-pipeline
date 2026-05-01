@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cluster Briefs · zvoove SEO Pipeline</title>
+<style>
+:root {
+  --bg: #fafafa;
+  --bg-card: #ffffff;
+  --bg-header: #0f172a;
+  --bg-row: #f8fafc;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --text-secondary: #475569;
+  --primary: #0d9488;
+  --primary-dark: #115e59;
+  --accent: #f59e0b;
+  --badge-info-bg: #dbeafe;
+  --badge-info-fg: #1e40af;
+  --badge-warn-bg: #fed7aa;
+  --badge-warn-fg: #9a3412;
+  --badge-ok-bg: #d1fae5;
+  --badge-ok-fg: #065f46;
+}
+html { scroll-behavior: smooth; scroll-padding-top: 16px; background: var(--bg); min-height: 100%; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 32px 24px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+       background: var(--bg); color: var(--text); line-height: 1.6; }
+.wrap { max-width: 980px; margin: 0 auto; }
+header { padding: 24px 32px; background: var(--bg-header); color: white; border-radius: 12px;
+         margin-bottom: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+         display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+header .header-text { flex: 1; min-width: 280px; }
+header h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.02em; }
+header p { margin: 0; color: #94a3b8; font-size: 13px; }
+header .map-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--primary); color: white; padding: 10px 18px;
+  border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;
+  letter-spacing: 0.01em; transition: background 0.18s, transform 0.18s;
+  white-space: nowrap; align-self: center;
+}
+header .map-cta:hover { background: var(--primary-dark); transform: translateY(-1px); }
+header .map-cta::before { content: "🗺"; font-size: 14px; }
+header .header-actions { display: flex; flex-direction: column; gap: 8px; align-self: center; }
+header .glossar-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; color: white; padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.25); border-radius: 8px;
+  text-decoration: none; font-size: 12px; font-weight: 500;
+  cursor: pointer; font-family: inherit;
+  transition: background 0.18s, border-color 0.18s;
+  white-space: nowrap;
+}
+header .glossar-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+header .glossar-btn::before { content: "ⓘ"; font-size: 14px; opacity: 0.85; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(2px);
+  display: none; z-index: 100; overflow-y: auto;
+  padding: 40px 16px;
+  animation: fadein 0.18s ease;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  background: var(--bg-card); border-radius: 12px;
+  max-width: 760px; width: 100%; padding: 32px 36px 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  position: relative; animation: slidein 0.22s ease;
+}
+@keyframes slidein { from { transform: translateY(-12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 6px;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-muted); font-size: 20px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: var(--bg-row); color: var(--text); }
+.modal h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.01em; }
+.modal .modal-sub { color: var(--text-muted); font-size: 13px; margin: 0 0 24px; }
+.modal h3 { font-size: 13px; margin: 24px 0 10px; color: var(--text); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em; }
+.modal h3:first-of-type { margin-top: 8px; }
+.modal table { width: 100%; border-collapse: collapse; margin: 0 0 8px; font-size: 13px; }
+.modal table th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border);
+                  color: var(--text-muted); font-weight: 600; font-size: 11px;
+                  text-transform: uppercase; letter-spacing: 0.04em; }
+.modal table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top;
+                  color: var(--text-secondary); line-height: 1.5; }
+.modal table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+.modal table tr:last-child td { border-bottom: none; }
+.modal .note { background: #fef9e7; border-left: 3px solid var(--accent);
+               padding: 10px 14px; margin: 18px 0 4px; border-radius: 4px;
+               font-size: 12px; line-height: 1.55; color: var(--text-secondary); }
+.minigrid-label { font-size: 11px; font-weight: 600; color: var(--text-muted);
+                  text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px; }
+.mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+             gap: 12px; margin-bottom: 36px; }
+.mini-card { display: flex; flex-direction: column; justify-content: space-between;
+             background: var(--bg-card); border: 1px solid var(--border);
+             border-radius: 10px; padding: 14px 16px; text-decoration: none;
+             color: var(--text); min-height: 132px;
+             transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s; }
+.mini-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(15,23,42,0.08);
+                   border-color: var(--primary); }
+.mini-id { font-size: 10px; color: var(--text-muted); text-transform: uppercase;
+           letter-spacing: 0.05em; margin-bottom: 6px; font-weight: 600; }
+.mini-title { font-size: 13px; font-weight: 600; line-height: 1.35;
+              margin-bottom: 10px; color: var(--text); }
+.mini-meta { display: flex; justify-content: space-between; align-items: center;
+             gap: 6px; flex-wrap: wrap; }
+.mini-sv { font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums;
+           font-weight: 600; }
+.summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;
+               margin: 24px 0 32px; }
+.summary-cell { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+                padding: 12px 16px; }
+.summary-cell .label { font-size: 11px; font-weight: 600; color: var(--text-muted);
+                       text-transform: uppercase; letter-spacing: 0.04em; }
+.summary-cell .value { font-size: 22px; font-weight: 700; margin-top: 4px;
+                       font-variant-numeric: tabular-nums; color: var(--text); }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+        padding: 24px 28px; margin-bottom: 16px;
+        box-shadow: 0 1px 2px rgba(15,23,42,0.04); transition: box-shadow 0.18s, transform 0.18s; }
+.card:hover { box-shadow: 0 4px 16px rgba(15,23,42,0.08); transform: translateY(-1px); }
+.section-label { font-size: 11px; font-weight: 600; color: var(--text-muted);
+                 text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 4px; }
+.section-value { font-size: 13px; color: var(--text); margin: 0 0 16px; line-height: 1.6; }
+.section-value.struct { margin-bottom: 4px; }
+.cluster-title { font-size: 18px; font-weight: 600; margin: 0 0 6px; color: var(--text); letter-spacing: -0.005em; }
+.cluster-id { font-size: 11px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.04em;
+              text-transform: uppercase; }
+.brief-actions { display: flex; gap: 10px; margin: 12px 0 0; flex-wrap: wrap; }
+.action-link { display: inline-flex; align-items: center; gap: 6px;
+               font-size: 12px; font-weight: 500; padding: 6px 12px;
+               background: var(--bg-row); color: var(--text-secondary);
+               border: 1px solid var(--border); border-radius: 6px;
+               text-decoration: none;
+               transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.action-link:hover { background: var(--bg-card); color: var(--primary-dark);
+                     border-color: var(--primary); }
+.action-link::before { font-weight: 700; font-size: 13px; }
+.action-link.download::before { content: "↓"; }
+.action-link.map::before { content: "→"; }
+.badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 4px;
+         font-weight: 600; margin-right: 4px; margin-bottom: 4px; letter-spacing: 0.01em; }
+.badge-info { background: var(--badge-info-bg); color: var(--badge-info-fg); }
+.badge-warn { background: var(--badge-warn-bg); color: var(--badge-warn-fg); }
+.badge-ok { background: var(--badge-ok-bg); color: var(--badge-ok-fg); }
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.kw-row { display: flex; justify-content: space-between; font-size: 12px; padding: 6px 0;
+          border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+.kw-row:last-child { border-bottom: none; }
+.kw-name { color: var(--text); font-weight: 500; }
+.kw-stats { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.cta-block { background: var(--bg-row); border-left: 3px solid var(--primary); padding: 12px 16px;
+             border-radius: 4px; }
+.gap-block { background: #fef9e7; border-left: 3px solid var(--accent); padding: 12px 16px;
+             border-radius: 4px; font-size: 12px; line-height: 1.55; color: var(--text-secondary); }
+.gap-block ul { margin: 4px 0 0; padding-left: 20px; }
+.gap-block li { margin-bottom: 4px; }
+.toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+       padding: 16px 20px; margin-bottom: 28px; }
+.toc h3 { margin: 0 0 8px; font-size: 13px; color: var(--text-muted);
+          text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+.toc ol { margin: 0; padding-left: 18px; font-size: 13px; }
+.toc li { padding: 3px 0; }
+.toc a { color: var(--primary-dark); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+@media (max-width: 720px) {
+  body { padding: 20px 12px; }
+  .card { padding: 18px 20px; }
+}
+
+.back-nav{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}
+.back-link{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}
+.back-link:hover{text-decoration:underline}
+</style>
+</head><body><div class="wrap">
+<nav class="back-nav"><a class="back-link" href="../../index.html">← Zurück zur Lauf-Übersicht</a><a class="back-link" href="../../../../index.html">← Zurück zur Doku</a></nav>
+<header>
+  <div class="header-text">
+    <h1>Cluster Briefs</h1>
+    <p>Pro Cluster ein Content Brief: Top-Keywords, Persona, Seitenstruktur, SERP-Lücken, CTA.
+    Sortiert nach Suchvolumen pro Monat.</p>
+  </div>
+  <div class="header-actions">
+    <a class="map-cta" href="cluster_map.html">Cluster Karte öffnen</a>
+    <button type="button" class="glossar-btn" onclick="openGlossar()">Glossar: was heißen die Zahlen?</button>
+  </div>
+</header>
+
+<!-- Glossar Modal -->
+<div class="modal-overlay" id="glossar-modal" onclick="if(event.target===this)closeGlossar()">
+  <div class="modal" role="dialog" aria-labelledby="glossar-title">
+    <button class="modal-close" onclick="closeGlossar()" aria-label="Schließen">×</button>
+    <h2 id="glossar-title">Glossar</h2>
+    <p class="modal-sub">Was die Kennzahlen im Dashboard bedeuten, in einfachem Deutsch.</p>
+
+    <h3>KPI-Box ganz oben</h3>
+    <table>
+      <thead><tr><th>Feld</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>Cluster</td><td>Anzahl der thematischen Gruppen, in die HDBSCAN die Keywords sortiert hat</td></tr>
+        <tr><td>Keywords</td><td>Summe aller Keywords über alle Cluster</td></tr>
+        <tr><td>SV / Monat</td><td>Geschätztes Suchvolumen pro Monat: wie oft alle Keywords zusammen monatlich auf Google in Deutschland gesucht werden</td></tr>
+        <tr><td>Mittlere KD</td><td>Durchschnittliche Keyword Difficulty über alle Keywords. Skala 0 bis 100</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pro Cluster</h3>
+    <table>
+      <thead><tr><th>Feld</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>Volumen</td><td>Suchvolumen pro Monat über alle Keywords im Cluster zusammen</td></tr>
+        <tr><td>Difficulty</td><td>Median Keyword Difficulty: wie schwer es im Schnitt ist, in den Top 10 von Google zu landen</td></tr>
+        <tr><td>Keywords</td><td>Anzahl der Keywords in diesem Cluster</td></tr>
+        <tr><td>% kommerziell</td><td>Anteil der Keywords, deren Suchintention "commercial" ist (Nutzer will kaufen oder vergleichen, nicht nur Wissen sammeln)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Intent-Badges</h3>
+    <table>
+      <thead><tr><th>Badge</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>commercial</td><td>Cluster mehrheitlich kaufnah, mindestens 70 Prozent kommerziell. Bottom-of-Funnel</td></tr>
+        <tr><td>informational</td><td>Cluster mehrheitlich Wissens-Suche, maximal 20 Prozent kommerziell. Top-of-Funnel</td></tr>
+        <tr><td>mixed</td><td>Mischung, zwischen 20 und 70 Prozent kommerziell. Mid-Funnel</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pro Keyword (in der Tabelle)</h3>
+    <table>
+      <thead><tr><th>Wert</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td>SV</td><td>Suchvolumen: geschätzte monatliche Suchen für genau dieses Keyword</td></tr>
+        <tr><td>KD</td><td>Keyword Difficulty 0 bis 100. 0-30 leicht, 30-60 mittel, 60-100 schwer</td></tr>
+        <tr><td>CPC</td><td>Cost Per Click in Euro: was Werbetreibende auf Google Ads pro Klick zahlen. Hoch heißt kommerziell wertvoll</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Suchvolumen-Skala</h3>
+    <table>
+      <thead><tr><th>Bereich</th><th>Was es heißt</th></tr></thead>
+      <tbody>
+        <tr><td>unter 100</td><td>Nische, wenig Traffic, oft hoch konvertierend</td></tr>
+        <tr><td>100 bis 1.000</td><td>Sweet-Spot, oft Long-Tail mit klarer Intention</td></tr>
+        <tr><td>1.000 bis 5.000</td><td>Starkes Volumen, oft Head-Terms</td></tr>
+        <tr><td>über 5.000</td><td>Top-Volumen, oft generisch und stark umkämpft</td></tr>
+      </tbody>
+    </table>
+
+    <h3>KD-Skala</h3>
+    <table>
+      <thead><tr><th>Bereich</th><th>Was es heißt</th></tr></thead>
+      <tbody>
+        <tr><td>0 bis 30</td><td>Leicht, mit gutem Content rankt man oft schnell auf Seite 1</td></tr>
+        <tr><td>30 bis 60</td><td>Mittel, braucht solide Optimierung und Backlinks</td></tr>
+        <tr><td>60 bis 80</td><td>Schwer, etablierte Wettbewerber, lange Aufbauzeit</td></tr>
+        <tr><td>80 bis 100</td><td>Brutal, oft nur große Brands oder Nachrichten-Sites ranken</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <b>Wichtig:</b> Die Werte sind Schätzungen aus einer deterministischen Heuristik (SHA256 Hash des Keywords als Seed), nicht echte DataForSEO Daten. Spalte <code>data_source</code> in den CSV-Dateien markiert das. In Produktion stehen hier echte Werte, die Größenordnungen sind aber realistisch genug, um die Cluster-Strategie zu bewerten.
+    </div>
+  </div>
+</div>
+
+<script>
+function openGlossar() { document.getElementById('glossar-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeGlossar() { document.getElementById('glossar-modal').classList.remove('open'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeGlossar(); });
+</script>
+
+<div class="summary-row">
+  <div class="summary-cell"><div class="label">Cluster</div><div class="value">13</div></div>
+  <div class="summary-cell"><div class="label">Keywords</div><div class="value">500</div></div>
+  <div class="summary-cell"><div class="label">SV / Monat</div><div class="value">239.976</div></div>
+  <div class="summary-cell"><div class="label">Mittlere KD</div><div class="value">38.9</div></div>
+</div>
+
+<p class="minigrid-label">Cluster im Überblick · Klick öffnet den Brief</p><div class="mini-grid"><a href="#cluster-11" class="mini-card"><div><div class="mini-id">Cluster 11</div><div class="mini-title">HR Software für KMU: Mitarbeiterverwaltung, Dokumente und Abrechnung in einer Lösung</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">45.567/Mo</span></div></a><a href="#cluster-13" class="mini-card"><div><div class="mini-id">Cluster 13</div><div class="mini-title">Zeitarbeit Software 2025: CRM, Lohnabrechnung, Einsatzplanung und Factoring in einer Plattform</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">28.301/Mo</span></div></a><a href="#cluster-2" class="mini-card"><div><div class="mini-id">Cluster 2</div><div class="mini-title">Zeitarbeitssoftware mit integrierter Zeiterfassung: So wählen Sie die richtige Lösung</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">26.159/Mo</span></div></a><a href="#cluster-8" class="mini-card"><div><div class="mini-id">Cluster 8</div><div class="mini-title">Digitalisierung in der Personaldienstleistung: Was wirklich zählt und was nur Buzzword ist</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">23.984/Mo</span></div></a><a href="#cluster-4" class="mini-card"><div><div class="mini-id">Cluster 4</div><div class="mini-title">zvoove im Überblick: Alle Module, Features und echte Kundenstimmen</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">23.604/Mo</span></div></a><a href="#cluster-9" class="mini-card"><div><div class="mini-id">Cluster 9</div><div class="mini-title">Liquidität in der Zeitarbeit sichern: Equal Pay, Tariflandschaft und Debitorenmanagement im Überblick</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">15.571/Mo</span></div></a><a href="#cluster-5" class="mini-card"><div><div class="mini-id">Cluster 5</div><div class="mini-title">Lohnabrechnung, Recruiting und AÜG: Der große Überblick für Personaldienstleister</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">14.455/Mo</span></div></a><a href="#cluster-12" class="mini-card"><div><div class="mini-id">Cluster 12</div><div class="mini-title">Arbeitnehmerüberlassung: Recht, Sozialversicherung und Pflichten im Überblick</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">14.429/Mo</span></div></a><a href="#cluster-7" class="mini-card"><div><div class="mini-id">Cluster 7</div><div class="mini-title">Personaleinsatzplanung und Personalverwaltung: So behalten Personaldienstleister den Überblick</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">12.386/Mo</span></div></a><a href="#cluster-3" class="mini-card"><div><div class="mini-id">Cluster 3</div><div class="mini-title">KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Bewerbungsprozess</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">12.075/Mo</span></div></a><a href="#cluster-6" class="mini-card"><div><div class="mini-id">Cluster 6</div><div class="mini-title">Zeitarbeit in Deutschland 2025: Marktdaten, AÜG-Regeln und was Verleiher wirklich wissen müssen</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">11.462/Mo</span></div></a><a href="#cluster-10" class="mini-card"><div><div class="mini-id">Cluster 10</div><div class="mini-title">Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung im Überblick</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">8.467/Mo</span></div></a><a href="#cluster-1" class="mini-card"><div><div class="mini-id">Cluster 1</div><div class="mini-title">Factoring für Zeitarbeit: Buchen, Genehmigung und Anbieter im Überblick</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">3.516/Mo</span></div></a></div>
+
+
+
+<section class="card" id="cluster-11">
+  <p class="cluster-id">Cluster 11</p>
+  <h2 class="cluster-title">HR Software für KMU: Mitarbeiterverwaltung, Dokumente und Abrechnung in einer Lösung</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-ok">commercial</span>
+    <span class="badge badge-info">Volumen: 45.567/Mo</span>
+    <span class="badge badge-info">Difficulty: 52</span>
+    <span class="badge badge-info">45 Keywords</span>
+    <span class="badge badge-ok">89% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_11.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-11" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">dokumentenmanagement software</span><span class="kw-stats">5.975 · KD 59 · €9.45</span></div>
+<div class="kw-row"><span class="kw-name">bewerbermanagement software</span><span class="kw-stats">5.670 · KD 84 · €10.51</span></div>
+<div class="kw-row"><span class="kw-name">mitarbeiterverwaltung software</span><span class="kw-stats">4.809 · KD 63 · €11.52</span></div>
+<div class="kw-row"><span class="kw-name">hr software kmu</span><span class="kw-stats">4.028 · KD 58 · €5.66</span></div>
+<div class="kw-row"><span class="kw-name">gehaltsabrechnung software</span><span class="kw-stats">3.940 · KD 70 · €5.57</span></div>
+<div class="kw-row"><span class="kw-name">ats software</span><span class="kw-stats">3.060 · KD 78 · €10.59</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">commercial, mixed, Suchende vergleichen aktiv Softwarelösungen und suchen nach einer konsolidierten HR-Plattform, die mehrere Einzeltools ersetzt.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">HR-Leiter oder Geschäftsführer eines deutschen KMU mit 50 bis 500 Mitarbeitern, oft in Zeitarbeit, Gebäudedienstleistung oder Facility Management, der aktuell mit Excel-Listen, Papierordnern oder fragmentierten Einzellösungen arbeitet.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Personalakten liegen in drei verschiedenen Systemen, Lohnabrechnung läuft über eine externe Steuerkanzlei, und Bewerberdaten stecken in E-Mail-Postfächern. Bei einer Betriebsprüfung oder AÜG-Kontrolle dauert es Stunden, die richtigen Dokumente zusammenzusuchen. Gleichzeitig wächst das Team, neue gesetzliche Anforderungen kommen hinzu, und der manuelle Aufwand frisst jede Woche mehrere Arbeitstage.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll verstehen, welche HR-Funktionen eine einzige Plattform abdecken muss, um den Verwaltungsaufwand in KMU spürbar zu senken, und danach eine Demo oder einen direkten Produktvergleich anfragen.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> HR Software für KMU: Mitarbeiterverwaltung, Dokumentenmanagement und Gehaltsabrechnung in einer Lösung</p>
+<p class="section-value struct"><b>H2:</b> Warum KMU an zu vielen HR-Insellösungen scheitern</p>
+<p class="section-value struct"><b>H2:</b> Kernfunktionen einer HR Software für KMU im Überblick</p>
+<p class="section-value struct"><b>H2:</b> Besondere Anforderungen in Zeitarbeit und Gebäudedienstleistung</p>
+<p class="section-value struct"><b>H2:</b> Auswahlkriterien: Worauf KMU beim Softwarevergleich wirklich achten sollten</p>
+<p class="section-value struct"><b>H2:</b> Typische Fehler beim HR-Software-Kauf in KMU</p>
+<p class="section-value struct"><b>H2:</b> Checkliste: Das muss eine HR Software für KMU leisten</p>
+<p class="section-value struct"><b>H2:</b> Fazit und nächste Schritte: So finden KMU die passende Lösung</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Marktführer im deutschen KMU-Segment, hohe Domain Authority, rankt für fast alle Zielkeywords dieses Clusters</li><li>starker Inhaltsanbieter mit breiter Keyword-Abdeckung im Bereich Gehaltsabrechnung und Mitarbeiterverwaltung</li><li>direkter Wettbewerber mit Fokus auf ATS und Bewerbermanagement für den deutschen Mittelstand</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo von zvoove HR anfordern: zeigen, wie Mitarbeiterverwaltung, Dokumentenmanagement und AÜG-Compliance in einer Plattform funktionieren, inklusive Live-Walkthrough für Zeitarbeit oder Gebäudedienstleistung.</div>
+</section>
+<section class="card" id="cluster-13">
+  <p class="cluster-id">Cluster 13</p>
+  <h2 class="cluster-title">Zeitarbeit Software 2025: CRM, Lohnabrechnung, Einsatzplanung und Factoring in einer Plattform</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 28.301/Mo</span>
+    <span class="badge badge-info">Difficulty: 35</span>
+    <span class="badge badge-info">97 Keywords</span>
+    <span class="badge badge-info">34% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_13.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-13" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">zeitarbeit programm</span><span class="kw-stats">3.980 · KD 79 · €6.78</span></div>
+<div class="kw-row"><span class="kw-name">zeitarbeit branche entwicklung</span><span class="kw-stats">2.456 · KD 56 · €0.68</span></div>
+<div class="kw-row"><span class="kw-name">factoring zeitarbeit</span><span class="kw-stats">2.219 · KD 85 · €8.96</span></div>
+<div class="kw-row"><span class="kw-name">crm zeitarbeit</span><span class="kw-stats">1.360 · KD 81 · €8.83</span></div>
+<div class="kw-row"><span class="kw-name">lohnabrechnung zeitarbeit</span><span class="kw-stats">851 · KD 72 · €11.92</span></div>
+<div class="kw-row"><span class="kw-name">saas zeitarbeit</span><span class="kw-stats">707 · KD 56 · €5.76</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Nutzer vergleichen aktiv Softwarelösungen und informieren sich gleichzeitig über Branchentrends, um eine Kaufentscheidung vorzubereiten.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder Niederlassungsleiter eines mittelständischen Zeitarbeitsunternehmens mit 50 bis 500 Mitarbeitern auf Abruf, der seine Softwarelandschaft konsolidieren will.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Drei oder vier Insellösungen für Disposition, Lohnabrechnung und CRM fressen täglich Stunden durch manuelle Datenpflege und doppelte Eingaben. Der Margendruck in der Branche wächst, aber das interne Team hat keine Kapazität, einen aufwendigen Systemwechsel zu stemmen. Dazu kommt die Frage der Liquidität: Ohne funktionierendes Factoring fehlt der Puffer, wenn Kunden langsam zahlen und gleichzeitig Löhne fristgerecht raus müssen.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll verstehen, welche Kernmodule eine moderne Zeitarbeit-Software abdecken muss, wie Factoring in den Cashflow-Kreislauf passt, und warum eine integrierte SaaS-Plattform die wirtschaftlichere Wahl gegenüber Einzellösungen ist.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Zeitarbeit Software 2025: Was ein modernes Programm wirklich können muss</p>
+<p class="section-value struct"><b>H2:</b> Warum die Zeitarbeitsbranche unter besonderem Softwaredruck steht</p>
+<p class="section-value struct"><b>H2:</b> Die fünf Kernmodule, die kein Zeitarbeitsunternehmen missen sollte</p>
+<p class="section-value struct"><b>H2:</b> Factoring in der Zeitarbeit: Wie das Modell funktioniert und was Software leisten muss</p>
+<p class="section-value struct"><b>H2:</b> SaaS vs. On-Premise: Welches Modell passt zu welcher Unternehmensgröße</p>
+<p class="section-value struct"><b>H2:</b> Branchenspezifische Anforderungen: Pflege und Handwerk als Sonderfall</p>
+<p class="section-value struct"><b>H2:</b> Worauf es beim Software-Vergleich wirklich ankommt</p>
+<p class="section-value struct"><b>H2:</b> Fazit und Marktausblick: Zeitarbeit-Software als strategischer Hebel</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>deckt Lohnabrechnung und Tarifsysteme ab, rankt auf relevante Longtails, zeigt aber keine Gesamtplattform-Perspektive</li><li>hohe Domain Authority, informationaler Content zur Branche, gut zum Verstehen der Suchintention rund um Branchenentwicklung</li><li>Haufe-Ratgeberartikel mit Modulübersicht, direkter Wettbewerb bei informationals, aber ohne SaaS- und Factoring-Tiefe</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo buchen: Leser werden eingeladen, eine 30-minütige Live-Demo von zvoove zu vereinbaren, in der alle fünf Kernmodule, inklusive der Factoring-Schnittstelle, anhand echter Zeitarbeitsdaten gezeigt werden.</div>
+</section>
+<section class="card" id="cluster-2">
+  <p class="cluster-id">Cluster 2</p>
+  <h2 class="cluster-title">Zeitarbeitssoftware mit integrierter Zeiterfassung: So wählen Sie die richtige Lösung</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-ok">commercial</span>
+    <span class="badge badge-info">Volumen: 26.159/Mo</span>
+    <span class="badge badge-info">Difficulty: 43</span>
+    <span class="badge badge-info">47 Keywords</span>
+    <span class="badge badge-ok">94% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_02.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-2" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">zeiterfassung software</span><span class="kw-stats">4.892 · KD 76 · €8.87</span></div>
+<div class="kw-row"><span class="kw-name">mobile zeiterfassung</span><span class="kw-stats">4.743 · KD 82 · €5.13</span></div>
+<div class="kw-row"><span class="kw-name">zeitarbeitssoftware</span><span class="kw-stats">4.381 · KD 57 · €9.99</span></div>
+<div class="kw-row"><span class="kw-name">roi zeitarbeit software</span><span class="kw-stats">2.065 · KD 76 · €4.10</span></div>
+<div class="kw-row"><span class="kw-name">zeitarbeit software</span><span class="kw-stats">1.822 · KD 82 · €2.83</span></div>
+<div class="kw-row"><span class="kw-name">lohnabrechnung software zeitarbeit</span><span class="kw-stats">780 · KD 68 · €11.50</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">commercial / mixed, Suchende vergleichen aktiv Softwarelösungen und bewerten Funktionsumfang, Preismodelle und ROI vor einer Kaufentscheidung.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder Niederlassungsleiter eines Zeitarbeitsunternehmens mit 5 bis 50 internen Mitarbeitern und 50 bis 500 aktiven Zeitarbeitnehmern, der seine manuelle Zeiterfassung und Lohnabrechnung endlich zusammenführen will.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Stundenzettel kommen per WhatsApp, per Post oder gar nicht, und am Monatsende verbringt das Team Tage damit, Daten manuell in die Lohnabrechnung zu übertragen. Fehler in der Abrechnung führen zu Beschwerden der Zeitarbeitnehmer, im schlimmsten Fall zu Nachzahlungen und Bußgeldern wegen fehlerhafter Mindestlohndokumentation. Der Geschäftsführer weiß, dass er eine Software braucht, hat aber keine Zeit für einen langen Evaluierungsprozess und ist unsicher, welche Lösung wirklich für Zeitarbeit gebaut ist und nicht nur umgebaut wurde.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll nach dem Lesen die fünf entscheidenden Kriterien kennen, nach denen er Zeitarbeitssoftware mit Zeiterfassung bewertet, und direkt eine Demo oder ein Erstgespräch buchen.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Zeitarbeitssoftware mit integrierter Zeiterfassung: So wählen Sie die richtige Lösung</p>
+<p class="section-value struct"><b>H2:</b> Warum generische Software für Zeitarbeit nicht funktioniert</p>
+<p class="section-value struct"><b>H2:</b> Die fünf wichtigsten Funktionen einer guten Zeitarbeitssoftware</p>
+<p class="section-value struct"><b>H2:</b> Mobile Zeiterfassung in der Praxis: Worauf es wirklich ankommt</p>
+<p class="section-value struct"><b>H2:</b> ROI und Preismodelle: Was Zeitarbeitssoftware kosten darf</p>
+<p class="section-value struct"><b>H2:</b> Integration mit Lohnabrechnung und Payroll</p>
+<p class="section-value struct"><b>H2:</b> Compliance und gesetzliche Anforderungen</p>
+<p class="section-value struct"><b>H2:</b> Checkliste: So wählen Sie die richtige Lösung in 5 Schritten</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>hohe Domain-Autorität, rankt auf generische Zeiterfassungsbegriffe, deckt aber Zeitarbeit-Spezifika nur oberflächlich ab</li><li>direkter Wettbewerber im Segment mobile Zeiterfassung, starke SEO-Struktur</li><li>Wettbewerber mit HR-Fokus, zeigt wie Funktionstiefe im Artikel als Kaufargument positioniert wird</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo buchen: Zeigen Sie mir, wie zvoove Zeiterfassung, Stundenzettelfreigabe und Lohnabrechnung in einer Plattform verbindet, inklusive Live-Kalkulation des ROI für Ihre Niederlassungsgröße.</div>
+</section>
+<section class="card" id="cluster-8">
+  <p class="cluster-id">Cluster 8</p>
+  <h2 class="cluster-title">Digitalisierung in der Personaldienstleistung: Was wirklich zählt und was nur Buzzword ist</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 23.984/Mo</span>
+    <span class="badge badge-info">Difficulty: 32</span>
+    <span class="badge badge-info">37 Keywords</span>
+    <span class="badge badge-info">35% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_08.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-8" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">digitalisierung zeitarbeit</span><span class="kw-stats">5.645 · KD 40 · €2.10</span></div>
+<div class="kw-row"><span class="kw-name">digitalisierung personaldienstleistung</span><span class="kw-stats">4.088 · KD 32 · €2.34</span></div>
+<div class="kw-row"><span class="kw-name">künstliche intelligenz personaldienstleistung</span><span class="kw-stats">4.035 · KD 39 · €1.89</span></div>
+<div class="kw-row"><span class="kw-name">digitale zeiterfassung</span><span class="kw-stats">3.656 · KD 77 · €8.72</span></div>
+<div class="kw-row"><span class="kw-name">elektronische lohnabrechnung</span><span class="kw-stats">759 · KD 61 · €4.78</span></div>
+<div class="kw-row"><span class="kw-name">datenschutz personaldienstleister</span><span class="kw-stats">718 · KD 36 · €1.47</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Entscheider recherchieren sowohl konkrete Lösungen als auch grundlegende Orientierung, bevor sie in Software investieren.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder Niederlassungsleiter einer mittelständischen Zeitarbeitsfirma mit 5 bis 50 internen Mitarbeitern, die merken, dass ihre Prozesse nicht mehr skalieren.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Jeden Monat kostet die manuelle Lohnabrechnung Stunden, die Fehlerquote steigt mit der Mitarbeiterzahl, und ein einziger Prüfer der Rentenversicherung kann das ganze Kartenhaus zum Einsturz bringen. Gleichzeitig werfen Softwareanbieter mit KI und Automatisierung um sich, ohne zu erklären, was das konkret im Alltag einer Zeitarbeitsfirma bedeutet. Der Entscheider weiß nicht, wo er anfangen soll, und hat Angst, in die falsche Lösung zu investieren.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll nach dem Lesen wissen, welche Digitalisierungsbausteine für Personaldienstleister wirklich praxisrelevant sind, in welcher Reihenfolge er sie angehen sollte, und warum eine integrierte Plattform isolierten Einzellösungen überlegen ist.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Digitalisierung in der Personaldienstleistung: Was wirklich zählt und was nur Buzzword ist</p>
+<p class="section-value struct"><b>H2:</b> Warum Personaldienstleister unter besonderem Digitalisierungsdruck stehen</p>
+<p class="section-value struct"><b>H2:</b> Die fünf Kernbereiche der Digitalisierung im Überblick</p>
+<p class="section-value struct"><b>H2:</b> Künstliche Intelligenz in der Personaldienstleistung: Hype oder echter Hebel</p>
+<p class="section-value struct"><b>H2:</b> Sonderfall Gebäudereinigung und gewerbliche Branchen: digitale Besonderheiten</p>
+<p class="section-value struct"><b>H2:</b> Revisionssichere Archivierung: keine Option, sondern Pflicht</p>
+<p class="section-value struct"><b>H2:</b> Digitalisierung in Stufen: ein realistischer Fahrplan</p>
+<p class="section-value struct"><b>H2:</b> Integrierte Plattform vs. Insellösungen: die Kostenfrage</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Haufe deckt Compliance-Themen breit ab und rankt für viele informationelle Keywords in diesem Cluster.</li><li>Branchenverband mit Studiendaten zur Digitalisierung, relevant als Quellenkonkurrenz und für Verlinkungskontext.</li><li>Starker Wettbewerber im Bereich elektronische Lohnabrechnung mit hohem Domain Authority.</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo von zvoove buchen: zeigen, wie digitale Personalakte, Zeiterfassung und Lohnabrechnung in einer Plattform zusammenlaufen, inklusive GoBD-konformer Archivierung ohne Zusatzmodul.</div>
+</section>
+<section class="card" id="cluster-4">
+  <p class="cluster-id">Cluster 4</p>
+  <h2 class="cluster-title">zvoove im Überblick: Alle Module, Features und echte Kundenstimmen</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-ok">commercial</span>
+    <span class="badge badge-info">Volumen: 23.604/Mo</span>
+    <span class="badge badge-info">Difficulty: 51</span>
+    <span class="badge badge-info">34 Keywords</span>
+    <span class="badge badge-ok">97% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_04.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-4" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">zvoove referenzen</span><span class="kw-stats">4.617 · KD 61 · €11.42</span></div>
+<div class="kw-row"><span class="kw-name">zvoove dms</span><span class="kw-stats">3.902 · KD 76 · €8.61</span></div>
+<div class="kw-row"><span class="kw-name">zvoove cockpit</span><span class="kw-stats">3.418 · KD 70 · €6.71</span></div>
+<div class="kw-row"><span class="kw-name">zvoove payroll</span><span class="kw-stats">3.188 · KD 85 · €2.56</span></div>
+<div class="kw-row"><span class="kw-name">zvoove cashlink</span><span class="kw-stats">2.982 · KD 47 · €5.67</span></div>
+<div class="kw-row"><span class="kw-name">zvoove recruit</span><span class="kw-stats">1.369 · KD 61 · €3.75</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">commercial, Nutzer kennen zvoove bereits oder evaluieren die Plattform aktiv gegen Alternativen und suchen Produktdetails sowie Kundennachweise zur Kaufentscheidung.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder Niederlassungsleiter eines mittelständischen Personaldienstleisters mit 50 bis 500 Mitarbeitern, der aktuell eine neue Branchensoftware evaluiert oder sein bestehendes System ablösen will.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Der Entscheider sitzt zwischen Anbietern, die alle dasselbe versprechen, und braucht konkrete Belege statt Hochglanz-Marketing. Er fragt sich, ob zvoove wirklich alle Prozesse abdeckt, also Recruiting, Payroll, DMS und Finanzen in einem System, oder ob er wieder Insellösungen zusammenstückeln muss. Dazu kommt die Sorge, ob eine DATEV-Integration reibungslos funktioniert und ob andere Personaldienstleister in seiner Größe damit tatsächlich produktiv arbeiten.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll nach dem Lesen verstehen, welche zvoove-Module welche konkreten Probleme lösen, und genug Vertrauen aufgebaut haben, um eine Demo anzufragen oder ein Beratungsgespräch zu buchen.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> zvoove One: Module, Features und was echte Kunden sagen</p>
+<p class="section-value struct"><b>H2:</b> Was ist zvoove One und für wen ist es gebaut?</p>
+<p class="section-value struct"><b>H2:</b> Die zvoove Module im Einzelnen</p>
+<p class="section-value struct"><b>H2:</b> Integrationen: DATEV, ERP und weitere Schnittstellen</p>
+<p class="section-value struct"><b>H2:</b> zvoove Referenzen und Kundenstimmen</p>
+<p class="section-value struct"><b>H2:</b> zvoove Alternative: Wann lohnt sich der Vergleich?</p>
+<p class="section-value struct"><b>H2:</b> Implementierung und Support: Was erwartet Sie nach dem Kauf?</p>
+<p class="section-value struct"><b>H2:</b> Fazit und nächste Schritte</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Eigene Produktseite als inhaltliche Referenz und Gap-Analyse: Was fehlt dort an Tiefe, das der Artikel liefern kann.</li><li>Vergleichsplattform-Inhalte zeigen, welche Feature-Fragen Kaufinteressenten stellen.</li><li>Bewertungsportal mit echten Nutzerfeedbacks, das direkt als Suchziel konkurrierender Keywords auftritt.</li><li>Relevant weil viele Interessenten die DATEV-Schnittstelle als K.o.-Kriterium behandeln und dort recherchieren.</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2500</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Leser werden eingeladen, eine persönliche Produktdemo von zvoove zu buchen, idealerweise mit dem Hinweis, dass in der Demo gezielt auf das eigene Betriebsmodell (Zeitarbeit, Direktvermittlung oder gemischt) eingegangen wird.</div>
+</section>
+<section class="card" id="cluster-9">
+  <p class="cluster-id">Cluster 9</p>
+  <h2 class="cluster-title">Liquidität in der Zeitarbeit sichern: Equal Pay, Tariflandschaft und Debitorenmanagement im Überblick</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 15.571/Mo</span>
+    <span class="badge badge-info">Difficulty: 33</span>
+    <span class="badge badge-info">34 Keywords</span>
+    <span class="badge badge-info">18% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_09.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-9" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">debitorenmanagement</span><span class="kw-stats">4.929 · KD 54 · €0.77</span></div>
+<div class="kw-row"><span class="kw-name">equal pay zeitarbeit</span><span class="kw-stats">3.331 · KD 37 · €1.16</span></div>
+<div class="kw-row"><span class="kw-name">zahlungsausfall absichern</span><span class="kw-stats">769 · KD 20 · €2.27</span></div>
+<div class="kw-row"><span class="kw-name">liquidität zeitarbeit</span><span class="kw-stats">719 · KD 48 · €2.00</span></div>
+<div class="kw-row"><span class="kw-name">tariflandschaft zeitarbeit</span><span class="kw-stats">701 · KD 50 · €1.52</span></div>
+<div class="kw-row"><span class="kw-name">igz tarifvertrag aktuell</span><span class="kw-stats">700 · KD 17 · €1.76</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Zeitarbeitsunternehmen suchen sowohl grundlegendes Orientierungswissen zu Tarifen und Equal Pay als auch konkrete Handlungsoptionen zum Schutz ihrer Liquidität.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder kaufmännischer Leiter eines mittelständischen Zeitarbeitsunternehmens mit 50 bis 300 Mitarbeitern, der die Marge unter Druck sieht und gleichzeitig steigende Lohnkosten durch Equal Pay und Tarifanpassungen managen muss.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Tariferhöhungen bei IGZ und BAP plus Equal-Pay-Pflicht ab dem 15. Einsatzmonat erhöhen die Lohnkosten sprunghaft, während Kundenzahlungsziele von 30 bis 60 Tagen die Liquidität dauerhaft belasten. Ein einziger Zahlungsausfall eines größeren Kunden kann die gesamte Vorfinanzierung der Löhne gefährden. Wer die aktuelle Tariflandschaft nicht im Griff hat, kalkuliert Angebote falsch und verliert entweder Marge oder Aufträge.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll nach dem Lesen verstehen, wie Equal Pay, aktuelle Tarifentwicklungen und strukturiertes Debitorenmanagement zusammenhängen, und konkrete Maßnahmen kennen, mit denen er seine Liquidität planbar hält.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Liquidität in der Zeitarbeit sichern: Equal Pay, Tariflandschaft und Debitorenmanagement im Überblick</p>
+<p class="section-value struct"><b>H2:</b> Warum Liquidität in der Zeitarbeit strukturell schwierig ist</p>
+<p class="section-value struct"><b>H2:</b> Die aktuelle Tariflandschaft: IGZ und BAP im Vergleich</p>
+<p class="section-value struct"><b>H2:</b> Equal Pay in der Zeitarbeit: Was genau gilt ab dem 15. Einsatzmonat</p>
+<p class="section-value struct"><b>H2:</b> Debitorenmanagement: Zahlungsausfälle verhindern, bevor sie entstehen</p>
+<p class="section-value struct"><b>H2:</b> Zahlungsausfall absichern: Instrumente im Überblick</p>
+<p class="section-value struct"><b>H2:</b> Lohnsteuer und Sozialabgaben in der Zeitarbeit: Compliance als Liquiditätsfaktor</p>
+<p class="section-value struct"><b>H2:</b> Fazit: Liquiditätsplanung als strategische Aufgabe, nicht als Feuerlöscheinsatz</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Offizielle IGZ-Tarifseite, direkt referenziert von Suchenden nach aktuellem IGZ-Tarifvertrag, hohe thematische Autorität</li><li>BAP-Tarifübersicht, vergleichbar mit IGZ-Seite und für die Gegenüberstellung beider Systeme unverzichtbar</li><li>Gut strukturierter Ratgeberartikel zu Equal Pay mit rechtlicher Tiefe, zeigt welche Detailtiefe Suchende bei diesem Thema erwarten</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo von zvoove buchen: Zeigen lassen, wie zvoove die Equal-Pay-Fälligkeit je Mitarbeiter automatisch trackt, aktuelle Tarifentwicklungen in die Lohnkalkulation einspielt und offene Posten im Debitorenmanagement übersichtlich darstellt, damit Liquiditätslücken sichtbar werden, bevor sie entstehen.</div>
+</section>
+<section class="card" id="cluster-5">
+  <p class="cluster-id">Cluster 5</p>
+  <h2 class="cluster-title">Lohnabrechnung, Recruiting und AÜG: Der große Überblick für Personaldienstleister</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 14.455/Mo</span>
+    <span class="badge badge-info">Difficulty: 35</span>
+    <span class="badge badge-info">32 Keywords</span>
+    <span class="badge badge-info">22% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_05.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-5" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">aüg</span><span class="kw-stats">5.006 · KD 32 · €1.50</span></div>
+<div class="kw-row"><span class="kw-name">bewerber finden</span><span class="kw-stats">2.768 · KD 39 · €1.54</span></div>
+<div class="kw-row"><span class="kw-name">lohnabrechnung sage</span><span class="kw-stats">604 · KD 47 · €11.71</span></div>
+<div class="kw-row"><span class="kw-name">indeed alternative</span><span class="kw-stats">549 · KD 58 · €11.86</span></div>
+<div class="kw-row"><span class="kw-name">offboarding prozess</span><span class="kw-stats">517 · KD 37 · €1.91</span></div>
+<div class="kw-row"><span class="kw-name">lohnabrechnung erstellen</span><span class="kw-stats">456 · KD 49 · €2.49</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Nutzer suchen teils nach praktischen Anleitungen (Muster, Erstellung), teils nach konkreten Softwarelösungen und Alternativen zu bekannten Tools.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder HR-Leiter eines mittelständischen Personaldienstleisters oder einer Zeitarbeitsfirma mit 10 bis 100 Mitarbeitern, der seine Prozesse rund um Abrechnung und Recruiting konsolidieren will.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Lohnabrechnung, Bewerbermanagement und gesetzeskonforme AÜG-Dokumentation laufen in vielen Betrieben noch in drei verschiedenen Tools oder sogar in Excel, was zu Fehlern, Fristverstößen und vermeidbarem Zeitaufwand führt. Wechselnde Tarifverträge und AÜG-Pflichten machen jede manuelle Abrechnung zum Risiko, besonders wenn im gleichen Monat Leiharbeitnehmer zwischen Kundenbetrieben wechseln. Gleichzeitig wird der Fachkräftemangel spürbarer, sodass der Druck wächst, Stellen schneller zu besetzen, ohne teure Jobbörsen blind zu buchen.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll verstehen, wie er Lohnabrechnung, AÜG-Compliance und Recruiting in einem durchgängigen Prozess organisiert, und dabei konkret prüfen, ob eine spezialisierte All-in-one-Software wie zvoove den bisherigen Flickenteppich ersetzen kann.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Lohnabrechnung, Recruiting und AÜG: So bringen Personaldienstleister alle Prozesse unter einen Hut</p>
+<p class="section-value struct"><b>H2:</b> Warum Personaldienstleister besondere Anforderungen haben</p>
+<p class="section-value struct"><b>H2:</b> Lohnabrechnung erstellen: Grundlagen und gesetzliche Mindestanforderungen</p>
+<p class="section-value struct"><b>H2:</b> Bewerber finden in einem leergefegten Markt</p>
+<p class="section-value struct"><b>H2:</b> Offboarding Prozess: Das unterschätzte Ende des Arbeitsverhältnisses</p>
+<p class="section-value struct"><b>H2:</b> SaaS-Lizenzmodelle für Personaldienstleister: Was passt zu welcher Firmengröße</p>
+<p class="section-value struct"><b>H2:</b> All-in-one oder Best-of-Breed: Welcher Ansatz gewinnt in der Praxis</p>
+<p class="section-value struct"><b>H2:</b> Fazit und nächste Schritte</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>direkter Wettbewerber mit hoher Domain Authority, rankt auf mehrere der Ziel-Keywords und setzt den inhaltlichen Standard für den Abschnitt zur Lohnabrechnung</li><li>redaktionell starke Compliance-Ressource, zeigt wie AÜG-Inhalte für Praktiker aufbereitet werden sollten</li><li>relevant als Referenz für den Abschnitt zu Stellenanzeigen und Indeed-Alternativen, liefert Vergleichswerte zu CPCs</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo von zvoove buchen: Leser werden direkt eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove Lohnabrechnung nach AÜG, Multiposting und Offboarding in einer Oberfläche vereint, inklusive kurzem Selbst-Check-Formular mit drei Fragen zur aktuellen Softwarelandschaft im Betrieb.</div>
+</section>
+<section class="card" id="cluster-12">
+  <p class="cluster-id">Cluster 12</p>
+  <h2 class="cluster-title">Arbeitnehmerüberlassung: Recht, Sozialversicherung und Pflichten im Überblick</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-warn">informational</span>
+    <span class="badge badge-info">Volumen: 14.429/Mo</span>
+    <span class="badge badge-info">Difficulty: 30</span>
+    <span class="badge badge-info">44 Keywords</span>
+    <span class="badge badge-info">2% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_12.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-12" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">arbeitnehmerüberlassung</span><span class="kw-stats">4.131 · KD 66 · €2.24</span></div>
+<div class="kw-row"><span class="kw-name">arbeitnehmerüberlassungsgesetz</span><span class="kw-stats">2.910 · KD 40 · €2.23</span></div>
+<div class="kw-row"><span class="kw-name">einkommensteuer zeitarbeit</span><span class="kw-stats">591 · KD 50 · €1.53</span></div>
+<div class="kw-row"><span class="kw-name">arbeitsschutz zeitarbeit</span><span class="kw-stats">464 · KD 37 · €1.46</span></div>
+<div class="kw-row"><span class="kw-name">arbeitgeberanteile sozialversicherung</span><span class="kw-stats">420 · KD 46 · €2.32</span></div>
+<div class="kw-row"><span class="kw-name">arbeitsmarkt 2026</span><span class="kw-stats">417 · KD 19 · €1.91</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">informational, weil Suchende primär rechtliche Grundlagen, Pflichten und Prozesse verstehen wollen, bevor sie kaufen oder handeln.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Personalleiter oder Geschäftsführer eines mittelständischen Zeitarbeitsunternehmens (10 bis 100 Mitarbeiter intern), der seine Compliance-Prozesse professionalisieren und Haftungsrisiken reduzieren will.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Gesetzliche Änderungen im AÜG, bei Sozialversicherungspflichten und im Arbeitsschutz kommen schnell, aber im Tagesgeschäft bleibt kaum Zeit, den Überblick zu behalten. Fehler bei der Überlassungshöchstdauer, bei Gleichstellungsgeboten oder bei der Sozialversicherungsmeldung kosten nicht nur Bußgeld, sondern gefährden die Betriebserlaubnis. Wer Arbeitszeitkonten falsch führt oder die Disposition nicht sauber dokumentiert, sitzt bei einer Prüfung durch den Zoll oder die Deutsche Rentenversicherung schnell in der Klemme.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll die zentralen Rechtspflichten bei der Arbeitnehmerüberlassung kennen, häufige Compliance-Fehler vermeiden und verstehen, wie Software diese Prozesse absichert.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Arbeitnehmerüberlassung: Rechtliche Pflichten, Sozialversicherung und sichere Disposition</p>
+<p class="section-value struct"><b>H2:</b> Was das Arbeitnehmerüberlassungsgesetz konkret von Zeitarbeitsfirmen verlangt</p>
+<p class="section-value struct"><b>H2:</b> Sozialversicherung in der Zeitarbeit: Was Arbeitgeber zahlen und melden müssen</p>
+<p class="section-value struct"><b>H2:</b> Einkommensteuer in der Zeitarbeit: Was Arbeitnehmer wissen müssen und was Arbeitgeber beachten</p>
+<p class="section-value struct"><b>H2:</b> Arbeitsschutz in der Zeitarbeit: Doppelte Verantwortung, doppeltes Risiko</p>
+<p class="section-value struct"><b>H2:</b> Arbeitszeitkonten richtig führen: Anforderungen und typische Fehler</p>
+<p class="section-value struct"><b>H2:</b> Disposition von Zeitarbeitnehmern: Rechtliche Fallstricke in der Praxis</p>
+<p class="section-value struct"><b>H2:</b> Wie Software Compliance in der Zeitarbeit absichert</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>umfassende Darstellung der AÜG-Grundlagen, hohe Autorität im HR-Rechtsbereich</li><li>offizielle Quelle der Bundesagentur für Arbeit zu Erlaubnispflichten, signifikant für E-E-A-T</li><li>Branchenverband mit aktuellem Tarifwerk, relevant für Equal Pay und Sozialversicherungsthemen</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo buchen: Zeig mir, wie zvoove die Überlassungsfristen, Sozialversicherungsmeldungen und Arbeitszeitkonten deiner Zeitarbeitnehmer automatisch überwacht und dokumentiert.</div>
+</section>
+<section class="card" id="cluster-7">
+  <p class="cluster-id">Cluster 7</p>
+  <h2 class="cluster-title">Personaleinsatzplanung und Personalverwaltung: So behalten Personaldienstleister den Überblick</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 12.386/Mo</span>
+    <span class="badge badge-info">Difficulty: 35</span>
+    <span class="badge badge-info">34 Keywords</span>
+    <span class="badge badge-info">32% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_07.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-7" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">personaleinsatzplanung</span><span class="kw-stats">4.799 · KD 64 · €1.15</span></div>
+<div class="kw-row"><span class="kw-name">personalakte inhalt</span><span class="kw-stats">792 · KD 35 · €1.89</span></div>
+<div class="kw-row"><span class="kw-name">gehaltsabrechnung outsourcing</span><span class="kw-stats">765 · KD 55 · €4.48</span></div>
+<div class="kw-row"><span class="kw-name">azubi verwaltung</span><span class="kw-stats">712 · KD 42 · €9.34</span></div>
+<div class="kw-row"><span class="kw-name">karriereseite erstellen</span><span class="kw-stats">706 · KD 19 · €0.43</span></div>
+<div class="kw-row"><span class="kw-name">saas personaldienstleister</span><span class="kw-stats">654 · KD 38 · €2.39</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Nutzer suchen teils nach Prozesswissen (was gehört in eine Personalakte, wie funktioniert Einsatzplanung), teils nach konkreten Softwarelösungen für Personaldienstleister.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Disponent oder Operations Manager in einem Personaldienstleistungs- oder Zeitarbeitsunternehmen mit 20 bis 200 Mitarbeitenden intern, der täglich mehrere Dutzend Mitarbeiter im Außeneinsatz koordiniert.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Excel-Tabellen und veraltete Tools reichen nicht mehr aus, sobald die Zahl der Einsatzkräfte wächst: Schichten werden doppelt vergeben, Qualifikationsnachweise fehlen bei der Kontrolle, und die Lohnabrechnung muss am Ende des Monats mühsam aus drei verschiedenen Quellen zusammengebaut werden. Dazu kommt der Druck durch Prüfungen nach dem Arbeitnehmerüberlassungsgesetz: Wer keine saubere digitale Personalakte führt, riskiert Bußgelder und verliert im schlimmsten Fall seine AÜG-Lizenz. Gleichzeitig fehlt die Zeit, sich in komplexe Softwareprojekte einzuarbeiten, während das Tagesgeschäft weiterläuft.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll verstehen, welche Prozesse in der Personalverwaltung und Einsatzplanung zusammenspielen, wo typische Fehlerquellen liegen, und warum eine integrierte SaaS-Lösung diese Probleme strukturell löst statt nur einzelne Symptome zu behandeln.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Personaleinsatzplanung und Personalverwaltung: So behalten Personaldienstleister den Überblick</p>
+<p class="section-value struct"><b>H2:</b> Warum Personaldienstleister besondere Anforderungen haben</p>
+<p class="section-value struct"><b>H2:</b> Personaleinsatzplanung: Was wirklich dahintersteckt</p>
+<p class="section-value struct"><b>H2:</b> Die digitale Personalakte: Pflichtinhalt und Best Practices</p>
+<p class="section-value struct"><b>H2:</b> Lohnabrechnung und Gehaltsabrechnung: Outsourcing oder inhouse</p>
+<p class="section-value struct"><b>H2:</b> Kennzahlen, die Personaldienstleister wirklich brauchen</p>
+<p class="section-value struct"><b>H2:</b> KI im Bewerbermanagement und in der Einsatzplanung</p>
+<p class="section-value struct"><b>H2:</b> SaaS für Personaldienstleister: Worauf es bei der Auswahl ankommt</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Hohe Domain Authority, rankt auf generische Begriffe rund um Einsatzplanung, behandelt aber nicht die spezifischen Anforderungen von Personaldienstleistern</li><li>Stark für &quot;personalakte inhalt&quot;, sehr informationslastig, kein Bezug zu Zeitarbeit oder AÜG</li><li>Direkter Wettbewerber im HR-Software-Segment, solide Abdeckung, aber kein Fokus auf Lohn-Schnittstellen oder Kennzahlen</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo buchen: Zeige dem Leser, wie zvoove in einer Live-Demo Einsatzplanung, digitale Personalakte und Lohnabrechnung in einem System verbindet, mit einem direkten Link zur Demo-Anfrage und dem konkreten Hinweis, dass keine IT-Kenntnisse für den Einstieg nötig sind.</div>
+</section>
+<section class="card" id="cluster-3">
+  <p class="cluster-id">Cluster 3</p>
+  <h2 class="cluster-title">KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Bewerbungsprozess</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 12.075/Mo</span>
+    <span class="badge badge-info">Difficulty: 38</span>
+    <span class="badge badge-info">34 Keywords</span>
+    <span class="badge badge-info">44% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_03.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-3" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">ki recruiting</span><span class="kw-stats">3.354 · KD 36 · €2.43</span></div>
+<div class="kw-row"><span class="kw-name">recruiting software</span><span class="kw-stats">1.149 · KD 52 · €6.81</span></div>
+<div class="kw-row"><span class="kw-name">recruiting plattform</span><span class="kw-stats">796 · KD 66 · €8.35</span></div>
+<div class="kw-row"><span class="kw-name">automatisierung recruiting prozess</span><span class="kw-stats">739 · KD 29 · €0.73</span></div>
+<div class="kw-row"><span class="kw-name">active sourcing tools</span><span class="kw-stats">736 · KD 74 · €4.26</span></div>
+<div class="kw-row"><span class="kw-name">recruiting automatisieren</span><span class="kw-stats">699 · KD 52 · €0.92</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Nutzer recherchieren sowohl nach Grundlagen zu KI im Recruiting als auch nach konkreten Tools und Plattformen für den Einsatz im Tagesgeschäft.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Niederlassungsleiter oder Recruiting-Verantwortliche in einem Personaldienstleistungsunternehmen mit 5 bis 50 Mitarbeitern, der täglich zu viele Stellen zu besetzen hat und zu wenig Zeit für manuelle Prozesse.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Die Stellenbesetzungszeiten steigen, während qualifizierte Bewerber in Minuten von Wettbewerbern abgefangen werden, weil interne Prozesse noch auf E-Mail und Excel basieren. Das Tagesgeschäft lässt kaum Raum, jeden Kandidaten im richtigen Moment anzusprechen, Lebensläufe manuell zu sichten kostet Stunden, die schlicht nicht da sind. Gleichzeitig wächst der Druck von Kundenunternehmen, Vakanzen schneller zu besetzen, und jede verzögerte Besetzung ist direkt entgangener Umsatz.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll verstehen, welche Schritte im Recruiting durch KI und Automatisierung konkret abgedeckt werden können, und eine fundierte Entscheidungsgrundlage haben, welche Art von Software für Personaldienstleister und Zeitarbeitsfirmen sinnvoll ist.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Bewerbungsprozess</p>
+<p class="section-value struct"><b>H2:</b> Warum manuelle Recruiting-Prozesse Personaldienstleister Umsatz kosten</p>
+<p class="section-value struct"><b>H2:</b> Was KI im Recruiting konkret bedeutet, jenseits des Hypes</p>
+<p class="section-value struct"><b>H2:</b> Der Recruiting Funnel im Überblick: Wo Automatisierung den größten Hebel hat</p>
+<p class="section-value struct"><b>H2:</b> Applicant Tracking System vs. All-in-One-Plattform: Was Personaldienstleister wirklich brauchen</p>
+<p class="section-value struct"><b>H2:</b> Active Sourcing mit KI: Kandidaten finden, bevor sie aktiv suchen</p>
+<p class="section-value struct"><b>H2:</b> Rechtliche Grenzen: Was bei KI-gestütztem Recruiting in Deutschland zu beachten ist</p>
+<p class="section-value struct"><b>H2:</b> Einführung eines KI-Recruiting-Tools: Typische Fehler und wie man sie vermeidet</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Hoch rankender Grundlagenartikel von einem bekannten HR-Software-Anbieter, zeigt die Erwartungshaltung der Zielgruppe an Tiefe und Struktur</li><li>Redaktionell starker Artikel mit Praxisbezug, relevant wegen der Abdeckung rechtlicher Aspekte und Nutzerzitate</li><li>Direkt konkurrierendes Tool erklärt ATS-Grundlagen, zeigt welche Keywords in einem Artikel sinnvoll gebündelt werden</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo von zvoove Recruit buchen: Leser werden eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove den Recruiting Funnel vom Stelleneingang bis zur Vermittlung automatisiert, inklusive KI-gestütztem Matching und integriertem Bewerbermanagement für Zeitarbeitsunternehmen.</div>
+</section>
+<section class="card" id="cluster-6">
+  <p class="cluster-id">Cluster 6</p>
+  <h2 class="cluster-title">Zeitarbeit in Deutschland 2025: Marktdaten, AÜG-Regeln und was Verleiher wirklich wissen müssen</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 11.462/Mo</span>
+    <span class="badge badge-info">Difficulty: 32</span>
+    <span class="badge badge-info">20 Keywords</span>
+    <span class="badge badge-info">5% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_06.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-6" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">höchstüberlassungsdauer</span><span class="kw-stats">3.959 · KD 51 · €1.87</span></div>
+<div class="kw-row"><span class="kw-name">fachkräftemangel deutschland</span><span class="kw-stats">3.916 · KD 29 · €0.31</span></div>
+<div class="kw-row"><span class="kw-name">gig economy deutschland</span><span class="kw-stats">789 · KD 17 · €2.20</span></div>
+<div class="kw-row"><span class="kw-name">gesetzliche abzüge lohn</span><span class="kw-stats">538 · KD 43 · €2.32</span></div>
+<div class="kw-row"><span class="kw-name">markt zeitarbeit deutschland</span><span class="kw-stats">484 · KD 38 · €1.40</span></div>
+<div class="kw-row"><span class="kw-name">ranking zeitarbeitsfirmen deutschland</span><span class="kw-stats">193 · KD 22 · €0.72</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Betreiber und Compliance-Verantwortliche in Zeitarbeitsunternehmen suchen sowohl Marktdaten zur eigenen Orientierung als auch konkrete Regelungsfragen rund um das AÜG.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder Niederlassungsleiter einer mittelgroßen Zeitarbeitsfirma mit 50 bis 500 aktiven Leiharbeitnehmern, der den eigenen Marktanteil einordnen und gleichzeitig sichergehen will, keine AÜG-Verstöße zu riskieren.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Der Markt für Zeitarbeit schrumpft oder stagniert in manchen Segmenten, während der Fachkräftemangel gleichzeitig den Druck erhöht, schneller und flexibler zu besetzen. Wer die Höchstüberlassungsdauer oder Meldefristen der Bundesagentur für Arbeit nicht im Griff hat, riskiert empfindliche Bußgelder und den Entzug der Erlaubnis. Viele Unternehmen wissen nicht genau, wo sie im Vergleich zum Wettbewerb stehen und welche regulatorischen Stolpersteine 2025 besonders gefährlich sind.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll nach dem Lesen die aktuelle Marktlage einordnen können, die drei kritischsten AÜG-Pflichten kennen und einschätzen, wo sein Unternehmen im Branchenvergleich steht.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Zeitarbeit in Deutschland 2025: Marktdaten, AÜG-Regeln und was Verleiher wirklich wissen müssen</p>
+<p class="section-value struct"><b>H2:</b> Der deutsche Zeitarbeitsmarkt in Zahlen</p>
+<p class="section-value struct"><b>H2:</b> AÜG-Meldepflichten: Was viele Verleiher falsch machen</p>
+<p class="section-value struct"><b>H2:</b> Höchstüberlassungsdauer: Die 18-Monats-Regel in der Praxis</p>
+<p class="section-value struct"><b>H2:</b> Sanktionen bei AÜG-Verstößen: Bußgelder, Erlaubnisentzug und zivilrechtliche Folgen</p>
+<p class="section-value struct"><b>H2:</b> Der Überlassungsvertrag: Pflichtinhalte und häufige Lücken</p>
+<p class="section-value struct"><b>H2:</b> Gig Economy und neue Beschäftigungsmodelle: Bedrohung oder Ergänzung für Zeitarbeit?</p>
+<p class="section-value struct"><b>H2:</b> Gesetzliche Abzüge und Equal Pay: Was Verleiher beim Lohn beachten müssen</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Branchenverband mit aktuellen Marktdaten und AÜG-Statistiken, hohe Relevanz für Zahlen und Ranking</li><li>Gut rankender Ratgeberartikel zur Höchstüberlassungsdauer mit konkreten Praxisbeispielen</li><li>Offizielle Quelle der BA zu Erlaubnispflicht und Meldeverfahren, wird oft zitiert und verlinkt</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Jetzt kostenlosen Demo-Termin vereinbaren und sehen, wie zvoove Zeitarbeit Fristen zur Höchstüberlassungsdauer, AÜG-Meldepflichten und Vertragsdokumentation automatisch im Griff behält.</div>
+</section>
+<section class="card" id="cluster-10">
+  <p class="cluster-id">Cluster 10</p>
+  <h2 class="cluster-title">Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung im Überblick</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 8.467/Mo</span>
+    <span class="badge badge-info">Difficulty: 39</span>
+    <span class="badge badge-info">27 Keywords</span>
+    <span class="badge badge-info">52% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_10.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-10" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">gebäudereinigung software</span><span class="kw-stats">5.051 · KD 78 · €8.43</span></div>
+<div class="kw-row"><span class="kw-name">disposition gebäudereinigung</span><span class="kw-stats">367 · KD 35 · €6.64</span></div>
+<div class="kw-row"><span class="kw-name">auftragsverwaltung gebäudereinigung</span><span class="kw-stats">197 · KD 47 · €9.72</span></div>
+<div class="kw-row"><span class="kw-name">reinigungskalkulation software</span><span class="kw-stats">196 · KD 64 · €2.84</span></div>
+<div class="kw-row"><span class="kw-name">unterhaltsreinigung kalkulation</span><span class="kw-stats">187 · KD 27 · €2.34</span></div>
+<div class="kw-row"><span class="kw-name">zeiterfassung gebäudereinigung</span><span class="kw-stats">184 · KD 39 · €9.28</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Betreiber von Reinigungsunternehmen suchen aktiv nach einer Softwarelösung, wollen aber vorher verstehen, welche Funktionen wirklich notwendig sind und was eine Einführung kostet.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Geschäftsführer oder Disponenten eines mittelständischen Gebäudereinigungsunternehmens mit 20 bis 200 Mitarbeitern, das bisher mit Excel, Papier oder veralteten Insellösungen arbeitet.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Aufträge werden manuell koordiniert, Touren laufen ineffizient, und der Disponent verliert täglich Zeit mit Telefonaten, weil niemand weiß, wer gerade wo eingesetzt ist. Kalkulationsfehler bei Unterhaltsreinigungsverträgen fressen die Marge, weil Reinigungszeiten falsch geschätzt werden und Nachkalkulation kaum stattfindet. Bei Betriebsprüfungen oder Kundenreklamationen fehlen saubere Nachweise über geleistete Stunden und Qualitätskontrollen.</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll verstehen, welche Kernfunktionen eine Software für Gebäudereiniger braucht, wie eine Einführung konkret abläuft, und warum er mit zvoove eine Demo vereinbaren sollte, bevor er eine Kaufentscheidung trifft.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung endlich digital</p>
+<p class="section-value struct"><b>H2:</b> Warum Excel und Telefon in der Gebäudereinigung ausgedient haben</p>
+<p class="section-value struct"><b>H2:</b> Die fünf Kernfunktionen, die eine Reinigungssoftware mitbringen muss</p>
+<p class="section-value struct"><b>H2:</b> Disposition in der Gebäudereinigung: Wie gute Software den Alltag verändert</p>
+<p class="section-value struct"><b>H2:</b> Reinigungskalkulation: Angebote gewinnen, ohne die Marge zu opfern</p>
+<p class="section-value struct"><b>H2:</b> Zeiterfassung in der Gebäudereinigung: Rechtssicher und einfach für Reinigungskräfte</p>
+<p class="section-value struct"><b>H2:</b> Softwareeinführung in einer Reinigungsfirma: Was wirklich auf Sie zukommt</p>
+<p class="section-value struct"><b>H2:</b> Gebäudedienstleistung digitalisieren: Schritt für Schritt zum papierlosen Betrieb</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Marktübersicht eines Branchenportals, deckt viele der Nebenkeywords ab und rankt bereits für mehrere Clusterbegriffe</li><li>Praxisbericht eines mittelständischen Reinigungsunternehmens, hohe inhaltliche Glaubwürdigkeit durch Erfahrungswerte</li><li>Fachmagazin-Artikel mit Produktvergleich, liefert Kontext zu Wettbewerbern und Kaufkriterien</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2800</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Jetzt eine kostenlose Demo von zvoove für Gebäudereiniger vereinbaren und live sehen, wie Disposition, Kalkulation und Zeiterfassung in einer Plattform zusammenspielen.</div>
+</section>
+<section class="card" id="cluster-1">
+  <p class="cluster-id">Cluster 1</p>
+  <h2 class="cluster-title">Factoring für Zeitarbeit: Buchen, Genehmigung und Anbieter im Überblick</h2>
+  <div style="margin: 8px 0 0;">
+    <span class="badge badge-info">mixed</span>
+    <span class="badge badge-info">Volumen: 3.516/Mo</span>
+    <span class="badge badge-info">Difficulty: 39</span>
+    <span class="badge badge-info">15 Keywords</span>
+    <span class="badge badge-info">27% kommerziell</span>
+  </div>
+  <div class="brief-actions">
+    <a class="action-link download" href="briefings/cluster_01.md" download>Markdown herunterladen</a>
+    <a class="action-link map" href="cluster_map.html#cluster-1" target="_blank" rel="noopener">Im Cluster-Map anzeigen</a>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Top Keywords im Cluster</p>
+  <div style="margin-bottom: 16px;"><div class="kw-row"><span class="kw-name">factoring buchen</span><span class="kw-stats">799 · KD 18 · €2.27</span></div>
+<div class="kw-row"><span class="kw-name">factoring erlaubnis</span><span class="kw-stats">671 · KD 40 · €2.28</span></div>
+<div class="kw-row"><span class="kw-name">offenes factoring</span><span class="kw-stats">296 · KD 39 · €1.22</span></div>
+<div class="kw-row"><span class="kw-name">echtes factoring</span><span class="kw-stats">244 · KD 19 · €0.64</span></div>
+<div class="kw-row"><span class="kw-name">factoring kfw</span><span class="kw-stats">234 · KD 32 · €1.27</span></div>
+<div class="kw-row"><span class="kw-name">stilles factoring</span><span class="kw-stats">170 · KD 29 · €1.81</span></div></div>
+
+  <p class="section-label">Suchintention</p>
+  <p class="section-value">mixed, Leser suchen sowohl grundlegendes Verständnis zu Factoring-Varianten als auch konkrete Handlungsoptionen wie Anbieterauswahl und Buchhaltungsbehandlung.</p>
+
+  <p class="section-label">Zielgruppe</p>
+  <p class="section-value">Kaufmännische Leitung oder Geschäftsführer eines mittelständischen Zeitarbeitsunternehmens mit 20 bis 200 Mitarbeitern, der Liquiditätsengpässe zwischen Lohnauszahlung und Kundenzahlung schließen will.</p>
+
+  <p class="section-label">Schmerzpunkt</p><p class="section-value">Zeitarbeitsunternehmen zahlen Löhne wöchentlich oder vierzehntägig, bekommen ihr Geld von Kundenunternehmen aber erst nach 30 bis 60 Tagen. Dieser strukturelle Liquiditätsengpass zwingt viele Unternehmen in teure Kontokorrentkredite oder bremst das Wachstum. Dazu kommt Unsicherheit: Brauche ich eine Erlaubnis für Factoring, wie buche ich die Transaktionen korrekt, und welcher Anbieter passt zu meiner Betriebsgröße?</p>
+
+  <p class="section-label">Ziel des Artikels</p><p class="section-value">Der Leser soll nach dem Lesen verstehen, welche Factoring-Variante für sein Zeitarbeitsunternehmen passt, wie er die Buchungen korrekt abbildet und welche nächsten Schritte zur Beantragung sinnvoll sind.</p>
+
+  <p class="section-label">Empfohlene Seitenstruktur</p>
+  <p class="section-value struct"><b>H1:</b> Factoring in der Zeitarbeit: Buchen, Genehmigung und die richtige Anbieterauswahl</p>
+<p class="section-value struct"><b>H2:</b> Warum Factoring für Zeitarbeitsunternehmen ein Dauerthema ist</p>
+<p class="section-value struct"><b>H2:</b> Die wichtigsten Factoring-Varianten im Vergleich</p>
+<p class="section-value struct"><b>H2:</b> Factoring buchen: So läuft die Buchhaltung korrekt ab</p>
+<p class="section-value struct"><b>H2:</b> Factoring Erlaubnis: Was rechtlich zu beachten ist</p>
+<p class="section-value struct"><b>H2:</b> Factoring online beantragen: So läuft der Prozess heute ab</p>
+<p class="section-value struct"><b>H2:</b> Factoring Anbieter vergleichen: Worauf es in der Zeitarbeit wirklich ankommt</p>
+<p class="section-value struct"><b>H2:</b> Factoring und Zeitarbeitssoftware: Wenn beides zusammenspielt</p>
+
+  <hr class="divider">
+
+  <p class="section-label">Inhaltliche Lücken (Top-3-SERP Analyse)</p>
+  <div class="gap-block"><b>Was die Top-Wettbewerber zeigen, was Lücken sind:</b><ul><li>Hochrangiger Ratgeberartikel zu Buchungssätzen, direkt auf das Hauptkeyword optimiert</li><li>Klarer, praxisnaher Aufbau mit Buchungsbeispielen, gut verlinkt im KMU-Segment</li><li>Spezialisierte Branchenseite mit Fokus auf Erlaubnispflicht und BaFin-Thematik</li></ul></div>
+
+  <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
+  <p class="section-value">2500</p>
+
+  <p class="section-label">Call to Action</p>
+  <div class="cta-block">Demo vereinbaren: Zeig mir, wie zvoove die Rechnungsstellung automatisiert und damit die Voraussetzung für schnelles Factoring schafft.</div>
+</section>
+
+</div></body></html>

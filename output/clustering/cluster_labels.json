@@ -1,55 +1,55 @@
 {
   "0": {
-    "de": "Factoring Geschäftsmodelle und Genehmigung",
-    "en": "Factoring Business Models and Licensing"
+    "de": "Factoring Buchhaltung und Genehmigung",
+    "en": "Factoring Accounting and Licensing"
   },
   "1": {
-    "de": "Zeiterfassungs- und Zeitarbeitssoftware",
-    "en": "Time Tracking and Temp Work Software"
+    "de": "Zeiterfassung und Zeitarbeitssoftware",
+    "en": "Time Tracking and Staffing Software"
   },
   "2": {
-    "de": "KI-gestützte Recruiting-Automatisierung",
+    "de": "KI-gestützte Recruiting Automatisierung",
     "en": "AI-Powered Recruiting Automation"
   },
   "3": {
-    "de": "Zvoove Produktfeatures und Preise",
-    "en": "Zvoove Product Features and Pricing"
+    "de": "Zvoove Produkte und Features",
+    "en": "Zvoove Products and Features"
   },
   "4": {
-    "de": "Lohnabrechnung und Candidate Sourcing",
-    "en": "Payroll Processing and Candidate Sourcing"
+    "de": "Sammelthemen Lohnabrechnung und Recruiting",
+    "en": "Catch-all Payroll and Recruitment"
   },
   "5": {
-    "de": "Personalakte und Einsatzplanung",
-    "en": "Personnel File and Shift Planning"
+    "de": "Zeitarbeit Markt und Regulierung Deutschland",
+    "en": "Staffing Market and German Regulations"
   },
   "6": {
-    "de": "Digitalisierung in Personaldienstleistung",
-    "en": "Digital Transformation in HR Services"
+    "de": "Personalverwaltung und Einsatzplanung",
+    "en": "Personnel Management and Deployment Planning"
   },
   "7": {
-    "de": "Debitorenmanagement und Equal Pay",
-    "en": "Receivables Management and Equal Pay"
+    "de": "Digitalisierung Personaldienstleistung und KI",
+    "en": "Digitalization of HR Services and AI"
   },
   "8": {
-    "de": "Gebäudereinigung Software und Disposition",
-    "en": "Facility Cleaning Software and Dispatch"
+    "de": "Liquidität Equal Pay und Tariflandschaft",
+    "en": "Liquidity Equal Pay and Collective Agreements"
   },
   "9": {
-    "de": "HR- und Bewerbermanagementsoftware KMU",
-    "en": "HR and Applicant Tracking for SMEs"
+    "de": "Gebäudereinigung Disposition und Kalkulation",
+    "en": "Facility Cleaning Scheduling and Costing"
   },
   "10": {
-    "de": "Arbeitnehmerüberlassung Regulierung und Onboarding",
-    "en": "Employee Leasing Regulations and Onboarding"
+    "de": "HR Software Dokumentenverwaltung und Mitarbeiterverwaltung",
+    "en": "HR Software Document and Employee Management"
   },
   "11": {
-    "de": "Zeiterfassung Spezialbranche und Compliance",
-    "en": "Time Tracking Niche Industries and Compliance"
+    "de": "Arbeitnehmerüberlassung Recht und Sozialversicherung",
+    "en": "Employee Leasing Law and Social Insurance"
   },
   "12": {
-    "de": "Zeitarbeit Branchentrends und Einsatzplanung",
-    "en": "Temp Work Industry Trends and Scheduling"
+    "de": "Sammelthemen Zeitarbeit Software und Finanzierung",
+    "en": "Catch-all Staffing Software and Financing"
   },
   "-1": {
     "de": "Rauschen / Ausreißer",

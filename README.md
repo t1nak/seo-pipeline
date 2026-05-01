@@ -159,13 +159,13 @@ seo-pipeline/
 | LLM Briefs | `anthropic` SDK, `claude-sonnet-4-6` | mit Prompt Caching auf System Block, ungefähr 90 Prozent Token Ersparnis bei wiederholten Läufen |
 | Live Keyword Daten | DataForSEO Labs API | optional, Heuristik als Default |
 
-## Was diese Pipeline bewusst nicht tut
+## Was noch fehlt
 
 - Keine direkte Anbindung an einen Search Console Account. Wenn echte Click und Impression Daten gewünscht sind, ist das eine Erweiterung des Discover Schritts.
 - Kein Auto-Publishing der Briefs in ein CMS. Die Briefs sind Markdown, eine Anbindung an Sanity, Contentful oder WordPress wäre ein eigener Schritt.
 - Kein Tracking der Pipeline Läufe in einer Datenbank. Für Produktion wäre ein einfacher SQLite Run-Log sinnvoll, aktuell sind Snapshots die Persistenz Schicht.
 
-Diese Lücken sind dokumentiert in [`docs/decisions.md`](docs/decisions.md), nicht zufällig.
+Diese Lücken sind dokumentiert in [`docs/decisions.md`](docs/decisions.md).
 
 ## Lizenz und Kontext
 

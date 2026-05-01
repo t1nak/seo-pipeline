@@ -45,7 +45,7 @@
   <!-- Step 1 -->
   <rect x="60" y="64" width="560" height="120" rx="10" class="step-blue"/>
   <text x="340" y="90"  class="title title-blue mid">Step 1 · Keywords holen und anreichern</text>
-  <text x="340" y="114" class="desc mid">Eine Quelle wählen. Liefert Volumen, Difficulty und SERP-Merkmale je Keyword.</text>
+  <text x="340" y="114" class="desc mid">Verschiedene Quellen möglich. Ziel: Volumen, Difficulty und SERP-Merkmale je Keyword.</text>
   <g>
     <rect x="168" y="130" width="80" height="24" rx="12" class="chip-blue"/>
     <text x="208" y="142" class="chip-text mid">SEMrush API</text>
@@ -63,7 +63,7 @@
   <!-- Step 2 -->
   <rect x="60" y="206" width="560" height="120" rx="10" class="step-orange"/>
   <text x="340" y="232" class="title title-orange mid">Step 2 · Semantisches Clustering</text>
-  <text x="340" y="256" class="desc mid">Embeddings, Dimensionsreduktion, Dichte-Clustering. Anzahl ergibt sich aus den Daten.</text>
+  <text x="340" y="256" class="desc mid">Embeddings, Dimensionsreduktion. Anzahl ergibt sich aus den Daten.</text>
   <g>
     <rect x="212" y="272" width="80" height="24" rx="12" class="chip-orange"/>
     <text x="252" y="284" class="chip-text mid">MiniLM</text>
@@ -81,12 +81,10 @@
   <text x="340" y="374" class="title title-green mid">Step 3 · Content-Briefings</text>
   <text x="340" y="398" class="desc mid">Pro Cluster: Intention, Persona, Seitenstruktur, SERP-Lücken, CTA. Provider auswechselbar.</text>
   <g>
-    <rect x="212" y="414" width="80" height="24" rx="12" class="chip-green"/>
-    <text x="252" y="426" class="chip-text mid">Anthropic</text>
-    <rect x="300" y="414" width="80" height="24" rx="12" class="chip-green"/>
-    <text x="340" y="426" class="chip-text mid">OpenAI</text>
-    <rect x="388" y="414" width="80" height="24" rx="12" class="chip-green"/>
-    <text x="428" y="426" class="chip-text mid">Stub (Dry-Run)</text>
+    <rect x="256" y="414" width="80" height="24" rx="12" class="chip-green"/>
+    <text x="296" y="426" class="chip-text mid">Anthropic</text>
+    <rect x="344" y="414" width="80" height="24" rx="12" class="chip-green"/>
+    <text x="384" y="426" class="chip-text mid">OpenAI</text>
   </g>
   <text x="340" y="456" class="out out-green mid">Output: briefing_[cluster].md, versioniert in Git</text>
 
@@ -95,7 +93,7 @@
   <!-- Step 4 -->
   <rect x="60" y="490" width="560" height="120" rx="10" class="step-purple"/>
   <text x="340" y="516" class="title title-purple mid">Step 4 · Reporting</text>
-  <text x="340" y="540" class="desc mid">Konsolidiertes Dashboard plus Status-Push. Outputformate und Plattformen austauschbar.</text>
+  <text x="340" y="540" class="desc mid">Konsolidiertes Dashboard. Outputformate und Plattformen austauschbar.</text>
   <g>
     <rect x="168" y="556" width="80" height="24" rx="12" class="chip-purple"/>
     <text x="208" y="568" class="chip-text mid">GitHub Pages</text>

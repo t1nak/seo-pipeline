@@ -116,5 +116,6 @@ extra_css:
 
 extra_javascript:
   - javascripts/lightbox.js
+  - javascripts/palette-fix.js
 
 copyright: Tina Koziol, Case Study für eine Bewerbung als Revenue AI Architect

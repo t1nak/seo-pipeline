@@ -2,22 +2,13 @@
 
 > Eine Pipeline, die aus dem zvoove Blog ein priorisiertes Keyword Set ableitet, thematisch clustert, pro Cluster einen Content Brief erzeugt und ein konsolidiertes Reporting liefert.
 
-Diese Schreibarbeit erklärt, was gebaut wurde, warum so, wo die Grenzen liegen und wie das in einen Revenue Stack passt. Sie ist die längere Version des [README](index.md).
+Der folgende Text ist eine ausführlichere Version des [README](index.md) auf Deutsch.
 
 ## 1. Aufgabe
 
-Die Aufgabe in der ausgeschriebenen Form:
+Die Aufgabenstellung im Original:
 
 > Develop a keyword set from existing blog topics, cluster the keywords, generate content briefs, and transfer everything into a structured reporting system. Baue einen funktionierenden Workflow, der aus vorhandenen Blogartikeln, Themenfeldern oder Content-Schwerpunkten zunächst ein relevantes Keywordset von max. 500 Keywords entwickelt, diese anschließend thematisch clustert, pro Cluster einen Content-Brief generiert und die Ergebnisse in ein strukturiertes Reporting überführt. Die Basis ist unser Blog: https://zvoove.de/wissen/blog
-
-Ich habe die Aufgabe als vier verbundene Probleme gelesen:
-
-1. Welche Themen sind überhaupt relevant für die Zielgruppe und für zvoove als Anbieter?
-2. Welche dieser Themen lohnen sich nach Suchnachfrage und Wettbewerb?
-3. Welche Themen gehören semantisch zusammen und sollten als ein Pillar plus Cluster Strategie behandelt werden statt als isolierte Artikel?
-4. Wie wird das Ergebnis so verpackt, dass eine Redaktion damit ohne weitere Vorarbeit produzieren kann?
-
-Punkt 3 ist der eigentliche Gewinn. Punkt 4 ist das, was den Unterschied zwischen einer Keyword Liste und einem nutzbaren Asset ausmacht.
 
 ## Das Problem in einem Satz
 
@@ -25,7 +16,7 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 
 ## 2. Ergebnis in zwei Minuten
 
-Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 10 thematische Cluster plus rund 40 Ausreißer (~8 Prozent). Die wichtigsten Zahlen:
+Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 13 thematische Cluster, alle 500 Keywords sind zugeordnet, 0 Outlier (`mcs=10, ms=5, eom` plus Soft-Assignment der 72 HDBSCAN-Rand-Keywords). Die wichtigsten Zahlen:
 
 | Metrik | Wert |
 |---|---|
@@ -34,9 +25,9 @@ Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 10 thematische Clus
 | HDBSCAN-Kern-Keywords | 428 (direkt geclustert) |
 | Soft-Assigned-Keywords | 72 (Nearest-Centroid in 5D UMAP) |
 | Gesamt Suchvolumen pro Monat | 239.976 (alle Cluster) |
-| Größter Cluster nach SV | HR Software Dokumenten- und Mitarbeiterverwaltung (45.567 SV, 45 Keywords) |
-| Größter Cluster nach Anzahl | Sammelthemen Zeitarbeit Software und Finanzierung (97 Keywords, 28.301 SV — Sub-Clustering empfohlen) |
-| Höchste kommerzielle Dichte | Zvoove Produkte und Features (97 Prozent kommerziell, 23.604 SV) |
+| Größter Cluster nach SV | HR und Dokumentenverwaltungssoftware (45.567 SV, 45 Keywords) |
+| Größter Cluster nach Anzahl | Zeitarbeit Branche Software und Tools (97 Keywords, 28.301 SV, Sub-Clustering empfohlen) |
+| Höchste kommerzielle Dichte | Zvoove Plattform Features und Preise (97 Prozent kommerziell, 23.604 SV) |
 | Silhouette HDBSCAN-Kern | 0,647 |
 | Silhouette inklusive Soft-Assignment | 0,570 |
 | Silhouette Ward(k=12) (Vergleich) | 0,590 |
@@ -47,11 +38,11 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster (DE) | Keywords | SV / Monat | Ø KD | % kommerziell |
 |---|---|---|---|---|---|
-| 10 | HR Software Dokumenten- und Mitarbeiterverwaltung | 45 | 45.567 | 52 | 89 |
-| 12 | Sammelthemen Zeitarbeit Software und Finanzierung | 97 | 28.301 | 36 | 34 |
+| 10 | HR und Dokumentenverwaltungssoftware | 45 | 45.567 | 53 | 89 |
+| 12 | Zeitarbeit Branche Software und Tools | 97 | 28.301 | 37 | 34 |
 | 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
-| 7 | Digitalisierung Personaldienstleistung und KI | 37 | 23.984 | 36 | 35 |
-| 3 | Zvoove Produkte und Features | 34 | 23.604 | 52 | 97 |
+| 7 | Digitalisierung Personaldienstleistung | 37 | 23.984 | 36 | 35 |
+| 3 | Zvoove Plattform Features und Preise | 34 | 23.604 | 52 | 97 |
 
 Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keywords erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Soft-Assignment der HDBSCAN-Rand-Keywords ist in [ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords) dokumentiert: jedes der 72 Noise-Keywords bekommt seinen nächsten Cluster-Centroid im 5D-UMAP-Raum, die ursprüngliche Noise-Eigenschaft bleibt in `noise_assigned: bool` erhalten.
 
@@ -281,14 +272,14 @@ Ein Beispiel: Der ursprüngliche LLM Cluster `cluster_03` („Recruiting & Bewer
 Ich habe für jeden der 13 Cluster die Top 10 Keywords gelesen und gegen das LLM-generierte Label gegengeprüft. Ergebnis:
 
 - 11 von 13 Clustern sind eindeutig sinnvoll und sauber. Beispiel Cluster 0 (Factoring Buchhaltung und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`. Beispiel Cluster 1 (Zeiterfassung und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`.
-- Cluster 4 (Sammelthemen Lohnabrechnung und Recruiting) ist vom LLM transparent als „Sammelthemen" gelabelt — enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `offboarding prozess`. Empfohlene Bearbeitung: Top-Keywords einzeln, nicht als Pillar.
-- Cluster 12 (Sammelthemen Zeitarbeit Software und Finanzierung) ist mit 97 Keywords der größte Cluster. Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn. Vom LLM transparent als „Sammelthemen" gelabelt. Empfohlen: Sub-Clustering vor Bearbeitung. Vollständige pro-Cluster-Empfehlung in [`results.md`](results.md).
+- Cluster 4 (aktuell „Lohnabrechnung und Bewerberverwaltung") ist heterogen — enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `offboarding prozess`. Empfohlene Bearbeitung: Top-Keywords einzeln, nicht als Pillar.
+- Cluster 12 (aktuell „Zeitarbeit Branche Software und Tools") ist mit 97 Keywords der größte Cluster. Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn. Empfohlen: Sub-Clustering vor Bearbeitung. Vollständige pro-Cluster-Empfehlung in [`results.md`](results.md).
 
 ## 10. Top Empfehlungen aus diesem Lauf
 
 Drei aus den 13 Clustern, sortiert nach Hebel für zvoove. Eine vollständige Cluster-Tabelle mit Empfehlung pro Cluster steht in [`results.md`](results.md).
 
-### Empfehlung 1: HR Software Dokumenten- und Mitarbeiterverwaltung (Cluster 10)
+### Empfehlung 1: HR und Dokumentenverwaltungssoftware (Cluster 10)
 
 45.567 SV pro Monat, 45 Keywords, 89 Prozent kommerziell, mittlere KD 52. Top Keywords: `dokumentenmanagement software`, `bewerbermanagement software`, `mitarbeiterverwaltung software`, `hr software kmu`, `gehaltsabrechnung software`.
 
@@ -296,7 +287,7 @@ Was tun: ein Pillar Page Set zu Software-Kategorien, das jeweils zvoove-Module a
 
 Revenue Hypothese: Wenn 5 Prozent der monatlichen 45.000 SV Klicks generieren und 2 Prozent davon zu MQLs werden, sind das 45 MQLs pro Monat aus diesem Cluster.
 
-### Empfehlung 2: Zvoove Produkte und Features (Cluster 3)
+### Empfehlung 2: Zvoove Plattform Features und Preise (Cluster 3)
 
 23.604 SV, 34 Keywords, 97 Prozent kommerziell, mittlere KD 52. Top Keywords: `zvoove referenzen`, `zvoove dms`, `zvoove cockpit`, `zvoove payroll`, `zvoove cashlink`.
 
@@ -304,7 +295,7 @@ Was tun: alle Brand-Begriffe müssen auf dedizierten Produktseiten ranken. KD 52
 
 Schneller Win: Ein zvoove-Erfahrungen-Hub, der die positiven Bewertungen aggregiert, mit klarer URL-Struktur unter `/produkte/`.
 
-### Empfehlung 3: Digitalisierung Personaldienstleistung und KI (Cluster 7)
+### Empfehlung 3: Digitalisierung Personaldienstleistung (Cluster 7)
 
 23.984 SV pro Monat, 37 Keywords, 35 Prozent kommerziell, mittlere KD 36. Top Keywords: `digitalisierung zeitarbeit`, `digitalisierung personaldienstleistung`, `künstliche intelligenz personaldienstleistung`, `digitale zeiterfassung`, `elektronische lohnabrechnung`.
 

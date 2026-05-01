@@ -135,21 +135,6 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 
 Voller Lauf ohne Briefs (Demo, kein Label-Call): ungefähr 25 Sekunden. Voller Lauf mit Labels und Briefs: ungefähr 2 bis 3 Minuten (13 Cluster).
 
-### Kosten pro Lauf, je Provider-Kombination
-
-Embeddings, UMAP und HDBSCAN laufen lokal (0 USD). Variabel sind Enrichment, Label-Step und Brief-Provider.
-
-| Enrichment | Label-Step | Brief-Provider | Enrichment | Label | Brief | Gesamt pro Lauf |
-|---|---|---|---|---|---|---|
-| Heuristik | aus (`dry_run=true`) | Stub | 0 USD | 0 USD | 0 USD | **0 USD** |
-| Heuristik | Anthropic Haiku | Anthropic Sonnet (Caching) | 0 USD | ~0,01 USD | ~0,18 USD | **~0,19 USD** |
-| Heuristik | Anthropic Haiku | OpenAI (gpt-5) | 0 USD | ~0,01 USD | ~0,40 USD | **~0,41 USD** |
-| DataForSEO | Anthropic Haiku | Anthropic Sonnet | ~0,75 USD | ~0,01 USD | ~0,18 USD | **~0,94 USD** |
-| DataForSEO | Anthropic Haiku | OpenAI | ~0,75 USD | ~0,01 USD | ~0,40 USD | **~1,16 USD** |
-| SEMrush / Ahrefs | Anthropic Haiku | je Brief-Provider | abhängig vom Plan | ~0,01 USD | abhängig | abhängig |
-
-Annahmen: 500 Keywords (alle in Clustern dank Soft-Assignment, siehe [ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)), 13 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl. Der Label-Step ist ein einziger Batch-Call und bleibt nahezu konstant (~1 Cent), egal wie viele Cluster entstehen.
-
 ## Skalierung
 
 Was ändert sich, wenn das Keyword Set wächst auf 5000 Keywords?

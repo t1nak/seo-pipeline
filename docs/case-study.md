@@ -78,7 +78,7 @@ Discover beantwortet die Frage „welche Keywords sind überhaupt relevant?". Di
 | Quelle | Beschreibung | Heute aktiv |
 |---|---|---|
 | **Manual CSV** | Kuratiertes Keyword Set aus früherer Iteration, mit Hilfe eines LLM aus Blog-Themen abgeleitet. Frozen in `data/keywords.manual.csv`. | Ja, Default |
-| **zvoove Blog Scrape** | Live-Crawl der Blog-Übersicht (`zvoove.de/wissen/blog`), pro Artikel H1/H2/H3 plus erste 200 Wörter, anschließend LLM-basierte Umformulierung in Seed-Keywords. | TODO |
+| **zvoove Blog Scrape** | Live-Crawl der Blog-Übersicht (`zvoove.de/wissen/blog`), pro Artikel H1/H2/H3 plus erste 200 Wörter, anschließend LLM-basierte Umformulierung in Seed-Keywords. | Optional, einbaubar |
 | **SEMrush API** | Abruf von Keyword-Vorschlägen zu einer Domain oder Seed-Liste über die SEMrush Domain Analytics API. Liefert direkt Suchvolumen mit (Schritt 1 und 2 fallen zusammen). | Optional, einbaubar |
 | **DataForSEO Labs API** | Ähnlich wie SEMrush mit alternativem Provider. Ranked Keywords oder Related Keywords Endpoints. | Optional, einbaubar |
 | **Ahrefs Keywords Explorer API** | Weiterer Anbieter mit Suchvolumen-Datenbank, gleiches Discover-Pattern. | Optional, einbaubar |

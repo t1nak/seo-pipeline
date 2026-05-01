@@ -1,12 +1,12 @@
 {
   "run_id": "2026-05-01",
-  "generated_at": "2026-05-01T08:28:47+00:00",
+  "generated_at": "2026-05-01T09:38:37+00:00",
   "source": "llm-generated",
   "totals": {
     "n_keywords": 500,
     "n_clusters": 13,
     "n_outliers": 0,
-    "total_search_volume": 239976,
+    "total_search_volume": 219189,
     "mean_kd": 38.9
   },
   "clusters": [
@@ -358,98 +358,9 @@
       "brief_md_path": "briefings/cluster_08.md"
     },
     {
-      "cluster_id": 3,
-      "display_id": 4,
-      "rank_by_sv": 5,
-      "is_noise": false,
-      "label_de": "Zvoove Softwareprodukte und Features",
-      "label_en": "Zvoove Software Products and Features",
-      "n_keywords": 34,
-      "total_search_volume": 23604,
-      "median_search_volume": 99,
-      "mean_kd": 52.2,
-      "median_kd": 51,
-      "mean_cpc_eur": 6.44,
-      "mean_priority": 11.2,
-      "pct_commercial": 97.0,
-      "intent_dominant": "commercial",
-      "top_keywords_by_sv": [
-        "zvoove referenzen",
-        "zvoove dms",
-        "zvoove cockpit",
-        "zvoove payroll",
-        "zvoove cashlink"
-      ],
-      "top_keywords_by_priority": [
-        "zvoove referenzen",
-        "zvoove cashlink",
-        "zvoove dms"
-      ],
-      "top_terms": [
-        "zvoove",
-        "payroll",
-        "cashlink",
-        "preise",
-        "erfahrungen",
-        "cockpit"
-      ],
-      "brief": {
-        "title": "zvoove im Überblick: Alle Module, Features und echte Kundenstimmen",
-        "main_keyword": "zvoove one",
-        "secondary_keywords": [
-          "zvoove dms",
-          "zvoove cockpit",
-          "zvoove payroll",
-          "zvoove cashlink",
-          "zvoove recruit",
-          "zvoove referenzen",
-          "zvoove kunden",
-          "zvoove alternative",
-          "zvoove integration datev"
-        ],
-        "search_intent_text": "commercial, mixed — Suchende kennen zvoove bereits oder evaluieren es aktiv als Lösung für ihre Personaldienstleistung und wollen Funktionsumfang, Kundennachweise und Abgrenzung zu Alternativen verstehen.",
-        "recommended_word_count": 2800,
-        "target_audience": "Geschäftsführer oder IT-verantwortliche Führungskraft in einer mittelständischen Zeitarbeits- oder Personalvermittlungsagentur mit 20 bis 200 Mitarbeitern, die eine neue ERP-Lösung evaluiert oder die bestehende Software ablösen will.",
-        "pain_point": "Die aktuelle Software-Landschaft ist fragmentiert: Lohnabrechnung läuft in einem Tool, Bewerberverwaltung in einem anderen, Dokumentenmanagement in Excel-Ordnern. Jede Schnittstellenlösung kostet Zeit, erzeugt Fehler und macht Audits zur Qual. Der Entscheider weiß nicht, ob eine Plattform wie zvoove wirklich alle Prozesse abdeckt oder nur eine weitere Insellösung ist.",
-        "article_goal": "Der Leser soll nach dem Lesen den vollständigen Funktionsumfang von zvoove One kennen, verstehen wie die einzelnen Module zusammenspielen und genug Vertrauen aufgebaut haben, um eine Demo anzufragen oder einen Vertriebskontakt aufzunehmen.",
-        "h1": "zvoove One: Alle Module, Features und was echte Kunden sagen",
-        "h2_outline": [
-          "Was ist zvoove One und für wen ist es gebaut",
-          "Die zvoove Module im Detail",
-          "Integrationen: zvoove und DATEV, plus weitere Schnittstellen",
-          "zvoove Referenzen und Kundenstimmen",
-          "zvoove Alternative: Wann lohnt sich der Vergleich",
-          "Implementierung und Support: Was Neukunden erwartet",
-          "Fazit und nächste Schritte"
-        ],
-        "content_gaps": [
-          "Offizielle Produktseite als Referenz für Modulbeschreibungen und aktuelle Positionierung",
-          "Nutzerbewertungen auf G2, relevant für den Abschnitt Referenzen und Glaubwürdigkeit",
-          "Capterra-Profil mit Kundenstimmen und Vergleichsfunktion, direkt relevant für den Alternativenvergleich"
-        ],
-        "benchmark_urls": [
-          {
-            "url": "https://www.zvoove.com/loesungen",
-            "note": "Offizielle Produktseite als Referenz für Modulbeschreibungen und aktuelle Positionierung"
-          },
-          {
-            "url": "https://www.g2.com/products/zvoove/reviews",
-            "note": "Nutzerbewertungen auf G2, relevant für den Abschnitt Referenzen und Glaubwürdigkeit"
-          },
-          {
-            "url": "https://www.capterra.com/p/zvoove",
-            "note": "Capterra-Profil mit Kundenstimmen und Vergleichsfunktion, direkt relevant für den Alternativenvergleich"
-          }
-        ],
-        "cta": "Demo-Anfrage direkt auf zvoove.com buchen: Leser werden am Ende des Artikels aufgefordert, sich für eine 30-minütige Produktdemo zu registrieren, in der ein zvoove-Berater die für ihre Unternehmensgröße relevanten Module live zeigt.",
-        "source_path": "output/briefings/cluster_04.md"
-      },
-      "brief_md_path": "briefings/cluster_04.md"
-    },
-    {
       "cluster_id": 8,
       "display_id": 9,
-      "rank_by_sv": 6,
+      "rank_by_sv": 5,
       "is_noise": false,
       "label_de": "Liquidität und Tarifkosten Zeitarbeit",
       "label_en": "Liquidity Management and Wage Tariffs",
@@ -536,7 +447,7 @@
     {
       "cluster_id": 4,
       "display_id": 5,
-      "rank_by_sv": 7,
+      "rank_by_sv": 6,
       "is_noise": false,
       "label_de": "Personalgewinnung und Bewerbermanagement Catch-all",
       "label_en": "Talent Acquisition and Applicant Management Catch-all",
@@ -622,7 +533,7 @@
     {
       "cluster_id": 11,
       "display_id": 12,
-      "rank_by_sv": 8,
+      "rank_by_sv": 7,
       "is_noise": false,
       "label_de": "Arbeitnehmerüberlassung Recht und Compliance",
       "label_en": "Employee Leasing Law and Compliance",
@@ -709,7 +620,7 @@
     {
       "cluster_id": 6,
       "display_id": 7,
-      "rank_by_sv": 9,
+      "rank_by_sv": 8,
       "is_noise": false,
       "label_de": "Personaleinsatzplanung und Verwaltung",
       "label_en": "Personnel Scheduling and Administration",
@@ -796,7 +707,7 @@
     {
       "cluster_id": 2,
       "display_id": 3,
-      "rank_by_sv": 10,
+      "rank_by_sv": 9,
       "is_noise": false,
       "label_de": "KI-gestützte Recruiting-Automatisierung",
       "label_en": "AI-Powered Recruiting Automation",
@@ -883,7 +794,7 @@
     {
       "cluster_id": 5,
       "display_id": 6,
-      "rank_by_sv": 11,
+      "rank_by_sv": 10,
       "is_noise": false,
       "label_de": "Zeitarbeit Regulierung und Markttrends",
       "label_en": "Temporary Work Regulation and Market Trends",
@@ -969,7 +880,7 @@
     {
       "cluster_id": 9,
       "display_id": 10,
-      "rank_by_sv": 12,
+      "rank_by_sv": 11,
       "is_noise": false,
       "label_de": "Gebäudereinigungs-Spezialisoftware",
       "label_en": "Building Cleaning Specialized Software",
@@ -1056,7 +967,7 @@
     {
       "cluster_id": 0,
       "display_id": 1,
-      "rank_by_sv": 13,
+      "rank_by_sv": 12,
       "is_noise": false,
       "label_de": "Factoring Buchhaltung und Genehmigung",
       "label_en": "Factoring Accounting and Licensing",
@@ -1138,6 +1049,95 @@
         "source_path": "output/briefings/cluster_01.md"
       },
       "brief_md_path": "briefings/cluster_01.md"
+    },
+    {
+      "cluster_id": 3,
+      "display_id": 4,
+      "rank_by_sv": 13,
+      "is_noise": false,
+      "label_de": "Zvoove Softwareprodukte und Features",
+      "label_en": "Zvoove Software Products and Features",
+      "n_keywords": 34,
+      "total_search_volume": 2817,
+      "median_search_volume": 75,
+      "mean_kd": 52.2,
+      "median_kd": 51,
+      "mean_cpc_eur": 6.44,
+      "mean_priority": 1.8,
+      "pct_commercial": 97.0,
+      "intent_dominant": "commercial",
+      "top_keywords_by_sv": [
+        "zvoove integration datev",
+        "zvoove cockpit funktionen",
+        "zvoove one demo",
+        "support zvoove",
+        "zvoove one"
+      ],
+      "top_keywords_by_priority": [
+        "bewerber pool aufbauen",
+        "zvoove integration datev",
+        "zvoove cashlink kosten"
+      ],
+      "top_terms": [
+        "zvoove",
+        "cashlink",
+        "preise",
+        "payroll",
+        "erfahrungen",
+        "cockpit"
+      ],
+      "brief": {
+        "title": "zvoove im Überblick: Alle Module, Features und echte Kundenstimmen",
+        "main_keyword": "zvoove one",
+        "secondary_keywords": [
+          "zvoove dms",
+          "zvoove cockpit",
+          "zvoove payroll",
+          "zvoove cashlink",
+          "zvoove recruit",
+          "zvoove referenzen",
+          "zvoove kunden",
+          "zvoove alternative",
+          "zvoove integration datev"
+        ],
+        "search_intent_text": "commercial, mixed — Suchende kennen zvoove bereits oder evaluieren es aktiv als Lösung für ihre Personaldienstleistung und wollen Funktionsumfang, Kundennachweise und Abgrenzung zu Alternativen verstehen.",
+        "recommended_word_count": 2800,
+        "target_audience": "Geschäftsführer oder IT-verantwortliche Führungskraft in einer mittelständischen Zeitarbeits- oder Personalvermittlungsagentur mit 20 bis 200 Mitarbeitern, die eine neue ERP-Lösung evaluiert oder die bestehende Software ablösen will.",
+        "pain_point": "Die aktuelle Software-Landschaft ist fragmentiert: Lohnabrechnung läuft in einem Tool, Bewerberverwaltung in einem anderen, Dokumentenmanagement in Excel-Ordnern. Jede Schnittstellenlösung kostet Zeit, erzeugt Fehler und macht Audits zur Qual. Der Entscheider weiß nicht, ob eine Plattform wie zvoove wirklich alle Prozesse abdeckt oder nur eine weitere Insellösung ist.",
+        "article_goal": "Der Leser soll nach dem Lesen den vollständigen Funktionsumfang von zvoove One kennen, verstehen wie die einzelnen Module zusammenspielen und genug Vertrauen aufgebaut haben, um eine Demo anzufragen oder einen Vertriebskontakt aufzunehmen.",
+        "h1": "zvoove One: Alle Module, Features und was echte Kunden sagen",
+        "h2_outline": [
+          "Was ist zvoove One und für wen ist es gebaut",
+          "Die zvoove Module im Detail",
+          "Integrationen: zvoove und DATEV, plus weitere Schnittstellen",
+          "zvoove Referenzen und Kundenstimmen",
+          "zvoove Alternative: Wann lohnt sich der Vergleich",
+          "Implementierung und Support: Was Neukunden erwartet",
+          "Fazit und nächste Schritte"
+        ],
+        "content_gaps": [
+          "Offizielle Produktseite als Referenz für Modulbeschreibungen und aktuelle Positionierung",
+          "Nutzerbewertungen auf G2, relevant für den Abschnitt Referenzen und Glaubwürdigkeit",
+          "Capterra-Profil mit Kundenstimmen und Vergleichsfunktion, direkt relevant für den Alternativenvergleich"
+        ],
+        "benchmark_urls": [
+          {
+            "url": "https://www.zvoove.com/loesungen",
+            "note": "Offizielle Produktseite als Referenz für Modulbeschreibungen und aktuelle Positionierung"
+          },
+          {
+            "url": "https://www.g2.com/products/zvoove/reviews",
+            "note": "Nutzerbewertungen auf G2, relevant für den Abschnitt Referenzen und Glaubwürdigkeit"
+          },
+          {
+            "url": "https://www.capterra.com/p/zvoove",
+            "note": "Capterra-Profil mit Kundenstimmen und Vergleichsfunktion, direkt relevant für den Alternativenvergleich"
+          }
+        ],
+        "cta": "Demo-Anfrage direkt auf zvoove.com buchen: Leser werden am Ende des Artikels aufgefordert, sich für eine 30-minütige Produktdemo zu registrieren, in der ein zvoove-Berater die für ihre Unternehmensgröße relevanten Module live zeigt.",
+        "source_path": "output/briefings/cluster_04.md"
+      },
+      "brief_md_path": "briefings/cluster_04.md"
     }
   ],
   "keywords": [
@@ -1381,14 +1381,14 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand-Trust",
-      "search_volume": 4617,
+      "search_volume": 70,
       "kd": 61,
       "cpc_eur": 11.42,
       "serp_features": [
         "ads",
         "site-links"
       ],
-      "priority_score": 75.7,
+      "priority_score": 1.1,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -1538,13 +1538,13 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand",
-      "search_volume": 2982,
+      "search_volume": 50,
       "kd": 47,
       "cpc_eur": 5.67,
       "serp_features": [
         "shopping"
       ],
-      "priority_score": 63.4,
+      "priority_score": 1.1,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -1615,13 +1615,13 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand",
-      "search_volume": 3902,
+      "search_volume": 40,
       "kd": 76,
       "cpc_eur": 8.61,
       "serp_features": [
         "ads"
       ],
-      "priority_score": 51.3,
+      "priority_score": 0.5,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -1674,14 +1674,14 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand",
-      "search_volume": 3418,
+      "search_volume": 50,
       "kd": 70,
       "cpc_eur": 6.71,
       "serp_features": [
         "shopping",
         "site-links"
       ],
-      "priority_score": 48.8,
+      "priority_score": 0.7,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -1869,14 +1869,14 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand",
-      "search_volume": 3188,
+      "search_volume": 40,
       "kd": 85,
       "cpc_eur": 2.56,
       "serp_features": [
         "ads",
         "shopping"
       ],
-      "priority_score": 37.5,
+      "priority_score": 0.5,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -2065,14 +2065,14 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand",
-      "search_volume": 1369,
+      "search_volume": 50,
       "kd": 61,
       "cpc_eur": 3.75,
       "serp_features": [
         "shopping",
         "site-links"
       ],
-      "priority_score": 22.4,
+      "priority_score": 0.8,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -3107,14 +3107,14 @@
       "estimated_intent": "commercial",
       "type": "head",
       "notes": "Brand-Keyword",
-      "search_volume": 928,
+      "search_volume": 150,
       "kd": 75,
       "cpc_eur": 5.2,
       "serp_features": [
         "ads",
         "shopping"
       ],
-      "priority_score": 12.4,
+      "priority_score": 2.0,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -3634,14 +3634,14 @@
       "estimated_intent": "commercial",
       "type": "body",
       "notes": "Brand-Trust",
-      "search_volume": 533,
+      "search_volume": 60,
       "kd": 53,
       "cpc_eur": 5.76,
       "serp_features": [
         "ads",
         "site-links"
       ],
-      "priority_score": 10.1,
+      "priority_score": 1.1,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,
@@ -5302,14 +5302,14 @@
       "estimated_intent": "commercial",
       "type": "body",
       "notes": "Wettbewerb",
-      "search_volume": 410,
+      "search_volume": 50,
       "kd": 73,
       "cpc_eur": 6.98,
       "serp_features": [
         "shopping",
         "site-links"
       ],
-      "priority_score": 5.6,
+      "priority_score": 0.7,
       "data_source": "estimated",
       "cluster_id": 3,
       "cluster_display_id": 4,

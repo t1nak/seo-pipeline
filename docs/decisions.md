@@ -14,7 +14,7 @@
 
 **Konsequenzen.**
 
-- Pro: 10 Cluster aus den Daten heraus. 38 (lokal) bis 40 (CI) echte Ausreißer als Rauschen markiert. Die kleine Abweichung zwischen Plattformen liegt an unterschiedlichen BLAS-Implementierungen, nicht an einem Fehler. Begründung in [`methodology.md`](methodology.md).
+- Pro: Cluster-Anzahl folgt aus den Daten. Mit dem aktuellen Default `mcs=15, ms=5, leaf` entstehen 13 Cluster plus rund 130 Rausch-Punkte. Mit `mcs=15, ms=5, eom` waren es 10 plus ~40. Die genaue Hyperparameter-Wahl und die Abweichungen zwischen Plattformen (BLAS-Implementierung) sind in [`methodology.md`](methodology.md) begründet.
 - Pro: Variable Cluster-Dichte wird verarbeitet (zvoove Marken-Cluster ist eng, Branche-Sammelcluster ist breit).
 - Contra: Hyperparameter `min_cluster_size` und `min_samples` müssen gesweept werden.
 
@@ -75,25 +75,36 @@ Backlog: Vergleichslauf mit `multilingual-e5-large` zur Quantifizierung des Qual
 
 In Produktion würde `data_source` ein Filter sein: wenn alle Daten DataForSEO sind, ist die Priorisierung verlässlicher.
 
-## ADR-5: Manuelle Cluster Labels in YAML statt LLM-generiert oder hardcoded
+## ADR-5: LLM-generierte Cluster Labels pro Lauf, YAML als Fallback
 
-**Kontext.** Pro Cluster braucht es ein menschenlesbares Label.
+**Status.** Aktiv. Ersetzt die ursprüngliche Entscheidung „manuelle Labels in YAML" (siehe Historie unten).
 
-**Entscheidung.** Manuelle Labels in [`data/cluster_labels.yaml`](https://github.com/t1nak/seo-pipeline/blob/main/data/cluster_labels.yaml). EN und DE. `src/cluster.py` lädt sie zur Laufzeit; jede unbekannte Cluster-ID fällt auf "Cluster N" zurück, sodass auch nicht-default `mcs`-Werte nie einen KeyError auslösen.
+**Kontext.** Pro Cluster braucht es ein menschenlesbares Label in DE und EN. Die ursprünglich kuratierte Datei [`data/cluster_labels.yaml`](https://github.com/t1nak/seo-pipeline/blob/main/data/cluster_labels.yaml) deckte exakt 10 Cluster ab. Sobald die Pipeline mit anderen Hyperparametern oder einem leicht veränderten Datensatz läuft (z.B. `mcs=15, leaf` mit 13 Clustern), waren die zusätzlichen Cluster nur noch als „Cluster 11", „Cluster 12" sichtbar. Das ist im Dashboard, in der Cluster-Map und in den Briefs unschön und blockiert das Tunen der Hyperparameter aus der CI-Oberfläche heraus.
+
+**Entscheidung.** Eigener Pipeline-Schritt [`src/labels_llm.py`](https://github.com/t1nak/seo-pipeline/blob/main/src/labels_llm.py), der nach `cluster --step profile` läuft. Ein einziger Anthropic-Call (Haiku, mit Prompt Caching auf dem System-Block) erhält alle Cluster mit Top-Keywords und Top-Termen und gibt für jeden ein DE- und ein EN-Label zurück. Output: `output/clustering/cluster_labels.json`. Der Schritt updatet anschließend die Label-Spalten in `cluster_profiles.csv` und `keywords_labeled.csv`.
+
+`src/cluster.py` bevorzugt zur Laufzeit die JSON, fällt auf `data/cluster_labels.yaml` zurück, wenn die JSON nicht existiert (z.B. fresh checkout, lokaler Lauf ohne `python -m src.labels_llm`). Unbekannte Cluster-IDs landen weiterhin auf „Cluster N", sodass kein KeyError auftritt.
 
 **Alternativen geprüft.**
 
-- LLM-generiert pro Lauf: skaliert, aber Labels variieren zwischen Läufen, was die Reproduzierbarkeit von Reports erschwert
-- Top-Term basiert (häufigste Wörter): schwach, weil die Top Terms oft stoppwort-ähnlich sind
-- Hardcoded als Python Dict: kein Code-Edit für Label-Änderungen nötig, aber KeyError bei unbekannten Cluster-IDs (Bug in Pipeline-5, behoben mit diesem ADR)
+- Manuelle Labels in YAML als Default (vorherige Entscheidung): einfach, aber bricht jede Hyperparameter-Variante mit anderer Cluster-Anzahl auf generische Labels herunter. In einer Demo, in der per Workflow-Dispatch `mcs` und `method` getuned werden, ist das ein No-Go.
+- LLM-Call pro Cluster: ein Aufruf je Cluster wäre teurer und langsamer. Ein einziger Batch-Call hält die Kosten auf ~1 Cent, unabhängig von der Cluster-Anzahl.
+- Top-Term basiert (häufigste Wörter): schwach, weil die Top-Terms oft stoppwort-ähnlich sind.
+- Hardcoded als Python Dict: kein Code-Edit pro Lauf, aber dieselben Bruchstellen wie YAML.
 
 **Konsequenzen.**
 
-- Pro: stabil zwischen Läufen, kuratiert auf zvoove Geschäfts-Logik, editierbar ohne Code-Änderung.
-- Pro: Pipeline läuft mit beliebigem `mcs` durch, auch wenn mehr Cluster entstehen als Labels definiert sind.
-- Contra: skaliert nicht über 50 Cluster (dann Hybrid mit LLM-Vorschlag sinnvoller).
+- Pro: jede Cluster-Anzahl bekommt sofort sinnvolle Labels, ohne Code- oder YAML-Edit. Der `mcs`/`method`-Sweep aus der Workflow-UI ist endlich uneingeschränkt nutzbar.
+- Pro: Cluster-Map, Charts, Brief-Header und das Dashboard verwenden konsistent dasselbe Label.
+- Pro: Kosten flach (~1 Cent pro Lauf), durch Prompt Caching auf dem 600-Token System-Block.
+- Contra: Labels variieren leicht zwischen Läufen (z.B. „Lohnabrechnung und Candidate Sourcing" vs „Payroll und Recruiting"). Für Long-Run-Reports muss man entweder den JSON pinnen oder gezielt eine kuratierte Override-Datei einsetzen.
+- Contra: braucht `ANTHROPIC_API_KEY`. Lokal ohne Key fällt der Code auf den YAML-Fallback zurück.
 
-Backlog: bei Skalierung Hybrid-Ansatz mit LLM-Vorschlag und manueller Korrektur in `cluster_labels.yaml`.
+**Operativ.** Im Workflow `pipeline-full.yml` läuft der Schritt als „Step 3b — Generate cluster labels (LLM)" zwischen `cluster` und `brief`. `dry_run=true` überspringt ihn. Lokal: `python -m src.labels_llm` (oder `--model claude-sonnet-4-6` für höhere Qualität).
+
+Backlog: optionale `--lock` Variante, die generierte Labels manuell editierbar in `cluster_labels.yaml` einfriert, falls sie für eine Veröffentlichung stabil bleiben sollen.
+
+**Historie.** Vor diesem ADR enthielt `data/cluster_labels.yaml` die manuelle Quelle. Die Datei bleibt im Repo als Fallback und als Beispiel für eine kuratierte Override.
 
 ## ADR-6: Discover Schritt als Stub, nicht als Live Scraper
 
@@ -152,11 +163,11 @@ Backlog: höchste Priorität für die nächste Iteration. Konkret: Playwright-Sc
 
 In Produktion würde nur der aktuelle Stand im Git landen, Snapshots würden in einen S3 Bucket umziehen.
 
-## ADR-9: Prompt Caching für Brief-Generierung
+## ADR-9: Prompt Caching für Brief- und Label-Generierung
 
-**Kontext.** Pro Lauf werden 10 Briefs generiert, jeweils mit einem ungefähr 800-Token System Prompt, der das Brief-Format beschreibt. Das ist 10-mal derselbe System Prompt.
+**Kontext.** Pro Lauf werden so viele Briefs generiert, wie es Cluster gibt (aktuell 13), jeweils mit einem ungefähr 800-Token System Prompt, der das Brief-Format beschreibt. Das ist 13-mal derselbe System Prompt. Genauso für den Label-Schritt: ein gemeinsamer System-Block für alle Cluster, ein Batch-Call.
 
-**Entscheidung.** Anthropic Prompt Caching auf dem System Block. Das technische Mittel dafür ist ein zusätzliches Feld `cache_control: ephemeral` im API Request. Es signalisiert dem Modell: "Dieser Block soll im Cache gehalten werden." Ab dem zweiten Aufruf wird der System Prompt aus dem Cache gelesen statt neu tokenisiert.
+**Entscheidung.** Anthropic Prompt Caching auf dem System Block in `brief.py` und in `labels_llm.py`. Das technische Mittel dafür ist ein zusätzliches Feld `cache_control: ephemeral` im API Request. Es signalisiert dem Modell: „Dieser Block soll im Cache gehalten werden." Ab dem zweiten Aufruf wird der System Prompt aus dem Cache gelesen statt neu tokenisiert.
 
 **Alternativen geprüft.**
 
@@ -165,7 +176,7 @@ In Produktion würde nur der aktuelle Stand im Git landen, Snapshots würden in 
 
 **Konsequenzen.**
 
-- Pro: ungefähr 90 Prozent Token-Ersparnis auf den gecachten Anteil. Bei 10 Clustern ungefähr 6000 gecachte Tokens.
+- Pro: ungefähr 90 Prozent Token-Ersparnis auf den gecachten Anteil. Bei 13 Briefs ungefähr 8000 gecachte Tokens.
 - Pro: schnellere Antworten auf Folge-Aufrufe.
 - Contra: minimale Komplexität (ein zusätzliches Feld im Request).
 

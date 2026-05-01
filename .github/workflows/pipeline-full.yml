@@ -1,4 +1,4 @@
-name: Pipeline (full, 5 steps incl. brief)
+name: Pipeline (full)
 
 # Voller Pipeline-Lauf inklusive Brief-Step (Claude API).
 # Manuell ausgeloest, ANTHROPIC_API_KEY-Secret erforderlich.
@@ -6,7 +6,7 @@ name: Pipeline (full, 5 steps incl. brief)
 # Prompt-Caching). dry_run=true testet die Verkabelung ohne API-Aufruf.
 #
 # Warum kein push-Trigger: Brief-Step kostet Geld, jeder Lauf soll eine
-# bewusste Entscheidung sein. Demo-Lauf ohne Brief: pipeline.yml.
+# bewusste Entscheidung sein. dry_run=true testet die Verkabelung ohne API-Aufruf.
 
 on:
   workflow_dispatch:

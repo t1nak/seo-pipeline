@@ -1,74 +1,56 @@
 # Ergebnisse: Cluster Katalog
 
-10 Cluster aus 500 Keywords, sortiert nach Gesamt-Suchvolumen pro Monat. Pro Cluster eine Empfehlung mit Funnel Stage, Aufwand, und Revenue Hypothese.
+13 Cluster aus 500 Keywords (`mcs=15, ms=5, leaf`), sortiert nach Gesamt-Suchvolumen pro Monat. Pro Cluster eine Empfehlung mit Funnel-Stage, Aufwand und Revenue-Hypothese. Labels werden pro Lauf von Anthropic Haiku aus den Top-Keywords erzeugt (siehe [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)), bei einem Re-Run können sich Wortwahl und Reihenfolge leicht ändern.
 
-Diese Datei ist als Arbeitsdokument für Marketing und Redaktion gedacht. Zahlen kommen direkt aus `output/clustering/cluster_profiles.csv` und sind reproduzierbar via `python -m src.cluster --step profile`.
+Diese Datei ist als Arbeitsdokument für Marketing und Redaktion gedacht. Zahlen kommen direkt aus `output/clustering/cluster_profiles.csv` und sind reproduzierbar via `python -m src.cluster --step profile && python -m src.labels_llm`.
 
 ## Übersicht
 
 | # | Cluster (DE) | Keywords | SV / Monat | Ø KD | % komm. | Funnel Stage |
 |---|---|---|---|---|---|---|
-| 2 | Branche & Arbeitsrecht (Sammelbecken) | 189 | 64.264 | 34 | 22 | Mid / Mixed |
-| 10 | B2B-SaaS Kategorie-Heads | 44 | 47.989 | 49 | 82 | Bottom |
-| 3 | Kommerzielle Zeit/Software-Heads | 47 | 26.159 | 43 | 94 | Bottom |
-| 5 | Marke: zvoove Produktnamen | 34 | 23.604 | 51 | 97 | Bottom |
-| 6 | Operative Anleitungen (gemischt) | 30 | 13.755 | 33 | 23 | Mid |
-| 4 | Recruiting & KI-Tools | 34 | 12.075 | 38 | 44 | Mid |
-| 7 | HR-Mid-Funnel | 29 | 10.524 | 35 | 24 | Mid |
-| 8 | Gebäudereinigung-Vertikale | 24 | 8.135 | 38 | 50 | Bottom |
-| 1 | Factoring-Grundlagen | 15 | 3.516 | 39 | 27 | Top / Mid |
-| 9 | Digitalisierung praktisch | 16 | 3.281 | 29 | 44 | Top / Mid |
+| 9 | HR- und Bewerbermanagementsoftware KMU | 36 | 36.450 | 51 | 86 | Bottom |
+| 1 | Zeiterfassungs- und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 | Bottom |
+| 6 | Digitalisierung in Personaldienstleistung | 33 | 23.592 | 37 | 39 | Mid |
+| 3 | Zvoove Produktfeatures und Preise | 33 | 23.508 | 53 | 100 | Bottom (Brand) |
+| 4 | Lohnabrechnung und Candidate Sourcing | 28 | 13.668 | 35 | 25 | Mid |
+| 10 | Arbeitnehmerüberlassung Regulierung und Onboarding | 38 | 13.081 | 30 | 3 | Top / Mid |
+| 2 | KI-gestützte Recruiting-Automatisierung | 34 | 12.075 | 37 | 44 | Mid |
+| 7 | Debitorenmanagement und Equal Pay | 15 | 11.181 | 37 | 20 | Mid |
+| 12 | Zeitarbeit Branchentrends und Einsatzplanung | 28 | 9.537 | 37 | 32 | Top / Mid |
+| 5 | Personalakte und Einsatzplanung | 20 | 8.614 | 38 | 30 | Mid |
+| 8 | Gebäudereinigung Software und Disposition | 26 | 8.325 | 40 | 50 | Bottom (Vertikale) |
+| 0 | Factoring Geschäftsmodelle und Genehmigung | 15 | 3.516 | 36 | 27 | Top / Mid |
+| 11 | Zeiterfassung Spezialbranche und Compliance | 17 | 2.492 | 38 | 59 | Mid |
 
-Plus rund 40 Keywords als Rauschen (~8 Prozent, je nach Plattform leicht variabel). Diese werden nicht bearbeitet, weil sie semantisch isoliert sind und kein klares Pillar Thema bilden.
+Plus 130 Keywords (~26 Prozent) als Rauschen markiert. Diese werden nicht bearbeitet, weil sie semantisch isoliert sind und kein klares Pillar-Thema bilden. Die hohe Rauschrate ist die Konsequenz aus der Wahl `leaf` statt `eom`: feinere Cluster liefern bessere Brief-Themen, lassen aber mehr Randkeywords ohne klare Zuordnung. Methodische Begründung in der [Methodik](methodology.md).
 
-## Cluster 2: Branche & Arbeitsrecht (Sammelbecken)
+## Cluster 9: HR- und Bewerbermanagementsoftware KMU
 
-> Mit 189 Keywords der mit Abstand größte Cluster. Heterogen, deshalb VORSICHT vor Bearbeitung.
+> Größter Cluster nach SV. Klassischer Bottom-of-Funnel-Hebel mit hoher kommerzieller Dichte.
 
-**Stats:** 189 Keywords, 64.264 SV / Monat, Ø KD 34, 22 Prozent kommerziell, Ø CPC 2,79 EUR
+**Stats:** 36 Keywords, 36.450 SV / Monat, Ø KD 51, 86 Prozent kommerziell, Ø CPC 6,35 EUR
 
-**Top 5 Keywords:** `debitorenmanagement`, `arbeitnehmerüberlassung`, `zeitarbeit programm`, `höchstüberlassungsdauer`, `equal pay zeitarbeit`
-
-**Empfehlung**
-
-Dieser Cluster ist ein Catch-all aus Begriffen, die HDBSCAN nicht klar in andere Cluster einordnen konnte. Mischt AÜG Wissen, Software Begriffe, Equal Pay, Liquidität, CRM und Branchen-Trends. Zwei zwingende Schritte vor Bearbeitung:
-
-1. **Sub-Clustering.** Zweiten HDBSCAN Lauf nur auf diesen 189 Keywords ausführen, um Sub-Themen zu finden. Erwartung: 4 bis 6 Sub-Cluster (AÜG Wissen, Equal Pay, Software-Recherche, Cashflow / Factoring, Branchen-Monitor, Lohn-Themen).
-2. **Selektive Bearbeitung.** Bis das Sub-Clustering steht, nur die Top 10 Keywords nach Priority Score bearbeiten, nicht den ganzen Cluster.
-
-**Risiko:** Wenn ohne Sub-Clustering ein einzelner Pillar Artikel für den ganzen Cluster geschrieben wird, wird er thematisch verwässert und bei keinem Keyword wirklich konkurrenzfähig.
-
-**Aufwand:** vor Bearbeitung erst eine Methodik-Iteration. Dann hoch (mehrere Pillar plus Cluster Artikel).
-
-**Revenue Hypothese:** Der Cluster ist wertvoll wegen seiner Größe (64.000 SV). Wenn das Sub-Clustering sauber gemacht wird, kann jeder Sub-Pillar 5.000 bis 15.000 SV bedienen. Über alle Sub-Cluster hinweg potential für 30.000 plus Klicks pro Monat bei seriöser Bearbeitung.
-
-## Cluster 10: B2B-SaaS Kategorie-Heads
-
-> Zweitwichtigster Cluster nach SV. Klassischer Bottom-of-Funnel Hebel mit hoher kommerzieller Dichte.
-
-**Stats:** 44 Keywords, 47.989 SV / Monat, Ø KD 49, 82 Prozent kommerziell, Ø CPC 6,11 EUR
-
-**Top 5 Keywords:** `dokumentenmanagement software`, `bewerbermanagement software`, `mitarbeiterverwaltung software`, `digitalisierung personaldienstleistung`, `hr software kmu`
+**Top 5 Keywords:** `bewerbermanagement software`, `mitarbeiterverwaltung software`, `hr software kmu`, `gehaltsabrechnung software`, `ats software`
 
 **Empfehlung**
 
-Pillar Page Set zu Software Kategorien, jeweils mit zvoove Modul als Lösung. Architektur:
+Pillar-Page-Set zu Software-Kategorien, jeweils mit dem passenden zvoove-Modul als Lösung:
 
-- `/wissen/dokumentenmanagement-software-vergleich/` mit zvoove DMS+ als beworbene Lösung
 - `/wissen/bewerbermanagement-software/` mit zvoove Recruit
 - `/wissen/mitarbeiterverwaltung-personaldienstleister/` mit zvoove One als Plattform-Antwort
+- `/wissen/hr-software-kmu/` als KMU-Einstieg, Verlinkung in beide Richtungen
 
-Pro Pillar 2500 bis 3500 Wörter, plus 3 bis 5 Cluster Artikel je 1500 Wörter, die intern auf den Pillar verlinken.
+Pro Pillar 2.500 bis 3.500 Wörter, plus 3 bis 5 Cluster-Artikel je 1.500 Wörter, die intern auf den Pillar verlinken.
 
-**Aufwand:** mittel. Jeder Pillar braucht Vergleichstabelle, Persona, Pricing Sektion.
+**Aufwand:** mittel. Jeder Pillar braucht Vergleichstabelle, Persona, Pricing-Sektion.
 
-**Revenue Hypothese:** Bei 5 Prozent CTR auf 48.000 SV sind das 2.400 Klicks. Bei 2 Prozent Conversion zu MQL: 48 MQLs pro Monat. Bei 30 Prozent MQL-zu-SQL und 20 Prozent Close Rate: ungefähr 3 Neukunden pro Monat aus diesem Cluster. Die Conversion Annahmen sind konservativ und verifizierbar über GSC plus CRM Daten.
+**Revenue-Hypothese:** Bei 5 Prozent CTR auf 36.000 SV sind das 1.800 Klicks. Bei 2 Prozent Conversion zu MQL: 36 MQLs pro Monat. Bei 30 Prozent MQL-zu-SQL und 20 Prozent Close-Rate: ungefähr 2 Neukunden pro Monat aus diesem Cluster. Annahmen sind konservativ und über GSC plus CRM verifizierbar.
 
-## Cluster 3: Kommerzielle Zeit/Software-Heads
+## Cluster 1: Zeiterfassungs- und Zeitarbeitssoftware
 
-> Zeitarbeit-Software Spezial-Cluster mit höchster kommerzieller Dichte.
+> Direkter Wettbewerber-Cluster. 94 Prozent kommerziell, höchste Conversion-Wahrscheinlichkeit im Set.
 
-**Stats:** 47 Keywords, 26.159 SV / Monat, Ø KD 43, 94 Prozent kommerziell, Ø CPC 6,47 EUR
+**Stats:** 47 Keywords, 26.159 SV / Monat, Ø KD 48, 94 Prozent kommerziell, Ø CPC 6,47 EUR
 
 **Top 5 Keywords:** `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`, `roi zeitarbeit software`, `zeitarbeit software`
 
@@ -76,145 +58,201 @@ Pro Pillar 2500 bis 3500 Wörter, plus 3 bis 5 Cluster Artikel je 1500 Wörter, 
 
 Direkter Wettbewerber-Cluster zu Landwehr, Prosoft, sclever. zvoove muss hier ranken. Drei Hebel:
 
-1. Eine Pillar Page `/wissen/zeitarbeitssoftware-vergleich/` mit ehrlicher Vergleichsmatrix
+1. Pillar-Page `/wissen/zeitarbeitssoftware-vergleich/` mit ehrlicher Vergleichsmatrix
 2. Pro Wettbewerber eine eigene Vergleichsseite (`zvoove vs landwehr`, `zvoove vs prosoft`)
-3. ROI Rechner als interaktives Tool, das nach `roi zeitarbeit software` rankt
+3. ROI-Rechner als interaktives Tool, das nach `roi zeitarbeit software` rankt
 
-**Aufwand:** hoch, weil ROI Rechner Engineering Aufwand bedeutet. Aber der Wettbewerber ranking ist ohne diesen Differentiator schwer zu schlagen.
+**Aufwand:** hoch (ROI-Rechner ist Engineering). Ohne diesen Differentiator ist Wettbewerber-Ranking schwer.
 
-**Revenue Hypothese:** Niedrigere Volume aber höhere Conversion als Cluster 10, weil 94 Prozent kommerziell. Geschätzt 30 MQLs pro Monat bei 5 Prozent CTR und 2,5 Prozent Conversion.
+**Revenue-Hypothese:** Niedrigeres Volumen als Cluster 9, aber höhere Conversion-Rate. Geschätzt 30 MQLs pro Monat bei 5 Prozent CTR und 2,5 Prozent Conversion.
 
-## Cluster 5: Marke: zvoove Produktnamen
+## Cluster 6: Digitalisierung in Personaldienstleistung
 
-> 97 Prozent kommerzieller Brand Cluster. Schneller Win durch klare URL Architektur.
+> Mid-Funnel-Awareness mit hoher Priorität (Ø Priority 18,4) und niedriger KD. Der Brückenkopf in den Funnel.
 
-**Stats:** 34 Keywords, 23.604 SV / Monat, Ø KD 51, 97 Prozent kommerziell, Ø CPC 6,44 EUR
+**Stats:** 33 Keywords, 23.592 SV / Monat, Ø KD 37, 39 Prozent kommerziell, Ø CPC 3,61 EUR
+
+**Top 5 Keywords:** `digitalisierung zeitarbeit`, `digitalisierung personaldienstleistung`, `künstliche intelligenz personaldienstleistung`, `digitale zeiterfassung`, `elektronische lohnabrechnung`
+
+**Empfehlung**
+
+Hohe Priorität, weil das Verhältnis aus SV und KD attraktiv ist und die Themen perfekt auf zvoove-Botschaften einzahlen. Pillar `/wissen/digitalisierung-personaldienstleistung/` als Hub, der Awareness-Traffic gezielt in Cluster 1 (Zeitarbeitssoftware) und Cluster 9 (HR-ATS) überführt. Plus drei Cluster-Artikel zu `digitale zeiterfassung`, `elektronische lohnabrechnung` und `künstliche intelligenz personaldienstleistung`.
+
+**Aufwand:** mittel.
+
+**Revenue-Hypothese:** Pipeline-Influence statt direkte Conversion. Bei 6 bis 12 Monaten Reifezeit erwartbar: signifikante Brand-Lift-Wirkung und gestützte Brand-Suchen in Cluster 3.
+
+## Cluster 3: Zvoove Produktfeatures und Preise
+
+> 100 Prozent kommerziell. Brand-Cluster mit klarem Quick Win durch URL-Architektur und Schema.
+
+**Stats:** 33 Keywords, 23.508 SV / Monat, Ø KD 53, 100 Prozent kommerziell, Ø CPC 6,61 EUR
 
 **Top 5 Keywords:** `zvoove referenzen`, `zvoove dms`, `zvoove cockpit`, `zvoove payroll`, `zvoove cashlink`
 
 **Empfehlung**
 
-Brand Keywords haben ungewöhnlich hohe KD von 51, was darauf hindeutet, dass aktuell entweder Wettbewerber-Vergleichsseiten oder Bewertungsplattformen wie OMR Reviews die SERP belegen. Drei sofortige Maßnahmen:
+Brand-Keywords mit ungewöhnlich hoher KD von 53. Hinweis darauf, dass Wettbewerber-Vergleichsseiten oder Bewertungsplattformen wie OMR Reviews die SERP belegen. Drei sofortige Maßnahmen:
 
 1. **Audit der bestehenden Produktseiten.** `zvoove cockpit`, `zvoove payroll`, `zvoove dms`, `zvoove cashlink`, `zvoove recruit` müssen jeweils auf einer dedizierten Produktseite ranken, nicht auf einer Übersicht.
-2. **Erfahrungen Hub.** `zvoove referenzen` ist hochkommerziell. Eine eigene Seite mit aggregierten Bewertungen, Case Studies, und einem klaren CTA.
-3. **Schema Markup.** Product Schema und Review Schema auf jeder Produktseite, damit zvoove eigene Rich Results in der SERP belegt.
+2. **Erfahrungen-Hub.** `zvoove referenzen` und `zvoove erfahrungen` sind hochkommerziell. Eigene Seite mit aggregierten Bewertungen, Case Studies, klarem CTA.
+3. **Schema Markup.** Product- und Review-Schema auf jeder Produktseite, damit zvoove eigene Rich Results in der SERP belegt.
 
-**Aufwand:** niedrig bis mittel. Großteils technische SEO Arbeit auf bestehenden Seiten.
+**Aufwand:** niedrig bis mittel. Großteils technische SEO-Arbeit auf bestehenden Seiten.
 
-**Revenue Hypothese:** Brand Traffic ist am höchsten konvertierender Traffic überhaupt. Annahme: 10 Prozent CTR auf 23.000 SV sind 2.300 Klicks, bei 5 Prozent Conversion zu MQL sind das 115 hochqualifizierte MQLs.
+**Revenue-Hypothese:** Brand-Traffic ist der höchstkonvertierende Traffic überhaupt. Annahme: 10 Prozent CTR auf 23.000 SV sind 2.300 Klicks, bei 5 Prozent Conversion zu MQL sind das 115 hochqualifizierte MQLs.
 
-## Cluster 6: Operative Anleitungen (gemischt)
+## Cluster 4: Lohnabrechnung und Candidate Sourcing
 
-> Heterogener Mid-Funnel Cluster. Mehrere Sub-Themen vermischt.
+> Heterogener Mid-Funnel. Operative Lohn-Themen plus Recruiting-Hilfen, beides für Personaldienstleister relevant.
 
-**Stats:** 30 Keywords, 13.755 SV / Monat, Ø KD 33, 23 Prozent kommerziell, Ø CPC 2,64 EUR
+**Stats:** 28 Keywords, 13.668 SV / Monat, Ø KD 35, 25 Prozent kommerziell, Ø CPC 2,72 EUR
 
 **Top 5 Keywords:** `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `lohnabrechnung erstellen`
 
 **Empfehlung**
 
-Wie Cluster 2 ist auch dieser Cluster heterogen (Compliance, Recruiting, Lohnabrechnung). Praktisch:
+Cluster ist heterogen (Lohnabrechnung, Sourcing, AÜG-Begriffe). Pragmatisch:
 
-- Die Top 3 Keywords nach Priority bearbeiten, einzeln, nicht als Cluster
-- Sub-Clustering später, wenn Daten gewachsen sind
+- Top-3-Keywords nach Priority einzeln bearbeiten (`aüg`, `bewerber finden`, `lizenzmodell saas`)
+- Sub-Clustering später, sobald das Set wächst
+- `indeed alternative` als Anker für eine Sourcing-Tools-Vergleichsseite, die auf zvoove Recruit verlinkt
 
-**Aufwand:** niedrig (3 Einzelartikel statt Pillar)
+**Aufwand:** niedrig (3 bis 5 Einzelartikel statt Pillar).
 
-## Cluster 4: Recruiting & KI-Tools
+## Cluster 10: Arbeitnehmerüberlassung Regulierung und Onboarding
 
-> Mid-Funnel mit Tech-Hype Komponente. Konkurrenz wächst schnell.
+> AÜG- und Compliance-Cluster. Niedrige kommerzielle Dichte (3 Prozent), aber relevant für Vertrauensaufbau und Top-of-Funnel.
 
-**Stats:** 34 Keywords, 12.075 SV / Monat, Ø KD 38, 44 Prozent kommerziell, Ø CPC 3,28 EUR
+**Stats:** 38 Keywords, 13.081 SV / Monat, Ø KD 30, 3 Prozent kommerziell, Ø CPC 1,91 EUR
+
+**Top 5 Keywords:** `arbeitnehmerüberlassung`, `arbeitnehmerüberlassungsgesetz`, `arbeitsschutz zeitarbeit`, `arbeitgeberanteile sozialversicherung`, `disposition zeitarbeitnehmer`
+
+**Empfehlung**
+
+Reines Wissens-Cluster mit hohem Top-of-Funnel-Wert. Pillar `/wissen/arbeitnehmerueberlassung/` mit klarer Struktur (Definition, AÜG-Pflichten, Höchstüberlassungsdauer, Equal Pay, Sozialversicherung). Daraus 4 bis 6 Cluster-Artikel ableiten. Verlinkung in Cluster 1 und 9 als Lösungs-CTA.
+
+**Aufwand:** mittel.
+
+**Revenue-Hypothese:** Indirekt. Vertrauensanker für Suchen, die später kommerzielle Recherche auslösen.
+
+## Cluster 2: KI-gestützte Recruiting-Automatisierung
+
+> Mid-Funnel mit Tech-Hype-Komponente. Wettbewerber-Set wächst schnell.
+
+**Stats:** 34 Keywords, 12.075 SV / Monat, Ø KD 37, 44 Prozent kommerziell, Ø CPC 3,28 EUR
 
 **Top 5 Keywords:** `ki recruiting`, `recruiting software`, `recruiting plattform`, `automatisierung recruiting prozess`, `active sourcing tools`
 
 **Empfehlung**
 
-Aktuell hoher Such-Trend wegen KI Hype. Empfehlung: schnell sein, bevor das Wettbewerber-Set saturiert.
+Hoher Such-Trend wegen KI-Hype. Geschwindigkeit ist hier wichtiger als Tiefe.
 
 - Pillar `/wissen/ki-recruiting-zeitarbeit/` mit klarer Position: was macht KI in Recruiting konkret, was sind die Fallstricke
-- Cluster Artikel zu Sub-Themen (Bewerber Matching, Chatbots, Active Sourcing Tools)
+- Cluster-Artikel zu Sub-Themen (Bewerber-Matching, Chatbots, Active-Sourcing-Tools)
 - Verbindung zu zvoove Recruit als Lösung
 
-**Aufwand:** mittel, aber Geschwindigkeit ist hier wichtiger als Tiefe.
+**Aufwand:** mittel.
 
-## Cluster 7: HR-Mid-Funnel
+## Cluster 7: Debitorenmanagement und Equal Pay
 
-> Operative HR Themen. Niedriges SV pro Keyword aber hohe Kohäsion.
+> Höchste Priority im Set (19,3). Kompakter Cluster mit ungewöhnlich konzentriertem Suchvolumen pro Keyword.
 
-**Stats:** 29 Keywords, 10.524 SV / Monat, Ø KD 35, 24 Prozent kommerziell, Ø CPC 2,51 EUR
+**Stats:** 15 Keywords, 11.181 SV / Monat, Ø KD 37, 20 Prozent kommerziell, Ø CPC 2,42 EUR
 
-**Top 5 Keywords:** `personaleinsatzplanung`, `personalakte inhalt`, `karriereseite erstellen`, `saas personaldienstleister`, `ki bewerbermanagement`
+**Top 5 Keywords:** `debitorenmanagement`, `equal pay zeitarbeit`, `zahlungsausfall absichern`, `zahlungsziele kunden`, `bap tarif aktuell`
 
 **Empfehlung**
 
-Solider Mid-Funnel Cluster. Pro Top-Keyword ein eigener How-To Artikel, vernetzt über interne Verlinkung. Keine Pillar Architektur nötig.
+Brücke zwischen Compliance-Wissen (`equal pay`, `bap tarif`) und Liquiditäts-Themen (`debitorenmanagement`, `zahlungsausfall`). Zwei Pillars:
 
-**Aufwand:** niedrig (5 bis 7 How-To Artikel).
+1. `/wissen/equal-pay-zeitarbeit/` als regulatorischer Hub
+2. `/wissen/debitorenmanagement-personaldienstleister/` mit zvoove CashLink als Lösungs-Anker
 
-## Cluster 8: Gebäudereinigung-Vertikale
+**Aufwand:** niedrig bis mittel (15 Keywords, gut bearbeitbar).
 
-> Eigenständige Branchen-Vertikale. Eigene Sprache, eigene Cluster Logik.
+## Cluster 12: Zeitarbeit Branchentrends und Einsatzplanung
 
-**Stats:** 24 Keywords, 8.135 SV / Monat, Ø KD 38, 50 Prozent kommerziell, Ø CPC 4,30 EUR
+> Zukunfts- und Trend-Themen. Hoher Awareness-Wert, niedrige bis mittlere Conversion-Rate.
+
+**Stats:** 28 Keywords, 9.537 SV / Monat, Ø KD 37, 32 Prozent kommerziell, Ø CPC 3,23 EUR
+
+**Top 5 Keywords:** `zeitarbeit branche entwicklung`, `saas zeitarbeit`, `einsatzplanung zeitarbeit`, `zukunft zeitarbeit`, `ausbildung zeitarbeit`
+
+**Empfehlung**
+
+Solider Mid-Funnel-Cluster, gut für Thought-Leadership-Inhalte. Ein jährlich aktualisierter Trend-Report (`zeitarbeit branche entwicklung 2026`) als Lead-Magnet, plus 3 bis 4 Cluster-Artikel zu `einsatzplanung`, `saas zeitarbeit`, `zukunft zeitarbeit`.
+
+**Aufwand:** niedrig bis mittel.
+
+## Cluster 5: Personalakte und Einsatzplanung
+
+> Operative HR-Themen. Niedriges SV pro Keyword aber hohe Kohäsion.
+
+**Stats:** 20 Keywords, 8.614 SV / Monat, Ø KD 38, 30 Prozent kommerziell, Ø CPC 2,80 EUR
+
+**Top 5 Keywords:** `personaleinsatzplanung`, `personalakte inhalt`, `saas personaldienstleister`, `kennzahlen personaldienstleister`, `factoring personaldienstleister`
+
+**Empfehlung**
+
+Solider Mid-Funnel-Cluster. Pro Top-Keyword ein eigener How-To-Artikel, vernetzt über interne Verlinkung. Keine Pillar-Architektur nötig.
+
+**Aufwand:** niedrig (5 bis 7 How-To-Artikel).
+
+## Cluster 8: Gebäudereinigung Software und Disposition
+
+> Eigenständige Branchen-Vertikale. Eigene Sprache, eigene Cluster-Logik.
+
+**Stats:** 26 Keywords, 8.325 SV / Monat, Ø KD 40, 50 Prozent kommerziell, Ø CPC 4,26 EUR
 
 **Top 5 Keywords:** `gebäudereinigung software`, `disposition gebäudereinigung`, `auftragsverwaltung gebäudereinigung`, `reinigungskalkulation software`, `unterhaltsreinigung kalkulation`
 
 **Empfehlung**
 
-zvoove bedient Gebäudereinigung als zweite Kernzielgruppe. Eigene Sprache (Revier, Objektkartei, Glasreinigung), daher dedizierte Content Strategie. Pillar `/wissen/gebaeudereinigung-software/`, parallel zu Zeitarbeit Pillar geführt, kein gemeinsamer Pillar.
+zvoove bedient Gebäudereinigung als zweite Kernzielgruppe. Eigene Sprache (Revier, Objektkartei, Glasreinigung), daher dedizierte Content-Strategie. Pillar `/wissen/gebaeudereinigung-software/` parallel zur Zeitarbeit-Achse, kein gemeinsamer Pillar.
 
 **Aufwand:** mittel.
 
-## Cluster 1: Factoring-Grundlagen
+## Cluster 0: Factoring Geschäftsmodelle und Genehmigung
 
-> Top-of-Funnel Wissens-Cluster, Eingang in den CashLink Funnel.
+> Top-of-Funnel-Wissens-Cluster, Eingang in den CashLink-Funnel.
 
-**Stats:** 15 Keywords, 3.516 SV / Monat, Ø KD 39, 27 Prozent kommerziell, Ø CPC 3,23 EUR
+**Stats:** 15 Keywords, 3.516 SV / Monat, Ø KD 36, 27 Prozent kommerziell, Ø CPC 3,23 EUR
 
 **Top 5 Keywords:** `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`
 
 **Empfehlung**
 
-Wissens-Hub für Factoring Grundlagen, der dann in den CashLink Funnel überführt.
-
-`/wissen/factoring-grundlagen/`: 2500 Wörter, was ist Factoring, welche Typen gibt es (echt, offen), wann lohnt sich was, Beispielrechnung. Verlinkt auf zvoove CashLink Produktseite.
+Wissens-Hub für Factoring-Grundlagen, der dann in den CashLink-Funnel überführt. `/wissen/factoring-grundlagen/`: 2.500 Wörter, was ist Factoring, welche Typen gibt es (echt, offen), wann lohnt sich was, Beispielrechnung. Verlinkt auf zvoove CashLink Produktseite.
 
 **Aufwand:** niedrig.
 
-## Cluster 9: Digitalisierung praktisch
+## Cluster 11: Zeiterfassung Spezialbranche und Compliance
 
-> Top-of-Funnel Awareness Cluster, Brückenfunktion zu kommerziellen Themen.
+> Vertikalen-Cluster. Niedriges Gesamt-SV, aber 59 Prozent kommerziell und stark fokussiert.
 
-**Stats:** 16 Keywords, 3.281 SV / Monat, Ø KD 29, 44 Prozent kommerziell, Ø CPC 3,50 EUR
+**Stats:** 17 Keywords, 2.492 SV / Monat, Ø KD 38, 59 Prozent kommerziell, Ø CPC 5,20 EUR
 
-**Top 5 Keywords:** `elektronische lohnabrechnung`, `gebäudereiniger digital`, `digitale lohnabrechnung`, `business case digitalisierung kmu`, `mahnwesen automatisieren`
+**Top 5 Keywords:** `zeiterfassung pflege`, `zeiterfassung handwerk`, `zeiterfassung kostenlos`, `zeiterfassung dsgvo`, `zeitarbeit corona auswirkung`
 
 **Empfehlung**
 
-Praktischer Awareness-Cluster mit niedriger KD von 29. Fängt Geschäftsführer ab, die konkrete Digitalisierungs-Schritte recherchieren. Zwei How-To Artikel:
+Vertikalen-Plays: `zeiterfassung pflege` und `zeiterfassung handwerk` als zwei Branchen-Landingpages mit klaren Compliance-Ankern (DSGVO, branchenspezifische Pflichten). Verlinkung in Cluster 1 (Zeiterfassungssoftware) als Software-Lösung.
 
-1. `/wissen/elektronische-lohnabrechnung-einfuehren/`: 1500 Wörter, schrittweise Einführung
-2. `/wissen/mahnwesen-automatisieren/`: 1500 Wörter, Tools Vergleich plus Best Practices
-
-Beide Pillar sollen intern auf Cluster 10 (B2B-SaaS Heads) und Cluster 3 (Zeitarbeit Software) verlinken, damit Awareness Traffic in den Funnel überführt wird.
-
-**Aufwand:** niedrig (2 Artikel).
-
-**Revenue Hypothese:** Pipeline-Influence statt direkte Conversion. Awareness Touchpoint, der über 6 bis 12 Monate zu Brand-Suchen führt.
+**Aufwand:** niedrig.
 
 ## Konsolidierte Empfehlung
 
-Wenn Sie morgen anfangen müssten, in dieser Reihenfolge:
+Wenn morgen mit der Bearbeitung begonnen würde, wäre eine sinnvolle Reihenfolge:
 
-1. **Cluster 5 (Marke zvoove)**: Audit der Produktseiten plus Schema Markup. Niedriger Aufwand, hohe Conversion.
-2. **Cluster 3 (Kommerzielle Zeit/Software-Heads)**: Pillar plus Wettbewerber-Vergleiche. Höchste kommerzielle Dichte.
-3. **Cluster 10 (B2B-SaaS Heads)**: Pillar Set. Zweitgrößter Cluster nach SV.
-4. **Cluster 2 (Branche & Arbeitsrecht, Sammelbecken)**: ZUERST Sub-Clustering. DANN Pillar Set. Größter Cluster nach Anzahl, höchstes Volumen.
+1. **Cluster 3 (Zvoove Brand)**: Audit der Produktseiten plus Schema Markup. Niedriger Aufwand, höchste Conversion-Dichte.
+2. **Cluster 1 (Zeiterfassungs- und Zeitarbeitssoftware)**: Pillar plus Wettbewerber-Vergleiche. Höchste kommerzielle Dichte mit nennenswertem Volumen.
+3. **Cluster 9 (HR- und Bewerbermanagementsoftware KMU)**: Pillar-Set. Größter Cluster nach SV, klare KMU-Adressierung.
+4. **Cluster 6 (Digitalisierung)**: Awareness-Hub als Brücke in die kommerziellen Cluster. Hohe Priority, niedrige KD.
+5. **Cluster 7 (Debitorenmanagement und Equal Pay)**: Quick Win, weil kompakt und hochpriorisiert.
 
-Damit sind in Quartal 1 ungefähr 130.000 SV pro Monat angegangen, mit einer realistischen Mischung aus Bottom-Funnel Conversion und Top-Funnel Pipeline Influence.
+Damit sind in Quartal 1 ungefähr 121.000 SV pro Monat angegangen, mit einer Mischung aus Bottom-Funnel-Conversion (Cluster 1, 3, 9), Mid-Funnel-Awareness (Cluster 6) und einem fokussierten Quick Win (Cluster 7).
 
 ## Hinweis zur Reproduzierbarkeit
 
-Dieser Lauf basiert auf 500 Keywords (Cap aus 504 manuellem Baseline-Set). Ein vorheriger Lauf mit allen 504 Keywords lieferte 13 Cluster und ist als Snapshot gepinnt unter `output/_archive/2026-04-27_manual/`. Die unterschiedliche Cluster-Anzahl (10 vs 13) ist ein Beispiel dafür, wie HDBSCAN auf kleine Datenset-Änderungen reagiert: 4 weniger Keywords haben drei Cluster verschmelzen lassen.
+Dieser Lauf basiert auf 500 Keywords (Cap aus 504 manuellem Baseline-Set) mit `mcs=15, ms=5, leaf` und 13 Clustern. Frühere Läufe mit anderen Hyperparametern (z.B. `mcs=12, eom` mit 10 Clustern, oder 504 Keywords ohne Cap) sind als Snapshots in `output/_archive/` gepinnt. Die unterschiedliche Cluster-Anzahl ist ein Beispiel dafür, wie HDBSCAN auf Hyperparameter und Datenset-Variationen reagiert. Die Wahl von `leaf` über `eom` ist bewusst für Brief-Granularität getroffen, mit dem Trade-off einer höheren Rauschrate; Begründung in der [Methodik](methodology.md).

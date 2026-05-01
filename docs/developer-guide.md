@@ -13,24 +13,27 @@ Die fachliche Begründung der Methodik (HDBSCAN, UMAP, Hyperparameter) liegt in 
 
 ```
 seo-pipeline/
-├── pipeline.py              # End-to-End-Orchestrator (1 CLI für alle 5 Schritte)
+├── pipeline.py              # End-to-End-Orchestrator (CLI für die fünf Pipeline-Schritte)
 ├── src/
 │   ├── config.py            # Pydantic Settings, env-getrieben
 │   ├── logging_config.py    # einmalige Root-Logger-Konfiguration
 │   ├── retry.py             # Decorator: exponential backoff für Provider-Calls
 │   ├── discover.py          # Schritt 1: Keyword-Quelle (manual | live)
 │   ├── enrich.py            # Schritt 2: SV/KD/CPC anreichern (estimate | dataforseo)
-│   ├── cluster.py           # Schritt 3: embed → UMAP → HDBSCAN → label → profile → charts → viz
-│   ├── cluster_viz.py       # Plotly-Klick-Map (von cluster.py aufgerufen)
+│   ├── cluster.py           # Schritt 3: embed → UMAP → HDBSCAN → label-Stub → profile
+│   ├── cluster_viz.py       # Plotly-Klick-Map (vom Report-Schritt aufgerufen)
+│   ├── labels_llm.py        # Schritt 3b: DE/EN-Labels per Anthropic-Batch-Call
 │   ├── subcluster.py        # zweiter HDBSCAN-Pass auf einen Cluster
 │   ├── brief.py             # Schritt 4: LLM-Briefs (api | openai | max)
 │   ├── briefs_html.py       # konsolidiertes Brief-Dashboard
-│   └── report.py            # Schritt 5: KPI-Dashboard
+│   └── report.py            # Schritt 5: Charts, Cluster-Map, KPI-Dashboard
 ├── tests/                   # pytest, ohne Netz, ohne API-Keys
-├── data/                    # Eingabe-CSVs (gitignored ausser baseline)
-├── output/                  # alle erzeugten Artefakte (CSV, PNG, HTML, MD)
+├── data/                    # Eingabe-CSVs (gitignored ausser baseline) + cluster_labels.yaml (Fallback)
+├── output/                  # alle erzeugten Artefakte (CSV, PNG, HTML, MD, JSON)
 └── docs/                    # diese MkDocs-Site
 ```
+
+`labels_llm.py` läuft heute nicht über `pipeline.py`, sondern wird vom Workflow `pipeline-full.yml` als „Step 3b" zwischen Cluster und Brief explizit aufgerufen. Lokal: `python -m src.labels_llm` (braucht `ANTHROPIC_API_KEY`). Wenn der Schritt fehlt, fällt `cluster.py` beim nächsten Lesen auf `data/cluster_labels.yaml` zurück (siehe [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)).
 
 Drei Designprinzipien tragen die Struktur:
 
@@ -61,6 +64,11 @@ flowchart LR
     C4 --> KL[keywords_labeled.csv]
     KL --> C5[cluster.step_profile]
     C5 --> P[cluster_profiles.csv]
+    P --> L[labels_llm.py]
+    KL --> L
+    L --> LJ[cluster_labels.json]
+    L --> P
+    L --> KL
     P --> B[brief.py]
     KL --> B
     B --> BR[output/briefings/cluster_NN.md]
@@ -74,7 +82,7 @@ Was diese Grenze leistet:
 
 - **Wiederholbarkeit:** Ein Schritt re-runnen heisst, seine Eingabedateien existieren noch. Kein implizites Setup.
 - **Diagnose:** Bei Problemen reicht ein `head` auf das Zwischenartefakt, um zu wissen, ob der Fehler vor oder nach diesem Schritt liegt.
-- **Parallelisierbarkeit:** In CI laufen `cluster.charts` und `cluster.viz` heute sequenziell, könnten aber auf der gleichen Datenbasis parallel laufen, ohne dass Code geändert werden müsste.
+- **Parallelisierbarkeit:** Charts und Cluster-Map laufen heute sequenziell im Report-Schritt, könnten aber auf der gleichen Datenbasis parallel laufen, ohne dass Code geändert werden müsste.
 
 ## 3. Konfigurations-Modell
 
@@ -175,121 +183,20 @@ Was bewusst **nicht** getestet wird: das Clustering-Ergebnis selbst. UMAP hat pl
 
 ## 7. GitHub Actions Workflows (CI/CD im Detail)
 
-Im Repo liegen drei YAML-Workflows unter `.github/workflows/`. Sie sind so geschnitten, dass jeder einen klaren Zweck, einen klaren Trigger und einen klaren Kostenrahmen hat. Diese Trennung ist absichtlich — sie macht es schwer, versehentlich einen teuren Lauf auszulösen.
+Im Repo liegen zwei YAML-Workflows unter `.github/workflows/`. Sie sind so geschnitten, dass jeder einen klaren Zweck, einen klaren Trigger und einen klaren Kostenrahmen hat. Diese Trennung ist absichtlich — sie macht es schwer, versehentlich einen teuren Lauf auszulösen.
 
 | Datei | Zweck | Trigger | Kosten / Lauf | Secrets nötig |
 |---|---|---|---|---|
-| `pipeline.yml` | 4 Schritte ohne LLM (Demo-Lauf) | `push` auf `main` (gefiltert) + manuell | 0 EUR | optional `DATAFORSEO_*` |
-| `pipeline-full.yml` | Volle 5 Schritte mit Brief-Generierung | nur manuell (`workflow_dispatch`) | ~0,50 – 2 EUR | `ANTHROPIC_API_KEY` oder `OPENAI_API_KEY` |
+| `pipeline-full.yml` | Voller Pipeline-Lauf mit Labels und Briefs | nur manuell (`workflow_dispatch`) | ~0,20 – 1 USD | `ANTHROPIC_API_KEY` oder `OPENAI_API_KEY`, optional `DATAFORSEO_*` |
 | `docs.yml` | Baut MkDocs, verschlüsselt, deployt nach Pages | `push` auf `main` + manuell | 0 EUR | `STATICRYPT_PASSWORD` |
 
-### 7.1 `pipeline.yml` — der kostenlose Demo-Lauf
-
-Der schmalere der beiden Pipeline-Workflows. Lässt die ersten vier Schritte laufen (Discover → Enrich → Cluster → Report) und überspringt den Brief-Schritt, weil der Geld kostet.
-
-**Trigger** (Zeilen 8–44):
-
-```yaml
-on:
-  workflow_dispatch:                # manueller Knopf in der Actions-UI
-    inputs:
-      enrich_provider: ...          # estimate (frei) oder dataforseo (~0,75 USD)
-      max_keywords: ...             # 100 / 250 / 500 / 1000
-      cluster_mcs: ...              # 8 / 10 / 12 / 15 / 20 (HDBSCAN-Sweep)
-  push:
-    branches: [main]
-    paths:                          # NUR wenn diese Pfade sich ändern
-      - "src/**"
-      - "pipeline.py"
-      - "data/keywords.manual.csv"
-      - "requirements.txt"
-      - ".github/workflows/pipeline.yml"
-```
-
-Was an diesem Trigger-Block wichtig ist:
-
-1. **Path-Filter unter `push`** — der Workflow läuft nicht bei jedem Commit, sondern nur, wenn Code, Pipeline-Skript, Baseline-Daten, Dependencies oder das Workflow-File selbst sich ändern. Spart Minuten und macht die Action-History les bar. Doku-Änderungen (`docs/**`) lösen ihn bewusst nicht aus — die werden vom `docs.yml` Workflow abgehandelt.
-2. **`workflow_dispatch.inputs` mit `type: choice`** — die UI zwingt den Bediener auf eine erlaubte Auswahl statt freier Texteingabe. Verhindert Tippfehler in numerischen Feldern und erlaubt UI-Validierung pro Feld.
-3. **Kein Cron-Trigger** — bewusst weggelassen. Wenn ein Scheduled-Run gewünscht wäre, hier ein `schedule: - cron: ...` ergänzen, aber dann Kostenstelle bedenken.
-
-**`permissions: contents: read`** (Zeile 46–47) — Least Privilege. Der Workflow darf den Code lesen, sonst nichts. Keine Schreibrechte auf Issues, PRs, Pages oder Packages.
-
-**`concurrency`** (Zeile 49–51):
-
-```yaml
-concurrency:
-  group: pipeline-demo
-  cancel-in-progress: false
-```
-
-Sorgt dafür, dass parallele Läufe sich nicht gegenseitig auf den Artefakten zertrampeln. `cancel-in-progress: false` heisst: ein neuer Lauf wartet, bis der alte fertig ist, statt ihn abzubrechen — wichtig, wenn der Lauf bereits API-Kosten produziert hat (gilt mehr für `pipeline-full`, hier defensiv auch gesetzt).
-
-**`timeout-minutes: 25`** (Zeile 56) — harte Obergrenze. Wenn ein Lauf länger braucht (z.B. weil sentence-transformers ein neues Modell ziehen muss), bricht GitHub ab statt Stunden Compute zu verbrennen.
-
-**Secrets-Verfügbarkeit** (Zeile 84–86):
-
-```yaml
-env:
-  DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
-  DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
-```
-
-Wenn das Secret im Repo nicht gesetzt ist, ist die Variable einfach leer. Der Code in `enrich.fetch_dataforseo` prüft das und wirft einen klaren Fehler. Heisst: das Workflow-File ist auch ohne DataForSEO-Account lauffähig, solange `enrich_provider=estimate` gewählt wird.
-
-**Settings-Mapping** (Zeile 86–89):
-
-```yaml
-PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
-PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
-PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
-```
-
-Genau das Muster, das in Sektion 3 beschrieben ist: `inputs.<feld>` aus der Workflow-UI fliesst in `PIPELINE_*` Env-Vars, die Pydantic Settings beim Start liest. **Keine Code-Änderung** ist nötig, um einen anderen `mcs` zu testen — UI-Klick reicht.
-
-Wichtiger Detail: Beim `push`-Trigger sind diese Inputs leer (es gab ja keine UI-Auswahl). Pydantic Settings fällt dann auf die Defaults aus `src/config.py` zurück. Das ist bewusst so — der Push-Lauf soll die Baseline reproduzieren.
-
-**Modell-Cache** (Zeile 70–78):
-
-```yaml
-- name: Cache sentence-transformers model
-  uses: actions/cache@v4
-  with:
-    path:
-      - ~/.cache/huggingface
-      - ~/.cache/torch/sentence_transformers
-    key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
-```
-
-Spart 1–2 Minuten ab dem zweiten Lauf. Der Cache-Key enthält den Modellnamen — wenn das Embedding-Modell wechselt, wird der Cache automatisch invalidiert (alter Key trifft neue Datei nicht).
-
-**Run-Summary** (Zeile 92–101) — kurze Auszüge der Cluster-Profile, KPIs und der Datei-Liste werden in das Action-Log geschrieben. So sieht man im Browser, was rauskam, ohne das Artefakt herunterzuladen.
-
-**Artefakt-Upload** (Zeile 103–112):
-
-```yaml
-- name: Upload pipeline outputs
-  uses: actions/upload-artifact@v4
-  with:
-    name: pipeline-output
-    path:
-      - data/keywords.csv
-      - output/clustering/
-      - output/reporting/
-    retention-days: 14
-    if-no-files-found: error
-```
-
-`if-no-files-found: error` ist ein wichtiger Schutz: wenn die Pipeline still gescheitert ist und nichts geschrieben hat, fällt das hier auf statt erst beim manuellen Download.
-
-### 7.2 `pipeline-full.yml` — der bewusste, bezahlte Lauf
-
-Inhaltlich derselbe Pipeline-Lauf wie `pipeline.yml`, aber inklusive des Brief-Schritts (LLM-Aufruf). Wegen der Kosten ist dieser Workflow strikt manuell.
+### 7.1 `pipeline-full.yml` — der einzige Pipeline-Workflow
 
 **Kein Push-Trigger**, nur `workflow_dispatch` (Zeile 11–54). Im Header-Kommentar dokumentiert:
 
 ```yaml
 # Warum kein push-Trigger: Brief-Step kostet Geld, jeder Lauf soll eine
-# bewusste Entscheidung sein. Demo-Lauf ohne Brief: pipeline.yml.
+# bewusste Entscheidung sein. dry_run=true testet die Verkabelung ohne API-Aufruf.
 ```
 
 **`dry_run` Eingabe** (Zeile 14–17):
@@ -354,7 +261,7 @@ run: |
 
 Ternary-Ausdruck der GitHub-Expression-Sprache: bei `dry_run=true` wird `--dry-run` ans Kommando angehängt, sonst nichts. So bleibt `pipeline.py` ohne Sonderlogik für den CI-Modus.
 
-### 7.3 `docs.yml` — Build, Encrypt, Deploy
+### 7.2 `docs.yml` — Build, Encrypt, Deploy
 
 Baut die MkDocs-Site, verschlüsselt sie mit StatiCrypt und deployt sie auf GitHub Pages.
 
@@ -475,7 +382,7 @@ Der `deploy`-Job hängt vom `build`-Job ab (`needs: build`). Trennung in zwei Jo
 - **Separate Permissions** möglich (Build braucht andere Rechte als Deploy, hier sind sie zwar global, könnten aber pro Job spezialisiert werden).
 - **GitHub-Pages-Environment** wird sichtbar in der Repo-UI mit dem Deploy-Status und einer Verknüpfung zur veröffentlichten URL.
 
-### 7.4 Wartbarkeits-Checkliste für die Workflows
+### 7.3 Wartbarkeits-Checkliste für die Workflows
 
 | Wenn du ... | dann ... |
 |---|---|
@@ -483,9 +390,9 @@ Der `deploy`-Job hängt vom `build`-Job ab (`needs: build`). Trennung in zwei Jo
 | ein Embedding-Modell wechselst | den Cache-Key in beiden Pipeline-Workflows aktualisieren (`st-${{ runner.os }}-...`) — sonst läuft mit altem Cache und neuen Code-Erwartungen. |
 | einen neuen Secret-Wert brauchst | Secret in den Repo-Settings anlegen, in der `env:` Block des betreffenden Steps mappen, und einen Pre-Flight-Check wie in `pipeline-full.yml` ergänzen, damit das Fehlen früh und klar abbricht. |
 | eine Doku-Seite umbenennst und sie war unter `--strict` Pflicht | `mkdocs build --strict` würde brechen — daher heisst Umbenennen: alle Verweise prüfen und ggf. Redirects in `mkdocs.yml` setzen. Der Workflow ist hier dein Sicherheitsnetz. |
-| die Cron-Ausführung aktivierst | `pipeline.yml` ist der richtige Ort (kostenfrei). `pipeline-full.yml` bewusst **nicht** automatisieren, sonst setzt sich der Kostenrahmen leise höher. |
+| die Cron-Ausführung aktivierst | `pipeline-full.yml` bewusst **nicht** automatisieren, sonst setzt sich der Kostenrahmen leise höher. Falls doch gewünscht: `dry_run=true` als Default und ein Hard-Cap auf `cluster_mcs`/`max_keywords` setzen. |
 
-### 7.5 Häufige Stolpersteine
+### 7.4 Häufige Stolpersteine
 
 - **„Mein Lauf hat falsche Settings genommen"** — der `push`-Trigger hat keine `inputs`, also greifen Pydantic-Defaults. Manuell mit `workflow_dispatch` triggern, wenn andere Werte gewünscht sind.
 - **„Der Modell-Cache cached etwas Falsches"** — Cache-Key per Hand bumpen (z.B. `key: st-${{ runner.os }}-...-v2`). GitHub-Caches selber lassen sich aus der Actions-UI löschen, aber Key-Bump ist sicherer.
@@ -508,13 +415,13 @@ Rationale: Inspizierbar mit `head`, diff-bar in Git, keine Schema-Migration, von
 
 Rationale: zvoove-Keywords sind deutsch, deutsche Morphologie wäre in einem englischen Modell schlecht abgebildet. BGE-M3 wäre besser, aber 2 GB statt 120 MB und braucht GPU für brauchbare Geschwindigkeit. MiniLM-L12 läuft auf einem MacBook in 25 Sekunden auf 500 Keywords. Dokumentiert im Docstring von `cluster.step_embed`.
 
-### HDBSCAN-Defaults aus Plateau-Mitte
+### HDBSCAN-Defaults aus dem Sweep
 
-Rationale: Der Hyperparameter-Sweep zeigt eine Plateau-Region `mcs ∈ {10, 12, 15}` mit 10 Clustern. `mcs=12` ist die Mitte → ein Puffer auf jeder Seite gegen plattformbedingten UMAP-Drift. Konstante in `Settings` (siehe `cluster_hdbscan_mcs`), Begründung als Inline-Kommentar im Code-File und in der Methodik.
+Rationale: Der Hyperparameter-Sweep zeigt eine Plateau-Region. Aktueller Default in der Workflow-UI: `mcs=15, ms=5, leaf` (13 Cluster, 130 Noise, ~26 Prozent Rauschen, Silhouette 0,668). Die Wahl ist Granularität-getrieben: für Content-Briefs sind feinere Themen wertvoller als ein einzelnes Sammelbecken. Konstanten in `Settings` (`cluster_hdbscan_mcs`, `cluster_hdbscan_method`, `cluster_hdbscan_ms`), Begründung in der [Methodik](methodology.md).
 
-### Stable, kuratierte Cluster-Labels
+### LLM-generierte Cluster-Labels mit YAML-Fallback
 
-`CLUSTER_LABELS_DE` und `CLUSTER_LABELS_EN` in `cluster.py` sind hand-kuratiert. Sobald `random_state=42` und der Datensatz stabil sind, produziert HDBSCAN reproduzierbare IDs — das macht kuratierte Labels statt Auto-Naming akzeptabel. Wenn ein Lauf abweichende Cluster-Anzahlen liefert (z.B. 13 statt 10), greift die Fallback-Logik in `_label_en` / `_label_de` auf generische `Cluster N` zurück, statt zu crashen. Wartung: Bei Daten-Refresh die Labels prüfen, der entsprechende ADR steht in `decisions.md`.
+`src/labels_llm.py` ruft Anthropic Haiku einmal pro Lauf mit allen Clustern auf und schreibt `output/clustering/cluster_labels.json`. `src/cluster.py` lädt diese JSON beim Start (über `_load_cluster_labels`); fehlt sie, fällt es auf `data/cluster_labels.yaml` zurück. Cluster-IDs ohne Label landen auf `Cluster N`, das verhindert KeyError bei beliebigen Hyperparameter-Kombinationen. Wartung: Bei Daten-Refresh den Schritt re-running, oder die JSON manuell pinnen wenn Labels für eine Veröffentlichung stabil bleiben sollen. Der zugehörige ADR ist [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback).
 
 ### Klassennamen-Matching für transiente Fehler
 
@@ -539,7 +446,8 @@ Jeder Schritt hat eine eigene Sub-CLI:
 ```bash
 python -m src.discover --source manual --max-keywords 200
 python -m src.enrich --provider estimate
-python -m src.cluster --step embed,reduce,cluster,label
+python -m src.cluster --step embed,reduce,cluster,label,profile
+python -m src.labels_llm                            # DE/EN Labels per Anthropic Haiku
 python -m src.brief --provider api --cluster 5 --model claude-sonnet-4-6
 python -m src.briefs_html
 python -m src.report
@@ -580,9 +488,10 @@ Beispiel Brief-Schritt:
 ### Cluster-Labels nach einem Daten-Refresh aktualisieren
 
 1. `python -m src.cluster --step all` laufen lassen.
-2. `output/clustering/cluster_profiles.csv` ansehen — die `top_5_kw_by_sv` und `top_terms` Spalten sind die schnelle Inspektionsbasis.
-3. `CLUSTER_LABELS_DE` und `CLUSTER_LABELS_EN` in `src/cluster.py` editieren.
-4. Re-Run von `--step label,profile,charts,viz` reicht (embed/reduce/cluster sind unverändert).
+2. `python -m src.labels_llm` aufrufen (Anthropic API Key gesetzt). Schreibt `output/clustering/cluster_labels.json` und aktualisiert die Label-Spalten in `cluster_profiles.csv` und `keywords_labeled.csv`.
+3. Optional: für höhere Qualität `--model claude-sonnet-4-6` setzen.
+4. Wenn Labels für eine Veröffentlichung stabil bleiben sollen: die generierte JSON pinnen oder per Hand in `data/cluster_labels.yaml` übertragen, dann die JSON löschen — `cluster.py` fällt automatisch auf YAML zurück.
+5. Anschließend `python -m src.report` für die Dashboards und Charts.
 
 ## 11. Was diese Architektur explizit **nicht** löst
 

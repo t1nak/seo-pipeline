@@ -1,55 +1,55 @@
 {
   "0": {
-    "de": "Factoring Buchhaltung und Genehmigung",
-    "en": "Factoring Accounting and Licensing"
+    "de": "Factoring Buchung und Genehmigung",
+    "en": "Factoring Booking and Approval"
   },
   "1": {
-    "de": "Zeiterfassungs- und Arbeitszeitverwaltung",
-    "en": "Time Tracking and Work Hour Management"
+    "de": "Zeiterfassung und Zeitarbeitssoftware",
+    "en": "Time Tracking and Staffing Software"
   },
   "2": {
-    "de": "KI-gestützte Recruiting-Automatisierung",
-    "en": "AI-Powered Recruiting Automation"
+    "de": "KI-gestütztes Recruiting und Sourcing",
+    "en": "AI-Powered Recruiting and Sourcing"
   },
   "3": {
-    "de": "Zvoove Softwareprodukte und Features",
-    "en": "Zvoove Software Products and Features"
+    "de": "Zvoove Plattform Features und Preise",
+    "en": "Zvoove Platform Features and Pricing"
   },
   "4": {
-    "de": "Personalgewinnung und Bewerbermanagement Catch-all",
-    "en": "Talent Acquisition and Applicant Management Catch-all"
+    "de": "Lohnabrechnung und Bewerberverwaltung",
+    "en": "Payroll and Applicant Management"
   },
   "5": {
-    "de": "Zeitarbeit Regulierung und Markttrends",
-    "en": "Temporary Work Regulation and Market Trends"
+    "de": "Zeitarbeit Gesetze und Markttrends",
+    "en": "Staffing Laws and Market Trends"
   },
   "6": {
-    "de": "Personaleinsatzplanung und Verwaltung",
-    "en": "Personnel Scheduling and Administration"
+    "de": "Personalverwaltung und Recruiting Prozesse",
+    "en": "Personnel Management and Recruiting Processes"
   },
   "7": {
-    "de": "Digitalisierung Personaldienstleistungen und KI",
-    "en": "Digital Transformation of HR Services and AI"
+    "de": "Digitalisierung Personaldienstleistung",
+    "en": "Digital Transformation of HR Services"
   },
   "8": {
-    "de": "Liquidität und Tarifkosten Zeitarbeit",
-    "en": "Liquidity Management and Wage Tariffs"
+    "de": "Liquidität Equal Pay und Tarifvertrag",
+    "en": "Liquidity Equal Pay and Collective Agreements"
   },
   "9": {
-    "de": "Gebäudereinigungs-Spezialisoftware",
-    "en": "Building Cleaning Specialized Software"
+    "de": "Gebäudereinigung Verwaltungssoftware",
+    "en": "Facility Cleaning Management Software"
   },
   "10": {
-    "de": "HR-Verwaltungssoftware für KMU",
-    "en": "HR Administration Software for SMEs"
+    "de": "HR und Dokumentenverwaltungssoftware",
+    "en": "HR and Document Management Software"
   },
   "11": {
-    "de": "Arbeitnehmerüberlassung Recht und Compliance",
-    "en": "Employee Leasing Law and Compliance"
+    "de": "Arbeitnehmerüberlassung Rechtliche Grundlagen",
+    "en": "Employee Leasing Legal Framework"
   },
   "12": {
-    "de": "Zeitarbeit Software und Prozessmanagement",
-    "en": "Temporary Work Software and Process Management"
+    "de": "Zeitarbeit Branche Software und Tools",
+    "en": "Staffing Industry Software and Tools"
   },
   "-1": {
     "de": "Rauschen / Ausreißer",

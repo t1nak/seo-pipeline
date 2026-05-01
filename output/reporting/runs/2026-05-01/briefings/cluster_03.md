@@ -1,58 +1,55 @@
-# KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Recruiting-Funnel
+# KI im Recruiting: Wie Zeitarbeitsunternehmen mit KI-gestützten Tools schneller und besser besetzen
 
 **Hauptkeyword:** ki recruiting
-**Nebenkeywords:** recruiting automatisieren, recruiting software, recruiting plattform, recruiting tool zeitarbeit, automatisierung recruiting prozess, applicant tracking system deutsch, active sourcing tools
-**Suchintention:** mixed, weil ein Teil der Suchenden noch evaluiert ob KI-Recruiting sinnvoll ist, während ein anderer Teil bereits konkrete Software vergleicht.
+**Nebenkeywords:** recruiting software, recruiting plattform, active sourcing tools, recruiting automatisieren, automatisierung recruiting prozess, applicant tracking system deutsch, recruiting tool zeitarbeit
+**Suchintention:** mixed, Nutzer suchen teils nach grundlegenden Erklärungen zu KI im Recruiting, teils aktiv nach konkreten Tools und Plattformen zum Kauf oder Testen.
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Niederlassungsleiter oder Recruiting-Verantwortliche in einem Personaldienstleistungsunternehmen mit 5 bis 50 Mitarbeitern, der täglich offene Stellen besetzen muss und merkt, dass manuelle Prozesse nicht mehr skalieren.
+Niederlassungsleiter oder Recruiting-Verantwortlicher in einem mittelständischen Zeitarbeitsunternehmen mit 3 bis 15 Niederlassungen, der täglich offene Stellen nicht besetzen kann und weiß, dass sein aktueller Prozess zu langsam ist.
 
 ## Schmerzpunkt
 
-Die Anforderungslage steigt, aber das Team bleibt gleich groß: Hunderte Bewerbungen landen im Posteingang, Active Sourcing läuft noch per Hand über LinkedIn, und Kandidaten springen ab, weil niemand schnell genug antwortet. Gleichzeitig wächst der Druck von Kundenunternehmen, Vakanzen in kürzerer Zeit zu besetzen. Wer zu langsam ist, verliert den Auftrag an die Konkurrenz.
+Offene Stellen bleiben wochenlang unbesetzt, weil Bewerbungen manuell gesichtet, Kandidaten per Hand angeschrieben und Follow-ups vergessen werden. Der Wettbewerb besetzt dieselben Profile schneller, ohne mehr Personal im Recruiting zu haben. Gleichzeitig fehlt die Zeit, sich durch einen Dschungel aus Tool-Anbietern zu kämpfen und herauszufinden, was KI im Recruiting wirklich bringt und was nur Marketing ist.
 
 ## Ziel des Artikels
 
-Der Leser soll verstehen, welche konkreten Schritte im Recruiting-Funnel sich heute mit KI automatisieren lassen, und danach in der Lage sein, eine fundierte Kaufentscheidung für eine passende Recruiting-Software zu treffen.
+Der Leser soll nach dem Lesen konkret wissen, welche Schritte im Recruiting sich mit KI automatisieren lassen, welche Kriterien bei der Tool-Auswahl entscheidend sind, und warum zvoove für Zeitarbeitsunternehmen der naheliegendste nächste Schritt ist.
 
 ## Outline
 
-- H1: KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Recruiting-Funnel
-- H2: Warum manuelle Recruiting-Prozesse in der Zeitarbeit nicht mehr funktionieren
-  - H3: Steigende Vakanzzahlen bei gleichbleibendem Team
-  - H3: Was ein zu langsamer Funnel wirklich kostet
-- H2: Was KI im Recruiting konkret bedeutet, und was nicht
-  - H3: Mythos vs. Realität: Was aktuelle Systeme leisten
-  - H3: Welche Aufgaben KI übernimmt und wo Menschen bleiben müssen
-- H2: Die fünf Stufen des Recruiting-Funnels und wo Automatisierung greift
-  - H3: Stellenausschreibung und Multichannel-Distribution
-  - H3: Bewerbungseingang und automatisches Screening
-  - H3: Active Sourcing mit KI-gestützten Tools
-  - H3: Kandidatenkommunikation und Interview-Scheduling
-  - H3: Onboarding-Vorbereitung und Dokumentenmanagement
-- H2: Applicant Tracking System auf Deutsch: Worauf Personaldienstleister achten müssen
-  - H3: Pflichtfunktionen für die Zeitarbeit, AÜG-Konformität, Tarifzuordnung, Einsatzplanung
+- H1: KI im Recruiting: Wie Zeitarbeitsunternehmen mit KI-gestützten Tools schneller und besser besetzen
+- H2: Warum klassisches Recruiting in der Zeitarbeit an seine Grenzen stößt
+  - H3: Zu viele offene Stellen, zu wenig Zeit pro Kandidat
+  - H3: Manuelle Prozesse als Flaschenhals im Recruiting Funnel
+- H2: Was KI im Recruiting konkret bedeutet, jenseits des Hypes
+  - H3: KI als Entscheidungsunterstützung, nicht als Ersatz für Recruiter
+  - H3: Typische Anwendungsfälle: Matching, Vorauswahl, Kommunikation, Priorisierung
+- H2: Active Sourcing mit KI: Kandidaten finden, bevor sie aktiv suchen
+  - H3: Wie Active Sourcing Tools Profile automatisch identifizieren und bewerten
+  - H3: Zeitersparnis durch automatisierte Erstansprache und Follow-up
+- H2: Applicant Tracking System auf Deutsch: Was ein ATS im Zeitarbeitskontext leisten muss
+  - H3: Pflichtfunktionen für Zeitarbeitsunternehmen, Mehrfachbewerbungen, Poolmanagement, Compliance
   - H3: Integration in bestehende Dispositions- und ERP-Systeme
-  - H3: Datenschutz und DSGVO bei KI-Funktionen
-- H2: Active Sourcing Tools im Vergleich: Was bringt wirklich Ergebnisse
-  - H3: Automatisierte Kandidatenansprache auf LinkedIn, Xing und Beyond
-  - H3: Wie KI Kandidatenprofile bewertet und priorisiert
-- H2: So sieht ein automatisierter Recruiting-Funnel in der Praxis aus
-  - H3: Beispiel-Workflow von der Vakanz bis zur Einstellung
-  - H3: Typische Zeitersparnis und messbare KPIs
-- H2: Checkliste: Ist Ihre Organisation bereit für KI-gestütztes Recruiting
-  - H3: Technische Voraussetzungen
-  - H3: Prozessuale Voraussetzungen
-  - H3: Häufige Fehler bei der Einführung
+  - H3: Warum generische ATS-Lösungen oft nicht passen
+- H2: Den Recruiting Prozess automatisieren: Wo anfangen, was priorisieren
+  - H3: Die drei Schritte mit dem größten Zeitgewinn
+  - H3: Häufige Fehler bei der Einführung von Recruiting Automatisierung
+- H2: Kriterien für die Auswahl einer Recruiting Plattform für Zeitarbeitsunternehmen
+  - H3: Branchenfit, Datenschutz nach DSGVO, Implementierungsaufwand
+  - H3: Make-or-break-Fragen für das Anbietergespräch
+- H2: Wie zvoove KI-gestütztes Recruiting in den Arbeitsalltag von Zeitarbeitsunternehmen integriert
+  - H3: Automatisches Kandidaten-Matching aus dem bestehenden Pool
+  - H3: KI-gestützte Kommunikation und Wiedervorlage
+  - H3: Nahtlose Verbindung von Recruiting, Disposition und Abrechnung
 
 ## Benchmark URLs
 
-1. https://www.haufe.de/personal/hr-management/ki-im-recruiting_80_590900.html — etablierter HR-Publisher mit hoher Domain Authority, rankt auf mehrere der Nebenkeywords und definiert die inhaltliche Messlatte für informational Intent
-2. https://www.recruitee.com/de/artikel/recruiting-automatisierung — direkter Software-Wettbewerber mit starkem Content-Marketing, zeigt wie SaaS-Anbieter Funnel-Inhalte für Kaufinteressenten aufbauen
-3. https://www.personio.de/hr-lexikon/applicant-tracking-system/ — Marktführer im DACH-HR-SaaS-Bereich, dominiert Lexikon-Keywords rund um ATS und gibt das SEO-Benchmarkniveau für strukturierte Definitionen vor
+1. https://www.softgarden.com/ressourcen/glossar/ki-recruiting/ — Hohe Sichtbarkeit bei informativen KI-Recruiting-Begriffen, direkter Wettbewerber im ATS-Segment
+2. https://www.rexx-systems.com/blog/ki-recruiting/ — Rankt für mehrere Nebenkeywords, zeigt wie ein deutsches HR-Software-Unternehmen das Thema positioniert
+3. https://www.haufe.de/personal/hr-management/ki-im-recruiting_80_574772.html — Starke Domain-Authority, setzt den inhaltlichen Benchmark für "KI im Recruiting" in Deutschland
 
 ## Call to Action
 
-Demo buchen: Zeigen Sie Ihrem Team in 30 Minuten live, wie zvoove Recruit KI-gestütztes Screening, automatische Stellendistribution und ATS-Funktionen speziell für Personaldienstleister in einem System vereint.
+Demo buchen: Leser werden eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove das KI-Matching und die Recruiting-Automatisierung konkret in einem Zeitarbeitsunternehmen ihrer Größe funktioniert, inklusive Anbindung an Disposition und Lohnabrechnung.

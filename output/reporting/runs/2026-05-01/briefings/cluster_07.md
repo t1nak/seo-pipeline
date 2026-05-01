@@ -1,58 +1,54 @@
-# Personaleinsatzplanung für Personaldienstleister: Software, Kennzahlen und smarte Verwaltung im Überblick
+# Personalverwaltung für Personaldienstleister: Software, Prozesse und Kennzahlen im Überblick
 
-**Hauptkeyword:** Personaleinsatzplanung
-**Nebenkeywords:** SaaS Personaldienstleister, Kennzahlen Personaldienstleister, Lohnabrechnung Personaldienstleister, Gehaltsabrechnung Outsourcing, KI Bewerbermanagement, Personalakte Inhalt, Factoring Personaldienstleister
-**Suchintention:** mixed, Nutzer suchen teils nach Grundlagenwissen zur Einsatzplanung, teils konkret nach Software und Dienstleistungen zur Umsetzung.
+**Hauptkeyword:** saas personaldienstleister
+**Nebenkeywords:** personalverwaltung software, personaleinsatzplanung, lohnabrechnung personaldienstleister, kennzahlen personaldienstleister, ki bewerbermanagement, gehaltsabrechnung outsourcing, azubi verwaltung
+**Suchintention:** mixed, der Suchende informiert sich aktiv über Softwarelösungen und Prozessoptimierung, hat aber bereits konkreten Handlungsdruck durch Wachstum oder Compliance-Anforderungen.
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer oder Niederlassungsleiter eines Personaldienstleisters mit 10 bis 100 internen Mitarbeitern, der manuelle Prozesse in der Disposition und Verwaltung durch Software ersetzen will.
+Geschäftsführer oder Niederlassungsleiter eines mittelständischen Personaldienstleisters mit 50 bis 500 aktiven Mitarbeitern im Einsatz, der manuelle Prozesse in Verwaltung, Disposition und Abrechnung durch eine durchgängige Softwarelösung ersetzen will.
 
 ## Schmerzpunkt
 
-Der Disponent jongliert täglich Schichtpläne, Krankmeldungen und Kundenanfragen in Excel oder per Telefon, was zu Fehlern, Doppelbelegungen und verpassten Aufträgen führt. Gleichzeitig wächst der Verwaltungsaufwand durch Dokumentationspflichten, korrekte Personalakten und fristgerechte Lohnabrechnungen, ohne dass das interne Team mitwächst. Wer hier keine durchgängige Softwarelösung einsetzt, verliert sowohl Marge als auch Wettbewerbsfähigkeit gegenüber digitalisierten Wettbewerbern.
+Wer mit fünf verschiedenen Tools für Disposition, Lohnabrechnung und Bewerbermanagement arbeitet, verliert täglich Stunden durch Doppeleingaben, Medienbrüche und Abstimmungsfehler. Compliance-Anforderungen wie korrekte Personalakten, AÜG-Fristen und Branchenzuschläge werden in manuellen Prozessen zur Fehlerquelle mit echten Haftungsrisiken. Gleichzeitig steigt der Druck, Kennzahlen wie Auslastungsquote oder Time-to-Fill schnell und verlässlich bereitzustellen, weil Investoren, Kunden und die eigene Geschäftsleitung sie einfordern.
 
 ## Ziel des Artikels
 
-Der Leser soll verstehen, welche Kernprozesse der Personaleinsatzplanung und Verwaltung sich mit moderner SaaS-Software automatisieren lassen, und den nächsten Schritt in Richtung zvoove Demo oder Beratungsgespräch gehen.
+Der Leser soll verstehen, welche Kernprozesse der Personalverwaltung eine spezialisierte SaaS-Lösung abdecken muss und warum generische HR-Software für Personaldienstleister strukturell ungeeignet ist.
 
 ## Outline
 
-- H1: Personaleinsatzplanung für Personaldienstleister: So funktioniert effiziente Verwaltung mit der richtigen Software
-- H2: Was Personaleinsatzplanung in der Zeitarbeit wirklich bedeutet
-  - H3: Unterschied zur klassischen Personalplanung im Unternehmen
-  - H3: Typische Aufgaben eines Disponenten im Tagesgeschäft
-  - H3: Warum Excel und Telefon an ihre Grenzen stoßen
-- H2: Pflichtinhalte der Personalakte: Was Personaldienstleister wissen müssen
-  - H3: Gesetzlich vorgeschriebene Dokumente und Aufbewahrungsfristen
-  - H3: Digitale Personalakte als Standard in modernen HR-Systemen
-- H2: Lohnabrechnung und Gehaltsabrechnung im Personaldienstleistungskontext
-  - H3: Besonderheiten der Lohnabrechnung für Zeitarbeitnehmer
-  - H3: Gehaltsabrechnung outsourcen: Wann lohnt sich das?
-  - H3: Factoring als Liquiditätspuffer für Personaldienstleister
-- H2: Kennzahlen, die Personaldienstleister wirklich steuern müssen
-  - H3: Operative Kennzahlen: Auslastung, Ausfallquote, Time-to-Fill
-  - H3: Kaufmännische Kennzahlen: Rohertrag, Verrechnungssatz, Forderungslaufzeit
-  - H3: Wie ein gutes ERP diese Kennzahlen automatisch liefert
-- H2: KI im Bewerbermanagement und in der Disposition
-  - H3: Wie KI-gestützte Systeme Kandidaten und Einsätze zusammenbringen
-  - H3: Automatisierte Kommunikation mit Bewerbern und Kunden
-  - H3: Was KI kann und was der Disponent weiterhin selbst entscheiden muss
-- H2: SaaS für Personaldienstleister: Worauf bei der Softwareauswahl achten
-  - H3: Integration von Disposition, Abrechnung und Dokumentenmanagement
-  - H3: Azubiverwaltung und Karriereseite als unterschätzte Funktionen
-  - H3: On-Premise vs. SaaS: Die entscheidenden Unterschiede für KMU
-- H2: Fazit und nächste Schritte: So starten Personaldienstleister mit digitaler Einsatzplanung
-  - H3: Prioritäten setzen: Welcher Prozess bringt die schnellste Entlastung?
-  - H3: Checkliste für die Softwareevaluation
+- H1: Personalverwaltung für Personaldienstleister: Software, Prozesse und Kennzahlen im Überblick
+- H2: Warum Standard-HR-Software für Personaldienstleister nicht funktioniert
+  - H3: Dreiecksbeziehung Dienstleister, Mitarbeiter, Kunde
+  - H3: AÜG, Branchenzuschläge, Equal Pay: Compliance-Anforderungen, die generische Tools nicht kennen
+- H2: Die sieben Kernprozesse, die eine SaaS-Lösung abdecken muss
+  - H3: Digitale Personalakte: Pflichtinhalte und häufige Lücken
+  - H3: Personaleinsatzplanung: Von der Anfrage bis zum Schichtplan
+  - H3: Lohnabrechnung und Gehaltsabrechnung-Outsourcing im Vergleich
+  - H3: Azubi-Verwaltung als Sonderfall
+- H2: KI im Bewerbermanagement: Was heute schon funktioniert
+  - H3: Automatisches Matching und Kandidatenranking
+  - H3: Karriereseite erstellen und mit dem ATS verknüpfen
+- H2: Kennzahlen für Personaldienstleister: Was wirklich gemessen werden sollte
+  - H3: Operative Kennzahlen: Auslastung, Time-to-Fill, Fluktuationsquote
+  - H3: Finanzielle Kennzahlen: Marge, Factoring-Quote, DSO
+- H2: Gehaltsabrechnung outsourcen oder intern abbilden?
+  - H3: Wann Outsourcing sinnvoll ist
+  - H3: Wann eine integrierte Abrechnungslösung die bessere Wahl ist
+- H2: Factoring für Personaldienstleister: Verbindung zur Software
+  - H3: Wie eine SaaS-Lösung Factoring-Prozesse automatisiert
+- H2: Checkliste: So wählen Sie die richtige SaaS-Lösung aus
+  - H3: Fünf Fragen vor der Kaufentscheidung
+  - H3: Typische Fehler bei der Softwareeinführung
 
 ## Benchmark URLs
 
-1. https://www.sage.com/de-de/blog/personaleinsatzplanung/ — Rankt auf generische Personaleinsatzplanungs-Keywords mit Grundlageninhalt, zeigt welche Tiefe Google für dieses Thema erwartet
-2. https://www.haufe.de/personal/hr-management/personaleinsatzplanung_80_504854.html — Hochautoritäre Fachseite mit breiter Abdeckung des Themas, setzt den inhaltlichen Mindeststandard
-3. https://www.bite.de/blog/personaleinsatzplanung-software/ — Direkter SaaS-Wettbewerber im HR-Softwareumfeld mit produktnahem Artikel, zeigt kommerzielle Positionierung
+1. https://www.rexx-systems.com/blog/personalverwaltung/ — etablierter HR-Software-Anbieter mit breiter Sichtbarkeit im Cluster, zeigt welche Inhaltstiefe Google für diesen Begriff erwartet
+2. https://www.datev.de/web/de/aktuelles/datev-magazin/blog/lohnabrechnung-outsourcing/ — rankt stark auf Lohnabrechnung-Outsourcing, relevant weil viele Personaldienstleister DATEV-Schnittstellen als Kaufkriterium nennen
+3. https://www.haufe.de/personal/hr-management/kennzahlen-im-personalwesen/ — Referenz für Kennzahlen-Content, zeigt Suchintention der Zielgruppe im informationalen Teil des Clusters
 
 ## Call to Action
 
-Leser werden eingeladen, eine kostenlose Demo von zvoove zu vereinbaren, bei der ein Berater live zeigt, wie Disposition, Lohnabrechnung und Kennzahlen-Cockpit in einer Plattform zusammenspielen.
+Demo buchen: Leser werden auf eine zvoove-Produktseite geleitet, die zeigt, wie Personaleinsatzplanung, Lohnabrechnung und Bewerbermanagement in einer einzigen Plattform verbunden sind, inklusive eingebettetem Kalender für eine 30-minütige Live-Demo ohne Verkaufsdruck.

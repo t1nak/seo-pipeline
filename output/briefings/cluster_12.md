@@ -1,52 +1,57 @@
-# Arbeitnehmerüberlassung: Rechtliche Pflichten, Fallstricke und was Zeitarbeitsunternehmen 2025 wirklich wissen müssen
+# Arbeitnehmerüberlassung: Rechtliche Grundlagen, AÜG-Pflichten und was Verleiher 2025 wissen müssen
 
 **Hauptkeyword:** Arbeitnehmerüberlassung
-**Nebenkeywords:** Arbeitnehmerüberlassungsgesetz, Arbeitsschutz Zeitarbeit, Arbeitszeitkonto führen, Disposition Zeitarbeitnehmer, Arbeitgeberanteile Sozialversicherung, Equal Pay Zeitarbeit, Überlassungshöchstdauer
-**Suchintention:** mixed, weil Suchanfragen zwischen Grundlagenverständnis (informational) und konkretem Handlungsbedarf beim Aufbau oder Betrieb eines Zeitarbeitsunternehmens (commercial) wechseln.
+**Nebenkeywords:** Arbeitnehmerüberlassungsgesetz, AÜG Pflichten, Arbeitsschutz Zeitarbeit, Arbeitszeitkonto führen, Disposition Zeitarbeitnehmer, Equal Pay Zeitarbeit, Überlassungshöchstdauer
+**Suchintention:** mixed, weil ein Teil der Suchenden grundlegendes Regelwissen aufbaut, während Personaldienstleister und HR-Verantwortliche aktiv nach konkreten Compliance-Anforderungen für ihren Betrieb suchen.
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Niederlassungsleiter oder Geschäftsführer eines mittelständischen Personaldienstleisters mit 50 bis 500 aktiven Zeitarbeitnehmern, der entweder eine Betriebsprüfung erwartet oder seine Dispositions- und Abrechnungsprozesse auf rechtssicheren Stand bringen will.
+Geschäftsführer oder Niederlassungsleiter eines mittelgroßen Zeitarbeitsunternehmens mit 50 bis 300 aktiven Zeitarbeitnehmern, der seine AÜG-Compliance intern sicherstellen will, ohne bei jeder Änderung einen Anwalt beauftragen zu müssen.
 
 ## Schmerzpunkt
 
-Die Rechtslage zur Arbeitnehmerüberlassung ändert sich regelmäßig, und ein einziger Verstoß gegen Überlassungshöchstdauer oder Equal-Pay-Regelungen kann empfindliche Bußgelder und den Verlust der Erlaubnis bedeuten. Gleichzeitig kämpft die Disposition täglich damit, Einsätze, Arbeitszeitkonten und Sozialversicherungspflichten parallel im Blick zu behalten, ohne dass das vorhandene Tool das wirklich abbildet. Viele Unternehmen merken erst bei einer Prüfung durch die Bundesagentur für Arbeit, wo ihre Dokumentation Lücken hat.
+Die AÜG-Novellen der letzten Jahre haben Pflichten geschaffen, die im Tagesgeschäft leicht untergehen: Überlassungshöchstdauer je Entleiher, korrekte Arbeitszeitkonto-Führung, Equal-Pay-Fristen. Ein einziger Verstoß kann die Erlaubnis kosten oder hohe Bußgelder nach sich ziehen. Gleichzeitig fehlt eine kompakte, praxisnahe Übersicht, die nicht in Paragrafenwüsten endet und trotzdem rechtssicher ist.
 
 ## Ziel des Artikels
 
-Der Leser soll nach dem Lesen die zentralen Compliance-Pflichten nach dem AÜG kennen, typische Fehlerquellen in Disposition und Abrechnung einordnen können und verstehen, warum eine integrierte Software diese Risiken strukturell reduziert.
+Der Leser soll die wichtigsten AÜG-Pflichten und deren operative Konsequenzen so klar verstanden haben, dass er seine internen Prozesse dagegen abgleichen und gezielt Lücken schließen kann.
 
 ## Outline
 
-- H1: Arbeitnehmerüberlassung: Rechtliche Pflichten, Fallstricke und was Zeitarbeitsunternehmen 2025 wirklich wissen müssen
-- H2: Was das Arbeitnehmerüberlassungsgesetz konkret verlangt
-  - H3: Erlaubnispflicht und was bei Entzug passiert
-  - H3: Überlassungshöchstdauer: 18 Monate und die zulässigen Ausnahmen
-  - H3: Equal Pay: Wann greift die Regelung, wann gilt der Tarifvertrag
-- H2: Arbeitsschutz in der Zeitarbeit: Wer haftet wirklich
-  - H3: Geteilte Verantwortung zwischen Verleiher und Entleiher
-  - H3: Unterweisungspflichten und Dokumentation in der Praxis
-- H2: Arbeitszeitkonten richtig führen: Pflicht, nicht Kür
-  - H3: Gesetzliche Anforderungen an Aufbau und Ausgleich
-  - H3: Typische Fehler bei der Führung und ihre Konsequenzen
-- H2: Arbeitgeberanteile Sozialversicherung: Was Zeitarbeitsunternehmen besonders beachten müssen
-  - H3: Besonderheiten bei gewerblichen Zeitarbeitnehmern
-  - H3: Prüfrisiken bei der Deutschen Rentenversicherung
-- H2: Disposition und Compliance zusammendenken
-  - H3: Warum manuelle Prozesse Compliance-Risiken verstärken
-  - H3: Was eine rechtskonforme Dispositionssoftware leisten muss
-- H2: Was die Betriebsprüfung wirklich prüft
-  - H3: Checkliste: Diese Dokumente müssen sofort griffbereit sein
-  - H3: Häufige Beanstandungen und wie man sie vermeidet
-- H2: Fazit: Compliance ist kein Einmalproject, sondern ein Prozess
+- H1: Arbeitnehmerüberlassung: Rechtliche Grundlagen, AÜG-Pflichten und operative Konsequenzen
+- H2: Was das Arbeitnehmerüberlassungsgesetz regelt und wen es betrifft
+  - H3: Geltungsbereich: Verleiher, Entleiher und Zeitarbeitnehmer
+  - H3: Erlaubnispflicht nach Paragraf 1 AÜG: Voraussetzungen und häufige Fehler
+  - H3: Abgrenzung zu Werkvertrag und freiem Dienstvertrag
+- H2: Die wichtigsten Pflichten für Verleiher im Überblick
+  - H3: Schriftformpflicht beim Arbeitnehmerüberlassungsvertrag
+  - H3: Informationspflichten gegenüber Zeitarbeitnehmern
+  - H3: Sozialversicherung und Lohnsteuer: Wer haftet für was
+- H2: Überlassungshöchstdauer und Equal Pay: die zwei häufigsten Stolpersteine
+  - H3: 18-Monats-Grenze: Berechnung, Ausnahmen und tarifvertragliche Abweichungen
+  - H3: Equal-Pay-Anspruch ab dem 9. Monat: was das konkret bedeutet
+  - H3: Dokumentation als Schutz vor Bußgeldern
+- H2: Arbeitsschutz in der Zeitarbeit: geteilte Verantwortung, klare Regeln
+  - H3: Pflichten des Entleihers am Einsatzort
+  - H3: Pflichten des Verleihers vor dem Einsatz
+  - H3: Unfallversicherung und Haftung bei Arbeitsunfällen
+- H2: Arbeitszeitkonto führen in der Zeitarbeit: Anforderungen und Praxis
+  - H3: Gesetzlicher Rahmen nach AÜG und Arbeitszeitgesetz
+  - H3: Typische Fehler bei der Kontoführung und wie Software sie verhindert
+- H2: Disposition und Compliance: wo operative Prozesse auf Recht treffen
+  - H3: Einsatzplanung unter Berücksichtigung von Höchstdauer und Qualifikation
+  - H3: Was passiert bei einem Verstoß: Bußgelder, Erlaubnisentzug, Schadensersatz
+- H2: Rechtliche Entwicklungen 2025 und Ausblick auf den Arbeitsmarkt 2026
+  - H3: Aktuelle Trends: Remote Work, grenzüberschreitende Überlassung, Plattformarbeit
+  - H3: Was Zeitarbeitsunternehmen jetzt vorbereiten sollten
 
 ## Benchmark URLs
 
-1. https://www.haufe.de/personal/hr-management/arbeitnehmerueberlassung-gesetz-regelungen_80_484106.html — Hohe Autorität, rankt auf breiten AÜG-Begriffen, zeigt welche Tiefe Google hier erwartet
-2. https://www.igz.de/themen/recht/aeueg/ — Branchenverband mit sehr spezifischen Rechtsinformationen, direkte Konkurrenz um informational Traffic aus der Zeitarbeitsbranche
-3. https://www.bundesagentur.de/arbeitnehmerueberlassung — Offizielle Quelle, auf die viele Artikel verlinken, Pflichtlektüre für Gap-Analyse der eigenen Inhalte
+1. https://www.bmas.de/DE/Arbeit/Arbeitsrecht/Arbeitnehmeruberlassung/arbeitnehmeruberlassung.html — offizielle Behördenquelle, hohe Autorität, dominiert informational Queries und setzt den inhaltlichen Mindeststandard
+2. https://www.haufe.de/personal/arbeitsrecht/arbeitnehmerueberlassung/ — starke organische Sichtbarkeit bei HR-Entscheidern, deckt rechtliche Details mit Praxisbezug ab
+3. https://www.igz.de/themen/recht-tarif/aueberlass/ — Branchenverband IGZ als Referenz für tarifvertragliche Abweichungen und Equal-Pay-Regelungen
 
 ## Call to Action
 
-Lade dir die zvoove Compliance-Checkliste für Zeitarbeitsunternehmen herunter oder buche eine Live-Demo, um zu sehen, wie zvoove Recruit und zvoove Workforce Überlassungshöchstdauer, Arbeitszeitkonten und Equal-Pay-Fristen automatisch überwachen.
+Prüfe jetzt, ob deine Dispositions- und Abrechnungsprozesse AÜG-konform sind: Fordere eine kostenlose Demo von zvoove an und sieh live, wie automatische Fristüberwachung für Überlassungshöchstdauer und Equal Pay direkt in der Zeitarbeitssoftware funktioniert.

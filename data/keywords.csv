@@ -11,7 +11,7 @@ equal pay zeitarbeit,informational,cluster_06,head,Begriff,3331,37,1.16,video,90
 höchstüberlassungsdauer,informational,cluster_06,head,Begriff,3959,51,1.87,people-also-ask,77.6,estimated
 zeitarbeitssoftware,commercial,cluster_01,head,Schreibvariante zusammen,4381,57,9.99,ads,76.9,estimated
 mitarbeiterverwaltung software,commercial,cluster_09,head,Tool,4809,63,11.52,ads|shopping|site-links,76.3,estimated
-zvoove referenzen,commercial,cluster_11,head,Brand-Trust,70,61,11.42,ads|site-links,1.1,estimated
+zvoove referenzen,commercial,cluster_11,head,Brand-Trust,4617,61,11.42,ads|site-links,75.7,estimated
 personaleinsatzplanung,informational,cluster_04,head,Generisch,4799,64,1.15,featured-snippet|video,75.0,estimated
 arbeitnehmerüberlassungsgesetz,informational,cluster_06,head,Gesetz,2910,40,2.23,featured-snippet|people-also-ask,72.8,estimated
 bewerber finden,informational,cluster_03,head,Generisch,2768,39,1.54,featured-snippet,71.0,estimated
@@ -19,14 +19,14 @@ hr software kmu,commercial,cluster_09,head,Generisch,4028,58,5.66,ads,69.4,estim
 bewerbermanagement software,commercial,cluster_03,head,Hauptbegriff,5670,84,10.51,shopping,67.5,estimated
 gebäudereinigung software,commercial,cluster_08,head,Branchenfokus,5051,78,8.43,shopping|site-links,64.8,estimated
 zeiterfassung software,commercial,cluster_04,head,Hauptbegriff,4892,76,8.87,ads|site-links,64.4,estimated
-zvoove cashlink,commercial,cluster_05,head,Brand,50,47,5.67,shopping,1.1,estimated
+zvoove cashlink,commercial,cluster_05,head,Brand,2982,47,5.67,shopping,63.4,estimated
 arbeitnehmerüberlassung,informational,cluster_06,head,Begriff,4131,66,2.24,people-also-ask,62.6,estimated
 mobile zeiterfassung,commercial,cluster_04,head,Trend Mobile,4743,82,5.13,shopping|site-links,57.8,estimated
 gehaltsabrechnung software,commercial,cluster_02,head,Kategorie,3940,70,5.57,site-links,56.3,estimated
-zvoove dms,commercial,cluster_07,head,Brand,40,76,8.61,ads,0.5,estimated
+zvoove dms,commercial,cluster_07,head,Brand,3902,76,8.61,ads,51.3,estimated
 zeitarbeit programm,commercial,cluster_01,head,Synonym,3980,79,6.78,shopping|site-links,50.4,estimated
 einsatzplanung software,commercial,cluster_04,head,Tool,2335,47,2.15,ads|shopping,49.7,estimated
-zvoove cockpit,commercial,cluster_07,head,Brand,50,70,6.71,shopping|site-links,0.7,estimated
+zvoove cockpit,commercial,cluster_07,head,Brand,3418,70,6.71,shopping|site-links,48.8,estimated
 digitale zeiterfassung,commercial,cluster_04,head,Trend,3656,77,8.72,shopping,47.5,estimated
 gig economy deutschland,informational,cluster_10,body,Trend,789,17,2.2,video,46.4,estimated
 factoring buchen,informational,cluster_05,body,Buchhaltung,799,18,2.27,featured-snippet|people-also-ask,44.4,estimated
@@ -36,7 +36,7 @@ igz tarifvertrag aktuell,informational,cluster_10,body,Tarif,700,17,1.76,people-
 ats software,commercial,cluster_03,head,Kategorie,3060,78,10.59,ads,39.2,estimated
 gebäudereiniger digital,informational,cluster_08,body,Trend,619,16,1.03,people-also-ask|video,38.7,estimated
 zahlungsausfall absichern,informational,cluster_05,body,Risiko,769,20,2.27,people-also-ask,38.5,estimated
-zvoove payroll,commercial,cluster_02,head,Brand,40,85,2.56,ads|shopping,0.5,estimated
+zvoove payroll,commercial,cluster_02,head,Brand,3188,85,2.56,ads|shopping,37.5,estimated
 karriereseite erstellen,informational,cluster_03,body,Aufgabe,706,19,0.43,featured-snippet|people-also-ask,37.2,estimated
 aüg software,commercial,cluster_01,head,Kategorie,1563,48,10.48,site-links,32.6,estimated
 candidate experience verbessern,informational,cluster_03,longtail,Best Practice,195,7,0.4,featured-snippet|people-also-ask|video,27.9,estimated
@@ -46,7 +46,7 @@ automatisierung recruiting prozess,informational,cluster_12,body,Trend,739,29,0.
 auslastung zeitarbeit erhöhen,informational,cluster_11,longtail,KPI,176,7,2.44,featured-snippet,25.1,estimated
 lohnbuchhaltung zeitarbeit,informational,cluster_02,body,Buchhaltung,549,24,1.95,video,22.9,estimated
 personalakte inhalt,informational,cluster_09,body,Wissen,792,35,1.89,featured-snippet|people-also-ask,22.6,estimated
-zvoove recruit,commercial,cluster_03,head,Brand,50,61,3.75,shopping|site-links,0.8,estimated
+zvoove recruit,commercial,cluster_03,head,Brand,1369,61,3.75,shopping|site-links,22.4,estimated
 zeitarbeit software,commercial,cluster_01,head,Hauptbegriff zvoove One,1822,82,2.83,ads|site-links,22.2,estimated
 arbeitszeugnis erstellen zeitarbeit,informational,cluster_09,longtail,Aufgabe,177,8,2.29,featured-snippet|people-also-ask|video,22.1,estimated
 recruiting software,commercial,cluster_03,head,Hauptbegriff,1149,52,6.81,ads,22.1,estimated
@@ -99,7 +99,7 @@ dienstplan software,commercial,cluster_04,body,Tool,779,62,4.04,ads|shopping,12.
 arbeitsschutz zeitarbeit,informational,cluster_06,body,Pflicht,464,37,1.46,people-also-ask,12.5,estimated
 gesetzliche abzüge lohn,informational,cluster_02,body,Wissensfrage,538,43,2.32,featured-snippet|video,12.5,estimated
 elektronische lohnabrechnung,commercial,cluster_02,body,Trend,759,61,4.78,shopping,12.4,estimated
-zvoove one,commercial,cluster_01,head,Brand-Keyword,150,75,5.2,ads|shopping,2.0,estimated
+zvoove one,commercial,cluster_01,head,Brand-Keyword,928,75,5.2,ads|shopping,12.4,estimated
 ausbildung zeitarbeit,informational,cluster_09,body,Strategie,617,50,0.74,people-also-ask,12.3,estimated
 ki bewerbermanagement,informational,cluster_12,body,Trend,506,41,0.34,video,12.3,estimated
 zeiterfassung pflege,commercial,cluster_04,body,Branche,629,52,8.36,ads|shopping,12.1,estimated
@@ -126,7 +126,7 @@ kennzahlen personaldienstleister,informational,cluster_11,body,KPI,470,45,0.45,f
 aüg novelle,informational,cluster_06,body,Gesetzesänderung,249,24,0.57,people-also-ask|video,10.4,estimated
 reinigungsangebot vorlage,informational,cluster_08,longtail,Vorlage,133,13,1.55,people-also-ask|video,10.2,estimated
 multiposting software,commercial,cluster_03,body,Funktion,439,43,6.27,shopping,10.2,estimated
-zvoove kunden,commercial,cluster_11,body,Brand-Trust,60,53,5.76,ads|site-links,1.1,estimated
+zvoove kunden,commercial,cluster_11,body,Brand-Trust,533,53,5.76,ads|site-links,10.1,estimated
 business case digitalisierung kmu,informational,cluster_11,longtail,Methode,191,19,1.48,featured-snippet|people-also-ask,10.1,estimated
 active sourcing tools,commercial,cluster_03,body,Methode,736,74,4.26,shopping|site-links,9.9,estimated
 mindestlohngesetz zeitarbeit,informational,cluster_06,body,Gesetz,296,30,2.45,people-also-ask|video,9.9,estimated
@@ -211,7 +211,7 @@ gefährdungsbeurteilung zeitarbeit,informational,cluster_06,longtail,Pflicht,189
 urlaubsgeld zeitarbeit,informational,cluster_02,body,Wissensfrage,86,15,1.63,featured-snippet|people-also-ask|video,5.7,estimated
 verleihverbot bau,informational,cluster_06,body,Branche,261,47,2.25,featured-snippet|video,5.6,estimated
 zeitarbeitsbranche 2026,informational,cluster_10,longtail,Aktuell,190,34,0.99,featured-snippet,5.6,estimated
-zvoove alternative,commercial,cluster_01,body,Wettbewerb,50,73,6.98,shopping|site-links,0.7,estimated
+zvoove alternative,commercial,cluster_01,body,Wettbewerb,410,73,6.98,shopping|site-links,5.6,estimated
 bewerber pool aufbauen,informational,cluster_03,longtail,Methode,96,17,0.91,featured-snippet|video,5.6,estimated
 mitarbeitermotivation zeitarbeit,informational,cluster_09,longtail,Strategie,144,26,1.57,featured-snippet|video,5.5,estimated
 aüg erlaubnis kosten,informational,cluster_06,longtail,Pricing,176,32,1.5,featured-snippet|video,5.5,estimated

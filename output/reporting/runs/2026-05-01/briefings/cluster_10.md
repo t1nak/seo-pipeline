@@ -1,57 +1,63 @@
-# Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung in einem System
+# Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung in einer Lösung
 
 **Hauptkeyword:** gebäudereinigung software
-**Nebenkeywords:** disposition gebäudereinigung, auftragsverwaltung gebäudereinigung, reinigungskalkulation software, zeiterfassung gebäudereinigung, unterhaltsreinigung kalkulation, gebäudereinigung digitalisieren, qualitätsmanagement gebäudereinigung
-**Suchintention:** mixed, Nutzer vergleichen aktiv Softwarelösungen und suchen gleichzeitig nach Orientierung, welche Funktionen für Reinigungsbetriebe wirklich entscheidend sind.
+**Nebenkeywords:** disposition gebäudereinigung, auftragsverwaltung gebäudereinigung, reinigungskalkulation software, zeiterfassung gebäudereinigung, unterhaltsreinigung kalkulation, qualitätsmanagement gebäudereinigung, gebäudereinigung digitalisieren
+**Suchintention:** mixed, überwiegend kommerzielle Absicht mit Informationsbedarf, da Interessenten aktiv eine Softwarelösung evaluieren, aber zuerst verstehen wollen, welche Funktionen für ihre Betriebsgröße sinnvoll sind.
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer oder Betriebsleiter eines Gebäudereinigungsunternehmens mit 20 bis 200 Mitarbeitern, der manuelle Prozesse in Disposition, Kalkulation und Abrechnung endlich ablösen will.
+Geschäftsführer oder Betriebsleiter eines mittelständischen Reinigungsunternehmens mit 50 bis 300 Mitarbeitenden, der Disposition, Kalkulation und Dokumentation noch per Excel oder in getrennten Insellösungen abwickelt.
 
 ## Schmerzpunkt
 
-Kalkulationen laufen noch in Excel, Objekte werden doppelt belegt oder gar nicht besetzt, weil die Disposition auf Zuruf funktioniert. Jede Gehaltsabrechnung kostet Stunden, weil Stundenzettel unleserlich oder unvollständig ankommen. Gleichzeitig steigt der Druck durch Mindestlohnkontrollen und Dokumentationspflichten nach AEntG, und ein einziger Fehler kann teure Nachforderungen auslösen.
+Angebote für Unterhaltsreinigung dauern Stunden, weil Flächendaten, Reinigungsintervalle und Lohnkosten manuell zusammengesucht werden, und trotzdem rutscht die Marge erst beim nächsten Auftrag ans Licht. Disponenten verbringen mehr Zeit mit Telefonie als mit Planung, weil kurzfristige Krankmeldungen keine strukturierte Vertretungslogik auslösen. Qualitätsnachweise für Gewerbe- oder Krankenhausverträge fehlen oder liegen als Papierformulare im Aktenordner, was bei Audits zum Risiko wird.
 
 ## Ziel des Artikels
 
-Der Leser soll verstehen, welche fünf Kernfunktionen eine Gebäudereinigungssoftware zwingend abdecken muss, und danach eine Demo oder ein Beratungsgespräch mit zvoove anfragen.
+Der Leser soll nach dem Lesen verstehen, welche konkreten Module eine Gebäudereinigungssoftware mitbringen muss, und den nächsten Schritt machen: eine Demo oder ein konkretes Gespräch mit zvoove anfordern.
 
 ## Outline
 
-- H1: Gebäudereinigung Software: Was sie können muss und worauf es beim Kauf wirklich ankommt
-- H2: Warum Standard-Software für Reinigungsbetriebe nicht funktioniert
-  - H3: Die Besonderheiten der Gebäudereinigung gegenüber anderen Dienstleistungsbranchen
-  - H3: Typische Probleme ohne spezialisierte Lösung (Kalkulation, Disposition, Lohn)
-- H2: Reinigungskalkulation Software: Angebote schreiben, die tatsächlich profitabel sind
-  - H3: Flächenbasierte Kalkulation und Leistungsverzeichnisse
-  - H3: Unterhaltsreinigung kalkulation: Stundenansätze, Frequenzen, Materialkosten
-  - H3: Angebots- und Vertragsintegration direkt aus der Kalkulation
-- H2: Disposition Gebäudereinigung: Objekte besetzen, Ausfälle managen, Kosten kontrollieren
-  - H3: Objektbasierte Planung statt Schichtlisten in Excel
-  - H3: Kurzfristige Vertretungen und automatische Benachrichtigung
-  - H3: Verknüpfung von Disposition und Lohnkosten in Echtzeit
-- H2: Zeiterfassung Gebäudereinigung: Mobil, manipulationssicher, revisionsfest
-  - H3: GPS-gestützte Anwesenheitserfassung direkt am Objekt
-  - H3: Mindestlohndokumentation und AEntG-konforme Aufzeichnung
-  - H3: Schnittstelle zur Lohnabrechnung ohne Medienbruch
-- H2: Auftragsverwaltung Gebäudereinigung: Vom Angebot bis zur Rechnung ohne Systemwechsel
-  - H3: Auftragsanlage, Leistungserfassung und Rechnungsstellung im Workflow
-  - H3: Reklamationsmanagement und Nachweise für Auftraggeber
-- H2: Qualitätsmanagement Gebäudereinigung: Kontrollen dokumentieren, Zertifizierungen unterstützen
-  - H3: Digitale Begehungsprotokolle und Fotodokumentation
-  - H3: Anbindung an ISO 9001 und RAL-Gütesicherung
-- H2: Softwareeinführung Reinigungsfirma: So gelingt der Wechsel ohne Betriebsunterbrechung
-  - H3: Datenmigration, Schulung und Rollout-Zeitplan
-  - H3: Typische Fehler bei der Einführung und wie man sie vermeidet
-  - H3: Wann sich die Investition gerechnet hat: realistische ROI-Betrachtung
+- H1: Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung in einer Lösung
+- H2: Warum Excel und Einzellösungen in der Gebäudereinigung an ihre Grenze stoßen
+  - H3: Kalkulationsfehler kosten Marge, nicht nur Zeit
+  - H3: Manuelle Disposition funktioniert bis zum ersten größeren Ausfall
+  - H3: Papierdokumentation übersteht keinen Kundenaudit
+- H2: Was eine Gebäudereinigung Software leisten muss: die sieben entscheidenden Module
+  - H3: Auftragsverwaltung und Objektstammdaten
+  - H3: Reinigungskalkulation mit Flächenberechnung und Leistungszeiten
+  - H3: Disposition und Schichtplanung in Echtzeit
+  - H3: Digitale Zeiterfassung direkt am Objekt
+  - H3: Qualitätsmanagement und Prüfprotokolle
+  - H3: Rechnungsstellung und Controlling
+  - H3: Mitarbeiterportal und Kommunikation
+- H2: Unterhaltsreinigung kalkulieren: So funktioniert es digital
+  - H3: Flächendaten, Leistungszeiten und Lohnkosten zusammenführen
+  - H3: Angebotsvorlagen und Wiederverwendbarkeit
+  - H3: Kalkulation und tatsächliche Leistungszeiten vergleichen, Soll-Ist-Analyse
+- H2: Disposition in der Gebäudereinigung: Vom Reaktionsmodus zur Vorausplanung
+  - H3: Vertretungslogik bei Krankmeldungen automatisieren
+  - H3: Mehrere Objekte und Teams gleichzeitig koordinieren
+  - H3: Mitarbeiterqualifikationen und Objektzuordnung hinterlegen
+- H2: Zeiterfassung in der Gebäudereinigung, die vor Ort funktioniert
+  - H3: NFC, QR-Code oder App: Welche Methode passt zu welchem Betrieb
+  - H3: Nachweise für Kunden und Lohnvorbereitung aus einer Quelle
+- H2: Gebäudereinigung digitalisieren: typische Stolpersteine bei der Softwareeinführung
+  - H3: Stammdaten bereinigen, bevor das System startet
+  - H3: Mitarbeitende mitnehmen, nicht überrumpeln
+  - H3: Integrationen prüfen: Lohnabrechnung, DATEV, Buchhaltung
+- H2: So wählen Sie die richtige Software für Ihr Reinigungsunternehmen aus
+  - H3: Checkliste: Muss-Kriterien vor dem ersten Demo-Termin
+  - H3: Skalierbarkeit: Was, wenn das Unternehmen wächst
+  - H3: Referenzen und Branchenerfahrung des Anbieters prüfen
 
 ## Benchmark URLs
 
-1. https://www.winkler-software.de/branchenloesungen/gebaeudereinigung — direkter Wettbewerber mit branchenspezifischer Landingpage, zeigt welche Funktionen Interessenten als Tabelle erwarten
-2. https://www.scopevisio.com/ratgeber/gebaeudereinigung-software — redaktioneller Ratgeberartikel mit hohem informationalem Traffic, schwach bei kommerziellem CTA
-3. https://www.espresso-tutorials.de/topics/gebaeudereinigung-branche — SAP-naher Content, zeigt Suchintention von mittelständischen Betrieben die Systemintegration suchen
+1. https://www.tresle.de/branchenloesungen/gebaeudereinigung/ — direkte Wettbewerber-URL mit Branchenfokus Gebäudereinigung, zeigt, welche Funktionen Interessenten dort als relevant präsentiert bekommen
+2. https://www.forced.de/gebaeudereinigung-software — häufig in den oberen Suchergebnissen für das Hauptkeyword, relevant als inhaltliche und strukturelle Vergleichsgröße
+3. https://www.lohndata.de/blog/zeiterfassung-gebaeudereinigung/ — informationsorientierter Artikel mit hoher organischer Sichtbarkeit zum Thema Zeiterfassung, zeigt den typischen Einstiegspunkt in die Customer Journey
 
 ## Call to Action
 
-Demo von zvoove für Gebäudereinigungsbetriebe anfragen: 30 Minuten Live-Demo mit eigenem Objektbeispiel, direkt im Artikel als Button verlinkt.
+Kostenlose Demo von zvoove für Gebäudedienstleister anfordern: direkt im Artikel als CTA-Block nach dem Abschnitt über Softwareeinführung platzieren, mit dem Hinweis, dass zvoove Disposition, Kalkulation, Zeiterfassung und Qualitätsdokumentation in einer Plattform abbildet und speziell für gewerbliche Dienstleister entwickelt wurde.

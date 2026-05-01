@@ -12,29 +12,29 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Test-Modus: kein LLM-Call, Stubs schreiben (kostenlos, gut für Verkabelungs-Test)"
+        description: "Test-Modus ohne LLM-Aufruf. Schreibt Stub-Briefs, kostet nichts, prüft die Verkabelung."
         type: boolean
         default: false
       brief_provider:
-        description: "Brief-Provider (LLM für Content-Briefings) — api: Anthropic, openai: GPT-5. max (Agent SDK) ist lokal-only und in CI nicht verfügbar."
+        description: "LLM für die Content-Briefs. api = Anthropic Claude, openai = GPT-5. (max läuft nur lokal.)"
         type: choice
         options:
           - api
           - openai
         default: api
       model:
-        description: "Modell-ID überschreiben (leer = Default je Provider: api -> claude-sonnet-4-6, openai -> gpt-5). Nur relevant wenn dry_run=false."
+        description: "Modell-ID überschreiben. Leer = Default je Provider (api → claude-sonnet-4-6, openai → gpt-5)."
         type: string
         default: ""
       enrich_provider:
-        description: "Enrich-Provider (Suchvolumen, Difficulty) — estimate: Heuristik kostenlos, dataforseo: ~0.75 USD pro 500 Keywords"
+        description: "Suchvolumen + Keyword Difficulty. estimate = kostenlose Heuristik. dataforseo = Live-API (~0,75 USD pro 500 Keywords)."
         type: choice
         options:
           - estimate
           - dataforseo
         default: estimate
       max_keywords:
-        description: "Cap der Keyword-Anzahl nach Discover"
+        description: "Maximale Keyword-Anzahl nach dem Discover-Schritt."
         type: choice
         options:
           - "100"
@@ -43,7 +43,7 @@ on:
           - "1000"
         default: "500"
       cluster_mcs:
-        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Default 10 (kombiniert mit method=eom -> 13 Cluster), siehe Methodik."
+        description: "HDBSCAN min_cluster_size. Kleiner = mehr, kleinere Cluster. Default 10."
         type: choice
         options:
           - "8"
@@ -53,14 +53,14 @@ on:
           - "20"
         default: "10"
       cluster_method:
-        description: "HDBSCAN cluster_selection_method. eom = wenige stabile Cluster, leaf = mehr feinere Cluster. Default eom (mit mcs=10 -> 13 Cluster, 14% Noise; Soft-Assignment im Cluster-Step holt jedes Keyword in einen Cluster)."
+        description: "HDBSCAN cluster_selection_method. eom = wenige stabile Cluster. leaf = mehr feinere Cluster. Default eom."
         type: choice
         options:
           - eom
           - leaf
         default: eom
       sheets_sync:
-        description: "Reporting nach Google Sheets pushen (Service Account + Sheet-ID nötig, siehe docs/reporting-integration.md)"
+        description: "Reporting nach jedem Lauf in Google Sheets pushen. Braucht GOOGLE_SHEETS_CREDENTIALS_JSON (Secret) + GOOGLE_SHEETS_ID (Variable). Setup: docs/reporting-integration.md."
         type: boolean
         default: false
 

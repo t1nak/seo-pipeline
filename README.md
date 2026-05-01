@@ -1,4 +1,4 @@
-# SEO Keyword Pipeline für zvoove
+# SEO Keyword → ContentBrief Pipeline für zvoove
 
 Eine Pipeline, die aus dem zvoove Blog ein priorisiertes Keyword Set, thematische Cluster, Content Briefs und ein interaktives Reporting macht.
 

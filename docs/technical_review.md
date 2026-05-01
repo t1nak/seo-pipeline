@@ -43,12 +43,11 @@ Diese Trennung ist bewusst und dokumentiert in `docs/methodology.md`.
 | `embed` | 5 bis 8 s | linear |
 | `reduce` (UMAP) | 3 bis 4 s | n log n |
 | `cluster` (HDBSCAN) | 2 bis 3 s | n log n |
-| `charts` | 5 bis 7 s | konstant in Cluster-Anzahl |
-| `viz` (Plotly) | 3 bis 5 s | linear in Datenmenge |
-| `brief` (10 Cluster, mit API) | 50 bis 100 s | linear in Cluster-Anzahl |
-| `report` | weniger als 1 s | konstant |
+| `labels_llm` (Anthropic Haiku, Batch-Call) | 4 bis 8 s | konstant (ein Call) |
+| `report` (Charts plus Cluster-Map) | 8 bis 12 s | linear in Datenmenge |
+| `brief` (13 Cluster, mit API, Caching) | 60 bis 130 s | linear in Cluster-Anzahl |
 
-Voller Lauf ohne Briefs: ungefähr 25 s. Mit Briefs: ungefähr 2 Minuten.
+Voller Lauf ohne Briefs (kein Label-Call): ungefähr 25 s. Mit Labels und Briefs: 2 bis 3 Minuten.
 
 ### Bei 5000 Keywords (10x)
 

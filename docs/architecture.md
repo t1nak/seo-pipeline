@@ -22,10 +22,11 @@ Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute ak
 |---|---|---|
 | **Quelle** | `src/discover.py` | Welche Keywords sind überhaupt relevant. Aktuell Stub mit `--source manual`. |
 | **Anreicherung** | `src/enrich.py` | Pro Keyword: SV, KD, CPC, SERP Features, Priority Score. Heuristik oder DataForSEO. |
-| **Strukturierung** | `src/cluster.py` plus `src/cluster_viz.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Profiling, Charts, interaktive Karte. |
+| **Strukturierung** | `src/cluster.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Profiling. Charts und interaktive Karte werden im Report-Schritt aus `src/cluster_viz.py` aufgerufen. |
+| **Beschriftung** | `src/labels_llm.py` | Pro Cluster ein DE- und EN-Label per Anthropic-Batch-Call. Schreibt `cluster_labels.json` und aktualisiert die Label-Spalten in `cluster_profiles.csv` und `keywords_labeled.csv`. |
 | **Aktivierung** | `src/brief.py` | Pro Cluster ein redaktions-fertiger Content Brief. Claude API mit Prompt Caching. |
 | **Reporting** | `src/report.py` | Konsolidiertes Dashboard, das alle Artefakte verbindet. |
-| **Orchestrierung** | `pipeline.py` | CLI Entry Point. Kann alles oder einzelne Schritte ausführen. |
+| **Orchestrierung** | `pipeline.py` plus Workflow `pipeline-full.yml` | `pipeline.py` orchestriert die fünf Pipeline-Schritte, der Workflow ruft den Label-Schritt zwischen `cluster` und `brief` auf (`Step 3b`). |
 
 ## Schnittstellen zwischen Schritten
 
@@ -39,7 +40,7 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 |---|---|---|
 | `keyword` | Freitext, deutsch | Ja |
 | `estimated_intent` | `commercial`, `informational`, `transactional`, `navigational` | Ja |
-| `category` | Cluster ID (`cluster_01` bis `cluster_12`) | Ja |
+| `category` | Original-Cluster-ID aus dem Discover-Stub. Dient nur als Vergleichsbasis und ist nicht identisch mit den später per HDBSCAN gefundenen Clustern. | Ja |
 | `type` | `head`, `body`, `longtail` | Ja |
 | `notes` | Freitext | Optional |
 
@@ -56,7 +57,11 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 | `priority_score` | Float, `volume / max(kd, 5)` |
 | `data_source` | `estimated` oder `dataforseo` |
 
-### Cluster -> Brief
+### Cluster -> Labels
+
+**Schnittstelle:** `cluster_profiles.csv` (Top-Keywords und Top-Terms pro Cluster) wird vom Label-Schritt gelesen. Output: `output/clustering/cluster_labels.json` mit DE- und EN-Label pro Cluster-ID, plus die aktualisierten Spalten `label_en` / `label_de` in `cluster_profiles.csv` und `hdb_label` / `hdb_label_de` in `keywords_labeled.csv`. Details in [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback).
+
+### Labels (oder Cluster) -> Brief
 
 **Schnittstelle:** `output/clustering/cluster_profiles.csv` plus `output/clustering/keywords_labeled.csv`.
 
@@ -76,8 +81,9 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 
 | Phase | Wer löst aus | Was wird neu berechnet | Was bleibt |
 |---|---|---|---|
-| Wöchentliche Aktualisierung | Cron | `enrich` (für SV/KD Updates), `report` | Cluster, Briefs |
-| Re-Clustering | Manuell oder geplant | Alles | Nichts (mit Snapshot in `output/_archive/`) |
+| Wöchentliche Aktualisierung | Cron | `enrich` (für SV/KD Updates), `report` | Cluster, Labels, Briefs |
+| Re-Clustering | Manuell oder geplant | Alles, inklusive frischer LLM-Labels | Nichts (mit Snapshot in `output/_archive/`) |
+| Label-Refresh ohne Re-Clustering | Manuell | nur `labels_llm` (Cluster-IDs bleiben, neue Labels) | Embeddings, UMAP, HDBSCAN, Briefs |
 | Brief Update für einen Cluster | Manuell | nur ein Brief | Alles andere |
 
 Der Snapshot-Mechanismus in `output/_archive/` schützt vor unbeabsichtigtem Datenverlust: vor jedem `cluster --step all` wird der aktuelle Output Stand pinned.
@@ -106,29 +112,28 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | `embed` | 5 bis 8 Sekunden (erstes Mal: zusätzlich Modell-Download ~120 MB) | Keyword Anzahl, CPU |
 | `reduce` | 3 bis 4 Sekunden | Anzahl plus Embedding Dimension |
 | `cluster` | 2 bis 3 Sekunden | UMAP Dimension |
-| `label` | < 1 Sekunde | Keyword Anzahl |
+| `label` (HDBSCAN-Output) | < 1 Sekunde | Keyword Anzahl |
 | `profile` | < 1 Sekunde | Cluster Anzahl |
-| `charts` | 5 bis 7 Sekunden | matplotlib Rendering |
-| `viz` | 3 bis 5 Sekunden | Plotly Figure Größe |
-| `brief` (alle 10 Cluster, mit API) | 50 bis 100 Sekunden | Anthropic API Latenz |
-| `report` | < 1 Sekunde | Anzahl Cluster, Dateigrößen |
+| `labels_llm` (Anthropic Haiku, Batch-Call) | 4 bis 8 Sekunden | API-Latenz |
+| `report` (Charts, Cluster-Map, Dashboard) | 8 bis 12 Sekunden | matplotlib- und Plotly-Rendering |
+| `brief` (alle Cluster, mit API) | 60 bis 130 Sekunden | Anthropic API Latenz, linear in Cluster-Anzahl |
 
-Voller Lauf ohne Briefs (Demo): ungefähr 25 Sekunden. Voller Lauf mit Briefs: ungefähr 2 Minuten.
+Voller Lauf ohne Briefs (Demo, kein Label-Call): ungefähr 25 Sekunden. Voller Lauf mit Labels und Briefs: ungefähr 2 bis 3 Minuten (13 Cluster).
 
 ### Kosten pro Lauf, je Provider-Kombination
 
-Embeddings, UMAP und HDBSCAN laufen lokal (0 USD). Variabel sind nur Enrichment- und Brief-Provider.
+Embeddings, UMAP und HDBSCAN laufen lokal (0 USD). Variabel sind Enrichment, Label-Step und Brief-Provider.
 
-| Enrichment | Brief-Provider | Enrichment-Kosten | Brief-Kosten | Gesamt pro Lauf |
-|---|---|---|---|---|
-| Heuristik | Stub (`--dry-run`) | 0 USD | 0 USD | **0 USD** |
-| Heuristik | Anthropic API (sonnet-4-6, Caching) | 0 USD | ~0,15 USD | **~0,15 USD** |
-| Heuristik | OpenAI (gpt-5) | 0 USD | ~0,30 USD | **~0,30 USD** |
-| DataForSEO | Anthropic API | ~0,75 USD | ~0,15 USD | **~0,90 USD** |
-| DataForSEO | OpenAI | ~0,75 USD | ~0,30 USD | **~1,05 USD** |
-| SEMrush / Ahrefs | je nach Provider | abhängig vom Plan | je Brief-Provider | abhängig |
+| Enrichment | Label-Step | Brief-Provider | Enrichment | Label | Brief | Gesamt pro Lauf |
+|---|---|---|---|---|---|---|
+| Heuristik | aus (`dry_run=true`) | Stub | 0 USD | 0 USD | 0 USD | **0 USD** |
+| Heuristik | Anthropic Haiku | Anthropic Sonnet (Caching) | 0 USD | ~0,01 USD | ~0,18 USD | **~0,19 USD** |
+| Heuristik | Anthropic Haiku | OpenAI (gpt-5) | 0 USD | ~0,01 USD | ~0,40 USD | **~0,41 USD** |
+| DataForSEO | Anthropic Haiku | Anthropic Sonnet | ~0,75 USD | ~0,01 USD | ~0,18 USD | **~0,94 USD** |
+| DataForSEO | Anthropic Haiku | OpenAI | ~0,75 USD | ~0,01 USD | ~0,40 USD | **~1,16 USD** |
+| SEMrush / Ahrefs | Anthropic Haiku | je Brief-Provider | abhängig vom Plan | ~0,01 USD | abhängig | abhängig |
 
-Annahmen: 500 Keywords, 10 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl.
+Annahmen: 500 Keywords, 13 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl. Der Label-Step ist ein einziger Batch-Call und bleibt nahezu konstant (~1 Cent), egal wie viele Cluster entstehen.
 
 ## Skalierung
 

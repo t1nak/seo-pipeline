@@ -38,11 +38,20 @@ Lokal lassen sich dieselben Einstellungen als `PIPELINE_*` Environment-Variable 
 
 ### Was kostet ein Lauf?
 
-Bei der aktuellen Konfiguration (10 Cluster, Anthropic API mit Prompt Caching) rund **0,15 bis 0,25 USD pro Lauf** für die Brief-Generierung. Optionaler DataForSEO Live-Lookup für 500 Keywords: ~0,75 USD. Gesamt **~1 USD pro voller Lauf**, bei wöchentlicher Ausführung etwa 50 USD pro Jahr. Detail in §12 der [Case Study](case-study.md).
+Hängt vom gewählten Modell und Provider ab. Beispielwerte für 13 Cluster, 500 Keywords:
+
+| Konfiguration | Brief | Labels | Enrich | Gesamt |
+|---|---|---|---|---|
+| Anthropic Sonnet 4.6 (Caching) plus Heuristik | ~0,18 bis 0,25 USD | ~0,01 USD | 0 USD | **~0,20 USD** |
+| OpenAI GPT-5 plus Heuristik | ~0,30 bis 0,40 USD | ~0,01 USD | 0 USD | **~0,35 USD** |
+| Anthropic Sonnet plus DataForSEO Live | ~0,18 bis 0,25 USD | ~0,01 USD | ~0,75 USD | **~1,00 USD** |
+| Claude Subscription (Max/Pro) plus Heuristik | 0 USD (im Abo) | ~0,01 USD | 0 USD | **~0,01 USD** |
+
+Bei wöchentlicher Ausführung mit Anthropic API plus Heuristik also ungefähr 10 USD pro Jahr, mit DataForSEO eher 50 USD. Vollständige Tabelle und Annahmen in §12 der [Case Study](case-study.md) und [Architektur](architecture.md#kosten-pro-lauf-je-provider-kombination).
 
 ### Wie viele Cluster werden erkannt?
 
-HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Auf der aktuellen 500-Keyword-Baseline: **10 Cluster plus rund 40 Ausreißer** (~8 Prozent als Rauschen markiert). Hyperparameter-Sweep und Wahl von `mcs=12` aus der Plateau-Klasse in der [Methodik](methodology.md).
+HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Mit dem aktuellen Default `mcs=15, ms=5, leaf` entstehen aus der 500-Keyword-Baseline **13 Cluster plus rund 130 Ausreißer** (~26 Prozent als Rauschen markiert). Die Labels für diese Cluster werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt (siehe [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)), so bekommen auch alternative Hyperparameter-Einstellungen sofort sinnvolle Bezeichnungen. Begründung der Wahl `mcs=15/leaf` in der [Methodik](methodology.md).
 
 ### Was ist lokal, und was wäre in einer produktiven Pipeline anders?
 
@@ -106,7 +115,7 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
 -   :material-map-marker-radius: __Interaktive Cluster Karte__
 
-    10 Themengruppen visuell, mit Klick auf jeden Punkt die Details. Sprache umschaltbar.
+    13 Themengruppen visuell, mit Klick auf jeden Punkt die Details. Sprache umschaltbar.
 
     [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html)
 
@@ -134,7 +143,7 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
     [:octicons-arrow-right-24: Tiefe](methodology.md)
 
--   :material-format-list-bulleted: __10 Cluster Katalog__
+-   :material-format-list-bulleted: __Cluster Katalog__
 
     Pro Cluster: Stats, Top Keywords, Empfehlung, Aufwand, Revenue Hypothese.
 
@@ -155,15 +164,15 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 `500` Keywords (Cap aus 504 Baseline)
 { .annotate }
 
-`10` Cluster plus 40 Ausreißer (8,0 Prozent)
+`13` Cluster plus 130 Ausreißer (26 Prozent)
 
-`213.302` SV pro Monat (geschätzt, ohne Rauschen)
+`192.198` SV pro Monat (geschätzt, ohne Rauschen)
 
-`0,67` Silhouette Score (ohne Rauschen)
+`0,64` Silhouette Score (ohne Rauschen)
 
-`0,57` ARI gegen Ward Hierarchical (k=10)
+`mcs=15/leaf` HDBSCAN-Default
 
-`~25 s` voller Lauf ohne Briefs
+`~30 s` voller Lauf ohne Briefs
 
 </div>
 
@@ -171,15 +180,15 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster | Keywords | SV / Monat | Ø KD | % komm. |
 |---|---|---|---|---|---|
-| 10 | B2B-SaaS Kategorie-Heads | 44 | 47.989 | 49 | 82 |
-| 3 | Kommerzielle Zeit/Software-Heads | 47 | 26.159 | 43 | 94 |
-| 5 | Marke: zvoove Produktnamen | 34 | 23.604 | 51 | 97 |
-| 6 | Operative Anleitungen (gemischt) | 30 | 13.755 | 33 | 23 |
-| 4 | Recruiting & KI-Tools | 34 | 12.075 | 38 | 44 |
+| 9 | HR- und Bewerbermanagementsoftware KMU | 36 | 36.450 | 51 | 86 |
+| 1 | Zeiterfassungs- und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
+| 6 | Digitalisierung in Personaldienstleistung | 33 | 23.592 | 37 | 39 |
+| 3 | Zvoove Produktfeatures und Preise | 33 | 23.508 | 53 | 100 |
+| 4 | Lohnabrechnung und Candidate Sourcing | 28 | 13.668 | 35 | 25 |
 
-Plus der Catch-all Cluster 2 mit 189 Keywords (Branche & Arbeitsrecht), nach Anzahl der größte mit 64.264 SV.
+Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keywords erzeugt, sodass auch alternative Hyperparameter-Einstellungen sofort sprechende Bezeichnungen bekommen ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)).
 
-[Alle 10 Cluster im Detail :octicons-arrow-right-24:](results.md)
+[Alle Cluster im Detail :octicons-arrow-right-24:](results.md)
 
 ## Aktueller Stand der Pipeline
 
@@ -187,9 +196,10 @@ Plus der Catch-all Cluster 2 mit 189 Keywords (Branche & Arbeitsrecht), nach Anz
 |---|---|
 | Discover | Stub. `--source manual` funktioniert, `--source live` ist offen |
 | Enrich | Vollständig. Heuristik plus optional DataForSEO Live Lookup |
-| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, 6 Charts, interaktive Karte |
+| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Profiling |
+| Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
-| Report | Vollständig. Konsolidiertes HTML Dashboard |
+| Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |
 
 ## Schnellstart
 

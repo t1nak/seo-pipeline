@@ -13,10 +13,10 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 ## Was diese Pipeline tut
 
 ```
-Discover  ->  Enrich     ->  Cluster      ->  Brief         ->  Report
-Blog          SV/KD/CPC      HDBSCAN          Claude API        Dashboard
-zvoove.de     Heuristik      Embeddings       pro Cluster       konsolidiert
-              + DataForSEO   + UMAP           ein Brief         alle Schritte
+Discover -> Enrich    -> Cluster    -> Labels       -> Brief        -> Report
+Blog        SV/KD/CPC    HDBSCAN       Anthropic       Claude API      Dashboard
+zvoove.de   Heuristik    Embeddings    Haiku Batch     pro Cluster     konsolidiert
+            DataForSEO   UMAP          DE/EN labels    ein Brief       alle Schritte
 ```
 
 Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/blog), entwickelt daraus bis zu 500 thematisch passende Keywords, gruppiert sie automatisch nach Bedeutung, schreibt für jede Gruppe einen Content Brief und liefert ein interaktives Dashboard mit Empfehlungen.
@@ -34,13 +34,13 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 ## Ergebnisse aus dem aktuellen Lauf
 
-- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 10 thematische Cluster plus rund 40 Ausreißer (~8 Prozent Rauschen)
-- Gesamt Suchvolumen: 213.302 pro Monat (geschätzt, ohne Rauschen)
-- Größter Cluster nach Keyword-Anzahl: Branche & Arbeitsrecht Sammelbecken (189 Keywords, 64.264 SV)
-- Größter Cluster nach SV: B2B-SaaS Kategorie-Heads (47.989 SV / Monat, 44 Keywords)
-- Höchste kommerzielle Dichte: Marke zvoove (97 Prozent kommerziell, 23.604 SV)
-- Methodische Validierung: Silhouette Score ~0,67 auf der 5D UMAP (ohne Rauschen), ~0,59 inklusive Rauschen. ARI gegen die ursprünglichen LLM Cluster bei 0,11, NMI bei 0,32, ARI gegen Ward(k=10) bei 0,57. Details in [`docs/methodology.md`](docs/methodology.md)
-- Vorheriger Lauf ohne Cap (504 Keywords, 13 Cluster) ist als Snapshot pinned unter `output/_archive/2026-04-27_manual/`
+- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 13 thematische Cluster plus rund 130 Ausreißer (~26 Prozent Rauschen) bei `mcs=15, ms=5, leaf`
+- Gesamt Suchvolumen: 192.198 pro Monat (geschätzt, ohne Rauschen)
+- Größter Cluster nach SV: HR- und Bewerbermanagementsoftware KMU (36.450 SV / Monat, 36 Keywords)
+- Höchste kommerzielle Dichte: Zvoove Produktfeatures und Preise (100 Prozent kommerziell, 23.508 SV)
+- Cluster-Labels werden pro Lauf von Anthropic Haiku erzeugt (siehe [`docs/decisions.md`](docs/decisions.md) ADR-5), `data/cluster_labels.yaml` bleibt als Fallback für Demo-Läufe ohne API-Key
+- Methodische Validierung: Silhouette Score ~0,64 auf der 5D UMAP (ohne Rauschen). Details in [`docs/methodology.md`](docs/methodology.md)
+- Frühere Läufe (z.B. `mcs=12/eom` mit 10 Clustern, oder 504 Keywords mit 13 Clustern) sind als Snapshots in `output/_archive/` gepinnt
 
 ## Aktueller Stand
 
@@ -50,9 +50,10 @@ Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der 
 |---|---|
 | Discover | Stub. `--source manual` funktioniert, `--source live` ist offen |
 | Enrich | Vollständig. Heuristik plus optional DataForSEO Live Lookup |
-| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, 6 Charts, interaktive Karte |
+| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Profiling |
+| Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
-| Report | Vollständig. Konsolidiertes HTML Dashboard |
+| Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |
 
 ## Schnellstart
 
@@ -74,8 +75,11 @@ python pipeline.py --step report
 
 # Cluster Sub-Schritte einzeln
 python -m src.cluster --step embed,reduce,cluster,label,profile
-python -m src.cluster --step viz              # nur die interaktive Karte neu bauen
 python -m src.cluster --step sweep            # diagnostischer Hyperparameter Sweep
+
+# LLM-Labels nach dem Cluster-Schritt (braucht ANTHROPIC_API_KEY)
+python -m src.labels_llm                      # Default: claude-haiku-4-5
+python -m src.labels_llm --model claude-sonnet-4-6
 ```
 
 Für echte Content Briefs (sonst Stubs) wird ein Anthropic API Key gebraucht:
@@ -99,28 +103,31 @@ python pipeline.py --step enrich --provider dataforseo
 seo-pipeline/
 ├── README.md              dieses Dokument
 ├── CASE_STUDY.md          ausführliche Schreibarbeit zum Vorgehen
-├── pipeline.py            Orchestrator für alle 5 Skripte
+├── pipeline.py            Orchestrator für die fünf Pipeline-Schritte
 ├── requirements.txt
 ├── data/
 │   ├── keywords.csv             aktueller Stand (überschreibbar durch discover)
-│   └── keywords.manual.csv      kuratierter Baseline Datensatz, bleibt frozen
+│   ├── keywords.manual.csv      kuratierter Baseline Datensatz, bleibt frozen
+│   └── cluster_labels.yaml      Fallback-Labels für Demo-Läufe ohne API-Key
 ├── docs/
 │   ├── methodology.md     warum HDBSCAN, warum UMAP, Parameter Sweep, Validierung
-│   ├── results.md         10 Cluster Katalog mit Revenue Empfehlung
+│   ├── results.md         Cluster Katalog mit Revenue Empfehlung
 │   ├── architecture.md    Pipeline Diagramm, Datenfluss, Integration
+│   ├── developer-guide.md Repo-Struktur, Konfiguration, Erweiterungs-Rezepte
 │   └── decisions.md       Architecture Decision Records, knappe ADRs
 ├── output/
-│   ├── clustering/        Embeddings, UMAP, Charts, interaktive Karte
-│   ├── briefings/         13 Content Briefs als Markdown
-│   ├── reporting/         konsolidiertes Dashboard
+│   ├── clustering/        Embeddings, UMAP, cluster_labels.json, Profiles
+│   ├── briefings/         Content Briefs als Markdown (1 pro Cluster)
+│   ├── reporting/         konsolidiertes Dashboard, Charts, Cluster-Map
 │   └── _archive/          gepinnte Snapshots vergangener Läufe
 ├── src/
 │   ├── discover.py        Blog -> Seed Keywords (STUB)
 │   ├── enrich.py          SV / KD / CPC / Priority
-│   ├── cluster.py         Pipeline (clean, embed, UMAP, HDBSCAN, label, profile, charts, viz)
+│   ├── cluster.py         Pipeline (clean, embed, UMAP, HDBSCAN, label-Stub, profile)
 │   ├── cluster_viz.py     interaktive bilinguale Plotly Karte
+│   ├── labels_llm.py      DE/EN Cluster-Labels per Anthropic Haiku Batch-Call
 │   ├── brief.py           Content Briefs via Claude API
-│   └── report.py          konsolidiertes Reporting
+│   └── report.py          konsolidiertes Reporting, Charts, Cluster-Map
 └── tests/
 ```
 

@@ -124,6 +124,8 @@ Pro Keyword werden Suchvolumen, Keyword Difficulty, Cost-per-Click, SERP Feature
 - Die Werte sind in einer plausiblen Größenordnung, also reichen sie zum Cluster Profiling und zur Brief Erzeugung.
 - Die Spalte `data_source` markiert jedes Keyword als `estimated`, also ist immer sichtbar, was geschätzt und was live ist.
 
+Die manuelle Keyword-Liste in `data/keywords.manual.csv` wurde vor dem Lauf einmalig per LLM (Claude) auf Plausibilität geprüft (Schreibweise, Intent-Zuordnung, offensichtliche Dubletten). Die Heuristik wird damit auf einer bereinigten Eingabe gestartet. In Produktion ersetzt der DataForSEO- oder SEMrush-Provider sowohl die Heuristik als auch diesen Vorab-Check.
+
 ### DataForSEO (Live)
 
 `enrich.py --provider dataforseo` ruft die DataForSEO Labs API mit `language_code=de` und `location_code=2276` (Deutschland) auf. Die KD wird aus `competition_index` (0 bis 100) abgeleitet, was nahe genug an den Ahrefs / Semrush Definitionen ist, um Priorisierung zu erlauben. SERP Features brauchen einen separaten Endpoint, den ich aus Kosten Gründen nicht aktiviert habe, das ist ein leichter TODO.

@@ -51,7 +51,7 @@ Bei wöchentlicher Ausführung mit Anthropic API plus Heuristik also ungefähr 1
 
 ### Wie viele Cluster werden erkannt?
 
-HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Mit dem aktuellen Default `mcs=15, ms=5, leaf` entstehen aus der 500-Keyword-Baseline **13 Cluster plus rund 130 Ausreißer** (~26 Prozent als Rauschen markiert). Die Labels für diese Cluster werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt (siehe [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)), so bekommen auch alternative Hyperparameter-Einstellungen sofort sinnvolle Bezeichnungen. Begründung der Wahl `mcs=15/leaf` in der [Methodik](methodology.md).
+HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Mit dem aktuellen Default `mcs=10, ms=5, eom` entstehen aus der 500-Keyword-Baseline **13 Cluster, alle 500 Keywords sind zugeordnet**. HDBSCAN markiert zunächst 72 Rand-Keywords als Noise (14 Prozent), die anschließend per Soft-Assignment ihrem nächsten Cluster-Centroid zugeordnet werden ([ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) — Endzustand: 0 Outlier. Die Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Begründung der Wahl `mcs=10/eom` in der [Methodik](methodology.md).
 
 ### Was ist lokal, und was wäre in einer produktiven Pipeline anders?
 
@@ -164,13 +164,13 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 `500` Keywords (Cap aus 504 Baseline)
 { .annotate }
 
-`13` Cluster plus 130 Ausreißer (26 Prozent)
+`13` Cluster, **0 Outlier**
 
-`192.198` SV pro Monat (geschätzt, ohne Rauschen)
+`239.976` SV pro Monat (geschätzt)
 
-`0,64` Silhouette Score (ohne Rauschen)
+`0,65` Silhouette HDBSCAN-Kern
 
-`mcs=15/leaf` HDBSCAN-Default
+`mcs=10/eom` plus Soft-Assignment
 
 `~30 s` voller Lauf ohne Briefs
 
@@ -180,13 +180,13 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster | Keywords | SV / Monat | Ø KD | % komm. |
 |---|---|---|---|---|---|
-| 9 | HR- und Bewerbermanagementsoftware KMU | 36 | 36.450 | 51 | 86 |
-| 1 | Zeiterfassungs- und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
-| 6 | Digitalisierung in Personaldienstleistung | 33 | 23.592 | 37 | 39 |
-| 3 | Zvoove Produktfeatures und Preise | 33 | 23.508 | 53 | 100 |
-| 4 | Lohnabrechnung und Candidate Sourcing | 28 | 13.668 | 35 | 25 |
+| 10 | HR Software Dokumenten- und Mitarbeiterverwaltung | 45 | 45.567 | 52 | 89 |
+| 12 | Sammelthemen Zeitarbeit Software und Finanzierung | 97 | 28.301 | 36 | 34 |
+| 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
+| 7 | Digitalisierung Personaldienstleistung und KI | 37 | 23.984 | 36 | 35 |
+| 3 | Zvoove Produkte und Features | 34 | 23.604 | 52 | 97 |
 
-Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keywords erzeugt, sodass auch alternative Hyperparameter-Einstellungen sofort sprechende Bezeichnungen bekommen ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)).
+HDBSCAN findet 13 Cluster aus den Daten heraus (`mcs=10, eom`). 72 Rand-Keywords werden per Soft-Assignment ihrem nächsten Cluster-Centroid zugeordnet ([ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) — alle 500 Keywords haben einen Pillar. Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Zwei Cluster sind vom LLM transparent als „Sammelthemen" markiert und benötigen Sub-Clustering vor redaktioneller Bearbeitung.
 
 [Alle Cluster im Detail :octicons-arrow-right-24:](results.md)
 
@@ -196,7 +196,7 @@ Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keyw
 |---|---|
 | Discover | Stub. `--source manual` funktioniert, `--source live` ist offen |
 | Enrich | Vollständig. Heuristik plus optional DataForSEO Live Lookup |
-| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Profiling |
+| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Soft-Assignment, Profiling |
 | Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
 | Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |

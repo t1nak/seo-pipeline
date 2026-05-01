@@ -13,10 +13,11 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 ## Was diese Pipeline tut
 
 ```
-Discover -> Enrich    -> Cluster    -> Labels       -> Brief        -> Report
-Blog        SV/KD/CPC    HDBSCAN       Anthropic       Claude API      Dashboard
-zvoove.de   Heuristik    Embeddings    Haiku Batch     pro Cluster     konsolidiert
-            DataForSEO   UMAP          DE/EN labels    ein Brief       alle Schritte
+Discover -> Enrich    -> Cluster        -> Labels       -> Brief       -> Report
+Blog        SV/KD/CPC    HDBSCAN +         Anthropic       Claude API     Dashboard
+zvoove.de   Heuristik    Soft-Assign       Haiku Batch     pro Cluster    konsolidiert
+            DataForSEO   alle 500 in 13    DE/EN labels    ein Brief      alle Schritte
+                         Cluster, 0 out
 ```
 
 Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/blog), entwickelt daraus bis zu 500 thematisch passende Keywords, gruppiert sie automatisch nach Bedeutung, schreibt für jede Gruppe einen Content Brief und liefert ein interaktives Dashboard mit Empfehlungen.
@@ -34,13 +35,13 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 ## Ergebnisse aus dem aktuellen Lauf
 
-- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 13 thematische Cluster plus rund 130 Ausreißer (~26 Prozent Rauschen) bei `mcs=15, ms=5, leaf`
-- Gesamt Suchvolumen: 192.198 pro Monat (geschätzt, ohne Rauschen)
-- Größter Cluster nach SV: HR- und Bewerbermanagementsoftware KMU (36.450 SV / Monat, 36 Keywords)
-- Höchste kommerzielle Dichte: Zvoove Produktfeatures und Preise (100 Prozent kommerziell, 23.508 SV)
+- 500 Keywords (Cap aus 504 manuellem Baseline-Set), 13 thematische Cluster, **0 Outlier** bei `mcs=10, ms=5, eom` plus Soft-Assignment der HDBSCAN-Rand-Keywords ([ADR-15](docs/decisions.md))
+- Gesamt Suchvolumen: 239.976 pro Monat (geschätzt, alle Cluster zusammen)
+- Größter Cluster nach SV: HR Software Dokumenten- und Mitarbeiterverwaltung (45.567 SV / Monat, 45 Keywords)
+- Höchste kommerzielle Dichte: Zvoove Produkte und Features (97 Prozent kommerziell, 23.604 SV)
 - Cluster-Labels werden pro Lauf von Anthropic Haiku erzeugt (siehe [`docs/decisions.md`](docs/decisions.md) ADR-5), `data/cluster_labels.yaml` bleibt als Fallback für Demo-Läufe ohne API-Key
-- Methodische Validierung: Silhouette Score ~0,64 auf der 5D UMAP (ohne Rauschen). Details in [`docs/methodology.md`](docs/methodology.md)
-- Frühere Läufe (z.B. `mcs=12/eom` mit 10 Clustern, oder 504 Keywords mit 13 Clustern) sind als Snapshots in `output/_archive/` gepinnt
+- Methodische Validierung: Silhouette 0,647 auf den 428 HDBSCAN-Kern-Keywords, 0,570 inklusive der 72 Soft-Assignments. ARI gegen Ward(k=10): 0,811. Details in [`docs/methodology.md`](docs/methodology.md)
+- Frühere Läufe (z.B. `mcs=15/leaf` mit 130 Outliern oder `mcs=12/eom` mit 188-Sammelcluster) sind als Snapshots in `output/_archive/` gepinnt
 
 ## Aktueller Stand
 
@@ -50,7 +51,7 @@ Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der 
 |---|---|
 | Discover | Stub. `--source manual` funktioniert, `--source live` ist offen |
 | Enrich | Vollständig. Heuristik plus optional DataForSEO Live Lookup |
-| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Profiling |
+| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Soft-Assignment, Profiling |
 | Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
 | Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |

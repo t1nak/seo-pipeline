@@ -40,12 +40,13 @@ Entry-Point Optionen (austauschbar):
                    ▼            ▼           ▼             ▼          ▼
               keywords.csv  profiles.csv cluster_      briefings/ reporting/
               SV · KD · CPC labeled.csv  labels.json   *.md       runs/<id>/
-              priority                   (DE/EN)                  + index.html
+              priority      (incl. soft- (DE/EN)                  + index.html
+                            assignment)
 ```
 
 Der **Entry Point** ist über die Konfiguration austauschbar. Im Demo-Lauf liest `discover` eine LLM-erzeugte Liste aus `keywords.manual.csv`. Produktiv kann derselbe Schritt einen Semrush- oder Ahrefs-Export laden, eine DataForSEO-Abfrage absetzen oder den zvoove-Blog scrapen. Die nachfolgenden Schritte sind quellunabhängig.
 
-Sechs Schritte, jeder einzeln re-runnbar via `python pipeline.py --step <name>` bzw. `python -m src.labels_llm` für den Label-Schritt. Der `cluster`-Schritt enthält die internen Teilschritte (clean, embed, reduce, cluster, label, profile). `labels_llm` läuft danach als eigener Schritt und ersetzt die generischen Labels durch DE/EN-Labels aus einem Anthropic-Batch-Call (siehe [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Der `report`-Schritt erzeugt Charts, Cluster-Map und Dashboard und akzeptiert `--source <label>` und `--run-id <id>`, damit Läufe mit unterschiedlichen Entry Points im Reporting-Index nebeneinander sichtbar sind.
+Sechs Schritte, jeder einzeln re-runnbar via `python pipeline.py --step <name>` bzw. `python -m src.labels_llm` für den Label-Schritt. Der `cluster`-Schritt enthält die internen Teilschritte clean → embed → reduce → cluster → assign_noise → label → profile. `assign_noise` ordnet jedes HDBSCAN-Noise-Keyword seinem nächsten Cluster-Centroid im 5D-UMAP-Raum zu (siehe [ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) und markiert die Zuordnung in `noise_assigned: bool`. `labels_llm` ersetzt die generischen Labels durch DE/EN-Labels aus einem Anthropic-Batch-Call ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Der `report`-Schritt erzeugt Charts, Cluster-Map und Dashboard.
 
 ## 2. Embeddings: warum [`paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2)
 
@@ -110,18 +111,18 @@ HDBSCAN ist hier die beste Wahl, weil:
 
 - **Keine Vorab-Anzahl.** Bei 500 Keywords zu raten, ob es 8 oder 10 oder 20 Cluster gibt, wäre eine implizite Annahme, die das Ergebnis verzerrt.
 - **Variable Dichte.** Manche Themen sind eng (zvoove Marke: 32 Begriffe, alle teilen Wortteile), manche breit (Branche und Betrieb: 82 Begriffe, lose verbunden). Ein globaler `eps` wie bei DBSCAN würde entweder die engen Cluster überfeuern oder die breiten verlieren.
-- **Echte Ausreißer.** 130 Keywords (ca. 26 Prozent) gehören zu keinem dichten Cluster. Das sind Begriffe wie `fachkräftemangel deutschland`, ein Top-Funnel Begriff ohne klare Nachbarn. k-means würde sie zwanghaft einem Cluster zuordnen und damit dessen Profil verwässern. Die Rauschrate ist beim aktuellen Default `leaf` höher als bei `eom` und ist eine bewusste Entscheidung für Brief-Granularität, siehe Abschnitt 5.
+- **Echte Ausreißer.** Mit dem aktuellen Default `mcs=10, eom` markiert HDBSCAN 72 Keywords (14 Prozent) als Noise. Das sind Begriffe wie `fachkräftemangel deutschland`, ein Top-Funnel-Begriff ohne klare Nachbarn. k-means würde sie zwanghaft einem Cluster zuordnen und damit dessen Profil verwässern. Operativ wollen wir aber jedes Keyword in einem Pillar haben — das löst der Soft-Assignment-Schritt (Abschnitt 5).
 
 ### Parameter Wahl
 
 ```python
-HDBSCAN(min_cluster_size=15, min_samples=5,
-        cluster_selection_method="leaf", metric="euclidean")
+HDBSCAN(min_cluster_size=10, min_samples=5,
+        cluster_selection_method="eom", metric="euclidean")
 ```
 
-- `min_cluster_size=15`: ein Cluster braucht mindestens 15 Punkte. Niedrigere Werte produzieren mehr Mikro-Cluster, höhere Werte verschmelzen Themen.
+- `min_cluster_size=10`: ein Cluster braucht mindestens 10 Punkte. Niedrigere Werte produzieren mehr Mikro-Cluster, höhere Werte verschmelzen Themen.
 - `min_samples=5`: ein Punkt gilt als Kern-Punkt, wenn mindestens 5 Nachbarn in seinem Radius sind. Höhere Werte machen die Dichte-Schätzung konservativer.
-- `cluster_selection_method="leaf"`: schneidet den HDBSCAN-Hierarchiebaum auf Blatt-Ebene. Die Alternative `eom` (Excess of Mass) wählt die persistenteste Ebene und bevorzugt damit wenige stabile Cluster. `leaf` liefert hier feinere Aufteilungen, was für Content-Briefs handlungsfähiger ist (siehe Abschnitt 5).
+- `cluster_selection_method="eom"`: Excess of Mass — wählt die persistenteste Ebene des HDBSCAN-Hierarchiebaums und liefert damit stabile, dichte Cluster. Die Alternative `leaf` schneidet auf Blatt-Ebene und liefert feinere Aufteilungen, hat aber bei dieser Datenbasis eine Rauschrate von 26 Prozent. `eom` mit `mcs=10` produziert bei vergleichbarer Cluster-Anzahl (13 vs. 13) deutlich weniger Noise (14 Prozent statt 26), siehe Abschnitt 5.
 - `metric="euclidean"`: passt zu normalisierten Embeddings nach UMAP.
 
 ## 5. Hyperparameter Sweep: die volle Tabelle
@@ -140,7 +141,7 @@ Die HDBSCAN Parameter wurden nicht geraten, sondern gemessen. Reproduzierbar mit
    8    5   leaf     18    144   28.8%   0.653
   10    1    eom     14     58   11.6%   0.603
   10    1   leaf     19    102   20.4%   0.566
-  10    5    eom     13     72   14.4%   0.647
+  10    5    eom     13     72   14.4%   0.647  <-- gewählt
   10    5   leaf     14    120   24.0%   0.663
   12    1    eom     12     78   15.6%   0.620
   12    1   leaf     15    129   25.8%   0.625
@@ -149,7 +150,7 @@ Die HDBSCAN Parameter wurden nicht geraten, sondern gemessen. Reproduzierbar mit
   15    1    eom     12     78   15.6%   0.620
   15    1   leaf     14    115   23.0%   0.625
   15    5    eom      7     12    2.4%   0.593
-  15    5   leaf     13    130   26.0%   0.668  <-- gewählt
+  15    5   leaf     13    130   26.0%   0.668
   20    1    eom      8     41    8.2%   0.613
   20    1   leaf     10    114   22.8%   0.576
   20    5    eom      6     27    5.4%   0.582
@@ -158,25 +159,38 @@ Die HDBSCAN Parameter wurden nicht geraten, sondern gemessen. Reproduzierbar mit
 
 ### Wie der zentrale Parameter gewählt wurde
 
-Die Wahl fällt auf **`mcs=15, ms=5, leaf`**: 13 Cluster, 130 Noise-Punkte (26 Prozent), Silhouette 0,668. Die Begründung folgt aus drei Beobachtungen.
+Die Wahl fällt auf **`mcs=10, ms=5, eom`**: 13 Cluster, 72 Noise-Punkte (14 Prozent), Silhouette 0,647. Diese 72 Noise-Keywords werden anschließend per Soft-Assignment ihrem nächsten Cluster zugeordnet (siehe Abschnitt 5.1). Endzustand: 13 Cluster, 500 Keywords, 0 Outlier. Die Begründung folgt aus vier Beobachtungen.
 
-**1. Granularität schlägt Stabilität, wenn jeder Cluster ein Content-Brief wird.** Die `eom`-Spalte mit ms=5 produziert auf den aktuellen Daten zwar wenige stabile Cluster (10 bei mcs=12, 7 bei mcs=15), aber dabei entsteht ein Sammelcluster, der mehrere Sub-Themen vermischt (AÜG, Equal Pay, Höchstüberlassungsdauer, Debitorenmanagement). Ein einziger Brief darüber wäre zu breit, um redaktionell handlungsfähig zu sein. `leaf` bricht diesen Sammelcluster in feinere Sub-Themen auf, sodass ein Brief pro Cluster sinnvoll bleibt.
+**1. Granularität schlägt Konsolidierung, wenn jeder Cluster ein Content-Brief wird.** Die `eom`-Spalte mit `mcs=12` würde nur 10 Cluster liefern, dabei entsteht aber ein Sammelcluster mit 188 Keywords, der AÜG, Equal Pay, Höchstüberlassungsdauer und Debitorenmanagement vermischt. Ein einziger Brief darüber wäre redaktionell unbearbeitbar. `mcs=10` bricht diese Themen in vier separate Cluster (Cluster 5: Markt und Regulierung, Cluster 8: Liquidität und Equal Pay, Cluster 11: AÜG-Recht, Cluster 12: Sammelthemen Software/Finanzierung), von denen drei klar als Pillar-Themen taugen.
 
-**2. mcs=15 ist die robuste `leaf`-Position.** Die `leaf`-Spalte mit ms=5 zeigt eine klare Tendenz: kleine mcs erzeugen viele kleine Cluster mit hohem Noise (mcs=5: 32 Cluster, 36 Prozent Noise), große mcs kollabieren auf wenige (mcs=20: 10 Cluster). `mcs=12, ms=5, leaf` und `mcs=15, ms=5, leaf` liefern auf der aktuellen Datenbasis dasselbe Ergebnis (13 Cluster, 130 Noise, Silhouette 0,668). `mcs=15` ist als Default gewählt, weil es bei einem leicht veränderten Datensatz robuster gegen das Aufsplitten in Mikro-Cluster ist.
+**2. `eom` schlägt `leaf` bei der Rauschrate.** Auf der aktuellen Datenbasis liefern beide Methoden bei `mcs=10` bzw. `mcs=15` jeweils 13 Cluster. Der Unterschied: `eom` mit `mcs=10` produziert 14 Prozent Noise (72 Keywords), `leaf` mit `mcs=15` 26 Prozent (130 Keywords). 58 zusätzliche Keywords als Outlier zu markieren — darunter hochvolumige wie `dokumentenmanagement software` (5.000 SV) — ist operativ nicht tragbar. `eom` ist hier die robustere Wahl.
 
-**3. Noise als bewusste Designentscheidung.** Mit 26 Prozent Noise rauschen 130 von 500 Keywords aus den finalen Clustern raus. Das klingt nach Verlust, ist aber methodisch gewollt: HDBSCAN markiert Punkte als Noise (Cluster-Label `-1`), wenn sie keinem Cluster zuverlässig zugeordnet werden können. Diese Keywords ins nächste Cluster zu zwingen, würde die Cluster-Schärfe verwässern. Im Reporting werden Noise-Keywords als „Ausreißer" sichtbar gemacht, nicht versteckt, und können als Hinweis auf Themen dienen, die noch nicht genug Volumen für einen eigenen Cluster haben.
+**3. Soft-Assignment als zweiter Schritt schließt die Lücke ohne Cluster-Distortion.** Anstatt die HDBSCAN-Parameter so weit zu drehen, bis kein Noise mehr entsteht (was die Cluster-Reinheit zerstören würde), wird ein zusätzlicher Schritt nachgelagert: jedes Noise-Keyword wird seinem nächsten Cluster-Centroid zugeordnet. Bei `mcs=10, eom` sind das nur 72 Punkte, die sich gleichmäßig über die Cluster verteilen — keine neuen Sammelcluster entstehen. Bei `mcs=15, leaf` mit 130 Noise hätte ein einzelner Cluster 43 Keywords absorbiert, was operativ nicht akzeptabel war.
 
-**Tradeoff bewusst gewählt.** Die Alternative `mcs=12, ms=5, eom` mit 10 Clustern und 8 Prozent Noise hat eine niedrigere Silhouette (0,660 vs 0,668), aber deutlich weniger Rauschen. Wer einen Forschungs-Report mit möglichst hoher Abdeckung braucht, sollte sie nehmen. Wer Content-Briefs pro Cluster produziert, gewinnt mit `leaf` drei zusätzliche Themen-Differenzierungen, die direkt in drei zusätzliche Briefs übersetzt werden können.
+**4. Validierung über Silhouette und Ward-Vergleich.** HDBSCAN mit `mcs=10, eom` erreicht eine Silhouette von 0,647 auf den 428 HDBSCAN-Kern-Keywords (vor Soft-Assignment). Ward Hierarchical bei k=12 erreicht 0,590. Der ARI zwischen beiden Methoden ist 0,811 — sehr hohe Übereinstimmung. Beide unabhängige Verfahren finden ähnliche Strukturen, das stärkt das Vertrauen in die Cluster-Grenzen.
 
-Die Wahl ist über `cluster_hdbscan_mcs` (Default 15) und `cluster_hdbscan_method` (Default leaf) bzw. die Environment-Variablen `PIPELINE_CLUSTER_HDBSCAN_MCS` / `PIPELINE_CLUSTER_HDBSCAN_METHOD` veränderbar, ohne Code-Änderung.
+Die Wahl ist über `cluster_hdbscan_mcs` (Default 10), `cluster_hdbscan_method` (Default eom) bzw. die Environment-Variablen `PIPELINE_CLUSTER_HDBSCAN_MCS` / `PIPELINE_CLUSTER_HDBSCAN_METHOD` veränderbar, ohne Code-Änderung.
 
 ### Was nicht ausgewählt wurde und warum
 
-- **mcs=12, ms=5, eom (10 Cluster, 8 Prozent Noise, sil 0,660).** Hohe Abdeckung, niedriges Rauschen. Verworfen, weil ein einziger Sammelcluster mehrere Sub-Themen mischt und die Briefe dadurch zu breit werden.
-- **mcs=15, ms=5, eom (7 Cluster, 2,4 Prozent Noise).** Sehr saubere Cluster-Grenzen, aber 7 Cluster sind zu wenig für eine Content-Strategie auf 500 Keywords.
-- **mcs=20, ms=5, leaf (10 Cluster, 22 Prozent Noise).** Weniger Cluster und ähnlicher Noise wie der gewählte Punkt. Verliert eine sinnvolle Themen-Differenzierung im Vergleich.
-- **mcs=5, ms=5, eom (25 Cluster, sil 0,623).** Sehr feines Clustering, aber 25 Cluster sind operativ zu viel: zu wenig Differenzierung zwischen benachbarten Sub-Themen.
-- **mcs=10/15, ms=1, eom (12 Cluster, 16 Prozent Noise).** Plausibler Kompromiss, aber `min_samples=1` ist sehr aggressiv und die Cluster-Grenzen sind weniger robust als mit ms=5.
+- **mcs=12, ms=5, eom (10 Cluster, 8 Prozent Noise, sil 0,660).** Statistisch die sauberste Variante. Verworfen, weil der größte Cluster mit 188 Keywords AÜG, Equal Pay, Debitorenmanagement und Höchstüberlassungsdauer mischt — vier eigenständige Pillar-Themen in einem Bucket, redaktionell unbearbeitbar.
+- **mcs=15, ms=5, leaf (13 Cluster, 26 Prozent Noise, sil 0,668).** Höchste Silhouette und gleiche Cluster-Anzahl wie der gewählte Punkt. Verworfen wegen 130 Noise-Keywords — darunter hochvolumige wie `dokumentenmanagement software` (5.000 SV), die in einem Content-Plan nicht ungeparkt sein dürfen.
+- **mcs=15, ms=5, eom (7 Cluster, 2,4 Prozent Noise).** Sehr saubere Cluster-Grenzen, aber 7 Cluster sind zu wenig für eine differenzierte Content-Strategie auf 500 Keywords.
+- **mcs=5, ms=5, eom (25 Cluster, 12 Prozent Noise, sil 0,623).** Sehr feines Clustering, aber 25 Cluster sind operativ zu viel: zu wenig Differenzierung zwischen benachbarten Sub-Themen, zu hoher Brief-Aufwand pro Lauf.
+- **Ward Hierarchical (k=13).** Würde alle 500 Keywords zwanghaft zuordnen ohne separate Noise-Klasse. Verworfen, weil HDBSCANs Silhouette deutlich höher ist (0,647 vs 0,590) und HDBSCAN datengetriebene Cluster-Anzahl liefert statt einer geratenen `k`.
+
+### 5.1 Soft-Assignment der Noise-Keywords
+
+HDBSCAN-Default (`assign_noise=True` im Pipeline-Schritt) ordnet jedes als Noise markierte Keyword nachträglich seinem nächsten Cluster-Centroid im 5D-UMAP-Raum zu. Mathematisch: für jeden Noise-Punkt `p` und Cluster-Centroid `c_i` (gemittelt über alle Kern-Keywords des Clusters) wird `argmin_i ||p - c_i||_2` berechnet und `p` dem Argmin-Cluster zugewiesen. Die ursprüngliche Noise-Eigenschaft bleibt in der Spalte `noise_assigned: bool` erhalten, sodass Reporting und Cluster-Map die Rand-Keywords optional anders darstellen können.
+
+**Verteilung der 72 Soft-Assignments im aktuellen Lauf:**
+`c3+1, c4+4, c5+10, c6+14, c7+4, c8+19, c9+1, c10+9, c11+6, c12+4`
+
+Der größte Empfänger (Cluster 8 mit +19 Keywords, +56 Prozent zur ursprünglichen Größe) absorbiert die Equal-Pay/Liquiditäts-Rand-Keywords, was thematisch zur Cluster-Identität passt. Cluster 12 (Sammelthemen) bekommt nur +4 — die Soft-Assignment macht ihn nicht „noch heterogener". Insgesamt verteilen sich die 72 Punkte gleichmäßig genug, um keine neuen Sammelcluster zu erzeugen.
+
+**Auswirkung auf die Silhouette.** Die Silhouette auf den 428 HDBSCAN-Kern-Keywords beträgt 0,647. Inklusive der 72 Soft-Assigned-Keywords sinkt sie auf 0,570 — erwartet, weil Rand-Keywords per Definition näher an einer Cluster-Grenze liegen. Beide Werte sind in der Validierungs-Sektion dokumentiert.
+
+**Methodisch standardkonform.** Soft-Assignment ist die Standardlösung für Density-basierte Algorithmen mit operativer Vollabdeckung. `hdbscan` selbst bietet `approximate_predict()` und `all_points_membership_vectors()` als ähnliche Mechanismen. Hier ist es bewusst als einfache Centroid-Distance implementiert (`src/cluster.py:step_assign_noise`), damit das Verfahren in 30 Zeilen Code transparent nachvollziehbar bleibt.
 
 ## 6. Validierung
 
@@ -188,12 +202,11 @@ Der Silhouette Score misst pro Punkt, wie gut er in seinem eigenen Cluster sitzt
 
 | Setup | Silhouette |
 |---|---|
-| HDBSCAN ohne Rauschen | 0,668 |
-| HDBSCAN inklusive Rauschen | ~0,55 |
+| HDBSCAN-Kern (428 Keywords, vor Soft-Assignment) | 0,647 |
+| Alle 500 (nach Soft-Assignment) | 0,570 |
+| Ward Hierarchical k=12 (Vergleich) | 0,590 |
 
-0,668 ist für reale Textdaten sehr gut. Werte über 0,5 gelten als belastbare Cluster-Trennung. Cross-Platform (lokal macOS gegen Ubuntu-CI) variiert der Silhouette-Score um wenige Hundertstel wegen unterschiedlicher BLAS-Implementierungen.
-
-Der Unterschied zwischen beiden Werten ist informativ: wenn das Rauschen tatsächlich Rauschen ist (Punkte, die wirklich keinem Cluster zugehören), drückt es den Silhouette Score, weil es als Pseudo-Cluster mitgemessen wird.
+0,647 ist für reale Textdaten sehr gut. Werte über 0,5 gelten als belastbare Cluster-Trennung. Der Drop auf 0,570 nach Soft-Assignment ist erwartet: die 72 Rand-Keywords liegen per Definition näher an einer Cluster-Grenze, ihre Silhouette ist niedriger als die der Kern-Keywords. Cross-Platform (lokal macOS gegen Ubuntu-CI) variiert der Score um wenige Hundertstel wegen unterschiedlicher BLAS-Implementierungen.
 
 ### 6.2 ARI und NMI gegen die LLM Cluster
 
@@ -201,7 +214,7 @@ ARI (Adjusted Rand Index) und NMI (Normalized Mutual Information) messen beide, 
 
 | Vergleich | ARI | NMI |
 |---|---|---|
-| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,193 | 0,372 |
+| HDBSCAN gegen LLM Cluster (HDBSCAN-Kern, vor Soft-Assignment) | 0,143 | 0,342 |
 
 Diese Werte sind nicht hoch, und das ist methodisch interessant. HDBSCAN findet andere Cluster-Grenzen als die LLM-Definition. Beide sind gültige Sichten:
 
@@ -222,17 +235,19 @@ Als zweite unabhängige Methode rechne ich [Ward Hierarchical Clustering](https:
 | 10 | 0,562 |
 | 12 | 0,590 |
 
-Ward erreicht 0,590 bei k=12, HDBSCAN liegt bei 0,668. HDBSCAN ist klar besser. Der wichtigere Vorteil von HDBSCAN ist die Rauschen-Klasse: Ward muss alle 500 Keywords einem Cluster zuordnen, auch die 130 Ausreißer.
+Ward erreicht 0,590 bei k=12, HDBSCAN liegt auf den Kern-Punkten bei 0,647. HDBSCAN ist klar besser. Der wichtigere Vorteil von HDBSCAN: das Verfahren findet datengetrieben 13 Cluster ohne Vorgabe-`k` und markiert Rand-Keywords explizit als Noise, die wir dann kontrolliert per Soft-Assignment integrieren.
 
-ARI HDBSCAN gegen Ward(k=10) auf den Nicht-Rauschen-Punkten: 0,786. Beide Methoden stimmen auf einer großen Mehrheit der Cluster-Zuordnungen überein. Die methodische Aussage: zwei unabhängige Verfahren finden ähnliche Cluster-Grenzen, das stärkt das Vertrauen in die zugrunde liegende Struktur.
+ARI HDBSCAN gegen Ward(k=10) auf den HDBSCAN-Kern-Keywords: 0,859. Inklusive Soft-Assignment auf alle 500: 0,811. In beiden Fällen sehr hohe Übereinstimmung — zwei mathematisch unabhängige Verfahren finden im Wesentlichen dieselbe Struktur, das stärkt das Vertrauen in die Cluster-Grenzen.
 
 ### 6.4 Manuelle Spot Checks
 
-Pro Cluster wurden die Top 10 Keywords gelesen und gegen das vergebene Label gegengeprüft (Cluster-IDs 0 bis 12).
+Pro Cluster wurden die Top 10 Keywords gelesen und gegen das LLM-generierte Label gegengeprüft (Cluster-IDs 0 bis 12).
 
-- **11 von 13 Clustern sind eindeutig sauber.** Beispiel Cluster 0 (Factoring Geschäftsmodelle und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`. Klar ein einziges Thema. Beispiel Cluster 1 (Zeiterfassungs- und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`, `roi zeitarbeit software`. Klar Bottom-Funnel-Software-Begriffe.
-- **Cluster 4 (Lohnabrechnung und Candidate Sourcing) ist heterogen.** Enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`. Mehrere Sub-Themen (Compliance, Recruiting, Lohn). HDBSCAN hat hier keine ausreichende Dichte gefunden, um sie zu trennen — empfohlene Bearbeitung: Top-Keywords einzeln statt Pillar.
-- **Cluster 12 (Zeitarbeit Branchentrends und Einsatzplanung) hat einen breiten thematischen Bogen.** Mischt Trend-Themen mit operativen Begriffen. Brauchbar für Thought-Leadership-Inhalte, aber kein klarer Pillar-Kandidat ohne Sub-Editorial.
+- **11 von 13 Clustern sind eindeutig sauber.** Beispiel Cluster 0 (Factoring Buchhaltung und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`. Klar ein einziges Thema. Beispiel Cluster 1 (Zeiterfassung und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`, `roi zeitarbeit software`. Klar Bottom-Funnel-Software-Begriffe.
+- **Cluster 4 (Sammelthemen Lohnabrechnung und Recruiting) ist vom LLM transparent als „Sammelthemen" markiert.** Enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `offboarding prozess` — drei Sub-Themen (Compliance, Recruiting, Lohn). HDBSCAN hat hier keine ausreichende Dichte gefunden, um sie zu trennen — empfohlene Bearbeitung: Top-Keywords einzeln statt Pillar.
+- **Cluster 12 (Sammelthemen Zeitarbeit Software und Finanzierung) ist mit 97 Keywords der größte Cluster.** Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn und Branchen-Trends. Vom LLM transparent als „Sammelthemen" gelabelt. Empfohlen: Sub-Clustering vor Bearbeitung (zweiter HDBSCAN-Lauf nur auf diesem Cluster), siehe `src/subcluster.py`.
+
+Beide markierten Sammel-Cluster bleiben sichtbar als solche, statt durch andere Hyperparameter künstlich aufgespalten zu werden — das wäre eine Verschleierung der zugrunde liegenden Datendichte.
 
 Der manuelle Check ist subjektiv, aber notwendig, weil quantitative Maße wie Silhouette nicht alles erfassen. Hohe Silhouette-Werte können durch breite Cluster mit niedriger interner Kohäsion entstehen.
 
@@ -256,7 +271,7 @@ pip install -r requirements.txt
 python -m src.cluster --step all
 ```
 
-Erwartetes Ergebnis: 13 Cluster, Silhouette ~0,67, ~26 Prozent Noise.
+Erwartetes Ergebnis: 13 Cluster, Silhouette ~0,65 auf den HDBSCAN-Kern-Keywords, 14 Prozent Pre-Assignment-Noise → 0 Prozent Outlier nach Soft-Assignment.
 
 ## 8. Bekannte Schwächen
 

@@ -14,7 +14,7 @@
 
 **Konsequenzen.**
 
-- Pro: Cluster-Anzahl folgt aus den Daten. Mit dem aktuellen Default `mcs=15, ms=5, leaf` entstehen 13 Cluster plus rund 130 Rausch-Punkte. Mit `mcs=15, ms=5, eom` waren es 10 plus ~40. Die genaue Hyperparameter-Wahl und die Abweichungen zwischen Plattformen (BLAS-Implementierung) sind in [`methodology.md`](methodology.md) begründet.
+- Pro: Cluster-Anzahl folgt aus den Daten. Mit dem aktuellen Default `mcs=10, ms=5, eom` entstehen 13 Cluster plus 72 Rand-Keywords (14 Prozent). Diese 72 werden anschließend per Soft-Assignment (siehe [ADR-15](#adr-15-soft-assignment-fur-noise-keywords)) ihrem nächsten Cluster zugeordnet — Endzustand: 13 Cluster, 0 Outlier. Die genaue Hyperparameter-Wahl und die Abweichungen zwischen Plattformen (BLAS-Implementierung) sind in [`methodology.md`](methodology.md) begründet.
 - Pro: Variable Cluster-Dichte wird verarbeitet (zvoove Marken-Cluster ist eng, Branche-Sammelcluster ist breit).
 - Contra: Hyperparameter `min_cluster_size` und `min_samples` müssen gesweept werden.
 
@@ -328,3 +328,31 @@ def generate(self, system: str, user: str) -> str:
 ```
 
 `tests/test_retry.py` deckt ab: nicht-transiente Fehler propagieren, transiente Fehler werden bis zur erfolgreichen Antwort wiederholt, `max_attempts` wird respektiert, das Default-Predicate erkennt die Anthropic- und OpenAI-Klassennamen.
+
+## ADR-15: Soft-Assignment für Noise-Keywords
+
+**Status.** Aktiv.
+
+**Kontext.** HDBSCAN ist für die methodische Cluster-Findung optimal (datengetriebene Cluster-Anzahl, variable Dichte, explizite Rauschen-Klasse). Operativ bedeutet das aber: bei `mcs=10, ms=5, eom` werden 72 von 500 Keywords (14 Prozent) als Noise (`hdb=-1`) markiert — darunter hochvolumige Begriffe wie `dokumentenmanagement software` (5.000 SV) oder `fachkräftemangel deutschland`. Im Content-Plan dürfen diese Keywords nicht ungeparkt sein, sonst landen sie nicht in einem Pillar und ranken nirgends.
+
+**Entscheidung.** Ein eigener Pipeline-Schritt `step_assign_noise` zwischen `cluster` und `label` ordnet jedes Noise-Keyword seinem nächsten Cluster-Centroid im 5D-UMAP-Raum zu. Mathematisch: für jeden Noise-Punkt `p` und Cluster-Centroid `c_i` (gemittelt über alle Kern-Keywords des Clusters) wird `argmin_i ||p - c_i||_2` berechnet, `p` bekommt den Argmin-Cluster. Die ursprüngliche Noise-Eigenschaft bleibt in der Spalte `noise_assigned: bool` erhalten (in `keywords_labeled.csv`), sodass Reporting und Cluster-Map die Rand-Keywords optional anders darstellen können.
+
+**Alternativen geprüft.**
+
+- **Hyperparameter so lange tunen, bis kein Rauschen mehr entsteht.** Mit `mcs=15, ms=5, eom` sinkt die Rauschrate auf 2,4 Prozent (12 Punkte), aber die Cluster-Anzahl kollabiert auf 7 — zu wenig für eine differenzierte Content-Strategie. Mit `mcs=12, ms=5, eom` bleibt es bei 8 Prozent Rauschen, aber ein Sammelcluster mit 188 Keywords mischt vier eigenständige Pillar-Themen (AÜG, Equal Pay, Debitorenmanagement, Höchstüberlassungsdauer) — operativ unbearbeitbar.
+- **Ward Hierarchical Clustering statt HDBSCAN.** Ward hat keine Noise-Klasse und ordnet alle 500 Keywords zu. Verworfen, weil HDBSCANs Silhouette deutlich höher ist (0,647 vs 0,590 bei k=12) und HDBSCAN datengetriebene Cluster-Anzahl liefert statt einer geratenen `k`.
+- **Ungelabelte Keywords einfach ignorieren.** Verworfen, weil 72 von 500 Keywords (14 Prozent) operativ relevant sind. `dokumentenmanagement software` mit 5.000 SV als „Outlier" wegzuwerfen ist kein Content-Plan, sondern Datenverlust.
+- **`hdbscan.all_points_membership_vectors()` statt eigener Centroid-Distance.** Liefert Soft-Membership pro Keyword über alle Cluster. Eleganter, aber benötigt zusätzliche Library-Features und macht den Mechanismus weniger transparent. Eigene Centroid-Distance ist 30 Zeilen Code und in einem Code-Review nachvollziehbar.
+
+**Konsequenzen.**
+
+- Pro: jedes der 500 Keywords hat einen Pillar — der Content-Plan ist vollständig.
+- Pro: Cluster-Reinheit bleibt erhalten, weil HDBSCAN die Cluster-Grenzen findet und Soft-Assignment nur die Rand-Punkte verteilt. Bei `mcs=10, eom` sind das nur 72 Punkte, gleichmäßig auf die Cluster verteilt — keine neuen Sammelcluster.
+- Pro: methodisch standardkonform. Soft-Assignment ist die Standardlösung für Density-basierte Algorithmen mit operativer Vollabdeckung.
+- Contra: die Silhouette sinkt von 0,647 (HDBSCAN-Kern) auf 0,570 (alle 500). Erwartet, weil Rand-Keywords per Definition näher an Cluster-Grenzen liegen.
+- Contra: Soft-Assigned-Keywords sind weniger eindeutig zugeordnet als Kern-Keywords. Über die `noise_assigned` Spalte wird das transparent gemacht, sodass eine Redaktion die Rand-Keywords gesondert prüfen kann.
+
+**Verteilung im aktuellen Lauf.**
+`c3+1, c4+4, c5+10, c6+14, c7+4, c8+19, c9+1, c10+9, c11+6, c12+4`. Der größte Empfänger (Cluster 8 mit +19 Keywords) absorbiert die Equal-Pay/Liquiditäts-Rand-Keywords, was thematisch zur Cluster-Identität passt. Der vom LLM als „Sammelthemen" gelabelte Cluster 12 bekommt nur +4 — die Soft-Assignment macht ihn nicht „noch heterogener".
+
+**Implementierung.** `src/cluster.py:step_assign_noise()`. Default-on, läuft in der `DEFAULT_SEQUENCE` zwischen `cluster` und `label`. Per `python -m src.cluster --step cluster,label,profile` lässt sich das Verfahren auch ohne Soft-Assignment ausführen, falls jemand die Original-HDBSCAN-Zuweisung (mit Noise-Klasse) inspizieren möchte.

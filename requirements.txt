@@ -35,3 +35,8 @@ claude-agent-sdk>=0.1.70  # requires Python >=3.10
 
 # Live keyword metrics (optional, only used with --provider dataforseo)
 # requests is stdlib via urllib in src/enrich.py, no extra dep needed
+
+# Reporting-Push nach Google Sheets (optional, nur aktiv wenn
+# PIPELINE_SHEETS_SYNC_ENABLED=true). gspread bringt google-auth mit,
+# weil Service-Account-Auth einen JWT mit RSA-256 signieren muss.
+gspread>=6.0,<7.0

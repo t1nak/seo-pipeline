@@ -452,7 +452,7 @@ def run(source: str = DEFAULT_SOURCE, run_id: str | None = None) -> None:
     logger.info("wrote run %s (%d keywords, %d clusters)",
                 run_id, meta["n_keywords"], meta["n_clusters"])
 
-    runs = _load_runs()
+    runs = _load_runs()[:1]
     index_html = _render_runs_index(runs)
     (REPORTING / "index.html").write_text(index_html, encoding="utf-8")
     logger.info("wrote runs index with %d run(s)", len(runs))

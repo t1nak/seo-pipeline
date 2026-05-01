@@ -21,7 +21,7 @@ Usage:
 
     from src.config import settings
     print(settings.brief_provider)         # api | openai | max
-    print(settings.cluster_hdbscan_mcs)    # 15
+    print(settings.cluster_hdbscan_mcs)    # 10
 """
 from __future__ import annotations
 
@@ -63,17 +63,21 @@ class Settings(BaseSettings):
     cluster_umap_metric: str = "cosine"
 
     # ----- Cluster: HDBSCAN -----
-    # mcs=15, ms=5, leaf is the sweep row that lands on exactly 12 clusters
-    # (sil 0.642, 20% noise) — see the table in docs/methodology.md. The
-    # leaf selection method walks down to the leaves of the condensed tree
-    # and so splits the broad themes (e.g. Zeitarbeit & Arbeitsrecht, which
-    # dominated the eom baseline at 189/500 keywords) into more focused
-    # sub-themes. Trade-off vs. mcs=12/eom: noise rises from ~8% to ~20%.
-    # Override per run via PIPELINE_CLUSTER_HDBSCAN_MCS /
-    # PIPELINE_CLUSTER_HDBSCAN_METHOD or the workflow inputs.
-    cluster_hdbscan_mcs: int = 15
+    # mcs=10, ms=5, eom is the sweep row that produces 13 differentiated
+    # clusters at 14% noise (sil 0.647) on the 500-keyword baseline — see
+    # the table in docs/methodology.md. The choice is operationally driven:
+    # leaf at the same cluster count produced 26% noise (130 keywords lost
+    # to outliers, including high-SV terms), and mcs=12/eom produced a
+    # 188-keyword Sammelcluster mixing AÜG, Equal Pay, Debitorenmanagement
+    # and Höchstüberlassungsdauer that no single brief could address.
+    # The remaining 14% noise is absorbed by the assign_noise step
+    # (nearest-cluster centroid in 5D UMAP space) so every keyword has a
+    # home for the content plan. Override per run via
+    # PIPELINE_CLUSTER_HDBSCAN_MCS / PIPELINE_CLUSTER_HDBSCAN_METHOD or
+    # the workflow inputs.
+    cluster_hdbscan_mcs: int = 10
     cluster_hdbscan_ms: int = 5
-    cluster_hdbscan_method: Literal["eom", "leaf"] = "leaf"
+    cluster_hdbscan_method: Literal["eom", "leaf"] = "eom"
     cluster_hdbscan_metric: str = "euclidean"
 
     # ----- Brief -----

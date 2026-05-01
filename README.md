@@ -46,7 +46,7 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 ## Aktueller Stand
 
-Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der Discover Schritt scrapt den Blog noch nicht live, sondern liest die kuratierte Datei `data/keywords.manual.csv`. Das ist transparent dokumentiert in [`docs/decisions.md`](docs/decisions.md) und der nächste hochwertige Arbeitsblock.
+Diese Pipeline läuft end-to-end auf einem Keyword Set, das ein LLM auf Basis des [zvoove Blogs](https://zvoove.de/wissen/blog) generiert hat. Der Discover Schritt scrapt den Blog noch nicht live, sondern liest die kuratierte Datei `data/keywords.manual.csv`. Das ist transparent dokumentiert in [`docs/decisions.md`](docs/decisions.md) und der nächste hochwertige Arbeitsblock.
 
 | Schritt | Stand |
 |---|---|

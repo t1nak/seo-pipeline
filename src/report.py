@@ -46,6 +46,8 @@ F_VIZ = CLUSTERING / "cluster_map.html"
 
 DEFAULT_SOURCE = "llm-generated"
 
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit"
+
 
 def _load_cluster_labels() -> tuple[dict[int, str], dict[int, str]]:
     """LLM-generated labels (output/clustering/cluster_labels.json) win over
@@ -330,6 +332,14 @@ h1{font-size:28px;margin:0 0 8px;letter-spacing:-0.01em}
 .card-actions a{color:#0d9488;text-decoration:none;font-weight:500}
 .card-actions a:hover{text-decoration:underline}
 .empty{padding:40px;text-align:center;color:#64748b;border:1px dashed #cbd5e1;border-radius:10px}
+.page-footer{margin-top:32px;padding-top:18px;border-top:1px solid #e2e8f0;
+             display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:13px;color:#475569}
+.page-footer a{color:#0d9488;text-decoration:none;font-weight:500}
+.page-footer a:hover{text-decoration:underline}
+.sheet-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;
+            background:#ecfdf5;border:1px solid #a7f3d0;border-radius:999px;color:#047857;
+            text-decoration:none;font-size:12px;font-weight:500;align-self:flex-start;margin-top:4px}
+.sheet-pill:hover{background:#d1fae5}
 """
 
 
@@ -357,12 +367,16 @@ def _render_runs_index(runs: list[dict]) -> str:
         body = '<div class="empty">Keine Läufe gefunden. Pipeline ausführen, dann erscheint hier eine Karte je Lauf.</div>'
     else:
         cards = []
-        for r in runs:
+        for idx, r in enumerate(runs):
             sv = f"{r.get('total_search_volume', 0):,}".replace(",", ".")
             run_id = r['run_id']
             source_key = r.get('source', DEFAULT_SOURCE)
             source_label = _SOURCE_LABELS.get(source_key, source_key)
             source_tooltip = _SOURCE_TOOLTIPS.get(source_key, f"Eintrittspunkt: {source_key}")
+            sheet_link = (
+                f'<a class="sheet-pill" href="{SHEET_URL}" target="_blank" rel="noopener">📊 Daten als Google Sheet öffnen</a>'
+                if idx == 0 else ""
+            )
             cards.append(f"""
 <article class="card">
   <p class="card-id">Lauf {run_id}</p>
@@ -378,6 +392,7 @@ def _render_runs_index(runs: list[dict]) -> str:
     <a href="runs/{run_id}/index.html">Dashboard öffnen →</a>
     <a href="runs/{run_id}/cluster_map.html">Cluster Map öffnen →</a>
   </div>
+  {sheet_link}
 </article>""")
         body = f'<div class="grid">{"".join(cards)}</div>'
 

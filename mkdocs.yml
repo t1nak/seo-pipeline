@@ -54,6 +54,7 @@ nav:
   - Beispiel-Output:
     - Übersicht: example-output.md
     - Reporting Dashboard: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
+    - Live Google Sheet: https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit
   - Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
   - GitHub: https://github.com/t1nak/seo-pipeline
 

@@ -131,6 +131,12 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
     [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/briefings/index.html)
 
+-   :material-google-spreadsheet: __Live Reporting in Google Sheets__
+
+    Cluster und Keywords in zwei Tabs, automatisch von der Pipeline gepusht. Filterbar, sortierbar, teamtauglich.
+
+    [:octicons-arrow-right-24: Sheet öffnen](https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit)
+
 -   :material-book-open-variant: __Case Study__
 
     Vollständige Schreibarbeit mit Architektur, Validierung, Empfehlungen, Reflektion.

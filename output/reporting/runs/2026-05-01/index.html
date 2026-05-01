@@ -181,6 +181,30 @@ header .glossar-btn::before { content: "ⓘ"; font-size: 14px; opacity: 0.85; }
 .back-nav{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}
 .back-link{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}
 .back-link:hover{text-decoration:underline}
+.sheet-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+            background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;
+            color:#047857;font-size:13px;font-weight:500;text-decoration:none}
+.sheet-cta:hover{background:#d1fae5}
+.filter-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+             background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+             padding:12px 14px;margin:0 0 24px}
+.filter-bar input[type=search]{flex:1;min-width:220px;padding:8px 12px;
+             border:1px solid #cbd5e1;border-radius:6px;font-size:13px;
+             background:white;outline:none}
+.filter-bar input[type=search]:focus{border-color:#0d9488;box-shadow:0 0 0 3px rgba(13,148,136,0.15)}
+.filter-group{display:flex;gap:6px;align-items:center;font-size:12px;color:#64748b}
+.filter-group label{font-weight:600;text-transform:uppercase;letter-spacing:0.04em;font-size:11px;margin-right:4px}
+.filter-btn{padding:6px 12px;border:1px solid #cbd5e1;background:white;border-radius:6px;
+             font-size:12px;cursor:pointer;color:#475569;font-weight:500}
+.filter-btn:hover{border-color:#0d9488;color:#0d9488}
+.filter-btn.active{background:#0d9488;border-color:#0d9488;color:white}
+.filter-bar select{padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;background:white;color:#475569;cursor:pointer}
+.filter-count{font-size:12px;color:#64748b;margin-left:auto}
+.brief-card.is-hidden,.mini-card.is-hidden{display:none !important}
+.page-footer{margin-top:40px;padding-top:18px;border-top:1px solid #e2e8f0;
+             display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:13px;color:#475569}
+.page-footer a{color:#0d9488;text-decoration:none;font-weight:500}
+.page-footer a:hover{text-decoration:underline}
 </style>
 </head><body><div class="wrap">
 <nav class="back-nav"><a class="back-link" href="../../index.html">← Zurück zur Lauf-Übersicht</a><a class="back-link" href="../../../../index.html">← Zurück zur Doku</a></nav>
@@ -192,6 +216,7 @@ header .glossar-btn::before { content: "ⓘ"; font-size: 14px; opacity: 0.85; }
   </div>
   <div class="header-actions">
     <a class="map-cta" href="cluster_map.html">Cluster Karte öffnen</a>
+    <a class="sheet-cta" href="https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit" target="_blank" rel="noopener">📊 Google Sheet öffnen</a>
     <button type="button" class="glossar-btn" onclick="openGlossar()">Glossar: was heißen die Zahlen?</button>
   </div>
 </header>
@@ -290,11 +315,33 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <div class="summary-cell"><div class="label">Mittlere KD</div><div class="value">38.9</div></div>
 </div>
 
-<p class="minigrid-label">Cluster im Überblick · Klick öffnet den Brief</p><div class="mini-grid"><a href="#cluster-11" class="mini-card"><div><div class="mini-id">Cluster 11</div><div class="mini-title">HR- und Dokumentenverwaltung für KMU: Die richtige Software finden und Fehler beim Kauf vermeiden</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">45.567/Mo</span></div></a><a href="#cluster-13" class="mini-card"><div><div class="mini-id">Cluster 13</div><div class="mini-title">Zeitarbeit Software 2025: Welche Tools die Branche wirklich braucht</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">28.301/Mo</span></div></a><a href="#cluster-2" class="mini-card"><div><div class="mini-id">Cluster 2</div><div class="mini-title">Zeitarbeitssoftware mit Zeiterfassung: Was moderne Lösungen leisten müssen</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">26.159/Mo</span></div></a><a href="#cluster-8" class="mini-card"><div><div class="mini-id">Cluster 8</div><div class="mini-title">Digitalisierung in der Personaldienstleistung: Was jetzt wirklich zählt</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">23.984/Mo</span></div></a><a href="#cluster-4" class="mini-card"><div><div class="mini-id">Cluster 4</div><div class="mini-title">zvoove im Überblick: Module, Preise und echte Kundenerfahrungen</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">23.604/Mo</span></div></a><a href="#cluster-9" class="mini-card"><div><div class="mini-id">Cluster 9</div><div class="mini-title">Liquidität in der Zeitarbeit sichern: Equal Pay, Tarifvertrag und Debitorenmanagement im Griff</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">15.571/Mo</span></div></a><a href="#cluster-5" class="mini-card"><div><div class="mini-id">Cluster 5</div><div class="mini-title">Lohnabrechnung und Bewerberverwaltung für Personaldienstleister: So geht es 2025 effizient</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">14.455/Mo</span></div></a><a href="#cluster-12" class="mini-card"><div><div class="mini-id">Cluster 12</div><div class="mini-title">Arbeitnehmerüberlassung: Rechtliche Grundlagen, AÜG-Pflichten und was Verleiher 2025 wissen müssen</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">14.429/Mo</span></div></a><a href="#cluster-7" class="mini-card"><div><div class="mini-id">Cluster 7</div><div class="mini-title">Personalverwaltung für Personaldienstleister: Software, Prozesse und Kennzahlen im Überblick</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">12.386/Mo</span></div></a><a href="#cluster-3" class="mini-card"><div><div class="mini-id">Cluster 3</div><div class="mini-title">KI im Recruiting: Wie Zeitarbeitsunternehmen mit KI-gestützten Tools schneller und besser besetzen</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">12.075/Mo</span></div></a><a href="#cluster-6" class="mini-card"><div><div class="mini-id">Cluster 6</div><div class="mini-title">Zeitarbeit in Deutschland 2025: Gesetze, Kennzahlen und Markttrends im Überblick</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">11.462/Mo</span></div></a><a href="#cluster-10" class="mini-card"><div><div class="mini-id">Cluster 10</div><div class="mini-title">Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung in einer Lösung</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">8.467/Mo</span></div></a><a href="#cluster-1" class="mini-card"><div><div class="mini-id">Cluster 1</div><div class="mini-title">Factoring für Zeitarbeit: Buchen, Genehmigen und den richtigen Anbieter wählen</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">3.516/Mo</span></div></a></div>
+<div class="filter-bar" id="filter-bar">
+  <input type="search" id="filter-search" placeholder="Suche nach Cluster oder Keyword..." aria-label="Cluster suchen">
+  <div class="filter-group" role="group" aria-label="Intent-Filter">
+    <label>Intent</label>
+    <button type="button" class="filter-btn active" data-intent="all">Alle</button>
+    <button type="button" class="filter-btn" data-intent="commercial">commercial</button>
+    <button type="button" class="filter-btn" data-intent="informational">informational</button>
+    <button type="button" class="filter-btn" data-intent="mixed">mixed</button>
+  </div>
+  <div class="filter-group">
+    <label for="filter-sort">Sortierung</label>
+    <select id="filter-sort">
+      <option value="sv-desc">Suchvolumen (hoch → niedrig)</option>
+      <option value="sv-asc">Suchvolumen (niedrig → hoch)</option>
+      <option value="kw-desc">Keywords (viele → wenige)</option>
+      <option value="title-asc">Titel (A → Z)</option>
+    </select>
+  </div>
+  <span class="filter-count" id="filter-count"></span>
+</div>
+
+<p class="minigrid-label">Cluster im Überblick · Klick öffnet den Brief</p><div class="mini-grid"><a href="#cluster-11" class="mini-card" data-intent="commercial" data-sv="45567" data-title="hr- und dokumentenverwaltung für kmu: die richtige software finden und fehler beim kauf vermeiden"><div><div class="mini-id">Cluster 11</div><div class="mini-title">HR- und Dokumentenverwaltung für KMU: Die richtige Software finden und Fehler beim Kauf vermeiden</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">45.567/Mo</span></div></a><a href="#cluster-13" class="mini-card" data-intent="mixed" data-sv="28301" data-title="zeitarbeit software 2025: welche tools die branche wirklich braucht"><div><div class="mini-id">Cluster 13</div><div class="mini-title">Zeitarbeit Software 2025: Welche Tools die Branche wirklich braucht</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">28.301/Mo</span></div></a><a href="#cluster-2" class="mini-card" data-intent="commercial" data-sv="26159" data-title="zeitarbeitssoftware mit zeiterfassung: was moderne lösungen leisten müssen"><div><div class="mini-id">Cluster 2</div><div class="mini-title">Zeitarbeitssoftware mit Zeiterfassung: Was moderne Lösungen leisten müssen</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">26.159/Mo</span></div></a><a href="#cluster-8" class="mini-card" data-intent="mixed" data-sv="23984" data-title="digitalisierung in der personaldienstleistung: was jetzt wirklich zählt"><div><div class="mini-id">Cluster 8</div><div class="mini-title">Digitalisierung in der Personaldienstleistung: Was jetzt wirklich zählt</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">23.984/Mo</span></div></a><a href="#cluster-4" class="mini-card" data-intent="commercial" data-sv="23604" data-title="zvoove im überblick: module, preise und echte kundenerfahrungen"><div><div class="mini-id">Cluster 4</div><div class="mini-title">zvoove im Überblick: Module, Preise und echte Kundenerfahrungen</div></div><div class="mini-meta"><span class="badge badge-ok">commercial</span><span class="mini-sv">23.604/Mo</span></div></a><a href="#cluster-9" class="mini-card" data-intent="informational" data-sv="15571" data-title="liquidität in der zeitarbeit sichern: equal pay, tarifvertrag und debitorenmanagement im griff"><div><div class="mini-id">Cluster 9</div><div class="mini-title">Liquidität in der Zeitarbeit sichern: Equal Pay, Tarifvertrag und Debitorenmanagement im Griff</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">15.571/Mo</span></div></a><a href="#cluster-5" class="mini-card" data-intent="mixed" data-sv="14455" data-title="lohnabrechnung und bewerberverwaltung für personaldienstleister: so geht es 2025 effizient"><div><div class="mini-id">Cluster 5</div><div class="mini-title">Lohnabrechnung und Bewerberverwaltung für Personaldienstleister: So geht es 2025 effizient</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">14.455/Mo</span></div></a><a href="#cluster-12" class="mini-card" data-intent="informational" data-sv="14429" data-title="arbeitnehmerüberlassung: rechtliche grundlagen, aüg-pflichten und was verleiher 2025 wissen müssen"><div><div class="mini-id">Cluster 12</div><div class="mini-title">Arbeitnehmerüberlassung: Rechtliche Grundlagen, AÜG-Pflichten und was Verleiher 2025 wissen müssen</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">14.429/Mo</span></div></a><a href="#cluster-7" class="mini-card" data-intent="mixed" data-sv="12386" data-title="personalverwaltung für personaldienstleister: software, prozesse und kennzahlen im überblick"><div><div class="mini-id">Cluster 7</div><div class="mini-title">Personalverwaltung für Personaldienstleister: Software, Prozesse und Kennzahlen im Überblick</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">12.386/Mo</span></div></a><a href="#cluster-3" class="mini-card" data-intent="mixed" data-sv="12075" data-title="ki im recruiting: wie zeitarbeitsunternehmen mit ki-gestützten tools schneller und besser besetzen"><div><div class="mini-id">Cluster 3</div><div class="mini-title">KI im Recruiting: Wie Zeitarbeitsunternehmen mit KI-gestützten Tools schneller und besser besetzen</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">12.075/Mo</span></div></a><a href="#cluster-6" class="mini-card" data-intent="informational" data-sv="11462" data-title="zeitarbeit in deutschland 2025: gesetze, kennzahlen und markttrends im überblick"><div><div class="mini-id">Cluster 6</div><div class="mini-title">Zeitarbeit in Deutschland 2025: Gesetze, Kennzahlen und Markttrends im Überblick</div></div><div class="mini-meta"><span class="badge badge-warn">informational</span><span class="mini-sv">11.462/Mo</span></div></a><a href="#cluster-10" class="mini-card" data-intent="mixed" data-sv="8467" data-title="gebäudereinigung software: disposition, kalkulation und zeiterfassung in einer lösung"><div><div class="mini-id">Cluster 10</div><div class="mini-title">Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung in einer Lösung</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">8.467/Mo</span></div></a><a href="#cluster-1" class="mini-card" data-intent="mixed" data-sv="3516" data-title="factoring für zeitarbeit: buchen, genehmigen und den richtigen anbieter wählen"><div><div class="mini-id">Cluster 1</div><div class="mini-title">Factoring für Zeitarbeit: Buchen, Genehmigen und den richtigen Anbieter wählen</div></div><div class="mini-meta"><span class="badge badge-info">mixed</span><span class="mini-sv">3.516/Mo</span></div></a></div>
 
 
 
-<section class="card" id="cluster-11">
+<div id="brief-list">
+<section class="card brief-card" id="cluster-11" data-intent="commercial" data-sv="45567" data-keywords="45" data-title="hr- und dokumentenverwaltung für kmu: die richtige software finden und fehler beim kauf vermeiden" data-search="hr- und dokumentenverwaltung für kmu: die richtige software finden und fehler beim kauf vermeiden dokumentenmanagement software bewerbermanagement software mitarbeiterverwaltung software hr software kmu gehaltsabrechnung software ats software">
   <p class="cluster-id">Cluster 11</p>
   <h2 class="cluster-title">HR- und Dokumentenverwaltung für KMU: Die richtige Software finden und Fehler beim Kauf vermeiden</h2>
   <div style="margin: 8px 0 0;">
@@ -350,7 +397,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo vereinbaren: Zeigen Sie Ihrem Team live, wie zvoove HR-Dokumentenverwaltung, AÜG-Compliance, Bewerbermanagement und Einsatzplanung in einer Oberfläche zusammenführt, ohne mehrere Insellösungen zu betreiben.</div>
 </section>
-<section class="card" id="cluster-13">
+<section class="card brief-card" id="cluster-13" data-intent="mixed" data-sv="28301" data-keywords="97" data-title="zeitarbeit software 2025: welche tools die branche wirklich braucht" data-search="zeitarbeit software 2025: welche tools die branche wirklich braucht zeitarbeit programm zeitarbeit branche entwicklung factoring zeitarbeit crm zeitarbeit lohnabrechnung zeitarbeit saas zeitarbeit">
   <p class="cluster-id">Cluster 13</p>
   <h2 class="cluster-title">Zeitarbeit Software 2025: Welche Tools die Branche wirklich braucht</h2>
   <div style="margin: 8px 0 0;">
@@ -406,7 +453,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo von zvoove buchen: Leser werden auf eine Landing Page geleitet, auf der sie eine geführte Produktdemo für Zeitarbeitsunternehmen anfordern können, inklusive Live-Demo der Lohnabrechnung mit Branchenzuschlägen und der mobilen Zeiterfassung.</div>
 </section>
-<section class="card" id="cluster-2">
+<section class="card brief-card" id="cluster-2" data-intent="commercial" data-sv="26159" data-keywords="47" data-title="zeitarbeitssoftware mit zeiterfassung: was moderne lösungen leisten müssen" data-search="zeitarbeitssoftware mit zeiterfassung: was moderne lösungen leisten müssen zeiterfassung software mobile zeiterfassung zeitarbeitssoftware roi zeitarbeit software zeitarbeit software lohnabrechnung software zeitarbeit">
   <p class="cluster-id">Cluster 2</p>
   <h2 class="cluster-title">Zeitarbeitssoftware mit Zeiterfassung: Was moderne Lösungen leisten müssen</h2>
   <div style="margin: 8px 0 0;">
@@ -462,7 +509,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo-Anfrage für zvoove Recruit oder zvoove Work: Button oder Inline-Link mit dem Text &quot;Zeigen Sie mir, wie zvoove Zeiterfassung und Lohnabrechnung in einem System verbindet, Demo jetzt buchen&quot;, platziert am Ende des Fazits und als Sticky-Element nach dem zweiten H2-Abschnitt.</div>
 </section>
-<section class="card" id="cluster-8">
+<section class="card brief-card" id="cluster-8" data-intent="mixed" data-sv="23984" data-keywords="37" data-title="digitalisierung in der personaldienstleistung: was jetzt wirklich zählt" data-search="digitalisierung in der personaldienstleistung: was jetzt wirklich zählt digitalisierung zeitarbeit digitalisierung personaldienstleistung künstliche intelligenz personaldienstleistung digitale zeiterfassung elektronische lohnabrechnung datenschutz personaldienstleister">
   <p class="cluster-id">Cluster 8</p>
   <h2 class="cluster-title">Digitalisierung in der Personaldienstleistung: Was jetzt wirklich zählt</h2>
   <div style="margin: 8px 0 0;">
@@ -518,7 +565,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo von zvoove buchen: Zeige in einem 30-minütigen Live-Termin, wie zvoove Zeiterfassung, digitale Personalakte, Lohnabrechnung und revisionssichere Archivierung in einer einzigen Plattform abbildet, ohne dass der Betrieb stillsteht.</div>
 </section>
-<section class="card" id="cluster-4">
+<section class="card brief-card" id="cluster-4" data-intent="commercial" data-sv="23604" data-keywords="34" data-title="zvoove im überblick: module, preise und echte kundenerfahrungen" data-search="zvoove im überblick: module, preise und echte kundenerfahrungen zvoove referenzen zvoove dms zvoove cockpit zvoove payroll zvoove cashlink zvoove recruit">
   <p class="cluster-id">Cluster 4</p>
   <h2 class="cluster-title">zvoove im Überblick: Module, Preise und echte Kundenerfahrungen</h2>
   <div style="margin: 8px 0 0;">
@@ -574,7 +621,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Buche jetzt eine kostenlose Live-Demo von zvoove One und sieh in 30 Minuten, ob die Plattform zu deinen Prozessen passt, direkt auf zvoove.com/demo.</div>
 </section>
-<section class="card" id="cluster-9">
+<section class="card brief-card" id="cluster-9" data-intent="mixed" data-sv="15571" data-keywords="34" data-title="liquidität in der zeitarbeit sichern: equal pay, tarifvertrag und debitorenmanagement im griff" data-search="liquidität in der zeitarbeit sichern: equal pay, tarifvertrag und debitorenmanagement im griff debitorenmanagement equal pay zeitarbeit zahlungsausfall absichern liquidität zeitarbeit tariflandschaft zeitarbeit igz tarifvertrag aktuell">
   <p class="cluster-id">Cluster 9</p>
   <h2 class="cluster-title">Liquidität in der Zeitarbeit sichern: Equal Pay, Tarifvertrag und Debitorenmanagement im Griff</h2>
   <div style="margin: 8px 0 0;">
@@ -630,7 +677,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Laden Sie die kostenlose Checkliste zur Equal Pay Kalkulation herunter oder buchen Sie eine Live Demo von zvoove, um zu sehen wie automatisierte Abrechnung, integriertes Mahnwesen und Echtzeit Liquiditätsübersicht Ihren Cashflow planbar machen.</div>
 </section>
-<section class="card" id="cluster-5">
+<section class="card brief-card" id="cluster-5" data-intent="mixed" data-sv="14455" data-keywords="32" data-title="lohnabrechnung und bewerberverwaltung für personaldienstleister: so geht es 2025 effizient" data-search="lohnabrechnung und bewerberverwaltung für personaldienstleister: so geht es 2025 effizient aüg bewerber finden lohnabrechnung sage indeed alternative offboarding prozess lohnabrechnung erstellen">
   <p class="cluster-id">Cluster 5</p>
   <h2 class="cluster-title">Lohnabrechnung und Bewerberverwaltung für Personaldienstleister: So geht es 2025 effizient</h2>
   <div style="margin: 8px 0 0;">
@@ -686,7 +733,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo von zvoove buchen: Zeigen Sie Ihrem Team live, wie Lohnabrechnung, Bewerberverwaltung und AÜG-Compliance in einer Plattform zusammenwachsen, ohne Datenmigration zwischen fünf Tools.</div>
 </section>
-<section class="card" id="cluster-12">
+<section class="card brief-card" id="cluster-12" data-intent="mixed" data-sv="14429" data-keywords="44" data-title="arbeitnehmerüberlassung: rechtliche grundlagen, aüg-pflichten und was verleiher 2025 wissen müssen" data-search="arbeitnehmerüberlassung: rechtliche grundlagen, aüg-pflichten und was verleiher 2025 wissen müssen arbeitnehmerüberlassung arbeitnehmerüberlassungsgesetz einkommensteuer zeitarbeit arbeitsschutz zeitarbeit arbeitgeberanteile sozialversicherung arbeitsmarkt 2026">
   <p class="cluster-id">Cluster 12</p>
   <h2 class="cluster-title">Arbeitnehmerüberlassung: Rechtliche Grundlagen, AÜG-Pflichten und was Verleiher 2025 wissen müssen</h2>
   <div style="margin: 8px 0 0;">
@@ -742,7 +789,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Prüfe jetzt, ob deine Dispositions- und Abrechnungsprozesse AÜG-konform sind: Fordere eine kostenlose Demo von zvoove an und sieh live, wie automatische Fristüberwachung für Überlassungshöchstdauer und Equal Pay direkt in der Zeitarbeitssoftware funktioniert.</div>
 </section>
-<section class="card" id="cluster-7">
+<section class="card brief-card" id="cluster-7" data-intent="mixed" data-sv="12386" data-keywords="34" data-title="personalverwaltung für personaldienstleister: software, prozesse und kennzahlen im überblick" data-search="personalverwaltung für personaldienstleister: software, prozesse und kennzahlen im überblick personaleinsatzplanung personalakte inhalt gehaltsabrechnung outsourcing azubi verwaltung karriereseite erstellen saas personaldienstleister">
   <p class="cluster-id">Cluster 7</p>
   <h2 class="cluster-title">Personalverwaltung für Personaldienstleister: Software, Prozesse und Kennzahlen im Überblick</h2>
   <div style="margin: 8px 0 0;">
@@ -798,7 +845,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo buchen: Leser werden auf eine zvoove-Produktseite geleitet, die zeigt, wie Personaleinsatzplanung, Lohnabrechnung und Bewerbermanagement in einer einzigen Plattform verbunden sind, inklusive eingebettetem Kalender für eine 30-minütige Live-Demo ohne Verkaufsdruck.</div>
 </section>
-<section class="card" id="cluster-3">
+<section class="card brief-card" id="cluster-3" data-intent="mixed" data-sv="12075" data-keywords="34" data-title="ki im recruiting: wie zeitarbeitsunternehmen mit ki-gestützten tools schneller und besser besetzen" data-search="ki im recruiting: wie zeitarbeitsunternehmen mit ki-gestützten tools schneller und besser besetzen ki recruiting recruiting software recruiting plattform automatisierung recruiting prozess active sourcing tools recruiting automatisieren">
   <p class="cluster-id">Cluster 3</p>
   <h2 class="cluster-title">KI im Recruiting: Wie Zeitarbeitsunternehmen mit KI-gestützten Tools schneller und besser besetzen</h2>
   <div style="margin: 8px 0 0;">
@@ -854,7 +901,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo buchen: Leser werden eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove das KI-Matching und die Recruiting-Automatisierung konkret in einem Zeitarbeitsunternehmen ihrer Größe funktioniert, inklusive Anbindung an Disposition und Lohnabrechnung.</div>
 </section>
-<section class="card" id="cluster-6">
+<section class="card brief-card" id="cluster-6" data-intent="mixed" data-sv="11462" data-keywords="20" data-title="zeitarbeit in deutschland 2025: gesetze, kennzahlen und markttrends im überblick" data-search="zeitarbeit in deutschland 2025: gesetze, kennzahlen und markttrends im überblick höchstüberlassungsdauer fachkräftemangel deutschland gig economy deutschland gesetzliche abzüge lohn markt zeitarbeit deutschland ranking zeitarbeitsfirmen deutschland">
   <p class="cluster-id">Cluster 6</p>
   <h2 class="cluster-title">Zeitarbeit in Deutschland 2025: Gesetze, Kennzahlen und Markttrends im Überblick</h2>
   <div style="margin: 8px 0 0;">
@@ -910,7 +957,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Fordere eine kostenlose Demo von zvoove an und sieh, wie die Software Höchstüberlassungsfristen automatisch trackt, Meldungen fristgerecht vorbereitet und Überlassungsverträge DSGVO-konform verwaltet.</div>
 </section>
-<section class="card" id="cluster-10">
+<section class="card brief-card" id="cluster-10" data-intent="mixed" data-sv="8467" data-keywords="27" data-title="gebäudereinigung software: disposition, kalkulation und zeiterfassung in einer lösung" data-search="gebäudereinigung software: disposition, kalkulation und zeiterfassung in einer lösung gebäudereinigung software disposition gebäudereinigung auftragsverwaltung gebäudereinigung reinigungskalkulation software unterhaltsreinigung kalkulation zeiterfassung gebäudereinigung">
   <p class="cluster-id">Cluster 10</p>
   <h2 class="cluster-title">Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung in einer Lösung</h2>
   <div style="margin: 8px 0 0;">
@@ -966,7 +1013,7 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Kostenlose Demo von zvoove für Gebäudedienstleister anfordern: direkt im Artikel als CTA-Block nach dem Abschnitt über Softwareeinführung platzieren, mit dem Hinweis, dass zvoove Disposition, Kalkulation, Zeiterfassung und Qualitätsdokumentation in einer Plattform abbildet und speziell für gewerbliche Dienstleister entwickelt wurde.</div>
 </section>
-<section class="card" id="cluster-1">
+<section class="card brief-card" id="cluster-1" data-intent="mixed" data-sv="3516" data-keywords="15" data-title="factoring für zeitarbeit: buchen, genehmigen und den richtigen anbieter wählen" data-search="factoring für zeitarbeit: buchen, genehmigen und den richtigen anbieter wählen factoring buchen factoring erlaubnis offenes factoring echtes factoring factoring kfw stilles factoring">
   <p class="cluster-id">Cluster 1</p>
   <h2 class="cluster-title">Factoring für Zeitarbeit: Buchen, Genehmigen und den richtigen Anbieter wählen</h2>
   <div style="margin: 8px 0 0;">
@@ -1022,5 +1069,74 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
   <p class="section-label">Call to Action</p>
   <div class="cta-block">Demo von zvoove buchen und zeigen lassen, wie Factoring-Zahlungseingänge direkt in der Lohn- und Auftragsabrechnung verarbeitet werden, ohne manuelle Doppelbuchung.</div>
 </section>
+</div>
+
+<script>
+(function() {
+  var search = document.getElementById('filter-search');
+  var sortSel = document.getElementById('filter-sort');
+  var intentBtns = document.querySelectorAll('.filter-btn[data-intent]');
+  var countEl = document.getElementById('filter-count');
+  var briefList = document.getElementById('brief-list');
+  var miniGrid = document.querySelector('.mini-grid');
+  var briefs = Array.prototype.slice.call(document.querySelectorAll('.brief-card'));
+  var minis = Array.prototype.slice.call(document.querySelectorAll('.mini-card'));
+
+  var state = { intent: 'all', q: '' };
+
+  function apply() {
+    var q = state.q.trim().toLowerCase();
+    var visible = 0;
+    briefs.forEach(function(c) {
+      var hay = (c.dataset.search || '') + ' ' + (c.dataset.title || '');
+      var okIntent = state.intent === 'all' || c.dataset.intent === state.intent;
+      var okSearch = !q || hay.indexOf(q) !== -1;
+      var show = okIntent && okSearch;
+      c.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    });
+    var clusterIds = {};
+    briefs.forEach(function(c) { if (!c.classList.contains('is-hidden')) clusterIds[c.id] = 1; });
+    minis.forEach(function(m) {
+      var href = (m.getAttribute('href') || '').replace('#','');
+      m.classList.toggle('is-hidden', !clusterIds[href]);
+    });
+    countEl.textContent = visible + ' von ' + briefs.length + ' Clustern';
+  }
+
+  function sortCards() {
+    var mode = sortSel.value;
+    function num(el, attr) { return parseFloat(el.dataset[attr] || '0'); }
+    var cmp = {
+      'sv-desc': function(a,b) { return num(b,'sv') - num(a,'sv'); },
+      'sv-asc':  function(a,b) { return num(a,'sv') - num(b,'sv'); },
+      'kw-desc': function(a,b) { return num(b,'keywords') - num(a,'keywords'); },
+      'title-asc': function(a,b) { return (a.dataset.title||'').localeCompare(b.dataset.title||''); }
+    }[mode];
+    if (!cmp) return;
+    var sortedBriefs = briefs.slice().sort(cmp);
+    sortedBriefs.forEach(function(c) { briefList.appendChild(c); });
+    if (miniGrid) {
+      var byId = {};
+      minis.forEach(function(m) { byId[(m.getAttribute('href')||'').replace('#','')] = m; });
+      sortedBriefs.forEach(function(c) {
+        var m = byId[c.id]; if (m) miniGrid.appendChild(m);
+      });
+    }
+  }
+
+  search.addEventListener('input', function() { state.q = this.value; apply(); });
+  sortSel.addEventListener('change', function() { sortCards(); });
+  intentBtns.forEach(function(b) {
+    b.addEventListener('click', function() {
+      intentBtns.forEach(function(x) { x.classList.remove('active'); });
+      this.classList.add('active');
+      state.intent = this.dataset.intent;
+      apply();
+    });
+  });
+  apply();
+})();
+</script>
 
 </div></body></html>

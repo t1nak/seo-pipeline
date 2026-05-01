@@ -40,6 +40,8 @@ BRIEFINGS = OUT / "briefings"
 PROFILES_CSV = OUT / "clustering" / "cluster_profiles.csv"
 LABELED_CSV = OUT / "clustering" / "keywords_labeled.csv"
 
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit"
+
 
 # ---------------------------------------------------------------------------
 # Markdown brief parsing
@@ -394,7 +396,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
     map_link = f"{map_prefix}cluster_map.html#cluster-{display_id}"
 
     return f"""
-<section class="card" id="cluster-{display_id}">
+<section class="card brief-card" id="cluster-{display_id}" data-intent="{intent_label}" data-sv="{total_sv}" data-keywords="{n_kw}" data-title="{htmllib.escape(title).lower()}" data-search="{htmllib.escape((title + ' ' + ' '.join(top_kw['keyword'].astype(str).tolist())).lower())}">
   <p class="cluster-id">Cluster {display_id}</p>
   <h2 class="cluster-title">{htmllib.escape(title)}</h2>
   <div style="margin: 8px 0 0;">
@@ -478,7 +480,9 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
 
         sv_fmt = f"{sv:,}".replace(",", ".")
         cards.append(
-            f'<a href="#cluster-{display_id}" class="mini-card">'
+            f'<a href="#cluster-{display_id}" class="mini-card" '
+            f'data-intent="{intent_label}" data-sv="{sv}" '
+            f'data-title="{htmllib.escape(title).lower()}">'
             f'<div>'
             f'<div class="mini-id">Cluster {display_id}</div>'
             f'<div class="mini-title">{htmllib.escape(title)}</div>'
@@ -554,6 +558,30 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
 .back-nav{{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}}
 .back-link{{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}}
 .back-link:hover{{text-decoration:underline}}
+.sheet-cta{{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+            background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;
+            color:#047857;font-size:13px;font-weight:500;text-decoration:none}}
+.sheet-cta:hover{{background:#d1fae5}}
+.filter-bar{{display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+             background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+             padding:12px 14px;margin:0 0 24px}}
+.filter-bar input[type=search]{{flex:1;min-width:220px;padding:8px 12px;
+             border:1px solid #cbd5e1;border-radius:6px;font-size:13px;
+             background:white;outline:none}}
+.filter-bar input[type=search]:focus{{border-color:#0d9488;box-shadow:0 0 0 3px rgba(13,148,136,0.15)}}
+.filter-group{{display:flex;gap:6px;align-items:center;font-size:12px;color:#64748b}}
+.filter-group label{{font-weight:600;text-transform:uppercase;letter-spacing:0.04em;font-size:11px;margin-right:4px}}
+.filter-btn{{padding:6px 12px;border:1px solid #cbd5e1;background:white;border-radius:6px;
+             font-size:12px;cursor:pointer;color:#475569;font-weight:500}}
+.filter-btn:hover{{border-color:#0d9488;color:#0d9488}}
+.filter-btn.active{{background:#0d9488;border-color:#0d9488;color:white}}
+.filter-bar select{{padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;background:white;color:#475569;cursor:pointer}}
+.filter-count{{font-size:12px;color:#64748b;margin-left:auto}}
+.brief-card.is-hidden,.mini-card.is-hidden{{display:none !important}}
+.page-footer{{margin-top:40px;padding-top:18px;border-top:1px solid #e2e8f0;
+             display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:13px;color:#475569}}
+.page-footer a{{color:#0d9488;text-decoration:none;font-weight:500}}
+.page-footer a:hover{{text-decoration:underline}}
 </style>
 </head><body><div class="wrap">
 {back_html}
@@ -565,6 +593,7 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
   </div>
   <div class="header-actions">
     <a class="map-cta" href="{map_prefix}cluster_map.html">Cluster Karte öffnen</a>
+    <a class="sheet-cta" href="{SHEET_URL}" target="_blank" rel="noopener">📊 Google Sheet öffnen</a>
     <button type="button" class="glossar-btn" onclick="openGlossar()">Glossar: was heißen die Zahlen?</button>
   </div>
 </header>
@@ -658,11 +687,102 @@ document.addEventListener('keydown', function(e) {{ if (e.key === 'Escape') clos
 
 {summary}
 
+<div class="filter-bar" id="filter-bar">
+  <input type="search" id="filter-search" placeholder="Suche nach Cluster oder Keyword..." aria-label="Cluster suchen">
+  <div class="filter-group" role="group" aria-label="Intent-Filter">
+    <label>Intent</label>
+    <button type="button" class="filter-btn active" data-intent="all">Alle</button>
+    <button type="button" class="filter-btn" data-intent="commercial">commercial</button>
+    <button type="button" class="filter-btn" data-intent="informational">informational</button>
+    <button type="button" class="filter-btn" data-intent="mixed">mixed</button>
+  </div>
+  <div class="filter-group">
+    <label for="filter-sort">Sortierung</label>
+    <select id="filter-sort">
+      <option value="sv-desc">Suchvolumen (hoch → niedrig)</option>
+      <option value="sv-asc">Suchvolumen (niedrig → hoch)</option>
+      <option value="kw-desc">Keywords (viele → wenige)</option>
+      <option value="title-asc">Titel (A → Z)</option>
+    </select>
+  </div>
+  <span class="filter-count" id="filter-count"></span>
+</div>
+
 {minicards}
 
 {extra_section}
 
+<div id="brief-list">
 {cards_html}
+</div>
+
+<script>
+(function() {{
+  var search = document.getElementById('filter-search');
+  var sortSel = document.getElementById('filter-sort');
+  var intentBtns = document.querySelectorAll('.filter-btn[data-intent]');
+  var countEl = document.getElementById('filter-count');
+  var briefList = document.getElementById('brief-list');
+  var miniGrid = document.querySelector('.mini-grid');
+  var briefs = Array.prototype.slice.call(document.querySelectorAll('.brief-card'));
+  var minis = Array.prototype.slice.call(document.querySelectorAll('.mini-card'));
+
+  var state = {{ intent: 'all', q: '' }};
+
+  function apply() {{
+    var q = state.q.trim().toLowerCase();
+    var visible = 0;
+    briefs.forEach(function(c) {{
+      var hay = (c.dataset.search || '') + ' ' + (c.dataset.title || '');
+      var okIntent = state.intent === 'all' || c.dataset.intent === state.intent;
+      var okSearch = !q || hay.indexOf(q) !== -1;
+      var show = okIntent && okSearch;
+      c.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    }});
+    var clusterIds = {{}};
+    briefs.forEach(function(c) {{ if (!c.classList.contains('is-hidden')) clusterIds[c.id] = 1; }});
+    minis.forEach(function(m) {{
+      var href = (m.getAttribute('href') || '').replace('#','');
+      m.classList.toggle('is-hidden', !clusterIds[href]);
+    }});
+    countEl.textContent = visible + ' von ' + briefs.length + ' Clustern';
+  }}
+
+  function sortCards() {{
+    var mode = sortSel.value;
+    function num(el, attr) {{ return parseFloat(el.dataset[attr] || '0'); }}
+    var cmp = {{
+      'sv-desc': function(a,b) {{ return num(b,'sv') - num(a,'sv'); }},
+      'sv-asc':  function(a,b) {{ return num(a,'sv') - num(b,'sv'); }},
+      'kw-desc': function(a,b) {{ return num(b,'keywords') - num(a,'keywords'); }},
+      'title-asc': function(a,b) {{ return (a.dataset.title||'').localeCompare(b.dataset.title||''); }}
+    }}[mode];
+    if (!cmp) return;
+    var sortedBriefs = briefs.slice().sort(cmp);
+    sortedBriefs.forEach(function(c) {{ briefList.appendChild(c); }});
+    if (miniGrid) {{
+      var byId = {{}};
+      minis.forEach(function(m) {{ byId[(m.getAttribute('href')||'').replace('#','')] = m; }});
+      sortedBriefs.forEach(function(c) {{
+        var m = byId[c.id]; if (m) miniGrid.appendChild(m);
+      }});
+    }}
+  }}
+
+  search.addEventListener('input', function() {{ state.q = this.value; apply(); }});
+  sortSel.addEventListener('change', function() {{ sortCards(); }});
+  intentBtns.forEach(function(b) {{
+    b.addEventListener('click', function() {{
+      intentBtns.forEach(function(x) {{ x.classList.remove('active'); }});
+      this.classList.add('active');
+      state.intent = this.dataset.intent;
+      apply();
+    }});
+  }});
+  apply();
+}})();
+</script>
 
 </div></body></html>"""
 

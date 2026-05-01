@@ -91,6 +91,15 @@ class Settings(BaseSettings):
     brief_retry_max_delay: float = 60.0      # cap on backoff, seconds
     brief_retry_multiplier: float = 2.0      # exponential factor
 
+    # ----- Sheets sync (optional Reporting-Push nach Google Sheets) -----
+    # Aus per Default: ohne den Schalter (oder ohne Service-Account-JSON)
+    # ist `python -m src.sync_sheets` ein No-op. So funktioniert lokal
+    # `python pipeline.py` und in CI auch ohne Google-Cloud-Setup.
+    sheets_sync_enabled: bool = False
+    sheets_id: str | None = None
+    sheets_clusters_tab: str = "Clusters"
+    sheets_keywords_tab: str = "Keywords"
+
     # ----- Logging -----
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
 

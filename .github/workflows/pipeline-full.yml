@@ -59,6 +59,10 @@ on:
           - eom
           - leaf
         default: eom
+      sheets_sync:
+        description: "Reporting nach Google Sheets pushen (Service Account + Sheet-ID nötig, siehe docs/reporting-integration.md)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -149,6 +153,27 @@ jobs:
 
       - name: Step 5 -- Build report
         run: python pipeline.py --step report
+
+      - name: Step 6 -- Export reporting (JSON + CSV für Airtable, Notion, Sheets)
+        run: python pipeline.py --step export
+
+      - name: Step 7 -- Sync reporting to Google Sheets
+        if: ${{ inputs.sheets_sync }}
+        env:
+          PIPELINE_SHEETS_SYNC_ENABLED: "true"
+          PIPELINE_SHEETS_ID: ${{ vars.GOOGLE_SHEETS_ID }}
+          GOOGLE_SHEETS_CREDENTIALS_JSON: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_JSON }}
+        run: |
+          if [ -z "$GOOGLE_SHEETS_CREDENTIALS_JSON" ]; then
+            echo "::error::sheets_sync=true requires GOOGLE_SHEETS_CREDENTIALS_JSON secret."
+            echo "Setup: docs/reporting-integration.md"
+            exit 1
+          fi
+          if [ -z "$PIPELINE_SHEETS_ID" ]; then
+            echo "::error::sheets_sync=true requires GOOGLE_SHEETS_ID repo variable."
+            exit 1
+          fi
+          python -m src.sync_sheets
 
       - name: Show run summary
         run: |

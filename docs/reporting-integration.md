@@ -37,6 +37,52 @@ In Zelle `A1`:
 
 Sheets aktualisiert nach Cache-Ablauf automatisch (typisch 1 Stunde) oder bei `Datei → Aktualisieren`. Vorteil: keine manuellen Imports. Nachteil: macht das Reporting öffentlich, taugt also eher für Stakeholder-Übersichten ohne sensible Daten.
 
+### Variante C: Direkter Push aus der Pipeline (privat, automatisch)
+
+Für ein privates Sheet, das nach jedem Pipeline-Lauf aktualisiert wird, schreibt `src/sync_sheets.py` direkt in zwei Tabs (`Clusters`, `Keywords`). Der Push hängt an einem Schalter, damit lokale Läufe ohne Setup nicht crashen.
+
+**Einmaliges Setup:**
+
+1. **Google-Cloud-Projekt anlegen** auf [console.cloud.google.com](https://console.cloud.google.com).
+2. **Sheets-API aktivieren** unter `APIs & Services → Library → Google Sheets API → Enable`.
+3. **Service Account erstellen** unter `IAM & Admin → Service Accounts → Create`. Name frei wählbar, Rollen leer lassen.
+4. **JSON-Key herunterladen** beim erstellten Service Account unter `Keys → Add Key → JSON`. Die Datei enthält ein Feld `client_email`, das sieht aus wie `xyz@projekt.iam.gserviceaccount.com`.
+5. **Sheet anlegen** in Google Sheets, zwei Tabs benennen: `Clusters`, `Keywords`. Sheet mit der `client_email` aus Schritt 4 teilen, Editor-Rechte.
+6. **Sheet-ID** aus der URL kopieren: `https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit`.
+
+**Lokal ausführen:**
+
+```bash
+export PIPELINE_SHEETS_SYNC_ENABLED=true
+export PIPELINE_SHEETS_ID=1AbCDeF...  # die Sheet-ID
+export GOOGLE_SHEETS_CREDENTIALS_FILE=/Pfad/zu/service-account.json
+
+python -m src.sync_sheets --dry-run    # zeigt Zeilen- und Spaltenzahl, kein API-Call
+python -m src.sync_sheets              # tatsächlich pushen
+```
+
+**In CI automatisch:**
+
+Im GitHub-Repo unter `Settings → Secrets and variables → Actions` zwei Einträge anlegen:
+
+- Variable `GOOGLE_SHEETS_ID` mit der Sheet-ID
+- Secret `GOOGLE_SHEETS_CREDENTIALS_JSON` mit dem kompletten Inhalt der Service-Account-JSON
+
+Beim Auslösen des `Pipeline (full)`-Workflows den Toggle `sheets_sync` auf `true` setzen. Schritt 7 pusht dann nach jedem Lauf in das Sheet.
+
+**Schalter im Detail:**
+
+| Variable | Default | Wirkung |
+|---|---|---|
+| `PIPELINE_SHEETS_SYNC_ENABLED` | `false` | `false` macht `python -m src.sync_sheets` zum No-op (nur Log, kein Fehler). `true` aktiviert den Push. |
+| `PIPELINE_SHEETS_ID` | — | Pflicht, sobald aktiv. Sheet-ID aus der URL. |
+| `PIPELINE_SHEETS_CLUSTERS_TAB` | `Clusters` | Tab-Name. Wenn nicht da, wird er automatisch angelegt. |
+| `PIPELINE_SHEETS_KEYWORDS_TAB` | `Keywords` | Wie oben. |
+| `GOOGLE_SHEETS_CREDENTIALS_FILE` | — | Pfad zur JSON. Lokal benutzen. |
+| `GOOGLE_SHEETS_CREDENTIALS_JSON` | — | JSON-Inhalt direkt. Für CI-Secrets. |
+
+`--force` umgeht den `_ENABLED`-Schalter, etwa für einen einmaligen lokalen Test ohne Env-Variable zu setzen.
+
 ## Airtable
 
 Die Pipeline bringt einen Sync-Befehl mit, der `clusters.json` und `keywords.json` direkt in eine Airtable-Base hochlädt.

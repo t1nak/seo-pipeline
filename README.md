@@ -55,7 +55,7 @@ Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der 
 | Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
 | Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |
-| Export | Vollständig. JSON plus CSV pro Cluster und pro Keyword. Airtable-Sync via `python -m src.sync_airtable` |
+| Export | Vollständig. JSON plus CSV pro Cluster und pro Keyword. Airtable-Sync via `python -m src.sync_airtable`, Google-Sheets-Push via `python -m src.sync_sheets` (Schalter `PIPELINE_SHEETS_SYNC_ENABLED`) |
 
 ## Schnellstart
 
@@ -80,6 +80,11 @@ python pipeline.py --step export              # JSON + CSV für Airtable/Notion/
 export AIRTABLE_TOKEN=patXXX AIRTABLE_BASE_ID=appXXX
 python -m src.sync_airtable --print-schema    # Feldnamen für die Airtable-Tabellen
 python -m src.sync_airtable                   # voller Sync
+
+# Optional: direkt nach Google Sheets pushen (Service Account + Sheet-ID nötig)
+export PIPELINE_SHEETS_SYNC_ENABLED=true PIPELINE_SHEETS_ID=1AbC...
+export GOOGLE_SHEETS_CREDENTIALS_FILE=/Pfad/zu/service-account.json
+python -m src.sync_sheets                     # voller Push
 
 # Cluster Sub-Schritte einzeln
 python -m src.cluster --step embed,reduce,cluster,label,profile
@@ -137,7 +142,8 @@ seo-pipeline/
 │   ├── brief.py           Content Briefs via Claude API
 │   ├── report.py          konsolidiertes Reporting, Charts, Cluster-Map
 │   ├── export.py          JSON + CSV für Airtable, Notion, Google Sheets
-│   └── sync_airtable.py   direkter Upload der JSONs in eine Airtable-Base
+│   ├── sync_airtable.py   direkter Upload der JSONs in eine Airtable-Base
+│   └── sync_sheets.py     direkter Push in ein Google Sheet (Service Account, on/off-Schalter)
 └── tests/
 ```
 

@@ -53,12 +53,14 @@ Die interaktive Karte zum Klicken liegt unter [`output/clustering/cluster_map.ht
 Die Pipeline besteht aus vier modularen Phasen, in der aktuellen Umsetzung als fünf entkoppelte Skripte implementiert (Discover und Enrich liegen heute getrennt vor, würden bei Providern wie SEMrush oder DataForSEO aber zusammenfallen). Jeder Schritt liest klar definierte Eingaben und schreibt klar definierte Ausgaben. Das macht die Pipeline einzeln testbar und einzeln re-runnbar.
 
 ```
-discover.py ───→  data/keywords.manual.csv  (LLM-erzeugte 500er-Liste, aktueller Demo-Lauf)
-                                        │
-                                        ▼
-enrich.py ─── SV/KD/CPC ─────────→  data/keywords.csv  (kanonisch)
-                                        │
-        ┌───────────────────────────────┘
+data/keywords.manual.csv  (LLM-erzeugte 500er-Liste, frozen Seed des Demo-Laufs)
+        │
+        ▼
+discover.py ─── Validierung, Normalisierung ───→  data/keywords.csv  (kanonisch)
+        │
+        ▼
+enrich.py   ─── SV/KD/CPC anreichern ──────────→  data/keywords.csv  (in place)
+        │
         ▼
 cluster.py  ─→  output/clustering/{cluster_map.html, embeddings.npy, charts/...}
 brief.py    ─→  output/briefings/cluster_NN.md

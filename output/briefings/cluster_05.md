@@ -1,55 +1,56 @@
-# Lohnabrechnung, Recruiting und AÜG: Der große Überblick für Personaldienstleister
+# Bewerber finden, verwalten, abrechnen: Der vollständige Leitfaden für Personaldienstleister
 
-**Hauptkeyword:** lohnabrechnung erstellen
-**Nebenkeywords:** AÜG, bewerber finden, indeed alternative, stellenanzeige schalten, offboarding prozess, lohnabrechnung muster, lohnabrechnung sage
-**Suchintention:** mixed, Nutzer suchen teils nach praktischen Anleitungen (Muster, Erstellung), teils nach konkreten Softwarelösungen und Alternativen zu bekannten Tools.
+**Hauptkeyword:** bewerber finden
+**Nebenkeywords:** indeed alternative, stellenanzeige schalten, offboarding prozess, aüg, lohnabrechnung erstellen, lizenzmodell saas
+**Suchintention:** mixed, der Cluster vereint frühe Recherchephasen (wie finde ich Bewerber, wie schalte ich Stellenanzeigen) mit konkretem Kaufinteresse an Software-Alternativen und Abrechnungslösungen.
 **Empfohlene Wortanzahl:** 2800
 
 ## Zielgruppe
 
-Geschäftsführer oder HR-Leiter eines mittelständischen Personaldienstleisters oder einer Zeitarbeitsfirma mit 10 bis 100 Mitarbeitern, der seine Prozesse rund um Abrechnung und Recruiting konsolidieren will.
+Niederlassungsleiter oder HR-Verantwortlicher in einem mittelständischen Zeitarbeitsunternehmen oder einer Personalvermittlung mit 10 bis 80 Mitarbeitenden, der aktuell mit Insellösungen arbeitet und den gesamten Prozess von der Stellenanzeige bis zur Lohnabrechnung konsolidieren will.
 
 ## Schmerzpunkt
 
-Lohnabrechnung, Bewerbermanagement und gesetzeskonforme AÜG-Dokumentation laufen in vielen Betrieben noch in drei verschiedenen Tools oder sogar in Excel, was zu Fehlern, Fristverstößen und vermeidbarem Zeitaufwand führt. Wechselnde Tarifverträge und AÜG-Pflichten machen jede manuelle Abrechnung zum Risiko, besonders wenn im gleichen Monat Leiharbeitnehmer zwischen Kundenbetrieben wechseln. Gleichzeitig wird der Fachkräftemangel spürbarer, sodass der Druck wächst, Stellen schneller zu besetzen, ohne teure Jobbörsen blind zu buchen.
+Offene Stellen bleiben wochenlang unbesetzt, weil Stellenanzeigen manuell auf mehreren Portalen gepflegt werden und Bewerbungen in E-Mail-Postfächern verschwinden. Die Lohnabrechnung läuft parallel in einer Legacy-Software wie Sage oder Addison, die schlecht mit dem Bewerbermanagement kommuniziert, was zu Doppelerfassungen und Fehlerquellen führt. Gleichzeitig steigt der Druck durch AÜG-Compliance, Equal Pay und Dokumentationspflichten, die bei fragmentierten Systemen kaum revisionssicher abzubilden sind.
 
 ## Ziel des Artikels
 
-Der Leser soll verstehen, wie er Lohnabrechnung, AÜG-Compliance und Recruiting in einem durchgängigen Prozess organisiert, und dabei konkret prüfen, ob eine spezialisierte All-in-one-Software wie zvoove den bisherigen Flickenteppich ersetzen kann.
+Der Leser soll verstehen, warum ein integrierter Ansatz aus Multiposting, Bewerbermanagement und Lohnabrechnung in einer Plattform die operativen Kosten senkt und gleichzeitig die AÜG-Compliance sichert, und er soll eine Demo oder ein Beratungsgespräch mit zvoove anfragen.
 
 ## Outline
 
-- H1: Lohnabrechnung, Recruiting und AÜG: So bringen Personaldienstleister alle Prozesse unter einen Hut
-- H2: Warum Personaldienstleister besondere Anforderungen haben
-  - H3: AÜG-Pflichten im Alltag: Was wirklich schiefgehen kann
-  - H3: Das Problem mit Insellösungen wie Sage oder Addison
-- H2: Lohnabrechnung erstellen: Grundlagen und gesetzliche Mindestanforderungen
-  - H3: Was eine rechtskonforme Lohnabrechnung enthalten muss (mit Muster-Checkliste)
-  - H3: Besonderheiten bei Leiharbeitnehmern: Equal Pay, Branchenzuschläge, Höchstüberlassungsdauer
-  - H3: Typische Fehlerquellen und wie Software sie verhindert
-- H2: Bewerber finden in einem leergefegten Markt
-  - H3: Stellenanzeige schalten: Welche Kanäle sich für Zeitarbeitsfirmen lohnen
-  - H3: Indeed Alternativen im Vergleich: Kosten, Reichweite, Qualität der Bewerbungen
-  - H3: Multiposting vs. manuelles Schalten: Zeitaufwand und ROI
-- H2: Offboarding Prozess: Das unterschätzte Ende des Arbeitsverhältnisses
-  - H3: Pflichtschritte beim Offboarding nach AÜG und Sozialversicherungsrecht
-  - H3: Wie ein strukturierter Prozess Wiedereinstellungen beschleunigt
-- H2: SaaS-Lizenzmodelle für Personaldienstleister: Was passt zu welcher Firmengröße
-  - H3: Nutzungsbasiert vs. Flatrate: Vor- und Nachteile im Zeitarbeitskontext
-  - H3: Integrationsfähigkeit als Entscheidungskriterium
-- H2: All-in-one oder Best-of-Breed: Welcher Ansatz gewinnt in der Praxis
-  - H3: Wann ein Wechsel von Sage oder Addison sich rechnet
-  - H3: Checkliste: Diese Funktionen sollte jede Personaldienstleister-Software mitbringen
-- H2: Fazit und nächste Schritte
-  - H3: Die wichtigsten Punkte auf einen Blick
-  - H3: Wo zvoove in dieses Bild passt
+- H1: Bewerber finden, verwalten, abrechnen: Wie Personaldienstleister den gesamten Recruiting-Prozess ohne Systembrüche abbilden
+- H2: Warum Bewerber finden heute schwieriger ist als vor fünf Jahren
+  - H3: Fachkräftemangel und gestiegene Erwartungen von Kandidaten
+  - H3: Das Problem mit einzelnen Jobbörsen und manuellen Prozessen
+- H2: Stellenanzeige schalten: Multiposting statt Einzelaufwand
+  - H3: Indeed, StepStone und Co. im Vergleich: Wann lohnt sich was
+  - H3: Indeed Alternative: Warum Personaldienstleister breitere Kanalstrategien brauchen
+  - H3: Was eine gute Stellenanzeige technisch und inhaltlich leisten muss
+- H2: Bewerbermanagement: Von der Erstkontakt bis zur Vermittlung
+  - H3: Wie ein ATS den Überblick über alle Kandidaten sichert
+  - H3: Automatisierung von Statusmeldungen und Kommunikation
+  - H3: Mobiles Bewerben und Candidate Experience als Differenzierungsmerkmal
+- H2: AÜG-Compliance im Bewerberprozess nicht vergessen
+  - H3: Was das Arbeitnehmerüberlassungsgesetz für die Kandidatendokumentation bedeutet
+  - H3: Equal Pay, Überlassungshöchstdauer und revisionssichere Speicherung
+- H2: Lohnabrechnung erstellen: Wo Legacy-Software wie Sage oder Addison an Grenzen stößt
+  - H3: Typische Integrationsprobleme zwischen Recruiting und Payroll
+  - H3: Was ein modernes SaaS-Lizenzmodell gegenüber Einzelsoftware bietet
+  - H3: Lohnabrechnung Muster: Was Zeitarbeitsunternehmen im Abrechnungsbeleg brauchen
+- H2: Offboarding Prozess: Der unterschätzte Schlusspunkt im Personalzyklus
+  - H3: Was beim Offboarding rechtlich und operativ zu beachten ist
+  - H3: Wie sauberes Offboarding das nächste Recruiting erleichtert
+- H2: Integrierte Plattform vs. Insellösungen: Eine ehrliche Kosten-Nutzen-Betrachtung
+  - H3: Wann der Wechsel auf eine All-in-one-Lösung sich rechnet
+  - H3: Worauf man beim SaaS-Lizenzmodell für Personaldienstleister achten sollte
 
 ## Benchmark URLs
 
-1. https://www.sage.com/de-de/blog/lohnabrechnung-erstellen/ — direkter Wettbewerber mit hoher Domain Authority, rankt auf mehrere der Ziel-Keywords und setzt den inhaltlichen Standard für den Abschnitt zur Lohnabrechnung
-2. https://www.haufe.de/personal/hr-management/zeitarbeit-aueg/ — redaktionell starke Compliance-Ressource, zeigt wie AÜG-Inhalte für Praktiker aufbereitet werden sollten
-3. https://www.indeed.com/lead/cost-per-click-jobwerbung — relevant als Referenz für den Abschnitt zu Stellenanzeigen und Indeed-Alternativen, liefert Vergleichswerte zu CPCs
+1. https://www.haufe.de/personal/hr-management/bewerber-finden_80_576682.html — rankender Ratgeberartikel zu Bewerberfindung mit hoher Domainautorität, zeigt welche Informationstiefe Google erwartet
+2. https://www.jobware.de/content/ratgeber/stellenanzeige-schalten/ — praxisnaher Artikel zum Stellenanzeige schalten, direkt im Wettbewerb um transaktionale Keywords
+3. https://www.tenhil.de/blog/indeed-alternative/ — Artikel einer Recruiting-Plattform zu Indeed-Alternativen, zeigt wie Wettbewerber kommerzielles Intent mit Content abfangen
 
 ## Call to Action
 
-Demo von zvoove buchen: Leser werden direkt eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove Lohnabrechnung nach AÜG, Multiposting und Offboarding in einer Oberfläche vereint, inklusive kurzem Selbst-Check-Formular mit drei Fragen zur aktuellen Softwarelandschaft im Betrieb.
+Jetzt kostenlose Demo von zvoove vereinbaren und live sehen, wie Multiposting, Bewerbermanagement, AÜG-Dokumentation und Lohnabrechnung in einer Plattform zusammenspielen, ohne Doppelerfassung und ohne Systembrüche.

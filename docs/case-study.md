@@ -1,4 +1,4 @@
-# Case Study: SEO Keyword Pipeline für zvoove
+# Case Study: SEO Keyword → ContentBrief Pipeline für zvoove
 
 > Eine Pipeline, die aus dem zvoove Blog ein priorisiertes Keyword Set ableitet, thematisch clustert, pro Cluster einen Content Brief erzeugt und ein konsolidiertes Reporting liefert.
 

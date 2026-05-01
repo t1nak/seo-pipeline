@@ -44,10 +44,10 @@ Für ein privates Sheet, das nach jedem Pipeline-Lauf aktualisiert wird, schreib
 **Einmaliges Setup:**
 
 1. **Google-Cloud-Projekt anlegen** auf [console.cloud.google.com](https://console.cloud.google.com).
-2. **Sheets-API aktivieren** unter `APIs & Services → Library → Google Sheets API → Enable`.
-3. **Service Account erstellen** unter `IAM & Admin → Service Accounts → Create`. Name frei wählbar, Rollen leer lassen.
-4. **JSON-Key herunterladen** beim erstellten Service Account unter `Keys → Add Key → JSON`. Die Datei enthält ein Feld `client_email`, das sieht aus wie `xyz@projekt.iam.gserviceaccount.com`.
-5. **Sheet anlegen** in Google Sheets, zwei Tabs benennen: `Clusters`, `Keywords`. Sheet mit der `client_email` aus Schritt 4 teilen, Editor-Rechte.
+2. **Sheets-API aktivieren.** Direkter Link: `https://console.cloud.google.com/apis/library/sheets.googleapis.com?project={PROJECT_ID}` (Projekt-ID einsetzen). „Enable" klicken und ~10 Sekunden warten bis „API enabled" steht. Ohne diesen Schritt scheitert der Sync später mit `403: API has not been used`.
+3. **Service Account erstellen** unter `IAM & Admin → Service Accounts → Create`. Name frei wählbar (z.B. `seo-pipeline-sync`), Rollen leer lassen, optionale Permission- und Principal-Steps überspringen.
+4. **JSON-Key herunterladen** beim erstellten Service Account unter `Keys → Add Key → Create new key → JSON`. Die Datei enthält ein Feld `client_email`, das sieht aus wie `xyz@projekt.iam.gserviceaccount.com`. Diese E-Mail brauchst du gleich.
+5. **Sheet anlegen** in Google Sheets, zwei Tabs benennen: `Clusters`, `Keywords`. Sheet mit der `client_email` aus Schritt 4 teilen, Editor-Rechte. Häkchen „Notify people" entfernen (Service Accounts haben kein Postfach).
 6. **Sheet-ID** aus der URL kopieren: `https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit`.
 
 **Lokal ausführen:**
@@ -82,6 +82,16 @@ Beim Auslösen des `Pipeline (full)`-Workflows den Toggle `sheets_sync` auf `tru
 | `GOOGLE_SHEETS_CREDENTIALS_JSON` | — | JSON-Inhalt direkt. Für CI-Secrets. |
 
 `--force` umgeht den `_ENABLED`-Schalter, etwa für einen einmaligen lokalen Test ohne Env-Variable zu setzen.
+
+**Troubleshooting:**
+
+| Fehler | Ursache | Fix |
+|---|---|---|
+| `APIError: [403]: Google Sheets API has not been used in project ...` | Sheets-API ist im GCP-Projekt nicht aktiviert | Setup-Schritt 2: API auf der Library-Seite aktivieren, ~10 Sekunden warten, neu auslösen. |
+| `APIError: [403]: The caller does not have permission` | Sheet ist nicht mit der Service-Account-E-Mail geteilt | Sheet öffnen, „Share", `client_email` aus der JSON eintragen, Editor-Rechte. |
+| `APIError: [404]: Requested entity was not found.` | Sheet-ID falsch oder Sheet gelöscht | ID aus der aktuellen Sheet-URL nochmal kopieren, GitHub-Variable `GOOGLE_SHEETS_ID` aktualisieren. |
+| `gspread.exceptions.WorksheetNotFound` | Tab-Name stimmt nicht mit `PIPELINE_SHEETS_CLUSTERS_TAB` / `PIPELINE_SHEETS_KEYWORDS_TAB` überein | Tab im Sheet umbenennen oder die Env-Vars anpassen. (Tabs werden bei Bedarf automatisch angelegt, aber nur wenn das Sheet noch keinen anderen Tab mit dem Namen hat.) |
+| Step 7 wird mit „Skipped" angezeigt | `sheets_sync` Toggle stand beim Workflow-Start auf `false` | Workflow neu auslösen, Toggle auf `true`. |
 
 ## Airtable
 

@@ -13,7 +13,7 @@ Die fachliche Begründung der Methodik (HDBSCAN, UMAP, Hyperparameter) liegt in 
 
 ```
 seo-pipeline/
-├── pipeline.py              # End-to-End-Orchestrator (CLI für die fünf Pipeline-Schritte)
+├── pipeline.py              # End-to-End-Orchestrator (CLI für die sechs Pipeline-Schritte)
 ├── src/
 │   ├── config.py            # Pydantic Settings, env-getrieben
 │   ├── logging_config.py    # einmalige Root-Logger-Konfiguration
@@ -26,7 +26,10 @@ seo-pipeline/
 │   ├── subcluster.py        # zweiter HDBSCAN-Pass auf einen Cluster
 │   ├── brief.py             # Schritt 4: LLM-Briefs (api | openai | max)
 │   ├── briefs_html.py       # konsolidiertes Brief-Dashboard
-│   └── report.py            # Schritt 5: Charts, Cluster-Map, KPI-Dashboard
+│   ├── report.py            # Schritt 5: Charts, Cluster-Map, KPI-Dashboard
+│   ├── export.py            # Schritt 6: JSON + CSV pro Cluster und pro Keyword
+│   ├── sync_airtable.py     # optionaler Airtable-Push (CLI: python -m src.sync_airtable)
+│   └── sync_sheets.py       # optionaler Google-Sheets-Push (CLI + Workflow-Step 7)
 ├── tests/                   # pytest, ohne Netz, ohne API-Keys
 ├── data/                    # Eingabe-CSVs (gitignored ausser baseline) + cluster_labels.yaml (Fallback)
 ├── output/                  # alle erzeugten Artefakte (CSV, PNG, HTML, MD, JSON)
@@ -79,6 +82,13 @@ flowchart LR
     P --> R[report.py]
     BR --> R
     R --> RH[output/reporting/index.html]
+    P --> X[export.py]
+    KL --> X
+    BR --> X
+    X --> XJ[output/reporting/clusters.json + keywords.json + report.json]
+    X --> XC[output/reporting/clusters.csv + keywords.csv]
+    XJ -.-> SA[sync_airtable.py · optional]
+    XJ -.-> SS[sync_sheets.py · optional]
 ```
 
 Was diese Grenze leistet:
@@ -263,6 +273,34 @@ run: |
 ```
 
 Ternary-Ausdruck der GitHub-Expression-Sprache: bei `dry_run=true` wird `--dry-run` ans Kommando angehängt, sonst nichts. So bleibt `pipeline.py` ohne Sonderlogik für den CI-Modus.
+
+**Step 6 (Export) und Step 7 (Sheets-Sync):**
+
+```yaml
+- name: Step 6 -- Export reporting (JSON + CSV für Airtable, Notion, Sheets)
+  run: python pipeline.py --step export
+
+- name: Step 7 -- Sync reporting to Google Sheets
+  if: ${{ inputs.sheets_sync }}
+  env:
+    PIPELINE_SHEETS_SYNC_ENABLED: "true"
+    PIPELINE_SHEETS_ID: ${{ vars.GOOGLE_SHEETS_ID }}
+    GOOGLE_SHEETS_CREDENTIALS_JSON: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_JSON }}
+  run: |
+    if [ -z "$GOOGLE_SHEETS_CREDENTIALS_JSON" ]; then
+      echo "::error::sheets_sync=true requires GOOGLE_SHEETS_CREDENTIALS_JSON secret."
+      exit 1
+    fi
+    python -m src.sync_sheets
+```
+
+Step 6 läuft immer und schreibt fünf flache Dateien (`clusters.json/.csv`, `keywords.json/.csv`, `report.json`) für externes Reporting. Step 7 ist optional und gated:
+
+- **`if: ${{ inputs.sheets_sync }}`** überspringt den Step komplett wenn der Toggle nicht an ist. Ergibt einen sauberen „Skipped"-Status im UI statt einer harten Annahme über fehlende Secrets.
+- **`PIPELINE_SHEETS_SYNC_ENABLED: "true"`** überschreibt den Default-Schalter in `Settings`, damit `src.sync_sheets` tatsächlich pusht statt no-op.
+- **Pre-Flight-Check** für das Secret und die Variable, gleiches Muster wie der `Verify provider secret`-Step weiter oben. Konkrete Fehlermeldung mit Link auf die Setup-Doku.
+
+Setup-Anleitung für Service Account, Secret und Variable: [`reporting-integration.md`](reporting-integration.md#variante-c-direkter-push-aus-der-pipeline-privat-automatisch).
 
 ### 7.2 `docs.yml` — Build, Encrypt, Deploy
 

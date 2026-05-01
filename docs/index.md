@@ -1,4 +1,4 @@
-# SEO Keyword Pipeline für zvoove
+# SEO Keyword → ContentBrief Pipeline für zvoove
 
 ## Was ist die SEO Pipeline?
 

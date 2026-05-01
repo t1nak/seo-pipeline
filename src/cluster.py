@@ -4,13 +4,15 @@ Reads `data/keywords.csv` (the enriched keyword set from the discover/enrich
 steps) and produces semantic clusters plus interpretable artifacts.
 
 Pipeline:
-    1. clean    drop dupes, coerce numeric columns, attach orig cluster names
-    2. embed    sentence-transformers (multilingual MiniLM) -> embeddings.npy
-    3. reduce   UMAP to 5D for clustering, 2D for visualisation
-    4. sweep    HDBSCAN parameter grid (diagnostic, prints a table)
-    5. cluster  final HDBSCAN with the chosen hyperparameters
-    6. label    attach human-readable cluster names (DE + EN)
-    7. profile  per-cluster stats CSV (size, SV, KD, CPC, intent mix)
+    1. clean         drop dupes, coerce numeric columns, attach orig cluster names
+    2. embed         sentence-transformers (multilingual MiniLM) -> embeddings.npy
+    3. reduce        UMAP to 5D for clustering, 2D for visualisation
+    4. sweep         HDBSCAN parameter grid (diagnostic, prints a table)
+    5. cluster       final HDBSCAN with the chosen hyperparameters
+    6. assign_noise  soft-assign hdb=-1 keywords to their nearest cluster centroid
+                     (default-on; sets `noise_assigned=True` for downstream styling)
+    7. label         attach human-readable cluster names (DE + EN)
+    8. profile       per-cluster stats CSV (size, SV, KD, CPC, intent mix)
 
 The hyperparameter choices (UMAP n_neighbors=15, HDBSCAN mcs=12 / ms=5 / eom)
 are documented in docs/methodology.md, including the parameter sweep result
@@ -276,6 +278,61 @@ def step_cluster() -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
+# Step 5b: assign_noise
+# ---------------------------------------------------------------------------
+
+
+def step_assign_noise() -> pd.DataFrame:
+    """Soft-assign HDBSCAN noise points to their nearest cluster centroid.
+
+    HDBSCAN marks sparse-region points with `hdb=-1`. For an SEO content
+    plan every keyword needs a home, so we re-label noise points with the
+    nearest cluster centroid in 5D UMAP space (Euclidean distance).
+
+    The original noise status is preserved in the boolean column
+    `noise_assigned` so the report and the cluster map can render border
+    keywords with a different style if desired.
+    """
+    df = pd.read_csv(F_LABELED)
+    red5 = np.load(F_UMAP_5D)
+
+    df["noise_assigned"] = df["hdb"] == -1
+    n_noise = int(df["noise_assigned"].sum())
+
+    if n_noise == 0:
+        logger.info("no noise points to assign")
+        df.to_csv(F_LABELED, index=False)
+        return df
+
+    real_clusters = sorted(int(c) for c in df["hdb"].unique() if c != -1)
+    if not real_clusters:
+        logger.warning("no real clusters to assign noise to; skipping")
+        df.to_csv(F_LABELED, index=False)
+        return df
+
+    centroids = np.array([
+        red5[(df["hdb"].values == c)].mean(axis=0)
+        for c in real_clusters
+    ])
+    noise_mask = df["noise_assigned"].values
+    noise_pts = red5[noise_mask]
+
+    dists = np.linalg.norm(noise_pts[:, None, :] - centroids[None, :, :], axis=2)
+    nearest_idx = dists.argmin(axis=1)
+    nearest_cluster = np.array([real_clusters[i] for i in nearest_idx])
+
+    new_hdb = df["hdb"].values.copy()
+    new_hdb[noise_mask] = nearest_cluster
+    df["hdb"] = new_hdb.astype(int)
+    df.to_csv(F_LABELED, index=False)
+
+    counts = Counter(nearest_cluster.tolist())
+    spread = ", ".join(f"c{cid}+{n}" for cid, n in sorted(counts.items()))
+    logger.info(f"assigned {n_noise} noise points to nearest cluster ({spread})")
+    return df
+
+
+# ---------------------------------------------------------------------------
 # Step 6: label
 # ---------------------------------------------------------------------------
 
@@ -366,12 +423,13 @@ STEPS = {
     "reduce": step_reduce,
     "sweep": step_sweep,
     "cluster": step_cluster,
+    "assign_noise": step_assign_noise,
     "label": step_label,
     "profile": step_profile,
 }
 
 # Default --all sequence (sweep is diagnostic, not part of all)
-DEFAULT_SEQUENCE = ("clean", "embed", "reduce", "cluster", "label", "profile")
+DEFAULT_SEQUENCE = ("clean", "embed", "reduce", "cluster", "assign_noise", "label", "profile")
 
 
 def main() -> None:

@@ -43,7 +43,7 @@ on:
           - "1000"
         default: "500"
       cluster_mcs:
-        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Default 15 (kombiniert mit method=leaf -> 12 Cluster), siehe Methodik."
+        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Default 10 (kombiniert mit method=eom -> 13 Cluster), siehe Methodik."
         type: choice
         options:
           - "8"
@@ -51,14 +51,14 @@ on:
           - "12"
           - "15"
           - "20"
-        default: "15"
+        default: "10"
       cluster_method:
-        description: "HDBSCAN cluster_selection_method. eom = wenige stabile Cluster, leaf = mehr feinere Cluster. Default leaf (mit mcs=15 -> 12 Cluster)."
+        description: "HDBSCAN cluster_selection_method. eom = wenige stabile Cluster, leaf = mehr feinere Cluster. Default eom (mit mcs=10 -> 13 Cluster, 14% Noise; Soft-Assignment im Cluster-Step holt jedes Keyword in einen Cluster)."
         type: choice
         options:
           - eom
           - leaf
-        default: leaf
+        default: eom
 
 permissions:
   contents: write

@@ -38,11 +38,11 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster (DE) | Keywords | SV / Monat | Ø KD | % kommerziell |
 |---|---|---|---|---|---|
-| 10 | HR und Dokumentenverwaltungssoftware | 45 | 45.567 | 53 | 89 |
-| 12 | Zeitarbeit Branche Software und Tools | 97 | 28.301 | 37 | 34 |
-| 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
-| 7 | Digitalisierung Personaldienstleistung | 37 | 23.984 | 36 | 35 |
-| 3 | Zvoove Plattform Features und Preise | 34 | 23.604 | 52 | 97 |
+| 11 | HR und Dokumentenverwaltungssoftware | 45 | 45.567 | 52 | 89 |
+| 13 | Zeitarbeit Branche Software und Tools | 97 | 28.301 | 35 | 34 |
+| 2 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 43 | 94 |
+| 8 | Digitalisierung Personaldienstleistung | 37 | 23.984 | 32 | 35 |
+| 4 | Zvoove Plattform Features und Preise | 34 | 23.604 | 51 | 97 |
 
 Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keywords erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Soft-Assignment der HDBSCAN-Rand-Keywords ist in [ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords) dokumentiert: jedes der 72 Noise-Keywords bekommt seinen nächsten Cluster-Centroid im 5D-UMAP-Raum, die ursprüngliche Noise-Eigenschaft bleibt in `noise_assigned: bool` erhalten.
 
@@ -53,10 +53,7 @@ Die interaktive Karte zum Klicken liegt unter [`output/clustering/cluster_map.ht
 Die Pipeline besteht aus vier modularen Phasen, in der aktuellen Umsetzung als fünf entkoppelte Skripte implementiert (Discover und Enrich liegen heute getrennt vor, würden bei Providern wie SEMrush oder DataForSEO aber zusammenfallen). Jeder Schritt liest klar definierte Eingaben und schreibt klar definierte Ausgaben. Das macht die Pipeline einzeln testbar und einzeln re-runnbar.
 
 ```
-                    ┌─ scrapt ──→  data/blog_topics.csv (TODO)
-discover.py ────────┤
-                    └─ erweitert →  data/keywords_seed.csv (TODO)
-
+discover.py ───→  data/keywords.manual.csv  (LLM-erzeugte 500er-Liste, aktueller Demo-Lauf)
                                         │
                                         ▼
 enrich.py ─── SV/KD/CPC ─────────→  data/keywords.csv  (kanonisch)
@@ -67,6 +64,8 @@ cluster.py  ─→  output/clustering/{cluster_map.html, embeddings.npy, charts/
 brief.py    ─→  output/briefings/cluster_NN.md
 report.py   ─→  output/reporting/index.html
 ```
+
+Discover ist Provider-offen aufgebaut. Im Demo-Lauf liefert eine LLM-erzeugte Keyword-Liste den Eintrittspunkt; ein Live-Crawl des Blogs sowie SEMrush, Ahrefs und DataForSEO sind als zusätzliche Modi vorgesehen und in Schritt 1 unten dokumentiert.
 
 Der Orchestrator `pipeline.py` kann alles in einem Lauf ausführen oder einzelne Schritte einzeln triggern. Das ist wichtig für die Praxis, weil verschiedene Schritte verschieden teuer sind: Embeddings einmal berechnen, dann Clustering Parameter mehrmals tunen.
 

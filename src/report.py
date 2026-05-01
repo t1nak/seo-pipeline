@@ -333,6 +333,25 @@ h1{font-size:28px;margin:0 0 8px;letter-spacing:-0.01em}
 """
 
 
+_SOURCE_LABELS = {
+    "llm-generated": "LLM-kuratiertes Set",
+    "manual": "Manuelle CSV",
+    "semrush": "SEMrush API",
+    "ahrefs": "Ahrefs API",
+    "dataforseo": "DataForSEO API",
+}
+
+_SOURCE_TOOLTIPS = {
+    "llm-generated": ("Eintrittspunkt: vorab mit Hilfe eines LLM aus den "
+                      "zvoove-Blog-Themen abgeleitete Keyword-Liste "
+                      "(data/keywords.manual.csv, frozen)."),
+    "manual": "Eintrittspunkt: handgepflegte CSV.",
+    "semrush": "Eintrittspunkt: SEMrush Domain-Analytics-API.",
+    "ahrefs": "Eintrittspunkt: Ahrefs Keywords-Explorer-API.",
+    "dataforseo": "Eintrittspunkt: DataForSEO Labs API.",
+}
+
+
 def _render_runs_index(runs: list[dict]) -> str:
     if not runs:
         body = '<div class="empty">Keine Läufe gefunden. Pipeline ausführen, dann erscheint hier eine Karte je Lauf.</div>'
@@ -341,11 +360,14 @@ def _render_runs_index(runs: list[dict]) -> str:
         for r in runs:
             sv = f"{r.get('total_search_volume', 0):,}".replace(",", ".")
             run_id = r['run_id']
+            source_key = r.get('source', DEFAULT_SOURCE)
+            source_label = _SOURCE_LABELS.get(source_key, source_key)
+            source_tooltip = _SOURCE_TOOLTIPS.get(source_key, f"Eintrittspunkt: {source_key}")
             cards.append(f"""
 <article class="card">
   <p class="card-id">Lauf {run_id}</p>
   <a class="card-title" href="runs/{run_id}/index.html">{r['n_keywords']} Keywords · {r['n_clusters']} Cluster</a>
-  <span class="source-badge">{r.get('source', DEFAULT_SOURCE)}</span>
+  <span class="source-badge" title="{source_tooltip}">Quelle: {source_label}</span>
   <div class="kpi-row">
     <div class="kpi"><b>{r['n_keywords']}</b><span>Keywords</span></div>
     <div class="kpi"><b>{r['n_clusters']}</b><span>Cluster</span></div>

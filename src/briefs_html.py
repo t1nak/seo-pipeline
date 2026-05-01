@@ -287,6 +287,20 @@ def _badge(label: str, kind: str) -> str:
     return f'<span class="badge badge-{kind}">{htmllib.escape(label)}</span>'
 
 
+def _format_word_count(value: str) -> str:
+    """Append "Wörter" if the value is a bare number, leave it alone otherwise.
+
+    Briefs usually contain just "2800" but the LLM occasionally returns
+    "2800 Wörter" or "2500-3000 Wörter"; we don't want to double-stamp.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return "—"
+    escaped = htmllib.escape(value.strip())
+    if "Wörter" in escaped or "Wörtern" in escaped:
+        return escaped
+    return f"{escaped} Wörter"
+
+
 def _safe_label(value, display_id: int) -> str:
     """Return a string label, falling back when the cell is missing/NaN/empty.
 
@@ -406,7 +420,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
   <p class="section-label">Zielgruppe</p>
   <p class="section-value">{htmllib.escape(zielgruppe) or "—"}</p>
 
-  {f'<p class="section-label">Schmerzpunkt</p><p class="section-value">{htmllib.escape(schmerz)}</p>' if schmerz else ''}
+  {f'<p class="section-label">Pain Points</p><p class="section-value">{htmllib.escape(schmerz)}</p>' if schmerz else ''}
 
   {f'<p class="section-label">Ziel des Artikels</p><p class="section-value">{htmllib.escape(ziel)}</p>' if ziel else ''}
 
@@ -419,7 +433,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
   {gap_html}
 
   <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
-  <p class="section-value">{htmllib.escape(wortanzahl) or "—"}</p>
+  <p class="section-value">{_format_word_count(wortanzahl)}</p>
 
   <p class="section-label">Call to Action</p>
   <div class="cta-block">{htmllib.escape(cta) or "—"}</div>
@@ -560,7 +574,7 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
   <div class="modal" role="dialog" aria-labelledby="glossar-title">
     <button class="modal-close" onclick="closeGlossar()" aria-label="Schließen">×</button>
     <h2 id="glossar-title">Glossar</h2>
-    <p class="modal-sub">Was die Kennzahlen im Dashboard bedeuten, in einfachem Deutsch.</p>
+    <p class="modal-sub">Was die Kennzahlen im Dashboard bedeuten.</p>
 
     <h3>KPI-Box ganz oben</h3>
     <table>
@@ -627,7 +641,11 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
     </table>
 
     <div class="note">
-      <b>Wichtig:</b> Die Werte sind Schätzungen aus einer deterministischen Heuristik (SHA256 Hash des Keywords als Seed), nicht echte DataForSEO Daten. Spalte <code>data_source</code> in den CSV-Dateien markiert das. In Produktion stehen hier echte Werte, die Größenordnungen sind aber realistisch genug, um die Cluster-Strategie zu bewerten.
+      <b>Wichtig — woher die Zahlen kommen:</b> SV, KD und CPC sind in dieser Demo <em>Schätzwerte</em>, keine Live-API-Daten von DataForSEO oder Semrush.
+      <br><br>
+      Die Schätzung ist eine <b>deterministische Heuristik</b>: jedes Keyword wird per SHA256 in einen Hash umgewandelt, und Bytes aus diesem Hash bestimmen die konkreten Zahlen innerhalb plausibler Bereiche (Head-Keywords bekommen z.B. höhere SV-Bereiche als Longtails, kommerzielle Intent höhere CPC). „Deterministisch" heißt: dasselbe Keyword liefert in jedem Lauf die exakt gleiche Schätzung, weil der Hash nur vom Wort abhängt, nicht vom Zeitpunkt.
+      <br><br>
+      Vorteil: kostenlos, reproduzierbar, plausible Größenordnung — reicht zum Bewerten der Cluster-Strategie. Spalte <code>data_source</code> in den CSV-Dateien markiert jedes Keyword als <code>estimated</code>. In einer produktiven Pipeline (Schalter <code>--provider dataforseo</code>) stehen an dieser Stelle echte API-Werte.
     </div>
   </div>
 </div>

@@ -1,5 +1,9 @@
 # Reporting-Anbindung
 
+!!! tip "Live-Demo: Reporting in Google Sheets"
+    Diese Pipeline pusht nach jedem Lauf in ein echtes Google Sheet, das du direkt anschauen kannst:
+    [**docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ**](https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit) (zwei Tabs: `Clusters`, `Keywords`)
+
 Der `export`-Schritt der Pipeline schreibt fünf Dateien nach `output/reporting/`:
 
 | Datei | Inhalt | Empfohlenes Tool |

@@ -14,7 +14,7 @@ Der `export`-Schritt der Pipeline schreibt fünf Dateien nach `output/reporting/
 | `clusters.csv` | Wie `clusters.json`, mit aufgelösten Brief-Feldern (Prefix `brief_`) und Pipe-separierten Listen | Google Sheets, Excel |
 | `keywords.csv` | Wie `keywords.json`, mit Pipe-separierten Listen | Google Sheets, Excel |
 
-Diese Seite zeigt zwei konkrete Anbindungen, die in fünf Minuten lauffähig sind.
+Diese Seite zeigt die Google-Sheets-Anbindung im Detail. Push nach Airtable und Notion lässt sich genauso leicht ergänzen, weil die Pipeline beides als JSON exportiert und Skripte für direkten API-Push mitbringt.
 
 ## Google Sheets
 
@@ -97,71 +97,12 @@ Beim Auslösen des `Pipeline (full)`-Workflows den Toggle `sheets_sync` auf `tru
 | `gspread.exceptions.WorksheetNotFound` | Tab-Name stimmt nicht mit `PIPELINE_SHEETS_CLUSTERS_TAB` / `PIPELINE_SHEETS_KEYWORDS_TAB` überein | Tab im Sheet umbenennen oder die Env-Vars anpassen. (Tabs werden bei Bedarf automatisch angelegt, aber nur wenn das Sheet noch keinen anderen Tab mit dem Namen hat.) |
 | Step 7 wird mit „Skipped" angezeigt | `sheets_sync` Toggle stand beim Workflow-Start auf `false` | Workflow neu auslösen, Toggle auf `true`. |
 
-## Airtable
+## Airtable und Notion
 
-Die Pipeline bringt einen Sync-Befehl mit, der `clusters.json` und `keywords.json` direkt in eine Airtable-Base hochlädt.
+Beide Tools sind über die Pipeline-Outputs leicht anschließbar:
 
-### Setup
-
-1. **Token anlegen.** Auf [airtable.com/create/tokens](https://airtable.com/create/tokens) einen Personal Access Token erzeugen. Scopes: `data.records:read` und `data.records:write`. Access auf eine konkrete Base beschränken.
-
-2. **Base erstellen.** Im Airtable-UI eine leere Base anlegen. Zwei Tabellen erstellen, Standardnamen sind `Clusters` und `Keywords`. (Alternativ andere Namen wählen und über `AIRTABLE_CLUSTERS_TABLE` und `AIRTABLE_KEYWORDS_TABLE` setzen.)
-
-3. **Felder anlegen.** Airtable verlangt, dass alle Felder vorab im UI existieren. Die Pipeline verrät, welche das sind:
-
-   ```bash
-   python -m src.sync_airtable --print-schema
-   ```
-
-   Das druckt die rund 33 Cluster-Felder und 15 Keyword-Felder mit empfohlenem Typ. Im Airtable-UI für jedes Feld den passenden Typ wählen (`Number`, `Checkbox`, oder `Long text`). Tipp: Checkbox-Felder wie `is_noise` müssen in Airtable explizit als `Checkbox` angelegt sein, damit `true`/`false` korrekt landet.
-
-4. **Base-ID herauslesen.** Auf [airtable.com/api](https://airtable.com/api) die eigene Base anklicken. In der URL-Leiste steht jetzt etwas wie `airtable.com/appXXXXXXXXX/...`. Der Teil mit dem `app`-Prefix ist die Base-ID.
-
-5. **Umgebungsvariablen setzen** (oder als CLI-Flags übergeben):
-
-   ```bash
-   export AIRTABLE_TOKEN=patXXXXXXXXX
-   export AIRTABLE_BASE_ID=appXXXXXXXXX
-   ```
-
-### Sync ausführen
-
-```bash
-# Vorschau ohne Upload
-python -m src.sync_airtable --dry-run
-
-# Voller Sync
-python -m src.sync_airtable
-
-# Nur eine Tabelle
-python -m src.sync_airtable --tables clusters
-```
-
-**Sync-Strategie:** Die Tabelle wird vor jedem Lauf vollständig geleert und mit den aktuellen Records neu befüllt. Das ist absichtlich einfach, weil jeder Pipeline-Lauf einen vollständigen Snapshot erzeugt. Inkrementelle Updates wären für die übliche Lauffrequenz (täglich oder seltener) unnötiger Komplexitäts-Aufwand.
-
-**Linked Records (optional):** Standardmäßig steht in beiden Tabellen die `cluster_id` als Number-Feld. Wer in Airtable explizite Verknüpfungen will, konvertiert das `cluster_id`-Feld in der `Keywords`-Tabelle nachträglich auf den Typ `Link to another record` mit Ziel `Clusters`. Airtable zeigt dann pro Cluster automatisch alle zugehörigen Keywords.
-
-### Views, die sich für die zvoove-Daten lohnen
-
-In Airtable in der `Clusters`-Tabelle:
-
-- `Pillar-Kandidaten`: Filter `intent_dominant = commercial` und `total_search_volume > 10000`, sortiert nach `mean_priority`.
-- `Quick Wins`: Filter `mean_kd < 30` sortiert nach `total_search_volume`.
-- `Redaktions-Backlog`: Gruppiert nach `intent_dominant`, sortiert nach `rank_by_sv`.
-
-In der `Keywords`-Tabelle:
-
-- `Top Priority`: Sortiert nach `priority_score`, gefiltert auf `is_noise = false`.
-- `Pro Cluster`: Gruppiert nach `cluster_label_de`.
-
-## Notion
-
-Notion hat eine ähnliche API, aber bewusst kein dediziertes Sync-Modul in dieser Pipeline. Gründe:
-
-- Die Notion-API erlaubt nur einen Page-Insert pro Call, kein Bulk. Bei 500 Keywords sind das 500 Calls (langsam, Rate-Limit-anfällig).
-- Schema-Mapping ist fummeliger: Notion-Properties haben mehr Typen (relation, select-with-color, formula), die per UI gepflegt werden wollen.
-
-Wenn Notion das Zielsystem ist, der pragmatischste Weg: `clusters.csv` per `Importieren → CSV` in eine Notion-Database laden. Notion erkennt Spaltentypen automatisch und legt Properties an. Nachteil: ein neuer Lauf erzeugt eine neue Database-Page statt die alte zu überschreiben. Für reine Stakeholder-Sicht (kein bidirektionales Editieren) reicht das.
+- **Airtable:** `python -m src.sync_airtable --print-schema` zeigt die rund 33 Cluster- und 15 Keyword-Felder, die in der Base anzulegen sind. Mit `AIRTABLE_TOKEN` und `AIRTABLE_BASE_ID` pusht `python -m src.sync_airtable` die JSONs direkt in die Tabellen `Clusters` und `Keywords`.
+- **Notion:** `clusters.csv` per `Importieren → CSV` in eine Database laden, Notion erkennt die Spaltentypen automatisch. Für einen direkten API-Push (Bulk-Insert nicht unterstützt, 500 Calls bei 500 Keywords) lässt sich das Sync-Pattern aus `src/sync_airtable.py` übernehmen.
 
 ## Looker Studio / Metabase
 

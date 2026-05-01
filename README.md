@@ -38,8 +38,8 @@ Sie nimmt den bestehenden Blog [zvoove.de/wissen/blog](https://zvoove.de/wissen/
 
 - 500 Keywords (Cap aus 504 manuellem Baseline-Set), 13 thematische Cluster, **0 Outlier** bei `mcs=10, ms=5, eom` plus Soft-Assignment der HDBSCAN-Rand-Keywords ([ADR-15](docs/decisions.md))
 - Gesamt Suchvolumen: 239.976 pro Monat (geschätzt, alle Cluster zusammen)
-- Größter Cluster nach SV: HR Software Dokumenten- und Mitarbeiterverwaltung (45.567 SV / Monat, 45 Keywords)
-- Höchste kommerzielle Dichte: Zvoove Produkte und Features (97 Prozent kommerziell, 23.604 SV)
+- Größter Cluster nach SV: HR und Dokumentenverwaltungssoftware (45.567 SV / Monat, 45 Keywords)
+- Höchste kommerzielle Dichte: Zvoove Plattform Features und Preise (97 Prozent kommerziell, 23.604 SV)
 - Cluster-Labels werden pro Lauf von Anthropic Haiku erzeugt (siehe [`docs/decisions.md`](docs/decisions.md) ADR-5), `data/cluster_labels.yaml` bleibt als Fallback für Demo-Läufe ohne API-Key
 - Methodische Validierung: Silhouette 0,647 auf den 428 HDBSCAN-Kern-Keywords, 0,570 inklusive der 72 Soft-Assignments. ARI gegen Ward(k=10): 0,811. Details in [`docs/methodology.md`](docs/methodology.md)
 - Frühere Läufe (z.B. `mcs=15/leaf` mit 130 Outliern oder `mcs=12/eom` mit 188-Sammelcluster) sind als Snapshots in `output/_archive/` gepinnt

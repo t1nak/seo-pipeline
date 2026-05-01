@@ -161,7 +161,7 @@ Die HDBSCAN Parameter wurden nicht geraten, sondern gemessen. Reproduzierbar mit
 
 Die Wahl fällt auf **`mcs=10, ms=5, eom`**: 13 Cluster, 72 Noise-Punkte (14 Prozent), Silhouette 0,647. Diese 72 Noise-Keywords werden anschließend per Soft-Assignment ihrem nächsten Cluster zugeordnet (siehe Abschnitt 5.1). Endzustand: 13 Cluster, 500 Keywords, 0 Outlier. Die Begründung folgt aus vier Beobachtungen.
 
-**1. Granularität schlägt Konsolidierung, wenn jeder Cluster ein Content-Brief wird.** Die `eom`-Spalte mit `mcs=12` würde nur 10 Cluster liefern, dabei entsteht aber ein Sammelcluster mit 188 Keywords, der AÜG, Equal Pay, Höchstüberlassungsdauer und Debitorenmanagement vermischt. Ein einziger Brief darüber wäre redaktionell unbearbeitbar. `mcs=10` bricht diese Themen in vier separate Cluster (Cluster 5: Markt und Regulierung, Cluster 8: Liquidität und Equal Pay, Cluster 11: AÜG-Recht, Cluster 12: Sammelthemen Software/Finanzierung), von denen drei klar als Pillar-Themen taugen.
+**1. Granularität schlägt Konsolidierung, wenn jeder Cluster ein Content-Brief wird.** Die `eom`-Spalte mit `mcs=12` würde nur 10 Cluster liefern, dabei entsteht aber ein Sammelcluster mit 188 Keywords, der AÜG, Equal Pay, Höchstüberlassungsdauer und Debitorenmanagement vermischt. Ein einziger Brief darüber wäre redaktionell unbearbeitbar. `mcs=10` bricht diese Themen in vier separate Cluster (Cluster 5: Zeitarbeit-Recht und Markt, Cluster 8: Liquidität und Equal Pay, Cluster 11: AÜG-Recht, Cluster 12: Zeitarbeit Branche Software), von denen drei klar als Pillar-Themen taugen.
 
 **2. `eom` schlägt `leaf` bei der Rauschrate.** Auf der aktuellen Datenbasis liefern beide Methoden bei `mcs=10` bzw. `mcs=15` jeweils 13 Cluster. Der Unterschied: `eom` mit `mcs=10` produziert 14 Prozent Noise (72 Keywords), `leaf` mit `mcs=15` 26 Prozent (130 Keywords). 58 zusätzliche Keywords als Outlier zu markieren — darunter hochvolumige wie `dokumentenmanagement software` (5.000 SV) — ist operativ nicht tragbar. `eom` ist hier die robustere Wahl.
 
@@ -186,7 +186,7 @@ HDBSCAN-Default (`assign_noise=True` im Pipeline-Schritt) ordnet jedes als Noise
 **Verteilung der 72 Soft-Assignments im aktuellen Lauf:**
 `c3+1, c4+4, c5+10, c6+14, c7+4, c8+19, c9+1, c10+9, c11+6, c12+4`
 
-Der größte Empfänger (Cluster 8 mit +19 Keywords, +56 Prozent zur ursprünglichen Größe) absorbiert die Equal-Pay/Liquiditäts-Rand-Keywords, was thematisch zur Cluster-Identität passt. Cluster 12 (Sammelthemen) bekommt nur +4 — die Soft-Assignment macht ihn nicht „noch heterogener". Insgesamt verteilen sich die 72 Punkte gleichmäßig genug, um keine neuen Sammelcluster zu erzeugen.
+Der größte Empfänger (Cluster 8 mit +19 Keywords, +56 Prozent zur ursprünglichen Größe) absorbiert die Equal-Pay/Liquiditäts-Rand-Keywords, was thematisch zur Cluster-Identität passt. Cluster 12 (der heterogene „Zeitarbeit + X"-Cluster) bekommt nur +4 — die Soft-Assignment macht ihn nicht „noch heterogener". Insgesamt verteilen sich die 72 Punkte gleichmäßig genug, um keine neuen Sammelcluster zu erzeugen.
 
 **Auswirkung auf die Silhouette.** Die Silhouette auf den 428 HDBSCAN-Kern-Keywords beträgt 0,647. Inklusive der 72 Soft-Assigned-Keywords sinkt sie auf 0,570 — erwartet, weil Rand-Keywords per Definition näher an einer Cluster-Grenze liegen. Beide Werte sind in der Validierungs-Sektion dokumentiert.
 
@@ -243,9 +243,9 @@ ARI HDBSCAN gegen Ward(k=10) auf den HDBSCAN-Kern-Keywords: 0,859. Inklusive Sof
 
 Pro Cluster wurden die Top 10 Keywords gelesen und gegen das LLM-generierte Label gegengeprüft (Cluster-IDs 0 bis 12).
 
-- **11 von 13 Clustern sind eindeutig sauber.** Beispiel Cluster 0 (Factoring Buchhaltung und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`. Klar ein einziges Thema. Beispiel Cluster 1 (Zeiterfassung und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`, `roi zeitarbeit software`. Klar Bottom-Funnel-Software-Begriffe.
-- **Cluster 4 (Sammelthemen Lohnabrechnung und Recruiting) ist vom LLM transparent als „Sammelthemen" markiert.** Enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `offboarding prozess` — drei Sub-Themen (Compliance, Recruiting, Lohn). HDBSCAN hat hier keine ausreichende Dichte gefunden, um sie zu trennen — empfohlene Bearbeitung: Top-Keywords einzeln statt Pillar.
-- **Cluster 12 (Sammelthemen Zeitarbeit Software und Finanzierung) ist mit 97 Keywords der größte Cluster.** Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn und Branchen-Trends. Vom LLM transparent als „Sammelthemen" gelabelt. Empfohlen: Sub-Clustering vor Bearbeitung (zweiter HDBSCAN-Lauf nur auf diesem Cluster), siehe `src/subcluster.py`.
+- **11 von 13 Clustern sind eindeutig sauber.** Beispiel Cluster 0 (Factoring Buchung und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`, `echtes factoring`, `factoring kfw`. Klar ein einziges Thema. Beispiel Cluster 1 (Zeiterfassung und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`, `roi zeitarbeit software`. Klar Bottom-Funnel-Software-Begriffe.
+- **Cluster 4 (aktuell „Lohnabrechnung und Bewerberverwaltung") ist heterogen.** Enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`, `offboarding prozess` — drei Sub-Themen (Compliance, Recruiting, Lohn). HDBSCAN hat hier keine ausreichende Dichte gefunden, um sie zu trennen — empfohlene Bearbeitung: Top-Keywords einzeln statt Pillar.
+- **Cluster 12 (aktuell „Zeitarbeit Branche Software und Tools") ist mit 97 Keywords der größte Cluster.** Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn und Branchen-Trends. Empfohlen: Sub-Clustering vor Bearbeitung (zweiter HDBSCAN-Lauf nur auf diesem Cluster), siehe `src/subcluster.py`.
 
 Beide markierten Sammel-Cluster bleiben sichtbar als solche, statt durch andere Hyperparameter künstlich aufgespalten zu werden — das wäre eine Verschleierung der zugrunde liegenden Datendichte.
 

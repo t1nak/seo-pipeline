@@ -186,11 +186,11 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster | Keywords | SV / Monat | Ø KD | % komm. |
 |---|---|---|---|---|---|
-| 10 | HR-Verwaltungssoftware für KMU | 45 | 45.567 | 53 | 89 |
-| 12 | Zeitarbeit Software und Prozessmanagement | 97 | 28.301 | 37 | 34 |
-| 1 | Zeiterfassungs- und Arbeitszeitverwaltung | 47 | 26.159 | 48 | 94 |
-| 7 | Digitalisierung Personaldienstleistungen und KI | 37 | 23.984 | 36 | 35 |
-| 8 | Liquidität und Tarifkosten Zeitarbeit | 34 | 15.571 | 33 | 18 |
+| 10 | HR und Dokumentenverwaltungssoftware | 45 | 45.567 | 53 | 89 |
+| 12 | Zeitarbeit Branche Software und Tools | 97 | 28.301 | 37 | 34 |
+| 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
+| 7 | Digitalisierung Personaldienstleistung | 37 | 23.984 | 36 | 35 |
+| 3 | Zvoove Plattform Features und Preise | 34 | 23.604 | 52 | 97 |
 
 HDBSCAN findet 13 Cluster aus den Daten heraus (`mcs=10, eom`). 72 Rand-Keywords werden per Soft-Assignment ihrem nächsten Cluster-Centroid zugeordnet ([ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) — alle 500 Keywords haben einen Pillar. Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Zwei Cluster sind vom LLM transparent als „Sammelthemen" markiert und benötigen Sub-Clustering vor redaktioneller Bearbeitung.
 

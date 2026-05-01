@@ -48,6 +48,7 @@ nav:
       - methodology.md
       - Entscheidungen: decisions.md
     - Ergebnisse: results.md
+    - Reporting-Anbindung: reporting-integration.md
     - Developer Guide: developer-guide.md
     - Technical Review: technical_review.md
   - Beispiel-Output:

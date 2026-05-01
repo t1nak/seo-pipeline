@@ -1,0 +1,1138 @@
+[
+  {
+    "cluster_id": 10,
+    "display_id": 11,
+    "rank_by_sv": 1,
+    "is_noise": false,
+    "label_de": "HR Software Dokumentenverwaltung und Mitarbeiterverwaltung",
+    "label_en": "HR Software Document and Employee Management",
+    "n_keywords": 45,
+    "total_search_volume": 45567,
+    "median_search_volume": 262,
+    "mean_kd": 52.5,
+    "median_kd": 52,
+    "mean_cpc_eur": 6.47,
+    "mean_priority": 16.9,
+    "pct_commercial": 89.0,
+    "intent_dominant": "commercial",
+    "top_keywords_by_sv": [
+      "dokumentenmanagement software",
+      "bewerbermanagement software",
+      "mitarbeiterverwaltung software",
+      "hr software kmu",
+      "gehaltsabrechnung software"
+    ],
+    "top_keywords_by_priority": [
+      "dokumentenmanagement software",
+      "mitarbeiterverwaltung software",
+      "hr software kmu"
+    ],
+    "top_terms": [
+      "bewerbermanagement",
+      "management",
+      "facility",
+      "vergleich",
+      "dokumentenmanagement",
+      "mitarbeiterverwaltung"
+    ],
+    "brief": {
+      "title": "HR Software für KMU: Mitarbeiterverwaltung, Dokumente und Abrechnung in einer Lösung",
+      "main_keyword": "hr software kmu",
+      "secondary_keywords": [
+        "mitarbeiterverwaltung software",
+        "dokumentenmanagement software",
+        "bewerbermanagement software",
+        "gehaltsabrechnung software",
+        "ats software",
+        "aüg software"
+      ],
+      "search_intent_text": "commercial, mixed, Suchende vergleichen aktiv Softwarelösungen und suchen nach einer konsolidierten HR-Plattform, die mehrere Einzeltools ersetzt.",
+      "recommended_word_count": 2800,
+      "target_audience": "HR-Leiter oder Geschäftsführer eines deutschen KMU mit 50 bis 500 Mitarbeitern, oft in Zeitarbeit, Gebäudedienstleistung oder Facility Management, der aktuell mit Excel-Listen, Papierordnern oder fragmentierten Einzellösungen arbeitet.",
+      "pain_point": "Personalakten liegen in drei verschiedenen Systemen, Lohnabrechnung läuft über eine externe Steuerkanzlei, und Bewerberdaten stecken in E-Mail-Postfächern. Bei einer Betriebsprüfung oder AÜG-Kontrolle dauert es Stunden, die richtigen Dokumente zusammenzusuchen. Gleichzeitig wächst das Team, neue gesetzliche Anforderungen kommen hinzu, und der manuelle Aufwand frisst jede Woche mehrere Arbeitstage.",
+      "article_goal": "Der Leser soll verstehen, welche HR-Funktionen eine einzige Plattform abdecken muss, um den Verwaltungsaufwand in KMU spürbar zu senken, und danach eine Demo oder einen direkten Produktvergleich anfragen.",
+      "h1": "HR Software für KMU: Mitarbeiterverwaltung, Dokumentenmanagement und Gehaltsabrechnung in einer Lösung",
+      "h2_outline": [
+        "Warum KMU an zu vielen HR-Insellösungen scheitern",
+        "Kernfunktionen einer HR Software für KMU im Überblick",
+        "Besondere Anforderungen in Zeitarbeit und Gebäudedienstleistung",
+        "Auswahlkriterien: Worauf KMU beim Softwarevergleich wirklich achten sollten",
+        "Typische Fehler beim HR-Software-Kauf in KMU",
+        "Checkliste: Das muss eine HR Software für KMU leisten",
+        "Fazit und nächste Schritte: So finden KMU die passende Lösung"
+      ],
+      "content_gaps": [
+        "Marktführer im deutschen KMU-Segment, hohe Domain Authority, rankt für fast alle Zielkeywords dieses Clusters",
+        "starker Inhaltsanbieter mit breiter Keyword-Abdeckung im Bereich Gehaltsabrechnung und Mitarbeiterverwaltung",
+        "direkter Wettbewerber mit Fokus auf ATS und Bewerbermanagement für den deutschen Mittelstand"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.personio.de/hr-software/",
+          "note": "Marktführer im deutschen KMU-Segment, hohe Domain Authority, rankt für fast alle Zielkeywords dieses Clusters"
+        },
+        {
+          "url": "https://www.sage.com/de-de/blog/hr-software-kmu/",
+          "note": "starker Inhaltsanbieter mit breiter Keyword-Abdeckung im Bereich Gehaltsabrechnung und Mitarbeiterverwaltung"
+        },
+        {
+          "url": "https://www.rexx-systems.com/hr-software/",
+          "note": "direkter Wettbewerber mit Fokus auf ATS und Bewerbermanagement für den deutschen Mittelstand"
+        }
+      ],
+      "cta": "Demo von zvoove HR anfordern: zeigen, wie Mitarbeiterverwaltung, Dokumentenmanagement und AÜG-Compliance in einer Plattform funktionieren, inklusive Live-Walkthrough für Zeitarbeit oder Gebäudedienstleistung.",
+      "source_path": "output/briefings/cluster_11.md"
+    },
+    "brief_md_path": "briefings/cluster_11.md"
+  },
+  {
+    "cluster_id": 12,
+    "display_id": 13,
+    "rank_by_sv": 2,
+    "is_noise": false,
+    "label_de": "Sammelthemen Zeitarbeit Software und Finanzierung",
+    "label_en": "Catch-all Staffing Software and Financing",
+    "n_keywords": 97,
+    "total_search_volume": 28301,
+    "median_search_volume": 131,
+    "mean_kd": 36.5,
+    "median_kd": 35,
+    "mean_cpc_eur": 3.45,
+    "mean_priority": 7.4,
+    "pct_commercial": 34.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "zeitarbeit programm",
+      "zeitarbeit branche entwicklung",
+      "factoring zeitarbeit",
+      "crm zeitarbeit",
+      "lohnabrechnung zeitarbeit"
+    ],
+    "top_keywords_by_priority": [
+      "zeitarbeit programm",
+      "zeitarbeit branche entwicklung",
+      "factoring zeitarbeit"
+    ],
+    "top_terms": [
+      "zeiterfassung",
+      "factoring",
+      "lohnabrechnung",
+      "saas",
+      "pflege",
+      "dsgvo"
+    ],
+    "brief": {
+      "title": "Zeitarbeit Software 2025: CRM, Lohnabrechnung, Einsatzplanung und Factoring in einer Plattform",
+      "main_keyword": "zeitarbeit programm",
+      "secondary_keywords": [
+        "crm zeitarbeit",
+        "lohnabrechnung zeitarbeit",
+        "einsatzplanung zeitarbeit",
+        "factoring zeitarbeit",
+        "saas zeitarbeit",
+        "zeiterfassung zeitarbeit",
+        "zeitarbeit branche entwicklung"
+      ],
+      "search_intent_text": "mixed, Nutzer vergleichen aktiv Softwarelösungen und informieren sich gleichzeitig über Branchentrends, um eine Kaufentscheidung vorzubereiten.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder Niederlassungsleiter eines mittelständischen Zeitarbeitsunternehmens mit 50 bis 500 Mitarbeitern auf Abruf, der seine Softwarelandschaft konsolidieren will.",
+      "pain_point": "Drei oder vier Insellösungen für Disposition, Lohnabrechnung und CRM fressen täglich Stunden durch manuelle Datenpflege und doppelte Eingaben. Der Margendruck in der Branche wächst, aber das interne Team hat keine Kapazität, einen aufwendigen Systemwechsel zu stemmen. Dazu kommt die Frage der Liquidität: Ohne funktionierendes Factoring fehlt der Puffer, wenn Kunden langsam zahlen und gleichzeitig Löhne fristgerecht raus müssen.",
+      "article_goal": "Der Leser soll verstehen, welche Kernmodule eine moderne Zeitarbeit-Software abdecken muss, wie Factoring in den Cashflow-Kreislauf passt, und warum eine integrierte SaaS-Plattform die wirtschaftlichere Wahl gegenüber Einzellösungen ist.",
+      "h1": "Zeitarbeit Software 2025: Was ein modernes Programm wirklich können muss",
+      "h2_outline": [
+        "Warum die Zeitarbeitsbranche unter besonderem Softwaredruck steht",
+        "Die fünf Kernmodule, die kein Zeitarbeitsunternehmen missen sollte",
+        "Factoring in der Zeitarbeit: Wie das Modell funktioniert und was Software leisten muss",
+        "SaaS vs. On-Premise: Welches Modell passt zu welcher Unternehmensgröße",
+        "Branchenspezifische Anforderungen: Pflege und Handwerk als Sonderfall",
+        "Worauf es beim Software-Vergleich wirklich ankommt",
+        "Fazit und Marktausblick: Zeitarbeit-Software als strategischer Hebel"
+      ],
+      "content_gaps": [
+        "deckt Lohnabrechnung und Tarifsysteme ab, rankt auf relevante Longtails, zeigt aber keine Gesamtplattform-Perspektive",
+        "hohe Domain Authority, informationaler Content zur Branche, gut zum Verstehen der Suchintention rund um Branchenentwicklung",
+        "Haufe-Ratgeberartikel mit Modulübersicht, direkter Wettbewerb bei informationals, aber ohne SaaS- und Factoring-Tiefe"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.sage.com/de-de/blog/lohnabrechnung-zeitarbeit/",
+          "note": "deckt Lohnabrechnung und Tarifsysteme ab, rankt auf relevante Longtails, zeigt aber keine Gesamtplattform-Perspektive"
+        },
+        {
+          "url": "https://www.jobware.de/ratgeber/zeitarbeit/",
+          "note": "hohe Domain Authority, informationaler Content zur Branche, gut zum Verstehen der Suchintention rund um Branchenentwicklung"
+        },
+        {
+          "url": "https://www.haufe.de/personal/hr-management/zeitarbeit-software_80_583210.html",
+          "note": "Haufe-Ratgeberartikel mit Modulübersicht, direkter Wettbewerb bei informationals, aber ohne SaaS- und Factoring-Tiefe"
+        }
+      ],
+      "cta": "Demo buchen: Leser werden eingeladen, eine 30-minütige Live-Demo von zvoove zu vereinbaren, in der alle fünf Kernmodule, inklusive der Factoring-Schnittstelle, anhand echter Zeitarbeitsdaten gezeigt werden.",
+      "source_path": "output/briefings/cluster_13.md"
+    },
+    "brief_md_path": "briefings/cluster_13.md"
+  },
+  {
+    "cluster_id": 1,
+    "display_id": 2,
+    "rank_by_sv": 3,
+    "is_noise": false,
+    "label_de": "Zeiterfassung und Zeitarbeitssoftware",
+    "label_en": "Time Tracking and Staffing Software",
+    "n_keywords": 47,
+    "total_search_volume": 26159,
+    "median_search_volume": 149,
+    "mean_kd": 47.6,
+    "median_kd": 43,
+    "mean_cpc_eur": 6.47,
+    "mean_priority": 9.3,
+    "pct_commercial": 94.0,
+    "intent_dominant": "commercial",
+    "top_keywords_by_sv": [
+      "zeiterfassung software",
+      "mobile zeiterfassung",
+      "zeitarbeitssoftware",
+      "roi zeitarbeit software",
+      "zeitarbeit software"
+    ],
+    "top_keywords_by_priority": [
+      "zeitarbeitssoftware",
+      "zeiterfassung software",
+      "mobile zeiterfassung"
+    ],
+    "top_terms": [
+      "zeiterfassung",
+      "cloud",
+      "mobile",
+      "dsgvo",
+      "zeitarbeitssoftware",
+      "lohnabrechnung"
+    ],
+    "brief": {
+      "title": "Zeitarbeitssoftware mit integrierter Zeiterfassung: So wählen Sie die richtige Lösung",
+      "main_keyword": "zeitarbeitssoftware",
+      "secondary_keywords": [
+        "zeiterfassung software",
+        "mobile zeiterfassung",
+        "zeitarbeit software",
+        "lohnabrechnung software zeitarbeit",
+        "payroll software zeitarbeit",
+        "hr software zeitarbeit",
+        "mobile zeiterfassung app"
+      ],
+      "search_intent_text": "commercial / mixed, Suchende vergleichen aktiv Softwarelösungen und bewerten Funktionsumfang, Preismodelle und ROI vor einer Kaufentscheidung.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder Niederlassungsleiter eines Zeitarbeitsunternehmens mit 5 bis 50 internen Mitarbeitern und 50 bis 500 aktiven Zeitarbeitnehmern, der seine manuelle Zeiterfassung und Lohnabrechnung endlich zusammenführen will.",
+      "pain_point": "Stundenzettel kommen per WhatsApp, per Post oder gar nicht, und am Monatsende verbringt das Team Tage damit, Daten manuell in die Lohnabrechnung zu übertragen. Fehler in der Abrechnung führen zu Beschwerden der Zeitarbeitnehmer, im schlimmsten Fall zu Nachzahlungen und Bußgeldern wegen fehlerhafter Mindestlohndokumentation. Der Geschäftsführer weiß, dass er eine Software braucht, hat aber keine Zeit für einen langen Evaluierungsprozess und ist unsicher, welche Lösung wirklich für Zeitarbeit gebaut ist und nicht nur umgebaut wurde.",
+      "article_goal": "Der Leser soll nach dem Lesen die fünf entscheidenden Kriterien kennen, nach denen er Zeitarbeitssoftware mit Zeiterfassung bewertet, und direkt eine Demo oder ein Erstgespräch buchen.",
+      "h1": "Zeitarbeitssoftware mit integrierter Zeiterfassung: So wählen Sie die richtige Lösung",
+      "h2_outline": [
+        "Warum generische Software für Zeitarbeit nicht funktioniert",
+        "Die fünf wichtigsten Funktionen einer guten Zeitarbeitssoftware",
+        "Mobile Zeiterfassung in der Praxis: Worauf es wirklich ankommt",
+        "ROI und Preismodelle: Was Zeitarbeitssoftware kosten darf",
+        "Integration mit Lohnabrechnung und Payroll",
+        "Compliance und gesetzliche Anforderungen",
+        "Checkliste: So wählen Sie die richtige Lösung in 5 Schritten"
+      ],
+      "content_gaps": [
+        "hohe Domain-Autorität, rankt auf generische Zeiterfassungsbegriffe, deckt aber Zeitarbeit-Spezifika nur oberflächlich ab",
+        "direkter Wettbewerber im Segment mobile Zeiterfassung, starke SEO-Struktur",
+        "Wettbewerber mit HR-Fokus, zeigt wie Funktionstiefe im Artikel als Kaufargument positioniert wird"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.sage.com/de-de/blog/zeiterfassung-zeitarbeit/",
+          "note": "hohe Domain-Autorität, rankt auf generische Zeiterfassungsbegriffe, deckt aber Zeitarbeit-Spezifika nur oberflächlich ab"
+        },
+        {
+          "url": "https://www.clockodo.com/de/zeiterfassung-fuer-zeitarbeit/",
+          "note": "direkter Wettbewerber im Segment mobile Zeiterfassung, starke SEO-Struktur"
+        },
+        {
+          "url": "https://www.rexx-systems.com/hr-software/zeitarbeit/",
+          "note": "Wettbewerber mit HR-Fokus, zeigt wie Funktionstiefe im Artikel als Kaufargument positioniert wird"
+        }
+      ],
+      "cta": "Demo buchen: Zeigen Sie mir, wie zvoove Zeiterfassung, Stundenzettelfreigabe und Lohnabrechnung in einer Plattform verbindet, inklusive Live-Kalkulation des ROI für Ihre Niederlassungsgröße.",
+      "source_path": "output/briefings/cluster_02.md"
+    },
+    "brief_md_path": "briefings/cluster_02.md"
+  },
+  {
+    "cluster_id": 7,
+    "display_id": 8,
+    "rank_by_sv": 4,
+    "is_noise": false,
+    "label_de": "Digitalisierung Personaldienstleistung und KI",
+    "label_en": "Digitalization of HR Services and AI",
+    "n_keywords": 37,
+    "total_search_volume": 23984,
+    "median_search_volume": 167,
+    "mean_kd": 35.5,
+    "median_kd": 32,
+    "mean_cpc_eur": 3.37,
+    "mean_priority": 16.8,
+    "pct_commercial": 35.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "digitalisierung zeitarbeit",
+      "digitalisierung personaldienstleistung",
+      "künstliche intelligenz personaldienstleistung",
+      "digitale zeiterfassung",
+      "elektronische lohnabrechnung"
+    ],
+    "top_keywords_by_priority": [
+      "digitalisierung zeitarbeit",
+      "digitalisierung personaldienstleistung",
+      "künstliche intelligenz personaldienstleistung"
+    ],
+    "top_terms": [
+      "digital",
+      "digitalisierung",
+      "lohnabrechnung",
+      "digitale",
+      "datenschutz",
+      "personalakte"
+    ],
+    "brief": {
+      "title": "Digitalisierung in der Personaldienstleistung: Was wirklich zählt und was nur Buzzword ist",
+      "main_keyword": "digitalisierung personaldienstleistung",
+      "secondary_keywords": [
+        "digitalisierung zeitarbeit",
+        "künstliche intelligenz personaldienstleistung",
+        "digitale personalakte",
+        "digitale lohnabrechnung",
+        "elektronische lohnabrechnung",
+        "revisionssichere archivierung",
+        "datenschutz personaldienstleister"
+      ],
+      "search_intent_text": "mixed, Entscheider recherchieren sowohl konkrete Lösungen als auch grundlegende Orientierung, bevor sie in Software investieren.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder Niederlassungsleiter einer mittelständischen Zeitarbeitsfirma mit 5 bis 50 internen Mitarbeitern, die merken, dass ihre Prozesse nicht mehr skalieren.",
+      "pain_point": "Jeden Monat kostet die manuelle Lohnabrechnung Stunden, die Fehlerquote steigt mit der Mitarbeiterzahl, und ein einziger Prüfer der Rentenversicherung kann das ganze Kartenhaus zum Einsturz bringen. Gleichzeitig werfen Softwareanbieter mit KI und Automatisierung um sich, ohne zu erklären, was das konkret im Alltag einer Zeitarbeitsfirma bedeutet. Der Entscheider weiß nicht, wo er anfangen soll, und hat Angst, in die falsche Lösung zu investieren.",
+      "article_goal": "Der Leser soll nach dem Lesen wissen, welche Digitalisierungsbausteine für Personaldienstleister wirklich praxisrelevant sind, in welcher Reihenfolge er sie angehen sollte, und warum eine integrierte Plattform isolierten Einzellösungen überlegen ist.",
+      "h1": "Digitalisierung in der Personaldienstleistung: Was wirklich zählt und was nur Buzzword ist",
+      "h2_outline": [
+        "Warum Personaldienstleister unter besonderem Digitalisierungsdruck stehen",
+        "Die fünf Kernbereiche der Digitalisierung im Überblick",
+        "Künstliche Intelligenz in der Personaldienstleistung: Hype oder echter Hebel",
+        "Sonderfall Gebäudereinigung und gewerbliche Branchen: digitale Besonderheiten",
+        "Revisionssichere Archivierung: keine Option, sondern Pflicht",
+        "Digitalisierung in Stufen: ein realistischer Fahrplan",
+        "Integrierte Plattform vs. Insellösungen: die Kostenfrage"
+      ],
+      "content_gaps": [
+        "Haufe deckt Compliance-Themen breit ab und rankt für viele informationelle Keywords in diesem Cluster.",
+        "Branchenverband mit Studiendaten zur Digitalisierung, relevant als Quellenkonkurrenz und für Verlinkungskontext.",
+        "Starker Wettbewerber im Bereich elektronische Lohnabrechnung mit hohem Domain Authority."
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.haufe.de/personal/personaldienstleistung",
+          "note": "Haufe deckt Compliance-Themen breit ab und rankt für viele informationelle Keywords in diesem Cluster."
+        },
+        {
+          "url": "https://www.ig-zeitarbeit.de/presse/studien",
+          "note": "Branchenverband mit Studiendaten zur Digitalisierung, relevant als Quellenkonkurrenz und für Verlinkungskontext."
+        },
+        {
+          "url": "https://www.datev.de/web/de/datev-shop/personalwirtschaft/lohn-und-gehalt",
+          "note": "Starker Wettbewerber im Bereich elektronische Lohnabrechnung mit hohem Domain Authority."
+        }
+      ],
+      "cta": "Demo von zvoove buchen: zeigen, wie digitale Personalakte, Zeiterfassung und Lohnabrechnung in einer Plattform zusammenlaufen, inklusive GoBD-konformer Archivierung ohne Zusatzmodul.",
+      "source_path": "output/briefings/cluster_08.md"
+    },
+    "brief_md_path": "briefings/cluster_08.md"
+  },
+  {
+    "cluster_id": 3,
+    "display_id": 4,
+    "rank_by_sv": 5,
+    "is_noise": false,
+    "label_de": "Zvoove Produkte und Features",
+    "label_en": "Zvoove Products and Features",
+    "n_keywords": 34,
+    "total_search_volume": 23604,
+    "median_search_volume": 99,
+    "mean_kd": 52.2,
+    "median_kd": 51,
+    "mean_cpc_eur": 6.44,
+    "mean_priority": 11.2,
+    "pct_commercial": 97.0,
+    "intent_dominant": "commercial",
+    "top_keywords_by_sv": [
+      "zvoove referenzen",
+      "zvoove dms",
+      "zvoove cockpit",
+      "zvoove payroll",
+      "zvoove cashlink"
+    ],
+    "top_keywords_by_priority": [
+      "zvoove referenzen",
+      "zvoove cashlink",
+      "zvoove dms"
+    ],
+    "top_terms": [
+      "zvoove",
+      "payroll",
+      "cashlink",
+      "preise",
+      "erfahrungen",
+      "cockpit"
+    ],
+    "brief": {
+      "title": "zvoove im Überblick: Alle Module, Features und echte Kundenstimmen",
+      "main_keyword": "zvoove one",
+      "secondary_keywords": [
+        "zvoove referenzen",
+        "zvoove dms",
+        "zvoove cockpit",
+        "zvoove payroll",
+        "zvoove recruit",
+        "zvoove cashlink",
+        "zvoove integration datev",
+        "zvoove kunden",
+        "zvoove alternative"
+      ],
+      "search_intent_text": "commercial, Nutzer kennen zvoove bereits oder evaluieren die Plattform aktiv gegen Alternativen und suchen Produktdetails sowie Kundennachweise zur Kaufentscheidung.",
+      "recommended_word_count": 2500,
+      "target_audience": "Geschäftsführer oder Niederlassungsleiter eines mittelständischen Personaldienstleisters mit 50 bis 500 Mitarbeitern, der aktuell eine neue Branchensoftware evaluiert oder sein bestehendes System ablösen will.",
+      "pain_point": "Der Entscheider sitzt zwischen Anbietern, die alle dasselbe versprechen, und braucht konkrete Belege statt Hochglanz-Marketing. Er fragt sich, ob zvoove wirklich alle Prozesse abdeckt, also Recruiting, Payroll, DMS und Finanzen in einem System, oder ob er wieder Insellösungen zusammenstückeln muss. Dazu kommt die Sorge, ob eine DATEV-Integration reibungslos funktioniert und ob andere Personaldienstleister in seiner Größe damit tatsächlich produktiv arbeiten.",
+      "article_goal": "Der Leser soll nach dem Lesen verstehen, welche zvoove-Module welche konkreten Probleme lösen, und genug Vertrauen aufgebaut haben, um eine Demo anzufragen oder ein Beratungsgespräch zu buchen.",
+      "h1": "zvoove One: Module, Features und was echte Kunden sagen",
+      "h2_outline": [
+        "Was ist zvoove One und für wen ist es gebaut?",
+        "Die zvoove Module im Einzelnen",
+        "Integrationen: DATEV, ERP und weitere Schnittstellen",
+        "zvoove Referenzen und Kundenstimmen",
+        "zvoove Alternative: Wann lohnt sich der Vergleich?",
+        "Implementierung und Support: Was erwartet Sie nach dem Kauf?",
+        "Fazit und nächste Schritte"
+      ],
+      "content_gaps": [
+        "Eigene Produktseite als inhaltliche Referenz und Gap-Analyse: Was fehlt dort an Tiefe, das der Artikel liefern kann.",
+        "Vergleichsplattform-Inhalte zeigen, welche Feature-Fragen Kaufinteressenten stellen.",
+        "Bewertungsportal mit echten Nutzerfeedbacks, das direkt als Suchziel konkurrierender Keywords auftritt.",
+        "Relevant weil viele Interessenten die DATEV-Schnittstelle als K.o.-Kriterium behandeln und dort recherchieren."
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.zvoove.com/produkte",
+          "note": "Eigene Produktseite als inhaltliche Referenz und Gap-Analyse: Was fehlt dort an Tiefe, das der Artikel liefern kann."
+        },
+        {
+          "url": "https://www.softgarden.de/ressourcen/glossar/",
+          "note": "Vergleichsplattform-Inhalte zeigen, welche Feature-Fragen Kaufinteressenten stellen."
+        },
+        {
+          "url": "https://www.capterra.com.de/software/133131/zvoove",
+          "note": "Bewertungsportal mit echten Nutzerfeedbacks, das direkt als Suchziel konkurrierender Keywords auftritt."
+        },
+        {
+          "url": "https://www.datev.de/web/de/datev-shop/personalwirtschaft/",
+          "note": "Relevant weil viele Interessenten die DATEV-Schnittstelle als K.o.-Kriterium behandeln und dort recherchieren."
+        }
+      ],
+      "cta": "Leser werden eingeladen, eine persönliche Produktdemo von zvoove zu buchen, idealerweise mit dem Hinweis, dass in der Demo gezielt auf das eigene Betriebsmodell (Zeitarbeit, Direktvermittlung oder gemischt) eingegangen wird.",
+      "source_path": "output/briefings/cluster_04.md"
+    },
+    "brief_md_path": "briefings/cluster_04.md"
+  },
+  {
+    "cluster_id": 8,
+    "display_id": 9,
+    "rank_by_sv": 6,
+    "is_noise": false,
+    "label_de": "Liquidität Equal Pay und Tariflandschaft",
+    "label_en": "Liquidity Equal Pay and Collective Agreements",
+    "n_keywords": 34,
+    "total_search_volume": 15571,
+    "median_search_volume": 157,
+    "mean_kd": 33.3,
+    "median_kd": 33,
+    "mean_cpc_eur": 2.49,
+    "mean_priority": 12.9,
+    "pct_commercial": 18.0,
+    "intent_dominant": "informational",
+    "top_keywords_by_sv": [
+      "debitorenmanagement",
+      "equal pay zeitarbeit",
+      "zahlungsausfall absichern",
+      "liquidität zeitarbeit",
+      "tariflandschaft zeitarbeit"
+    ],
+    "top_keywords_by_priority": [
+      "debitorenmanagement",
+      "equal pay zeitarbeit",
+      "igz tarifvertrag aktuell"
+    ],
+    "top_terms": [
+      "kosten",
+      "equal",
+      "tarifvertrag",
+      "factoring",
+      "liquidität",
+      "aktuell"
+    ],
+    "brief": {
+      "title": "Liquidität in der Zeitarbeit sichern: Equal Pay, Tariflandschaft und Debitorenmanagement im Überblick",
+      "main_keyword": "liquidität zeitarbeit",
+      "secondary_keywords": [
+        "equal pay zeitarbeit",
+        "debitorenmanagement",
+        "igz tarifvertrag aktuell",
+        "bap tarif aktuell",
+        "tariflandschaft zeitarbeit",
+        "zahlungsausfall absichern",
+        "zahlungsziele kunden"
+      ],
+      "search_intent_text": "mixed, Zeitarbeitsunternehmen suchen sowohl grundlegendes Orientierungswissen zu Tarifen und Equal Pay als auch konkrete Handlungsoptionen zum Schutz ihrer Liquidität.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder kaufmännischer Leiter eines mittelständischen Zeitarbeitsunternehmens mit 50 bis 300 Mitarbeitern, der die Marge unter Druck sieht und gleichzeitig steigende Lohnkosten durch Equal Pay und Tarifanpassungen managen muss.",
+      "pain_point": "Tariferhöhungen bei IGZ und BAP plus Equal-Pay-Pflicht ab dem 15. Einsatzmonat erhöhen die Lohnkosten sprunghaft, während Kundenzahlungsziele von 30 bis 60 Tagen die Liquidität dauerhaft belasten. Ein einziger Zahlungsausfall eines größeren Kunden kann die gesamte Vorfinanzierung der Löhne gefährden. Wer die aktuelle Tariflandschaft nicht im Griff hat, kalkuliert Angebote falsch und verliert entweder Marge oder Aufträge.",
+      "article_goal": "Der Leser soll nach dem Lesen verstehen, wie Equal Pay, aktuelle Tarifentwicklungen und strukturiertes Debitorenmanagement zusammenhängen, und konkrete Maßnahmen kennen, mit denen er seine Liquidität planbar hält.",
+      "h1": "Liquidität in der Zeitarbeit sichern: Equal Pay, Tariflandschaft und Debitorenmanagement im Überblick",
+      "h2_outline": [
+        "Warum Liquidität in der Zeitarbeit strukturell schwierig ist",
+        "Die aktuelle Tariflandschaft: IGZ und BAP im Vergleich",
+        "Equal Pay in der Zeitarbeit: Was genau gilt ab dem 15. Einsatzmonat",
+        "Debitorenmanagement: Zahlungsausfälle verhindern, bevor sie entstehen",
+        "Zahlungsausfall absichern: Instrumente im Überblick",
+        "Lohnsteuer und Sozialabgaben in der Zeitarbeit: Compliance als Liquiditätsfaktor",
+        "Fazit: Liquiditätsplanung als strategische Aufgabe, nicht als Feuerlöscheinsatz"
+      ],
+      "content_gaps": [
+        "Offizielle IGZ-Tarifseite, direkt referenziert von Suchenden nach aktuellem IGZ-Tarifvertrag, hohe thematische Autorität",
+        "BAP-Tarifübersicht, vergleichbar mit IGZ-Seite und für die Gegenüberstellung beider Systeme unverzichtbar",
+        "Gut strukturierter Ratgeberartikel zu Equal Pay mit rechtlicher Tiefe, zeigt welche Detailtiefe Suchende bei diesem Thema erwarten"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.igz.de/tarifvertrag",
+          "note": "Offizielle IGZ-Tarifseite, direkt referenziert von Suchenden nach aktuellem IGZ-Tarifvertrag, hohe thematische Autorität"
+        },
+        {
+          "url": "https://www.bap.de/tarifvertrag",
+          "note": "BAP-Tarifübersicht, vergleichbar mit IGZ-Seite und für die Gegenüberstellung beider Systeme unverzichtbar"
+        },
+        {
+          "url": "https://www.haufe.de/personal/haufe-personal-office-platin/equal-pay-in-der-arbeitnehmeruberlassung",
+          "note": "Gut strukturierter Ratgeberartikel zu Equal Pay mit rechtlicher Tiefe, zeigt welche Detailtiefe Suchende bei diesem Thema erwarten"
+        }
+      ],
+      "cta": "Demo von zvoove buchen: Zeigen lassen, wie zvoove die Equal-Pay-Fälligkeit je Mitarbeiter automatisch trackt, aktuelle Tarifentwicklungen in die Lohnkalkulation einspielt und offene Posten im Debitorenmanagement übersichtlich darstellt, damit Liquiditätslücken sichtbar werden, bevor sie entstehen.",
+      "source_path": "output/briefings/cluster_09.md"
+    },
+    "brief_md_path": "briefings/cluster_09.md"
+  },
+  {
+    "cluster_id": 4,
+    "display_id": 5,
+    "rank_by_sv": 7,
+    "is_noise": false,
+    "label_de": "Sammelthemen Lohnabrechnung und Recruiting",
+    "label_en": "Catch-all Payroll and Recruitment",
+    "n_keywords": 32,
+    "total_search_volume": 14455,
+    "median_search_volume": 176,
+    "mean_kd": 34.1,
+    "median_kd": 35,
+    "mean_cpc_eur": 2.58,
+    "mean_priority": 13.8,
+    "pct_commercial": 22.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "aüg",
+      "bewerber finden",
+      "lohnabrechnung sage",
+      "indeed alternative",
+      "offboarding prozess"
+    ],
+    "top_keywords_by_priority": [
+      "aüg",
+      "bewerber finden",
+      "lizenzmodell saas"
+    ],
+    "top_terms": [
+      "lohnabrechnung",
+      "stellenanzeige",
+      "alternative",
+      "erstellen",
+      "bewerber",
+      "finden"
+    ],
+    "brief": {
+      "title": "Lohnabrechnung, Recruiting und AÜG: Der große Überblick für Personaldienstleister",
+      "main_keyword": "lohnabrechnung erstellen",
+      "secondary_keywords": [
+        "AÜG",
+        "bewerber finden",
+        "indeed alternative",
+        "stellenanzeige schalten",
+        "offboarding prozess",
+        "lohnabrechnung muster",
+        "lohnabrechnung sage"
+      ],
+      "search_intent_text": "mixed, Nutzer suchen teils nach praktischen Anleitungen (Muster, Erstellung), teils nach konkreten Softwarelösungen und Alternativen zu bekannten Tools.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder HR-Leiter eines mittelständischen Personaldienstleisters oder einer Zeitarbeitsfirma mit 10 bis 100 Mitarbeitern, der seine Prozesse rund um Abrechnung und Recruiting konsolidieren will.",
+      "pain_point": "Lohnabrechnung, Bewerbermanagement und gesetzeskonforme AÜG-Dokumentation laufen in vielen Betrieben noch in drei verschiedenen Tools oder sogar in Excel, was zu Fehlern, Fristverstößen und vermeidbarem Zeitaufwand führt. Wechselnde Tarifverträge und AÜG-Pflichten machen jede manuelle Abrechnung zum Risiko, besonders wenn im gleichen Monat Leiharbeitnehmer zwischen Kundenbetrieben wechseln. Gleichzeitig wird der Fachkräftemangel spürbarer, sodass der Druck wächst, Stellen schneller zu besetzen, ohne teure Jobbörsen blind zu buchen.",
+      "article_goal": "Der Leser soll verstehen, wie er Lohnabrechnung, AÜG-Compliance und Recruiting in einem durchgängigen Prozess organisiert, und dabei konkret prüfen, ob eine spezialisierte All-in-one-Software wie zvoove den bisherigen Flickenteppich ersetzen kann.",
+      "h1": "Lohnabrechnung, Recruiting und AÜG: So bringen Personaldienstleister alle Prozesse unter einen Hut",
+      "h2_outline": [
+        "Warum Personaldienstleister besondere Anforderungen haben",
+        "Lohnabrechnung erstellen: Grundlagen und gesetzliche Mindestanforderungen",
+        "Bewerber finden in einem leergefegten Markt",
+        "Offboarding Prozess: Das unterschätzte Ende des Arbeitsverhältnisses",
+        "SaaS-Lizenzmodelle für Personaldienstleister: Was passt zu welcher Firmengröße",
+        "All-in-one oder Best-of-Breed: Welcher Ansatz gewinnt in der Praxis",
+        "Fazit und nächste Schritte"
+      ],
+      "content_gaps": [
+        "direkter Wettbewerber mit hoher Domain Authority, rankt auf mehrere der Ziel-Keywords und setzt den inhaltlichen Standard für den Abschnitt zur Lohnabrechnung",
+        "redaktionell starke Compliance-Ressource, zeigt wie AÜG-Inhalte für Praktiker aufbereitet werden sollten",
+        "relevant als Referenz für den Abschnitt zu Stellenanzeigen und Indeed-Alternativen, liefert Vergleichswerte zu CPCs"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.sage.com/de-de/blog/lohnabrechnung-erstellen/",
+          "note": "direkter Wettbewerber mit hoher Domain Authority, rankt auf mehrere der Ziel-Keywords und setzt den inhaltlichen Standard für den Abschnitt zur Lohnabrechnung"
+        },
+        {
+          "url": "https://www.haufe.de/personal/hr-management/zeitarbeit-aueg/",
+          "note": "redaktionell starke Compliance-Ressource, zeigt wie AÜG-Inhalte für Praktiker aufbereitet werden sollten"
+        },
+        {
+          "url": "https://www.indeed.com/lead/cost-per-click-jobwerbung",
+          "note": "relevant als Referenz für den Abschnitt zu Stellenanzeigen und Indeed-Alternativen, liefert Vergleichswerte zu CPCs"
+        }
+      ],
+      "cta": "Demo von zvoove buchen: Leser werden direkt eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove Lohnabrechnung nach AÜG, Multiposting und Offboarding in einer Oberfläche vereint, inklusive kurzem Selbst-Check-Formular mit drei Fragen zur aktuellen Softwarelandschaft im Betrieb.",
+      "source_path": "output/briefings/cluster_05.md"
+    },
+    "brief_md_path": "briefings/cluster_05.md"
+  },
+  {
+    "cluster_id": 11,
+    "display_id": 12,
+    "rank_by_sv": 8,
+    "is_noise": false,
+    "label_de": "Arbeitnehmerüberlassung Recht und Sozialversicherung",
+    "label_en": "Employee Leasing Law and Social Insurance",
+    "n_keywords": 44,
+    "total_search_volume": 14429,
+    "median_search_volume": 154,
+    "mean_kd": 30.7,
+    "median_kd": 30,
+    "mean_cpc_eur": 1.81,
+    "mean_priority": 9.2,
+    "pct_commercial": 2.0,
+    "intent_dominant": "informational",
+    "top_keywords_by_sv": [
+      "arbeitnehmerüberlassung",
+      "arbeitnehmerüberlassungsgesetz",
+      "einkommensteuer zeitarbeit",
+      "arbeitsschutz zeitarbeit",
+      "arbeitgeberanteile sozialversicherung"
+    ],
+    "top_keywords_by_priority": [
+      "arbeitnehmerüberlassungsgesetz",
+      "arbeitnehmerüberlassung",
+      "arbeitsmarkt 2026"
+    ],
+    "top_terms": [
+      "arbeitsvertrag",
+      "arbeitsmarkt",
+      "arbeitnehmerüberlassung",
+      "sozialversicherung",
+      "employer",
+      "branding"
+    ],
+    "brief": {
+      "title": "Arbeitnehmerüberlassung: Recht, Sozialversicherung und Pflichten im Überblick",
+      "main_keyword": "Arbeitnehmerüberlassung",
+      "secondary_keywords": [
+        "Arbeitnehmerüberlassungsgesetz",
+        "Arbeitgeberanteile Sozialversicherung",
+        "Arbeitsschutz Zeitarbeit",
+        "Einkommensteuer Zeitarbeit",
+        "Arbeitszeitkonto führen",
+        "Disposition Zeitarbeitnehmer"
+      ],
+      "search_intent_text": "informational, weil Suchende primär rechtliche Grundlagen, Pflichten und Prozesse verstehen wollen, bevor sie kaufen oder handeln.",
+      "recommended_word_count": 2800,
+      "target_audience": "Personalleiter oder Geschäftsführer eines mittelständischen Zeitarbeitsunternehmens (10 bis 100 Mitarbeiter intern), der seine Compliance-Prozesse professionalisieren und Haftungsrisiken reduzieren will.",
+      "pain_point": "Gesetzliche Änderungen im AÜG, bei Sozialversicherungspflichten und im Arbeitsschutz kommen schnell, aber im Tagesgeschäft bleibt kaum Zeit, den Überblick zu behalten. Fehler bei der Überlassungshöchstdauer, bei Gleichstellungsgeboten oder bei der Sozialversicherungsmeldung kosten nicht nur Bußgeld, sondern gefährden die Betriebserlaubnis. Wer Arbeitszeitkonten falsch führt oder die Disposition nicht sauber dokumentiert, sitzt bei einer Prüfung durch den Zoll oder die Deutsche Rentenversicherung schnell in der Klemme.",
+      "article_goal": "Der Leser soll die zentralen Rechtspflichten bei der Arbeitnehmerüberlassung kennen, häufige Compliance-Fehler vermeiden und verstehen, wie Software diese Prozesse absichert.",
+      "h1": "Arbeitnehmerüberlassung: Rechtliche Pflichten, Sozialversicherung und sichere Disposition",
+      "h2_outline": [
+        "Was das Arbeitnehmerüberlassungsgesetz konkret von Zeitarbeitsfirmen verlangt",
+        "Sozialversicherung in der Zeitarbeit: Was Arbeitgeber zahlen und melden müssen",
+        "Einkommensteuer in der Zeitarbeit: Was Arbeitnehmer wissen müssen und was Arbeitgeber beachten",
+        "Arbeitsschutz in der Zeitarbeit: Doppelte Verantwortung, doppeltes Risiko",
+        "Arbeitszeitkonten richtig führen: Anforderungen und typische Fehler",
+        "Disposition von Zeitarbeitnehmern: Rechtliche Fallstricke in der Praxis",
+        "Wie Software Compliance in der Zeitarbeit absichert"
+      ],
+      "content_gaps": [
+        "umfassende Darstellung der AÜG-Grundlagen, hohe Autorität im HR-Rechtsbereich",
+        "offizielle Quelle der Bundesagentur für Arbeit zu Erlaubnispflichten, signifikant für E-E-A-T",
+        "Branchenverband mit aktuellem Tarifwerk, relevant für Equal Pay und Sozialversicherungsthemen"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.haufe.de/personal/arbeitsrecht/arbeitnehmerueberlassung-rechtliche-grundlagen",
+          "note": "umfassende Darstellung der AÜG-Grundlagen, hohe Autorität im HR-Rechtsbereich"
+        },
+        {
+          "url": "https://www.bundesagentur.de/arbeitnehmerueberlassung",
+          "note": "offizielle Quelle der Bundesagentur für Arbeit zu Erlaubnispflichten, signifikant für E-E-A-T"
+        },
+        {
+          "url": "https://www.igz.de/tarifvertraege",
+          "note": "Branchenverband mit aktuellem Tarifwerk, relevant für Equal Pay und Sozialversicherungsthemen"
+        }
+      ],
+      "cta": "Demo buchen: Zeig mir, wie zvoove die Überlassungsfristen, Sozialversicherungsmeldungen und Arbeitszeitkonten deiner Zeitarbeitnehmer automatisch überwacht und dokumentiert.",
+      "source_path": "output/briefings/cluster_12.md"
+    },
+    "brief_md_path": "briefings/cluster_12.md"
+  },
+  {
+    "cluster_id": 6,
+    "display_id": 7,
+    "rank_by_sv": 9,
+    "is_noise": false,
+    "label_de": "Personalverwaltung und Einsatzplanung",
+    "label_en": "Personnel Management and Deployment Planning",
+    "n_keywords": 34,
+    "total_search_volume": 12386,
+    "median_search_volume": 121,
+    "mean_kd": 36.8,
+    "median_kd": 35,
+    "mean_cpc_eur": 2.82,
+    "mean_priority": 8.9,
+    "pct_commercial": 32.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "personaleinsatzplanung",
+      "personalakte inhalt",
+      "gehaltsabrechnung outsourcing",
+      "azubi verwaltung",
+      "karriereseite erstellen"
+    ],
+    "top_keywords_by_priority": [
+      "personaleinsatzplanung",
+      "karriereseite erstellen",
+      "personalakte inhalt"
+    ],
+    "top_terms": [
+      "personalakte",
+      "bewerbermanagement",
+      "lohnabrechnung",
+      "personaleinsatzplanung",
+      "inhalt",
+      "gehaltsabrechnung"
+    ],
+    "brief": {
+      "title": "Personaleinsatzplanung und Personalverwaltung: So behalten Personaldienstleister den Überblick",
+      "main_keyword": "personaleinsatzplanung",
+      "secondary_keywords": [
+        "personalakte inhalt",
+        "azubi verwaltung",
+        "lohnabrechnung personaldienstleister",
+        "kennzahlen personaldienstleister",
+        "saas personaldienstleister",
+        "gehaltsabrechnung outsourcing",
+        "ki bewerbermanagement"
+      ],
+      "search_intent_text": "mixed, Nutzer suchen teils nach Prozesswissen (was gehört in eine Personalakte, wie funktioniert Einsatzplanung), teils nach konkreten Softwarelösungen für Personaldienstleister.",
+      "recommended_word_count": 2800,
+      "target_audience": "Disponent oder Operations Manager in einem Personaldienstleistungs- oder Zeitarbeitsunternehmen mit 20 bis 200 Mitarbeitenden intern, der täglich mehrere Dutzend Mitarbeiter im Außeneinsatz koordiniert.",
+      "pain_point": "Excel-Tabellen und veraltete Tools reichen nicht mehr aus, sobald die Zahl der Einsatzkräfte wächst: Schichten werden doppelt vergeben, Qualifikationsnachweise fehlen bei der Kontrolle, und die Lohnabrechnung muss am Ende des Monats mühsam aus drei verschiedenen Quellen zusammengebaut werden. Dazu kommt der Druck durch Prüfungen nach dem Arbeitnehmerüberlassungsgesetz: Wer keine saubere digitale Personalakte führt, riskiert Bußgelder und verliert im schlimmsten Fall seine AÜG-Lizenz. Gleichzeitig fehlt die Zeit, sich in komplexe Softwareprojekte einzuarbeiten, während das Tagesgeschäft weiterläuft.",
+      "article_goal": "Der Leser soll verstehen, welche Prozesse in der Personalverwaltung und Einsatzplanung zusammenspielen, wo typische Fehlerquellen liegen, und warum eine integrierte SaaS-Lösung diese Probleme strukturell löst statt nur einzelne Symptome zu behandeln.",
+      "h1": "Personaleinsatzplanung und Personalverwaltung: So behalten Personaldienstleister den Überblick",
+      "h2_outline": [
+        "Warum Personaldienstleister besondere Anforderungen haben",
+        "Personaleinsatzplanung: Was wirklich dahintersteckt",
+        "Die digitale Personalakte: Pflichtinhalt und Best Practices",
+        "Lohnabrechnung und Gehaltsabrechnung: Outsourcing oder inhouse",
+        "Kennzahlen, die Personaldienstleister wirklich brauchen",
+        "KI im Bewerbermanagement und in der Einsatzplanung",
+        "SaaS für Personaldienstleister: Worauf es bei der Auswahl ankommt"
+      ],
+      "content_gaps": [
+        "Hohe Domain Authority, rankt auf generische Begriffe rund um Einsatzplanung, behandelt aber nicht die spezifischen Anforderungen von Personaldienstleistern",
+        "Stark für \"personalakte inhalt\", sehr informationslastig, kein Bezug zu Zeitarbeit oder AÜG",
+        "Direkter Wettbewerber im HR-Software-Segment, solide Abdeckung, aber kein Fokus auf Lohn-Schnittstellen oder Kennzahlen"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.sage.com/de-de/blog/personaleinsatzplanung/",
+          "note": "Hohe Domain Authority, rankt auf generische Begriffe rund um Einsatzplanung, behandelt aber nicht die spezifischen Anforderungen von Personaldienstleistern"
+        },
+        {
+          "url": "https://www.haufe.de/personal/hr-management/personalakte-was-gehoert-rein_80_479768.html",
+          "note": "Stark für \"personalakte inhalt\", sehr informationslastig, kein Bezug zu Zeitarbeit oder AÜG"
+        },
+        {
+          "url": "https://www.perbit.de/hr-wissen/personaleinsatzplanung/",
+          "note": "Direkter Wettbewerber im HR-Software-Segment, solide Abdeckung, aber kein Fokus auf Lohn-Schnittstellen oder Kennzahlen"
+        }
+      ],
+      "cta": "Demo buchen: Zeige dem Leser, wie zvoove in einer Live-Demo Einsatzplanung, digitale Personalakte und Lohnabrechnung in einem System verbindet, mit einem direkten Link zur Demo-Anfrage und dem konkreten Hinweis, dass keine IT-Kenntnisse für den Einstieg nötig sind.",
+      "source_path": "output/briefings/cluster_07.md"
+    },
+    "brief_md_path": "briefings/cluster_07.md"
+  },
+  {
+    "cluster_id": 2,
+    "display_id": 3,
+    "rank_by_sv": 10,
+    "is_noise": false,
+    "label_de": "KI-gestützte Recruiting Automatisierung",
+    "label_en": "AI-Powered Recruiting Automation",
+    "n_keywords": 34,
+    "total_search_volume": 12075,
+    "median_search_volume": 152,
+    "mean_kd": 37.2,
+    "median_kd": 38,
+    "mean_cpc_eur": 3.28,
+    "mean_priority": 10.4,
+    "pct_commercial": 44.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "ki recruiting",
+      "recruiting software",
+      "recruiting plattform",
+      "automatisierung recruiting prozess",
+      "active sourcing tools"
+    ],
+    "top_keywords_by_priority": [
+      "ki recruiting",
+      "candidate experience verbessern",
+      "automatisierung recruiting prozess"
+    ],
+    "top_terms": [
+      "recruiting",
+      "sourcing",
+      "tool",
+      "chatbot",
+      "candidate",
+      "konkurrenz"
+    ],
+    "brief": {
+      "title": "KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Bewerbungsprozess",
+      "main_keyword": "ki recruiting",
+      "secondary_keywords": [
+        "recruiting automatisieren",
+        "recruiting software",
+        "recruiting plattform",
+        "recruiting tool zeitarbeit",
+        "automatisierung recruiting prozess",
+        "applicant tracking system deutsch",
+        "ki im recruiting"
+      ],
+      "search_intent_text": "mixed, Nutzer recherchieren sowohl nach Grundlagen zu KI im Recruiting als auch nach konkreten Tools und Plattformen für den Einsatz im Tagesgeschäft.",
+      "recommended_word_count": 2800,
+      "target_audience": "Niederlassungsleiter oder Recruiting-Verantwortliche in einem Personaldienstleistungsunternehmen mit 5 bis 50 Mitarbeitern, der täglich zu viele Stellen zu besetzen hat und zu wenig Zeit für manuelle Prozesse.",
+      "pain_point": "Die Stellenbesetzungszeiten steigen, während qualifizierte Bewerber in Minuten von Wettbewerbern abgefangen werden, weil interne Prozesse noch auf E-Mail und Excel basieren. Das Tagesgeschäft lässt kaum Raum, jeden Kandidaten im richtigen Moment anzusprechen, Lebensläufe manuell zu sichten kostet Stunden, die schlicht nicht da sind. Gleichzeitig wächst der Druck von Kundenunternehmen, Vakanzen schneller zu besetzen, und jede verzögerte Besetzung ist direkt entgangener Umsatz.",
+      "article_goal": "Der Leser soll verstehen, welche Schritte im Recruiting durch KI und Automatisierung konkret abgedeckt werden können, und eine fundierte Entscheidungsgrundlage haben, welche Art von Software für Personaldienstleister und Zeitarbeitsfirmen sinnvoll ist.",
+      "h1": "KI im Recruiting: So automatisieren Personaldienstleister ihren gesamten Bewerbungsprozess",
+      "h2_outline": [
+        "Warum manuelle Recruiting-Prozesse Personaldienstleister Umsatz kosten",
+        "Was KI im Recruiting konkret bedeutet, jenseits des Hypes",
+        "Der Recruiting Funnel im Überblick: Wo Automatisierung den größten Hebel hat",
+        "Applicant Tracking System vs. All-in-One-Plattform: Was Personaldienstleister wirklich brauchen",
+        "Active Sourcing mit KI: Kandidaten finden, bevor sie aktiv suchen",
+        "Rechtliche Grenzen: Was bei KI-gestütztem Recruiting in Deutschland zu beachten ist",
+        "Einführung eines KI-Recruiting-Tools: Typische Fehler und wie man sie vermeidet"
+      ],
+      "content_gaps": [
+        "Hoch rankender Grundlagenartikel von einem bekannten HR-Software-Anbieter, zeigt die Erwartungshaltung der Zielgruppe an Tiefe und Struktur",
+        "Redaktionell starker Artikel mit Praxisbezug, relevant wegen der Abdeckung rechtlicher Aspekte und Nutzerzitate",
+        "Direkt konkurrierendes Tool erklärt ATS-Grundlagen, zeigt welche Keywords in einem Artikel sinnvoll gebündelt werden"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.personio.de/hr-lexikon/ki-recruiting/",
+          "note": "Hoch rankender Grundlagenartikel von einem bekannten HR-Software-Anbieter, zeigt die Erwartungshaltung der Zielgruppe an Tiefe und Struktur"
+        },
+        {
+          "url": "https://www.haufe.de/personal/hr-management/ki-im-recruiting_80_596160.html",
+          "note": "Redaktionell starker Artikel mit Praxisbezug, relevant wegen der Abdeckung rechtlicher Aspekte und Nutzerzitate"
+        },
+        {
+          "url": "https://www.softgarden.com/ressourcen/glossar/applicant-tracking-system/",
+          "note": "Direkt konkurrierendes Tool erklärt ATS-Grundlagen, zeigt welche Keywords in einem Artikel sinnvoll gebündelt werden"
+        }
+      ],
+      "cta": "Demo von zvoove Recruit buchen: Leser werden eingeladen, sich in einer 30-minütigen Live-Demo zeigen zu lassen, wie zvoove den Recruiting Funnel vom Stelleneingang bis zur Vermittlung automatisiert, inklusive KI-gestütztem Matching und integriertem Bewerbermanagement für Zeitarbeitsunternehmen.",
+      "source_path": "output/briefings/cluster_03.md"
+    },
+    "brief_md_path": "briefings/cluster_03.md"
+  },
+  {
+    "cluster_id": 5,
+    "display_id": 6,
+    "rank_by_sv": 11,
+    "is_noise": false,
+    "label_de": "Zeitarbeit Markt und Regulierung Deutschland",
+    "label_en": "Staffing Market and German Regulations",
+    "n_keywords": 20,
+    "total_search_volume": 11462,
+    "median_search_volume": 156,
+    "mean_kd": 33.0,
+    "median_kd": 32,
+    "mean_cpc_eur": 2.02,
+    "mean_priority": 17.6,
+    "pct_commercial": 5.0,
+    "intent_dominant": "informational",
+    "top_keywords_by_sv": [
+      "höchstüberlassungsdauer",
+      "fachkräftemangel deutschland",
+      "gig economy deutschland",
+      "gesetzliche abzüge lohn",
+      "markt zeitarbeit deutschland"
+    ],
+    "top_keywords_by_priority": [
+      "fachkräftemangel deutschland",
+      "höchstüberlassungsdauer",
+      "gig economy deutschland"
+    ],
+    "top_terms": [
+      "deutschland",
+      "erlaubnis",
+      "höchstüberlassungsdauer",
+      "überlassungsvertrag",
+      "statistik",
+      "fachkräftemangel"
+    ],
+    "brief": {
+      "title": "Zeitarbeit in Deutschland 2025: Marktdaten, AÜG-Regeln und was Verleiher wirklich wissen müssen",
+      "main_keyword": "markt zeitarbeit deutschland",
+      "secondary_keywords": [
+        "höchstüberlassungsdauer",
+        "aüg statistik meldung",
+        "sanktionen aüg verstoß",
+        "ranking zeitarbeitsfirmen deutschland",
+        "überlassungsvertrag inhalt",
+        "fachkräftemangel deutschland zeitarbeit",
+        "gig economy deutschland"
+      ],
+      "search_intent_text": "mixed, Betreiber und Compliance-Verantwortliche in Zeitarbeitsunternehmen suchen sowohl Marktdaten zur eigenen Orientierung als auch konkrete Regelungsfragen rund um das AÜG.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder Niederlassungsleiter einer mittelgroßen Zeitarbeitsfirma mit 50 bis 500 aktiven Leiharbeitnehmern, der den eigenen Marktanteil einordnen und gleichzeitig sichergehen will, keine AÜG-Verstöße zu riskieren.",
+      "pain_point": "Der Markt für Zeitarbeit schrumpft oder stagniert in manchen Segmenten, während der Fachkräftemangel gleichzeitig den Druck erhöht, schneller und flexibler zu besetzen. Wer die Höchstüberlassungsdauer oder Meldefristen der Bundesagentur für Arbeit nicht im Griff hat, riskiert empfindliche Bußgelder und den Entzug der Erlaubnis. Viele Unternehmen wissen nicht genau, wo sie im Vergleich zum Wettbewerb stehen und welche regulatorischen Stolpersteine 2025 besonders gefährlich sind.",
+      "article_goal": "Der Leser soll nach dem Lesen die aktuelle Marktlage einordnen können, die drei kritischsten AÜG-Pflichten kennen und einschätzen, wo sein Unternehmen im Branchenvergleich steht.",
+      "h1": "Zeitarbeit in Deutschland 2025: Marktdaten, AÜG-Regeln und was Verleiher wirklich wissen müssen",
+      "h2_outline": [
+        "Der deutsche Zeitarbeitsmarkt in Zahlen",
+        "AÜG-Meldepflichten: Was viele Verleiher falsch machen",
+        "Höchstüberlassungsdauer: Die 18-Monats-Regel in der Praxis",
+        "Sanktionen bei AÜG-Verstößen: Bußgelder, Erlaubnisentzug und zivilrechtliche Folgen",
+        "Der Überlassungsvertrag: Pflichtinhalte und häufige Lücken",
+        "Gig Economy und neue Beschäftigungsmodelle: Bedrohung oder Ergänzung für Zeitarbeit?",
+        "Gesetzliche Abzüge und Equal Pay: Was Verleiher beim Lohn beachten müssen"
+      ],
+      "content_gaps": [
+        "Branchenverband mit aktuellen Marktdaten und AÜG-Statistiken, hohe Relevanz für Zahlen und Ranking",
+        "Gut rankender Ratgeberartikel zur Höchstüberlassungsdauer mit konkreten Praxisbeispielen",
+        "Offizielle Quelle der BA zu Erlaubnispflicht und Meldeverfahren, wird oft zitiert und verlinkt"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.igz.de/presse/statistiken/",
+          "note": "Branchenverband mit aktuellen Marktdaten und AÜG-Statistiken, hohe Relevanz für Zahlen und Ranking"
+        },
+        {
+          "url": "https://www.haufe.de/personal/hr-management/zeitarbeit-ueberlassungshoechstdauer_80_404810.html",
+          "note": "Gut rankender Ratgeberartikel zur Höchstüberlassungsdauer mit konkreten Praxisbeispielen"
+        },
+        {
+          "url": "https://www.bundesagentur.de/DE/Unternehmen/Beschaeftigung/AUG/aug-nav.html",
+          "note": "Offizielle Quelle der BA zu Erlaubnispflicht und Meldeverfahren, wird oft zitiert und verlinkt"
+        }
+      ],
+      "cta": "Jetzt kostenlosen Demo-Termin vereinbaren und sehen, wie zvoove Zeitarbeit Fristen zur Höchstüberlassungsdauer, AÜG-Meldepflichten und Vertragsdokumentation automatisch im Griff behält.",
+      "source_path": "output/briefings/cluster_06.md"
+    },
+    "brief_md_path": "briefings/cluster_06.md"
+  },
+  {
+    "cluster_id": 9,
+    "display_id": 10,
+    "rank_by_sv": 12,
+    "is_noise": false,
+    "label_de": "Gebäudereinigung Disposition und Kalkulation",
+    "label_en": "Facility Cleaning Scheduling and Costing",
+    "n_keywords": 27,
+    "total_search_volume": 8467,
+    "median_search_volume": 136,
+    "mean_kd": 40.2,
+    "median_kd": 39,
+    "mean_cpc_eur": 4.35,
+    "mean_priority": 6.7,
+    "pct_commercial": 52.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "gebäudereinigung software",
+      "disposition gebäudereinigung",
+      "auftragsverwaltung gebäudereinigung",
+      "reinigungskalkulation software",
+      "unterhaltsreinigung kalkulation"
+    ],
+    "top_keywords_by_priority": [
+      "gebäudereinigung software",
+      "gebäudereinigung digitalisieren",
+      "disposition gebäudereinigung"
+    ],
+    "top_terms": [
+      "gebäudereinigung",
+      "reinigung",
+      "zeiterfassung",
+      "kalkulation",
+      "gebäudedienstleistung",
+      "reinigungskräfte"
+    ],
+    "brief": {
+      "title": "Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung im Überblick",
+      "main_keyword": "gebäudereinigung software",
+      "secondary_keywords": [
+        "disposition gebäudereinigung",
+        "auftragsverwaltung gebäudereinigung",
+        "reinigungskalkulation software",
+        "unterhaltsreinigung kalkulation",
+        "zeiterfassung gebäudereinigung",
+        "gebäudereinigung digitalisieren",
+        "qualitätsmanagement gebäudereinigung"
+      ],
+      "search_intent_text": "mixed, Betreiber von Reinigungsunternehmen suchen aktiv nach einer Softwarelösung, wollen aber vorher verstehen, welche Funktionen wirklich notwendig sind und was eine Einführung kostet.",
+      "recommended_word_count": 2800,
+      "target_audience": "Geschäftsführer oder Disponenten eines mittelständischen Gebäudereinigungsunternehmens mit 20 bis 200 Mitarbeitern, das bisher mit Excel, Papier oder veralteten Insellösungen arbeitet.",
+      "pain_point": "Aufträge werden manuell koordiniert, Touren laufen ineffizient, und der Disponent verliert täglich Zeit mit Telefonaten, weil niemand weiß, wer gerade wo eingesetzt ist. Kalkulationsfehler bei Unterhaltsreinigungsverträgen fressen die Marge, weil Reinigungszeiten falsch geschätzt werden und Nachkalkulation kaum stattfindet. Bei Betriebsprüfungen oder Kundenreklamationen fehlen saubere Nachweise über geleistete Stunden und Qualitätskontrollen.",
+      "article_goal": "Der Leser soll verstehen, welche Kernfunktionen eine Software für Gebäudereiniger braucht, wie eine Einführung konkret abläuft, und warum er mit zvoove eine Demo vereinbaren sollte, bevor er eine Kaufentscheidung trifft.",
+      "h1": "Gebäudereinigung Software: Disposition, Kalkulation und Zeiterfassung endlich digital",
+      "h2_outline": [
+        "Warum Excel und Telefon in der Gebäudereinigung ausgedient haben",
+        "Die fünf Kernfunktionen, die eine Reinigungssoftware mitbringen muss",
+        "Disposition in der Gebäudereinigung: Wie gute Software den Alltag verändert",
+        "Reinigungskalkulation: Angebote gewinnen, ohne die Marge zu opfern",
+        "Zeiterfassung in der Gebäudereinigung: Rechtssicher und einfach für Reinigungskräfte",
+        "Softwareeinführung in einer Reinigungsfirma: Was wirklich auf Sie zukommt",
+        "Gebäudedienstleistung digitalisieren: Schritt für Schritt zum papierlosen Betrieb"
+      ],
+      "content_gaps": [
+        "Marktübersicht eines Branchenportals, deckt viele der Nebenkeywords ab und rankt bereits für mehrere Clusterbegriffe",
+        "Praxisbericht eines mittelständischen Reinigungsunternehmens, hohe inhaltliche Glaubwürdigkeit durch Erfahrungswerte",
+        "Fachmagazin-Artikel mit Produktvergleich, liefert Kontext zu Wettbewerbern und Kaufkriterien"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.spectos.com/blog/gebaeudereinigung-software",
+          "note": "Marktübersicht eines Branchenportals, deckt viele der Nebenkeywords ab und rankt bereits für mehrere Clusterbegriffe"
+        },
+        {
+          "url": "https://www.stherm.de/blog/digitalisierung-gebaeudereinigung",
+          "note": "Praxisbericht eines mittelständischen Reinigungsunternehmens, hohe inhaltliche Glaubwürdigkeit durch Erfahrungswerte"
+        },
+        {
+          "url": "https://www.facility-manager.de/themen/digitalisierung/software-fuer-gebaeudereiniger",
+          "note": "Fachmagazin-Artikel mit Produktvergleich, liefert Kontext zu Wettbewerbern und Kaufkriterien"
+        }
+      ],
+      "cta": "Jetzt eine kostenlose Demo von zvoove für Gebäudereiniger vereinbaren und live sehen, wie Disposition, Kalkulation und Zeiterfassung in einer Plattform zusammenspielen.",
+      "source_path": "output/briefings/cluster_10.md"
+    },
+    "brief_md_path": "briefings/cluster_10.md"
+  },
+  {
+    "cluster_id": 0,
+    "display_id": 1,
+    "rank_by_sv": 13,
+    "is_noise": false,
+    "label_de": "Factoring Buchhaltung und Genehmigung",
+    "label_en": "Factoring Accounting and Licensing",
+    "n_keywords": 15,
+    "total_search_volume": 3516,
+    "median_search_volume": 161,
+    "mean_kd": 35.7,
+    "median_kd": 39,
+    "mean_cpc_eur": 3.23,
+    "mean_priority": 8.4,
+    "pct_commercial": 27.0,
+    "intent_dominant": "mixed",
+    "top_keywords_by_sv": [
+      "factoring buchen",
+      "factoring erlaubnis",
+      "offenes factoring",
+      "echtes factoring",
+      "factoring kfw"
+    ],
+    "top_keywords_by_priority": [
+      "factoring buchen",
+      "factoring erlaubnis",
+      "echtes factoring"
+    ],
+    "top_terms": [
+      "factoring",
+      "online",
+      "buchen",
+      "erlaubnis",
+      "offenes",
+      "echtes"
+    ],
+    "brief": {
+      "title": "Factoring für Zeitarbeit: Buchen, Genehmigung und Anbieter im Überblick",
+      "main_keyword": "factoring buchen",
+      "secondary_keywords": [
+        "factoring erlaubnis",
+        "offenes factoring",
+        "stilles factoring",
+        "echtes factoring",
+        "unechtes factoring",
+        "factoring vergleich anbieter",
+        "factoring online beantragen"
+      ],
+      "search_intent_text": "mixed, Leser suchen sowohl grundlegendes Verständnis zu Factoring-Varianten als auch konkrete Handlungsoptionen wie Anbieterauswahl und Buchhaltungsbehandlung.",
+      "recommended_word_count": 2500,
+      "target_audience": "Kaufmännische Leitung oder Geschäftsführer eines mittelständischen Zeitarbeitsunternehmens mit 20 bis 200 Mitarbeitern, der Liquiditätsengpässe zwischen Lohnauszahlung und Kundenzahlung schließen will.",
+      "pain_point": "Zeitarbeitsunternehmen zahlen Löhne wöchentlich oder vierzehntägig, bekommen ihr Geld von Kundenunternehmen aber erst nach 30 bis 60 Tagen. Dieser strukturelle Liquiditätsengpass zwingt viele Unternehmen in teure Kontokorrentkredite oder bremst das Wachstum. Dazu kommt Unsicherheit: Brauche ich eine Erlaubnis für Factoring, wie buche ich die Transaktionen korrekt, und welcher Anbieter passt zu meiner Betriebsgröße?",
+      "article_goal": "Der Leser soll nach dem Lesen verstehen, welche Factoring-Variante für sein Zeitarbeitsunternehmen passt, wie er die Buchungen korrekt abbildet und welche nächsten Schritte zur Beantragung sinnvoll sind.",
+      "h1": "Factoring in der Zeitarbeit: Buchen, Genehmigung und die richtige Anbieterauswahl",
+      "h2_outline": [
+        "Warum Factoring für Zeitarbeitsunternehmen ein Dauerthema ist",
+        "Die wichtigsten Factoring-Varianten im Vergleich",
+        "Factoring buchen: So läuft die Buchhaltung korrekt ab",
+        "Factoring Erlaubnis: Was rechtlich zu beachten ist",
+        "Factoring online beantragen: So läuft der Prozess heute ab",
+        "Factoring Anbieter vergleichen: Worauf es in der Zeitarbeit wirklich ankommt",
+        "Factoring und Zeitarbeitssoftware: Wenn beides zusammenspielt"
+      ],
+      "content_gaps": [
+        "Hochrangiger Ratgeberartikel zu Buchungssätzen, direkt auf das Hauptkeyword optimiert",
+        "Klarer, praxisnaher Aufbau mit Buchungsbeispielen, gut verlinkt im KMU-Segment",
+        "Spezialisierte Branchenseite mit Fokus auf Erlaubnispflicht und BaFin-Thematik"
+      ],
+      "benchmark_urls": [
+        {
+          "url": "https://www.haufe.de/finance/buchfuehrung-kontierung/factoring-buchen_112_474338.html",
+          "note": "Hochrangiger Ratgeberartikel zu Buchungssätzen, direkt auf das Hauptkeyword optimiert"
+        },
+        {
+          "url": "https://www.billomat.com/magazin/buchhaltung/factoring-buchen/",
+          "note": "Klarer, praxisnaher Aufbau mit Buchungsbeispielen, gut verlinkt im KMU-Segment"
+        },
+        {
+          "url": "https://www.factoring.de/factoring-wissen/factoring-erlaubnis/",
+          "note": "Spezialisierte Branchenseite mit Fokus auf Erlaubnispflicht und BaFin-Thematik"
+        }
+      ],
+      "cta": "Demo vereinbaren: Zeig mir, wie zvoove die Rechnungsstellung automatisiert und damit die Voraussetzung für schnelles Factoring schafft.",
+      "source_path": "output/briefings/cluster_01.md"
+    },
+    "brief_md_path": "briefings/cluster_01.md"
+  }
+]

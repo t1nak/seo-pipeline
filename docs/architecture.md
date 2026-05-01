@@ -10,7 +10,7 @@ Vier modulare Phasen, an jeder Stelle sind Provider per Konfiguration austauschb
 
 ## Implementierungs-Detail
 
-Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute aktiven und alternativen Optionen), in der Mitte die fünf entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese fünf Skripte realisieren die vier modularen Phasen aus dem Diagramm oben; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Markierte Artefakte (★ gelb) sind über GitHub Pages live deployed.
+Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute aktiven und alternativen Optionen), in der Mitte die sechs entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report, Export) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese Skripte realisieren die vier modularen Phasen aus dem Diagramm oben; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Report und Export gehören beide zur Reporting-Phase: Report erzeugt ein menschlich lesbares HTML-Dashboard, Export ein maschinenlesbares JSON-Trio für externe Reporting-Tools. Markierte Artefakte (★ gelb) sind über GitHub Pages live deployed.
 
 ![Architektur Diagramm](architecture.svg){ .zoomable }
 
@@ -25,8 +25,9 @@ Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute ak
 | **Strukturierung** | `src/cluster.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Soft-Assignment der Rand-Keywords (Schritt `assign_noise`), Profiling. Charts und interaktive Karte werden im Report-Schritt aus `src/cluster_viz.py` aufgerufen. |
 | **Beschriftung** | `src/labels_llm.py` | Pro Cluster ein DE- und EN-Label per Anthropic-Batch-Call. Schreibt `cluster_labels.json` und aktualisiert die Label-Spalten in `cluster_profiles.csv` und `keywords_labeled.csv`. |
 | **Aktivierung** | `src/brief.py` | Pro Cluster ein redaktions-fertiger Content Brief. Claude API mit Prompt Caching. |
-| **Reporting** | `src/report.py` | Konsolidiertes Dashboard, das alle Artefakte verbindet. |
-| **Orchestrierung** | `pipeline.py` plus Workflow `pipeline-full.yml` | `pipeline.py` orchestriert die fünf Pipeline-Schritte, der Workflow ruft den Label-Schritt zwischen `cluster` und `brief` auf (`Step 3b`). |
+| **Reporting** | `src/report.py` | Konsolidiertes HTML-Dashboard, das alle Artefakte verbindet. |
+| **Reporting (JSON)** | `src/export.py` | Bündelt alle Ergebnisse als `clusters.json`, `keywords.json` und `report.json` zum direkten Import in Airtable, Notion, Google Sheets oder Looker Studio. |
+| **Orchestrierung** | `pipeline.py` plus Workflow `pipeline-full.yml` | `pipeline.py` orchestriert die sechs Pipeline-Schritte, der Workflow ruft den Label-Schritt zwischen `cluster` und `brief` auf (`Step 3b`). |
 
 ## Schnittstellen zwischen Schritten
 
@@ -77,6 +78,16 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 - `output/clustering/chart*.png` (eingebettete Bilder)
 - `output/briefings/*.md` (Liste, für die Brief-Spalte in der Tabelle)
 
+### Report (oder Cluster und Brief direkt) -> Export
+
+`export.py` liest dieselben Quellen wie `report.py` und schreibt drei flache JSON-Dateien nach `output/reporting/`:
+
+- `clusters.json` eine Zeile pro Cluster mit allen KPIs plus den geparsten Brief-Feldern (Hauptkeyword, Zielgruppe, H1, H2-Outline, Wortanzahl, CTA, Benchmark-URLs als Liste).
+- `keywords.json` eine Zeile pro Keyword mit Cluster-Zuordnung und allen Metriken (SV, KD, CPC, Priority, SERP Features).
+- `report.json` Bundle aus Run-Metadaten plus beiden Listen.
+
+Wenn `report.py` für denselben Lauf zuvor lief, werden die drei Dateien zusätzlich nach `output/reporting/runs/<run_id>/` gespiegelt, damit der Export pro Lauf erhalten bleibt.
+
 ## Datenflüsse: was läuft wann
 
 | Phase | Wer löst aus | Was wird neu berechnet | Was bleibt |
@@ -96,8 +107,10 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 |---|---|---|
 | `data/keywords.csv` | Google Ads | Direkter CSV Import in Keyword Planner für Search Kampagnen |
 | `data/keywords.csv` | Ahrefs / Semrush | CSV Import für Rank Tracking auf den 500 Keywords |
-| `output/clustering/clusters.json` | Notion / Airtable | Content Kalender Anker, ein Eintrag pro Cluster |
-| `output/clustering/cluster_profiles.csv` | Looker Studio | Datenquelle für SEO Dashboard, Visualisierung von Cluster Performance |
+| `output/reporting/clusters.json` | Airtable, Notion-Datenbank | Content-Kalender-Anker, ein Eintrag pro Cluster mit allen Brief-Feldern |
+| `output/reporting/keywords.json` | Google Sheets, Airtable | Filterbare Keyword-Tabelle, sortier- und gruppierbar nach Cluster, Intent, Priorität |
+| `output/reporting/report.json` | Looker Studio, Metabase, BI-Tools | Konsolidierte Datenquelle für ein SEO-Dashboard inkl. Run-Metadaten |
+| `output/clustering/cluster_profiles.csv` | Looker Studio (CSV-Connector) | Klassischer CSV-Import als Alternative zu `report.json` |
 | `output/briefings/*.md` | Sanity / Contentful | Draft Eintrag pro Cluster für die Redaktion |
 | `output/clustering/cluster_map.html` | Slack, Notion, Confluence | Embed in Marketing Wiki oder wöchentliche Stand-up Updates |
 | `output/reporting/index.html` | Internes Wiki | Self-service Dashboard, Stakeholder können selbst nachschauen |
@@ -117,6 +130,7 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | `profile` | < 1 Sekunde | Cluster Anzahl |
 | `labels_llm` (Anthropic Haiku, Batch-Call) | 4 bis 8 Sekunden | API-Latenz |
 | `report` (Charts, Cluster-Map, Dashboard) | 8 bis 12 Sekunden | matplotlib- und Plotly-Rendering |
+| `export` (drei JSON-Dateien) | < 1 Sekunde | Cluster- und Keyword-Anzahl |
 | `brief` (alle Cluster, mit API) | 60 bis 130 Sekunden | Anthropic API Latenz, linear in Cluster-Anzahl |
 
 Voller Lauf ohne Briefs (Demo, kein Label-Call): ungefähr 25 Sekunden. Voller Lauf mit Labels und Briefs: ungefähr 2 bis 3 Minuten (13 Cluster).

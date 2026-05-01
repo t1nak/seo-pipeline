@@ -1,17 +1,18 @@
 """End-to-end orchestrator for the SEO keyword pipeline.
 
-Five steps in order:
+Six steps in order:
 
     1. discover    blog -> seed keywords -> data/keywords.csv
     2. enrich      add SV / KD / CPC / priority to data/keywords.csv
     3. cluster     embed -> UMAP -> HDBSCAN -> labels -> profiles -> charts -> map
     4. brief       per-cluster content brief via Claude API -> output/briefings/
     5. report      consolidated HTML report -> output/reporting/index.html
+    6. export      filterbares JSON-Reporting -> output/reporting/{clusters,keywords,report}.json
 
 CLI:
-    python pipeline.py                              run all 5 steps
+    python pipeline.py                              run all 6 steps
     python pipeline.py --step cluster               run one step
-    python pipeline.py --step brief,report          run a subset
+    python pipeline.py --step brief,report,export   run a subset
     python pipeline.py --dry-run                    skip LLM call in brief
     python pipeline.py --brief-provider max         brief via Max subscription
     python pipeline.py --brief-provider api --brief-model claude-opus-4-7
@@ -30,13 +31,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-from src import brief, cluster, discover, enrich, report  # noqa: E402
+from src import brief, cluster, discover, enrich, export, report  # noqa: E402
 from src.config import settings  # noqa: E402
 from src.logging_config import setup_logging  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-ALL_STEPS = ("discover", "enrich", "cluster", "brief", "report")
+ALL_STEPS = ("discover", "enrich", "cluster", "brief", "report", "export")
 
 
 def step_discover(args: argparse.Namespace) -> None:
@@ -70,12 +71,17 @@ def step_report(args: argparse.Namespace) -> None:
     report.run()
 
 
+def step_export(args: argparse.Namespace) -> None:
+    export.run()
+
+
 RUNNERS = {
     "discover": step_discover,
     "enrich": step_enrich,
     "cluster": step_cluster,
     "brief": step_brief,
     "report": step_report,
+    "export": step_export,
 }
 
 

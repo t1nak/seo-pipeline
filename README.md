@@ -4,7 +4,7 @@ Eine Pipeline, die aus dem zvoove Blog ein priorisiertes Keyword Set, thematisch
 
 ![Pipeline Architektur](docs/architecture.svg)
 
-> Vier modulare Phasen, in fünf entkoppelten Skripten implementiert. Externe Systeme links, lokale ML in der Mitte, Datenartefakte rechts. Die markierten Artefakte sind über GitHub Pages live verfügbar. Detail in [`docs/architecture.md`](docs/architecture.md).
+> Vier modulare Phasen, in sechs entkoppelten Skripten implementiert. Externe Systeme links, lokale ML in der Mitte, Datenartefakte rechts. Die markierten Artefakte sind über GitHub Pages live verfügbar. Detail in [`docs/architecture.md`](docs/architecture.md).
 
 ## Das Problem in einem Satz
 
@@ -13,10 +13,10 @@ Das Ziel ist es, im Bereich Zeitarbeit und Personaldienstleistung organischen Tr
 ## Was diese Pipeline tut
 
 ```
-Discover -> Enrich    -> Cluster        -> Labels       -> Brief       -> Report
-Blog        SV/KD/CPC    HDBSCAN +         Anthropic       Claude API     Dashboard
-zvoove.de   Heuristik    Soft-Assign       Haiku Batch     pro Cluster    konsolidiert
-            DataForSEO   alle 500 in 13    DE/EN labels    ein Brief      alle Schritte
+Discover -> Enrich    -> Cluster        -> Labels       -> Brief       -> Report      -> Export
+Blog        SV/KD/CPC    HDBSCAN +         Anthropic       Claude API     Dashboard      JSON + CSV
+zvoove.de   Heuristik    Soft-Assign       Haiku Batch     pro Cluster    konsolidiert   Airtable / Sheets
+            DataForSEO   alle 500 in 13    DE/EN labels    ein Brief      alle Schritte  Notion / Looker
                          Cluster, 0 out
 ```
 
@@ -55,6 +55,7 @@ Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Der 
 | Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
 | Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |
+| Export | Vollständig. JSON plus CSV pro Cluster und pro Keyword. Airtable-Sync via `python -m src.sync_airtable` |
 
 ## Schnellstart
 
@@ -73,6 +74,12 @@ python pipeline.py
 python pipeline.py --step cluster
 python pipeline.py --step brief --dry-run    # ohne Claude API
 python pipeline.py --step report
+python pipeline.py --step export              # JSON + CSV für Airtable/Notion/Sheets
+
+# Optional: direkt nach Airtable synchronisieren (Token + Base nötig, siehe docs/reporting-integration.md)
+export AIRTABLE_TOKEN=patXXX AIRTABLE_BASE_ID=appXXX
+python -m src.sync_airtable --print-schema    # Feldnamen für die Airtable-Tabellen
+python -m src.sync_airtable                   # voller Sync
 
 # Cluster Sub-Schritte einzeln
 python -m src.cluster --step embed,reduce,cluster,label,profile
@@ -104,7 +111,7 @@ python pipeline.py --step enrich --provider dataforseo
 seo-pipeline/
 ├── README.md              dieses Dokument
 ├── CASE_STUDY.md          ausführliche Schreibarbeit zum Vorgehen
-├── pipeline.py            Orchestrator für die fünf Pipeline-Schritte
+├── pipeline.py            Orchestrator für die sechs Pipeline-Schritte
 ├── requirements.txt
 ├── data/
 │   ├── keywords.csv             aktueller Stand (überschreibbar durch discover)
@@ -119,7 +126,7 @@ seo-pipeline/
 ├── output/
 │   ├── clustering/        Embeddings, UMAP, cluster_labels.json, Profiles
 │   ├── briefings/         Content Briefs als Markdown (1 pro Cluster)
-│   ├── reporting/         konsolidiertes Dashboard, Charts, Cluster-Map
+│   ├── reporting/         konsolidiertes Dashboard, Charts, Cluster-Map, JSON-Export
 │   └── _archive/          gepinnte Snapshots vergangener Läufe
 ├── src/
 │   ├── discover.py        Blog -> Seed Keywords (STUB)
@@ -128,7 +135,9 @@ seo-pipeline/
 │   ├── cluster_viz.py     interaktive bilinguale Plotly Karte
 │   ├── labels_llm.py      DE/EN Cluster-Labels per Anthropic Haiku Batch-Call
 │   ├── brief.py           Content Briefs via Claude API
-│   └── report.py          konsolidiertes Reporting, Charts, Cluster-Map
+│   ├── report.py          konsolidiertes Reporting, Charts, Cluster-Map
+│   ├── export.py          JSON + CSV für Airtable, Notion, Google Sheets
+│   └── sync_airtable.py   direkter Upload der JSONs in eine Airtable-Base
 └── tests/
 ```
 

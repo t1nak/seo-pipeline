@@ -106,7 +106,7 @@
     <rect x="432" y="556" width="80" height="24" rx="12" class="chip-purple"/>
     <text x="472" y="568" class="chip-text mid">Slack</text>
   </g>
-  <text x="340" y="598" class="out out-purple mid">Output: HTML-Dashboard, API-Push, Notification</text>
+  <text x="340" y="598" class="out out-purple mid">Output: HTML-Dashboard plus clusters.json, keywords.json für Airtable/Notion/Sheets</text>
 
   <!-- Infrastructure row -->
   <text x="340" y="630" class="infra-label mid" dominant-baseline="auto">Infrastruktur · unsichtbar aber überall</text>

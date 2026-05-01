@@ -55,7 +55,7 @@ Die interaktive Karte zum Klicken liegt unter [`output/clustering/cluster_map.ht
 
 ## 3. Lösungsansatz
 
-Die Pipeline besteht aus fünf entkoppelten Schritten. Jeder Schritt liest klar definierte Eingaben und schreibt klar definierte Ausgaben. Das macht die Pipeline einzeln testbar und einzeln re-runnbar.
+Die Pipeline besteht aus sechs entkoppelten Schritten. Jeder Schritt liest klar definierte Eingaben und schreibt klar definierte Ausgaben. Das macht die Pipeline einzeln testbar und einzeln re-runnbar.
 
 ```
                     ┌─ scrapt ──→  data/blog_topics.csv (TODO)
@@ -71,6 +71,7 @@ enrich.py ─── SV/KD/CPC ─────────→  data/keywords.csv 
 cluster.py  ─→  output/clustering/{cluster_map.html, embeddings.npy, charts/...}
 brief.py    ─→  output/briefings/cluster_NN.md
 report.py   ─→  output/reporting/index.html
+export.py   ─→  output/reporting/{clusters,keywords,report}.json
 ```
 
 Der Orchestrator `pipeline.py` kann alles in einem Lauf ausführen oder einzelne Schritte einzeln triggern. Das ist wichtig für die Praxis, weil verschiedene Schritte verschieden teuer sind: Embeddings einmal berechnen, dann Clustering Parameter mehrmals tunen.
@@ -221,7 +222,23 @@ In Produktion würde ich hier einen Retry Wrapper mit exponentieller Backoff Str
 
 Bewusst keine Frontend Framework Abhängigkeit. Es ist eine einfache HTML Datei mit Inline CSS, die in jedem Browser funktioniert, sich an Stakeholder verschicken lässt und in einer Slack Nachricht klickbar bleibt. Wenn das später als Dashboard in einem Reporting Stack landen soll, ist das Markup einfach genug, um es nach Looker Studio oder Metabase zu portieren.
 
-## 9. Validierung
+## 9. Schritt 6: Export
+
+Die Aufgabenstellung verlangt am Ende ein filterbares Reporting in einem Tool wie Google Sheets, Airtable oder Notion. `export.py` erfüllt das, indem es alle Ergebnisse aus den vorherigen Schritten in flache JSON-Dateien überführt, die jedes dieser Tools direkt importieren kann.
+
+Drei Dateien werden in `output/reporting/` geschrieben:
+
+| Datei | Inhalt | Anwendungsfall |
+|---|---|---|
+| `clusters.json` | Eine Zeile pro Cluster mit allen KPIs plus den geparsten Brief-Feldern (Hauptkeyword, Zielgruppe, H1, H2-Outline, Wortanzahl, CTA, Benchmark-URLs als Liste) | Cluster-Reporting in Airtable, Notion-Datenbank oder Google Sheet |
+| `keywords.json` | Eine Zeile pro Keyword mit Cluster-Zuordnung, SV, KD, CPC, Priority, SERP Features | Filterbare Keyword-Sicht, etwa zum Sortieren nach Priority oder zum Filtern auf einen Intent |
+| `report.json` | Run-Metadaten plus beide Listen in einem Bundle | Wenn ein Tool oder Skript alles in einem Rutsch lesen will |
+
+Zusätzlich werden die Dateien nach `output/reporting/runs/<run_id>/` gespiegelt, damit jeder Lauf seinen eigenen Schnappschuss behält. So bleibt nachvollziehbar, wie sich Cluster und Priorisierung über Quartale verändern.
+
+Warum JSON statt direkter API-Anbindung an Airtable oder Notion? Eine Datei ist toolneutral und ohne API-Key importierbar. Wer regelmäßig importieren will, hängt einen kleinen Wrapper an: Airtable und Notion akzeptieren JSON-Listen direkt im REST-API-POST, Google Sheets braucht eine Konvertierung zu CSV (eine Zeile Python). Diese letzte Meile ist bewusst nicht Teil der Pipeline, weil die Wahl des Reporting-Tools zur Entscheidung des Marketing-Teams gehört, nicht zur technischen Lieferung.
+
+## 10. Validierung
 
 Drei Validierungs-Ebenen, von leichtgewichtig zu schwergewichtig.
 
@@ -258,7 +275,7 @@ Ich habe für jeden der 13 Cluster die Top 10 Keywords gelesen und gegen das LLM
 - Cluster 4 (Sammelthemen Lohnabrechnung und Recruiting) ist vom LLM transparent als „Sammelthemen" gelabelt — enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`. Nicht falsch, aber kein klares Pillar-Thema. Empfohlene Bearbeitung: Top-Keywords einzeln, nicht als Pillar.
 - Cluster 12 (Sammelthemen Zeitarbeit Software und Finanzierung) ist mit 97 Keywords der größte Cluster. Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn. Vom LLM transparent als „Sammelthemen" gelabelt. Empfohlen: Sub-Clustering vor Bearbeitung. Vollständige pro-Cluster-Empfehlung in [`docs/results.md`](docs/results.md).
 
-## 10. Top Empfehlungen aus diesem Lauf
+## 11. Top Empfehlungen aus diesem Lauf
 
 Drei aus den 13 Clustern, sortiert nach Hebel für zvoove. Eine vollständige Cluster-Tabelle mit Empfehlung pro Cluster steht in [`docs/results.md`](docs/results.md).
 
@@ -286,7 +303,7 @@ Was tun: Hub-Pillar `/wissen/digitalisierung-personaldienstleistung/`, der gezie
 
 Revenue Hypothese: Pipeline-Influence statt direkte Conversion. Über 6 bis 12 Monate erwartbar: Brand-Lift-Wirkung und gestützte Brand-Suchen. Geschäftsführer recherchieren Digitalisierungs-Schritte genau dann, wenn ein Software-Wechsel ansteht.
 
-## 11. Wie das in den Revenue Stack passt
+## 12. Wie das in den Revenue Stack passt
 
 Eine SEO Pipeline ist nur dann ein Revenue Asset, wenn ihre Ausgaben in andere Systeme einfließen. Diese Pipeline ist bewusst so gebaut, dass die Anbindung pro Schritt klar ist.
 
@@ -311,7 +328,7 @@ Wenn die Pipeline einmal pro Quartal läuft, kann der Output mit MQLs aus dem CR
 
 Das ist eine Erweiterung, kein Teil dieser Lieferung, aber technisch trivial: ein zusätzliches Skript `revenue_attribution.py`, das `cluster_profiles.csv` mit einer CRM Export CSV joint.
 
-## 12. Cost und Ops
+## 13. Cost und Ops
 
 | Posten | Kosten pro Lauf |
 |---|---|
@@ -326,7 +343,7 @@ Bei wöchentlicher Ausführung: ungefähr 50 USD pro Jahr. Vernachlässigbar geg
 
 Lauf Frequenz Empfehlung: einmal pro Quartal voll, zwischendrin nur `enrich` (für aktualisierte SV Daten) und `report`. Embeddings und Cluster ändern sich nur, wenn das Keyword Set sich substantiell ändert.
 
-## 13. Limits und nächste Schritte
+## 14. Limits und nächste Schritte
 
 Ehrlich, was fehlt oder schwach ist:
 
@@ -348,7 +365,7 @@ Ehrlich, was fehlt oder schwach ist:
 5. **CI mit Stub Lauf.** GitHub Actions, das `pipeline.py --step report` durchlaufen lässt und auf "schreibt es ein gültiges HTML" testet.
 6. **CMS Integration.** Sanity Studio Schema für Content Briefs, plus ein einfacher Sync, der jeden Brief als Draft in Sanity legt.
 
-## 14. Reflektion
+## 15. Reflektion
 
 ### Was lief gut
 

@@ -1,385 +1,335 @@
-# Interview-Präsentation: 15 Minuten auf Deutsch
+# Interview-Präsentation: 15 Minuten auf Deutsch (einfache Version)
 
-> Sprechskript für die mündliche Vorstellung der SEO-Keyword-zu-ContentBrief-Pipeline.
-> Zielzeit: 15 Minuten Vortrag, danach Q&A. Sprich frei, nutze die Notizen als Anker.
-
----
-
-## Kurzfahrplan (15 Minuten)
-
-| Zeit | Block | Slide / Artefakt |
-|---|---|---|
-| 0:00 – 1:00 | Einstieg, ein Satz zum Ziel | Titelfolie |
-| 1:00 – 2:30 | Aufgabe und Ergebnis in zwei Zahlen | KPI-Folie |
-| 2:30 – 4:30 | Architektur, sechs entkoppelte Schritte | `docs/architecture.svg` |
-| 4:30 – 8:30 | Herzstück: Cluster-Schritt (Embeddings, UMAP, HDBSCAN) | Cluster-Map |
-| 8:30 – 10:00 | Briefs mit Claude API plus Prompt Caching | Beispiel-Brief |
-| 10:00 – 11:30 | Reporting und Export, Anbindung an Revenue Stack | Dashboard, Sheets-Link |
-| 11:30 – 13:30 | Drei konkrete Empfehlungen für zvoove | Empfehlungs-Folie |
-| 13:30 – 14:30 | Limits, Trade-offs, was ich anders machen würde | Decisions-Slide |
-| 14:30 – 15:00 | Abschluss, Übergang in die Fragen | Titelfolie zurück |
+> Kurze Sätze, einfache Sprache, leicht zu merken.
+> Pro Block ein Gedanke, eine Zahl, ein Beispiel.
 
 ---
 
-## 0:00 – 1:00 · Einstieg
+## Fahrplan
 
-> Slide: Titelfolie mit Repo-Link und einem Satz zum Ziel.
-
-„Vielen Dank für die Einladung. Ich zeige in den nächsten fünfzehn Minuten eine
-Pipeline, die ich für die Aufgabenstellung gebaut habe: aus dem zvoove Blog ein
-priorisiertes Keyword-Set entwickeln, thematisch clustern, pro Cluster einen
-Content-Brief schreiben und das Ganze in ein filterbares Reporting überführen.
-
-Mein Ziel heute ist nicht, jede Codezeile zu erklären, sondern drei Dinge klar
-zu machen: erstens, wie ich die Aufgabe in Schritte zerlegt habe; zweitens, wo
-die nicht-trivialen Entscheidungen lagen; und drittens, wie das Ergebnis im
-Revenue-Kontext von zvoove landen würde."
-
----
-
-## 1:00 – 2:30 · Aufgabe und Ergebnis in zwei Zahlen
-
-> Slide: Die KPI-Tabelle aus dem README oder der Case Study. Zwei Zahlen groß
-> hervorheben: 500 Keywords, 13 Cluster.
-
-„Die Aufgabe in einem Satz: aus dem Blog ein Keyword-Set von maximal fünfhundert
-Keywords entwickeln, clustern, briefen, reporten.
-
-Das Ergebnis lässt sich in zwei Zahlen zusammenfassen. Fünfhundert Keywords sind
-in dreizehn thematische Cluster zugeordnet, mit null Outliern. Das Gesamt-
-Suchvolumen über alle Cluster liegt bei knapp zweihundertvierzigtausend
-Suchanfragen pro Monat.
-
-Drei Cluster stechen heraus. Der größte nach Suchvolumen ist `HR und
-Dokumentenverwaltungssoftware` mit fünfundvierzigtausend Suchanfragen im Monat.
-Die höchste kommerzielle Dichte hat der Cluster `Zvoove Plattform Features und
-Preise` mit siebenundneunzig Prozent kommerzieller Intent. Das ist genau die
-Mischung, die für Pillar-Pages und für Bottom-of-Funnel-Inhalte interessant ist.
-
-Methodisch validiert ist das Ganze über einen Silhouette-Score von 0,647 auf
-den Kern-Keywords und einen ARI von 0,811 gegen ein zweites, unabhängig
-gerechnetes Verfahren, Ward Hierarchical Clustering. Beide Werte sind solide,
-darauf komme ich gleich noch einmal kurz zurück."
+| Zeit | Block |
+|---|---|
+| 0:00 – 1:00 | Begrüßung |
+| 1:00 – 3:00 | Aufgabe und Ergebnis |
+| 3:00 – 5:00 | Architektur in sechs Schritten |
+| 5:00 – 9:00 | Cluster-Schritt erklären |
+| 9:00 – 10:30 | Briefs mit Claude |
+| 10:30 – 12:00 | Reporting und Export |
+| 12:00 – 13:30 | Drei Empfehlungen für zvoove |
+| 13:30 – 14:30 | Was fehlt noch |
+| 14:30 – 15:00 | Abschluss |
 
 ---
 
-## 2:30 – 4:30 · Architektur
+## 0:00 – 1:00 · Begrüßung
 
-> Slide: `docs/architecture.svg`. Linke Seite externe Systeme, Mitte die sechs
-> Schritte, rechts die Datenartefakte.
+„Hallo, danke für die Einladung.
 
-„Die Pipeline besteht aus sechs entkoppelten Schritten: Discover, Enrich,
-Cluster, Brief, Report und Export. Jeder Schritt hat klar definierte Eingaben
-und klar definierte Ausgaben. Das ist keine kosmetische Entscheidung, sondern
-eine bewusste Architektur, weil die Schritte unterschiedlich teuer sind.
+Ich zeige in fünfzehn Minuten meine Pipeline für die Aufgabenstellung.
 
-Embeddings rechne ich genau einmal. Das Cluster-Tuning, also Hyperparameter
-ausprobieren, läuft danach in Sekunden, weil ich nicht jedes Mal das Modell neu
-laden muss. Briefs kosten pro Lauf rund zwanzig Cent über die Claude API, also
-will ich sie nicht versehentlich bei jedem Test-Run neu generieren. Genau dafür
-ist die Entkopplung da: jeder Schritt einzeln triggerbar, jeder Schritt einzeln
-testbar.
+Ziel der Aufgabe: aus dem zvoove-Blog Keywords gewinnen, gruppieren, Briefs
+schreiben, ein Reporting bauen.
 
-Ein Wort zur ehrlichen Einordnung: der Discover-Schritt ist aktuell ein Stub.
-Ich lese ein kuratiertes Keyword-Set aus einer CSV, statt den Blog live zu
-scrapen. Das ist eine bewusste Trade-off-Entscheidung, transparent in den
-Architecture Decision Records dokumentiert. Die Begründung: ein perfektes
-Discover ohne Cluster und Brief wäre wertlos, ein gutes Cluster und ein guter
-Brief ohne Live-Discover ist trotzdem demonstrierbar. Wenn ich noch eine Woche
-hätte, wäre Discover der nächste Schritt, den ich nachziehe.
-
-Tech-Stack auf einen Blick: Sentence-Transformers für Embeddings, UMAP für
-Dimensionsreduktion, HDBSCAN fürs Clustering, Anthropic Haiku für die
-Cluster-Labels und Claude Sonnet für die Briefs. Optional DataForSEO für echte
-Suchvolumen. Alles, was lokal laufen kann, läuft lokal und kostenfrei."
+Drei Dinge möchte ich zeigen: Wie ich es gebaut habe. Warum ich so entschieden
+habe. Welchen Nutzen es für zvoove hat."
 
 ---
 
-## 4:30 – 8:30 · Herzstück: der Cluster-Schritt
+## 1:00 – 3:00 · Aufgabe und Ergebnis
 
-> Slide: Live die Cluster-Karte zeigen, oder ein Screenshot der zweidimensionalen
-> Darstellung. Sprache umschalten als kleiner Demo-Effekt.
+> Slide: zwei große Zahlen — **500** und **13**.
 
-„Das Herzstück ist der Cluster-Schritt. Die Aufgabe klingt einfach: gruppiere
-fünfhundert Keywords nach Bedeutung. Die Umsetzung hat drei nicht-triviale
-Entscheidungen, über die ich kurz spreche.
+„Die Aufgabe in einem Satz: Aus dem Blog ein Keyword-Set bauen, clustern,
+briefen, reporten.
 
-**Erste Entscheidung: das Embedding-Modell.** Ich nutze
-`paraphrase-multilingual-MiniLM-L12-v2`. Mehrsprachig, weil zvoove Keywords
-deutsche Komposita haben, die ein englisch-fokussiertes Modell schlechter
-handhabt. Klein, weil hundertzwanzig Megabyte auf jedem Laptop ohne GPU laufen.
-Etabliert, weil Sentence-Transformers das Standardwerkzeug sind und in einer
-Bewertung nicht erklärungsbedürftig.
+Das Ergebnis in zwei Zahlen:
 
-Wichtig zum Verständnis für alle, die nicht täglich mit Embeddings arbeiten:
+- **500 Keywords**
+- **13 thematische Cluster**, alle Keywords zugeordnet, null Outlier
+
+Das Gesamt-Suchvolumen liegt bei rund **240.000 Suchen pro Monat**.
+
+Drei Cluster sind besonders interessant:
+
+- Größter Cluster: HR- und Dokumentenverwaltungssoftware, 45.000 Suchen
+- Höchste kommerzielle Dichte: zvoove-Produktnamen, 97 Prozent kommerziell
+- Größter Awareness-Cluster: Digitalisierung in der Personaldienstleistung
+
+Ist das gut? Ja. Der Silhouette-Score liegt bei 0,65. Werte über 0,5 gelten als
+solide.
+
+Ich habe das mit einem zweiten Verfahren gegengeprüft. Beide Verfahren stimmen
+zu rund 80 Prozent überein. Das ist die Plausibilitätsprobe."
+
+---
+
+## 3:00 – 5:00 · Architektur
+
+> Slide: `docs/architecture.svg` zeigen.
+
+„Die Pipeline hat sechs Schritte:
+
+1. **Discover** — Keywords sammeln
+2. **Enrich** — Suchvolumen, Difficulty, CPC dazu
+3. **Cluster** — Keywords nach Bedeutung gruppieren
+4. **Brief** — pro Cluster einen Content-Brief schreiben
+5. **Report** — alles in ein Dashboard packen
+6. **Export** — JSON für Airtable, Notion, Sheets
+
+Jeder Schritt ist eigenständig. Ich kann jeden einzeln laufen lassen.
+
+Warum ist das wichtig? Die Schritte kosten unterschiedlich viel Zeit und Geld.
+Embeddings rechne ich einmal. Briefs kosten Geld pro Lauf. Das will ich nicht
+versehentlich neu erzeugen.
+
+Eine ehrliche Sache: Discover ist noch nicht fertig. Ich lese aktuell ein
+fertiges Keyword-Set aus einer CSV. Live-Scraping vom Blog kommt als Nächstes.
+
+Warum so? Lieber vier Schritte richtig fertig, als sechs Schritte halb fertig."
+
+---
+
+## 5:00 – 9:00 · Cluster-Schritt
+
+> Slide: Cluster-Karte live zeigen.
+
+„Der Cluster-Schritt ist das Herzstück. Drei Entscheidungen sind wichtig.
+
+**Erste Entscheidung: Embeddings.**
+
 Ein Embedding ist eine Zahlenfolge, die die Bedeutung eines Texts beschreibt.
-`Lohnabrechnung Software` und `Payroll Tool` haben ähnliche Zahlen, obwohl kein
-Wort identisch ist. Genau das brauche ich, um Keywords nach Thema zu gruppieren
-statt nach exakter Wortübereinstimmung.
 
-**Zweite Entscheidung: HDBSCAN statt k-means.** k-means braucht eine
-vorgegebene Clusteranzahl. Bei fünfhundert deutschen Keywords aus einer
-spezifischen Branche kann ich nicht seriös sagen, ob es fünf oder zehn oder
-fünfzehn sinnvolle Themen gibt. HDBSCAN entscheidet das selbst aus den Daten.
+Beispiel: `Lohnabrechnung Software` und `Payroll Tool`. Andere Wörter, gleiche
+Bedeutung, ähnliche Zahlen.
 
-Zweiter Vorteil: HDBSCAN markiert echte Ausreißer als Rauschen, statt sie
-zwanghaft einem Cluster zuzuordnen. Beispiel `fachkräftemangel deutschland` —
-ein Top-Funnel-Begriff ohne klare Cluster-Heimat. k-means würde ihn irgendeinem
-Cluster zuwerfen und dessen Profil verwässern. HDBSCAN sagt: gehört zu nichts.
-Ich behandle ihn dann als Soft-Assignment in den nächsten Cluster, behalte aber
-die Information `noise_assigned: true`, dass diese Zuordnung nachträglich war.
+Das brauche ich, um Keywords nach Thema zu gruppieren — nicht nach exakter
+Wortübereinstimmung.
 
-**Dritte Entscheidung: Hyperparameter-Sweep statt Bauchgefühl.** Die
-Schlüsselparameter `min_cluster_size`, `min_samples` und `cluster_selection_method`
-habe ich nicht geraten, sondern in einer Grid Search durchgespielt. Ergebnis:
-`mcs=10, ms=5, eom`. Begründung: höchster Silhouette-Score, plausible
-Cluster-Anzahl, plausibler Rauschanteil vor Soft-Assignment. Der Sweep ist
-reproduzierbar, das gehört für mich zu jedem ML-Projekt dazu.
+Ich nutze ein mehrsprachiges Modell. Es versteht deutsche Komposita gut und
+läuft auf jedem Laptop ohne GPU.
 
-Ein Detail noch zur Validierung: ich rechne parallel ein zweites,
-mathematisch unabhängiges Verfahren — Ward Hierarchical Clustering — und
-vergleiche die Übereinstimmung über Adjusted Rand Index. Der ARI von 0,811
-zwischen HDBSCAN und Ward sagt mir: zwei Verfahren, die unterschiedlich an die
-Sache rangehen, sind sich zu vier Fünfteln einig. Das ist die Plausibilitäts-
-Probe, dass ich nicht nur einen Algorithmus zufällig glücklich gewählt habe."
+**Zweite Entscheidung: HDBSCAN statt k-means.**
 
-> Optional, falls Zeit bleibt: kurz die Karte live demonstrieren, einen Cluster
-> anklicken, die Sprache umschalten. Das wirkt stärker als jeder Screenshot.
+Bei k-means muss ich vorher wissen, wie viele Cluster es gibt. Bei 500
+Keywords aus einer fremden Branche kann ich das nicht raten.
 
----
+HDBSCAN entscheidet selbst, wie viele Cluster sinnvoll sind.
 
-## 8:30 – 10:00 · Briefs mit Claude API plus Prompt Caching
+Zweiter Vorteil: HDBSCAN markiert Ausreißer als Rauschen. k-means würde sie
+zwanghaft einem Cluster zuwerfen und das Ergebnis verzerren.
 
-> Slide: Beispiel-Brief, etwa `output/briefings/cluster_05.md`, sichtbar
-> herunterscrollen.
+**Dritte Entscheidung: Hyperparameter testen.**
 
-„Pro Cluster wird ein Content-Brief in Markdown erzeugt. Das Format ist
-festgelegt: Arbeitstitel, Hauptkeyword, drei bis sieben Nebenkeywords,
-Suchintention, empfohlene Wortanzahl, Zielgruppe als Ein-Satz-Persona,
-Schmerzpunkt, Outline mit H1 bis H3, drei Benchmark-URLs und ein Call to Action
-mit Bezug zu zvoove-Produkten.
+Ich habe verschiedene Einstellungen ausprobiert und die beste mit Zahlen
+verglichen. Nichts geraten. Alles reproduzierbar.
 
-Technisch interessant ist Prompt Caching. Der System-Prompt — also die
-Beschreibung des Brief-Formats und des Tons — ist rund achthundert Tokens groß.
-Bei dreizehn Clustern würde ich den Prompt dreizehnmal mitsenden. Mit Caching
-wird er einmal gecached und in den darauffolgenden Aufrufen wiederverwendet.
-Tokeneinsparung ungefähr neunzig Prozent auf den gecachten Anteil. Das ist
-unter einem Dollar pro vollem Lauf, in absoluten Zahlen klein, aber genau die
-Sorte Engineering-Disziplin, die in Produktion über die Wirtschaftlichkeit
-einer Pipeline entscheidet.
+**Validierung.**
 
-Zu Robustheit: jeder API-Call ist mit einer Retry-Logik mit exponentiellem
-Backoff und Jitter umhüllt. Wenn ein einzelner Brief fehlschlägt, schreibt das
-Skript einen Stub und macht weiter. Die Pipeline bricht nicht ab, weil Cluster
-fünf einen Rate-Limit getroffen hat. Am Ende gibt es ein Status-Reporting:
-zwölf OK, ein Fehler. Das ist die Differenz zwischen Demo-Code und Code, der
-in einer wöchentlichen Cron-Pipeline überleben kann.
+Ich habe parallel ein zweites Verfahren laufen lassen, Ward Hierarchical
+Clustering. Beide Verfahren stimmen zu 81 Prozent überein.
 
-Für CI und für API-freie Demos gibt es einen Dry-Run-Modus, der Stubs schreibt,
-ohne die API zu rufen."
+Das heißt: zwei unabhängige Methoden sehen ähnliche Cluster. Das ist die
+Plausibilitätsprobe."
+
+> Optional: einen Cluster auf der Karte anklicken, Sprache umschalten.
 
 ---
 
-## 10:00 – 11:30 · Reporting und Export
+## 9:00 – 10:30 · Briefs mit Claude
 
-> Slide: Screenshot vom Dashboard. Wenn live verfügbar, Tab mit dem Google Sheet
-> nebenher offen halten.
+> Slide: einen Beispiel-Brief zeigen.
 
-„Der Reporting-Schritt erzeugt eine einzelne HTML-Datei, die alle Artefakte
-konsolidiert: KPI-Boxen, sortierte Cluster-Tabelle, eingebettete Charts, Link
-auf die interaktive Karte. Bewusst keine Frontend-Framework-Abhängigkeit. Es
-ist eine HTML-Datei mit Inline-CSS, die in jedem Browser läuft, sich an
-Stakeholder verschicken lässt und in Slack klickbar bleibt.
+„Pro Cluster schreibt Claude einen Content-Brief.
 
-Der Export-Schritt liefert dasselbe in maschinenlesbarer Form: drei JSON-
-Dateien — `clusters.json`, `keywords.json`, `report.json`. Das ist die
-toolneutrale Übergabe an Airtable, Notion oder Google Sheets. Plus ein
-optionaler Sync nach Airtable und ein optionaler Push nach Google Sheets über
-einen Service Account, jeweils per Konfigurations-Schalter aktivierbar.
+Jeder Brief enthält:
 
-Das ist bewusst aufgeteilt: die Pipeline produziert Daten, die letzte Meile zu
-einem konkreten Tool ist eine Marketing-Team-Entscheidung. Wer Notion nutzt,
-hängt einen Wrapper an. Wer Airtable nutzt, schaltet den Sync ein. Pipeline und
-Reporting-Tool bleiben austauschbar."
+- Arbeitstitel und Hauptkeyword
+- Suchintention und Zielgruppe
+- Outline mit Überschriften
+- Drei Benchmark-URLs
+- Call to Action
 
----
+Format und Stil stehen im System-Prompt. Pro Lauf konsistent über alle
+Cluster.
 
-## 11:30 – 13:30 · Drei Empfehlungen für zvoove
+Ein technisches Detail: Prompt Caching.
 
-> Slide: Drei Spalten oder drei Karten, je eine pro Empfehlung.
+Der System-Prompt ist groß. Bei 13 Clustern würde ich ihn 13-mal mitschicken.
+Mit Caching wird er einmal gespeichert und wiederverwendet.
 
-„Aus den dreizehn Clustern hebe ich drei heraus, sortiert nach Hebel.
+Ergebnis: rund 90 Prozent weniger Tokens. Kosten pro Lauf: unter einem Dollar.
 
-**Erstens: HR und Dokumentenverwaltungssoftware.** Fünfundvierzigtausend
-Suchanfragen pro Monat, neunundachtzig Prozent kommerziell. Top-Keywords sind
-`dokumentenmanagement software`, `bewerbermanagement software`,
-`mitarbeiterverwaltung software`. Empfehlung: ein Pillar-Page-Set zu
-Software-Kategorien, das jeweils ein zvoove-Modul als Lösung positioniert.
-Klassischer Bottom-of-Funnel-Hebel. Wenn fünf Prozent der monatlichen Klicks
-durchkommen und davon zwei Prozent zu MQLs werden, sind das fünfundvierzig MQLs
-pro Monat allein aus diesem Cluster.
+Falls ein Brief fehlschlägt — Rate-Limit, Netzwerk —, läuft die Pipeline
+weiter. Es gibt eine Retry-Logik mit Backoff. Am Ende ein Status-Bericht: 12 OK,
+1 Fehler.
 
-**Zweitens: Zvoove Plattform Features und Preise.** Dreiundzwanzigtausend
-Suchanfragen, siebenundneunzig Prozent kommerziell. Brand-Keywords wie
-`zvoove referenzen`, `zvoove dms`, `zvoove cockpit`. Die Keyword-Difficulty
-liegt bei zweiundfünfzig. Das ist für Brand-Begriffe ungewöhnlich hoch und
-deutet darauf hin, dass aktuell entweder Wettbewerber-Vergleichsseiten oder
-Bewertungsplattformen die Suchergebnisse dominieren. Schneller Win: ein
-zvoove-Erfahrungen-Hub unter `/produkte/`, der die positiven Bewertungen
-aggregiert. Das ist Defense und Offense in einem.
-
-**Drittens: Digitalisierung Personaldienstleistung.** Knapp vierundzwanzig-
-tausend Suchanfragen, niedrigere kommerzielle Dichte, mittlere KD. Das ist der
-klassische Top-of-Funnel-Eingang. Geschäftsführer recherchieren
-Digitalisierungs-Schritte genau dann, wenn ein Software-Wechsel ansteht.
-Empfehlung: ein Hub-Pillar `/wissen/digitalisierung-personaldienstleistung/`,
-der Awareness-Traffic gezielt in die kommerziellen Cluster eins, zehn und drei
-überführt. Pipeline-Influence statt direkter Conversion, Wirkung über sechs bis
-zwölf Monate.
-
-Was ich an dieser Übersetzung wichtig finde: nicht jeder Cluster ist ein
-Pillar. Cluster vier zum Beispiel ist heterogen — `aüg`, `bewerber finden`,
-`lohnabrechnung sage` in einem Topf. Meine Empfehlung dort lautet: Top-Keywords
-einzeln, nicht als Pillar. Cluster zwölf ist mit siebenundneunzig Keywords zu
-groß für einen einzigen Brief, da empfehle ich Sub-Clustering vor der
-redaktionellen Bearbeitung. Eine Pipeline ist nur dann ein Revenue-Asset, wenn
-sie nicht jedes Cluster gleich behandelt."
+Das ist der Unterschied zwischen Demo-Code und Code, der wöchentlich läuft."
 
 ---
 
-## 13:30 – 14:30 · Limits und nächste Schritte
+## 10:30 – 12:00 · Reporting und Export
 
-> Slide: Eine knappe Liste, drei Punkte links (Limits), drei Punkte rechts
-> (Next Steps).
+> Slide: Dashboard und Google Sheet.
 
-„Drei Punkte zur Ehrlichkeit.
+„Der Report-Schritt baut eine HTML-Datei.
 
-**Erstens, Limits.** Discover ist ein Stub, das Live-Scraping fehlt.
-Sentence-Transformer MiniLM ist gut, aber nicht state of the art für Deutsch
-— ein Test mit `multilingual-e5-large` wäre lohnenswert. Es gibt keine
-Persistenz-Schicht, Pipeline-Läufe leben als Snapshots im Dateisystem.
+Drin: KPI-Boxen, Cluster-Tabelle, Charts, Link auf die Karte.
 
-**Zweitens, Trade-offs.** Diese Limits sind keine Versäumnisse, sondern
-bewusste Priorisierungen. Sie sind in den Architecture Decision Records
-dokumentiert, jede mit Begründung und Alternative.
+Bewusst kein Frontend-Framework. Eine HTML-Datei, läuft in jedem Browser, kann
+per Mail oder Slack verschickt werden.
 
-**Drittens, was ich als Nächstes baue.** Erstens Discover live machen. Zweitens
-die Search Console anbinden, damit aus der Heuristik echte Click- und
-Impression-Daten werden. Drittens eine SQLite-Persistenzschicht, die
-Lauf-für-Lauf-Vergleiche ermöglicht. Viertens eine Schema-Anbindung an Sanity
-oder Contentful, damit Briefs als Drafts direkt im CMS landen.
+Der Export-Schritt produziert drei JSON-Dateien:
 
-Bei einer zweiten Iteration würde ich Discover zuerst bauen, nicht zuletzt.
-Das wäre die einzige strukturelle Sache, die ich anders machen würde."
+- `clusters.json` — eine Zeile pro Cluster
+- `keywords.json` — eine Zeile pro Keyword
+- `report.json` — alles zusammen
+
+Diese JSON-Dateien sind tool-neutral. Airtable, Notion und Google Sheets
+akzeptieren sie alle.
+
+Optional gibt es einen direkten Sync nach Airtable und Google Sheets, per
+Schalter aktivierbar.
+
+Warum nicht direkt in ein Tool? Die Wahl des Reporting-Tools gehört dem
+Marketing-Team, nicht der Pipeline."
+
+---
+
+## 12:00 – 13:30 · Drei Empfehlungen für zvoove
+
+> Slide: drei Karten, eine pro Empfehlung.
+
+„Aus 13 Clustern hebe ich drei heraus.
+
+**Erstens: HR- und Dokumentenverwaltungssoftware.**
+
+45.000 Suchen pro Monat, 89 Prozent kommerziell.
+
+Was tun: Pillar-Pages zu Software-Kategorien, jeweils mit zvoove als Lösung.
+
+Klassischer Bottom-of-Funnel-Hebel.
+
+**Zweitens: zvoove-Marken-Keywords.**
+
+23.000 Suchen pro Monat, 97 Prozent kommerziell.
+
+Schon der eigene Name. Aber: Difficulty bei 52. Das ist hoch. Wahrscheinlich
+ranken Vergleichsseiten und Bewertungsportale weit oben.
+
+Was tun: ein zvoove-Erfahrungen-Hub, der Bewertungen aggregiert. Defense und
+Offense in einem.
+
+**Drittens: Digitalisierung Personaldienstleistung.**
+
+24.000 Suchen pro Monat, niedrige kommerzielle Dichte.
+
+Das ist Top-of-Funnel. Geschäftsführer recherchieren genau dann, wenn ein
+Software-Wechsel ansteht.
+
+Was tun: ein Wissens-Hub, der Awareness-Traffic in die kommerziellen Cluster
+führt.
+
+Wichtig: Nicht jeder Cluster ist ein Pillar. Cluster vier ist zu gemischt. Da
+empfehle ich Top-Keywords einzeln. Cluster zwölf ist zu groß. Da empfehle ich
+Sub-Clustering."
+
+---
+
+## 13:30 – 14:30 · Was fehlt noch
+
+„Drei ehrliche Punkte.
+
+**Was fehlt:**
+
+- Discover ist ein Stub. Live-Scraping kommt als Nächstes.
+- Keine Datenbank. Läufe leben als Dateien.
+- Keine direkte Verbindung zur Search Console.
+
+**Warum so:**
+
+Bewusste Priorisierung. Alles dokumentiert in den Decision Records.
+
+**Was ich als Nächstes baue:**
+
+1. Discover live — der Blog wird gescrapt
+2. Search Console anbinden — echte Klick-Daten statt Heuristik
+3. SQLite-Persistenz — Läufe vergleichen
+4. CMS-Integration — Briefs landen direkt im Redaktions-Tool
+
+Bei einer zweiten Iteration würde ich Discover zuerst bauen, nicht zuletzt."
 
 ---
 
 ## 14:30 – 15:00 · Abschluss
 
-„Zusammengefasst: dreizehn Cluster, null Outlier, validiert mit Silhouette und
-ARI. Briefs über Claude mit Caching, Reporting toolneutral als JSON, optional
-direkt nach Airtable oder Sheets. Drei konkrete Empfehlungen mit Revenue-
-Hypothese. Aufgebaut so, dass jeder Schritt einzeln ersetzt werden kann, wenn
-ein Teil der zvoove-Realität anders aussieht als meine Annahme.
+„Zusammengefasst:
+
+- 13 Cluster, 0 Outlier, validiert mit zwei unabhängigen Methoden
+- Briefs mit Claude und Caching, robust gegen Fehler
+- Reporting tool-neutral, optional direkt in Airtable oder Sheets
+- Drei konkrete Empfehlungen für zvoove
+
+Aufgebaut so, dass jeder Schritt einzeln ersetzt werden kann.
 
 Ich freue mich auf eure Fragen."
 
 ---
 
-## Q&A — vorbereitete Antworten
+## Q&A — kurze Antworten
 
-Die wahrscheinlichsten Fragen aus der Bewerber-Perspektive plus knappe
-Antworten zum Mitnehmen.
+**Warum HDBSCAN, nicht k-means?**
 
-### Warum HDBSCAN und nicht ein LLM, das die Cluster direkt vorschlägt?
+„k-means braucht eine vorgegebene Clusteranzahl. HDBSCAN nicht. HDBSCAN findet
+auch Ausreißer, k-means zwingt jedes Keyword in einen Cluster."
 
-„Beides hat Berechtigung. HDBSCAN ist deterministisch, reproduzierbar, billig
-und mathematisch nachvollziehbar. Ein LLM-basierter Ansatz wäre flexibler, aber
-nicht reproduzierbar zwischen Läufen und teurer pro Lauf. Ich habe beide
-laufen lassen und vergleiche die Übereinstimmung über ARI. Der Wert von 0,143
-zeigt, dass die beiden Verfahren unterschiedliche, aber jeweils sinnvolle
-Cluster-Grenzen ziehen. HDBSCAN als Hauptverfahren, LLM als Gegenprobe und für
-die Labels."
+**Warum nicht ein LLM, das direkt clustert?**
 
-### Warum nicht einfach k-means mit k=13?
+„Habe ich auch laufen lassen. Ein LLM ist nicht reproduzierbar zwischen
+Läufen. HDBSCAN ist deterministisch. LLM nutze ich für die Labels."
 
-„Drei Gründe. Erstens, k=13 ist eine Antwort, kein Setup — ich wüsste nicht im
-Voraus, dass dreizehn die richtige Zahl ist. Zweitens, k-means hat keine
-Outlier-Behandlung, würde also `fachkräftemangel deutschland` zwangsweise
-einem Cluster zuwerfen. Drittens, k-means setzt sphärische Cluster gleicher
-Dichte voraus, und Keyword-Cluster sind in der Praxis sehr unterschiedlich
-dicht."
+**Wie produktiv ausrollen?**
 
-### Wie generalisierbar ist das auf andere Branchen oder Sprachen?
+„Wöchentlicher Cron für `enrich` und `report`. Quartalsweiser voller Lauf.
+SQLite für die Lauf-Historie. Ein Tag Arbeit."
 
-„Sehr gut. Das Embedding-Modell ist multilingual, das Clustering ist
-domänenfrei, der Brief-Prompt ist eine Konfiguration. Für eine andere Branche
-würde ich den System-Prompt für Briefs anpassen und die Discover-Quelle
-austauschen. Pro neuer Sprache eventuell ein Test mit einem
-sprach-spezifischen Embedding-Modell."
+**Wie misst man Erfolg?**
 
-### Wie würdest du die Pipeline produktiv ausrollen?
+„Methodisch: Silhouette und Übereinstimmung mit zweitem Verfahren. Geschäftlich:
+Rankings, Traffic auf neue Pillar-Pages, MQLs aus den Clustern."
 
-„Drei Schichten. Erstens, ein wöchentlicher Cron-Job, der `enrich` und `report`
-fährt — Embeddings und Cluster ändern sich nur, wenn das Keyword-Set
-substantiell wächst. Zweitens, ein quartalsweiser voller Lauf inklusive Cluster
-und Briefs. Drittens, eine SQLite- oder Postgres-Persistenz für
-Lauf-Metadaten. Plus ein einfacher Slack-Webhook am Ende jedes Laufs mit dem
-Status. Insgesamt ein Tag Arbeit auf bestehender Basis."
+**Was kostet das?**
 
-### Wie misst man den Erfolg dieser Pipeline?
+„Rund einen Dollar pro vollem Lauf. Bei wöchentlichem Lauf 50 Dollar pro Jahr."
 
-„Zwei Ebenen. Methodisch über Silhouette und ARI plus manuelle Spot Checks
-pro Cluster. Geschäftlich über die nachgelagerten KPIs: Rankings für die Top-
-Keywords, organischer Traffic auf die neuen Pillar-Pages, MQLs aus den
-Clustern, mit dem CRM gegenrelegt. Letzteres ist eine Erweiterung, nicht Teil
-dieser Lieferung — technisch trivial, sobald ein CRM-Export verfügbar ist."
+**Warum kein Live-Discover?**
 
-### Was kostet das?
+„Web-Scraping ist konzeptionell der schwierigste Schritt. Ich habe die Zeit
+lieber in Cluster, Brief und Reporting gesteckt. Beim nächsten Durchlauf wäre
+Discover Schritt eins."
 
-„Pro vollem Lauf rund einen Dollar. Bei wöchentlichem Lauf etwa fünfzig Dollar
-pro Jahr. Vernachlässigbar gegenüber dem Wert eines einzigen rankenden Pillar-
-Artikels."
+**Größte Schwäche?**
 
-### Warum hast du Discover nicht live umgesetzt?
+„Das fehlende Live-Discover. Sonst nichts Großes."
 
-„Bewusste Trade-off-Entscheidung. Discover ist konzeptionell der schwierigste
-Schritt, weil echtes HTML im echten Web ein Wundertüten-Problem ist —
-Anti-Bot-Schutz, JavaScript-Rendering, Pagination, Lazy Loading. Ich habe die
-Zeit lieber in Cluster, Brief und Reporting gesteckt, weil eine Pipeline ohne
-sauberes Discover trotzdem demonstrierbar ist, eine perfekte Discover ohne
-Cluster und Brief aber wertlos. Bei einer zweiten Iteration wäre Discover der
-erste Schritt."
+**Funktioniert das auch für andere Branchen?**
 
-### Was ist die größte Schwäche der aktuellen Lösung?
+„Ja. Das Embedding-Modell ist mehrsprachig, das Clustering ist domänenfrei.
+Brief-Prompt anpassen, Quelle austauschen, fertig."
 
-„Ehrlich: das fehlende Live-Discover. Die Pipeline läuft auf einem kuratierten
-Keyword-Set, das ich nicht aus dem aktuellen zvoove-Blog-Stand abgeleitet habe.
-Das ist die einzige Stelle, wo zwischen Demo und Produktion ein klarer Schritt
-liegt. Alles andere ist produktionsreif oder zumindest nahe dran."
+**Welche Rolle soll AI bei zvoove spielen?**
 
-### Welche Rolle soll AI in der zvoove-Marketing-Strategie spielen, deiner Meinung nach?
-
-„Drei Hebel. Erstens, Discovery — Themen finden, bevor Wettbewerber sie
-besetzen. Zweitens, Briefing-Qualität — Redaktion entlasten, Konsistenz
-sichern, Time-to-Publish drücken. Drittens, Personalisierung im Funnel —
-Recherche-Ergebnisse für unterschiedliche Personas anders anteasern. Diese
-Pipeline adressiert die ersten beiden, der dritte Hebel wäre der nächste
-Aufbau."
+„Drei Hebel: Themen finden, Briefs schreiben, Funnel personalisieren. Diese
+Pipeline deckt die ersten zwei ab."
 
 ---
 
-## Generalprobe-Tipps
+## Tipps für die Generalprobe
 
-- Sprich die Schlüsselzahlen laut aus, bis sie automatisch kommen: 500 Keywords,
-  13 Cluster, 0 Outlier, Silhouette 0,647, ARI 0,811, ~1 USD pro Lauf.
-- Halte die Cluster-Map im Browser bereit, eine Live-Demo wirkt stärker als
-  jeder Screenshot.
-- Bei Q&A: erst zwei Sekunden nachdenken, dann antworten. Wirkt souveräner als
-  reflexartige Antworten.
-- Wenn du eine Frage nicht beantworten kannst: ruhig sagen „das habe ich nicht
-  gemessen, mein Bauchgefühl ist X, sauber prüfen würde ich es so". Ehrlichkeit
-  schlägt Improvisation.
-- Vermeide Konjunktiv-Häufungen. „Ich würde tun" wirkt schwächer als „Ich tue".
-- Ein bewusster Atemzug zwischen den Blöcken. Fünfzehn Minuten sind kürzer als
-  sie sich vorbereiten lassen.
+- Diese Zahlen auswendig: **500, 13, 0 Outlier, 240.000 SV, 1 USD pro Lauf**.
+- Cluster-Karte im Browser geöffnet halten. Live-Demo wirkt stärker als ein
+  Screenshot.
+- Bei Q&A: zwei Sekunden Pause vor der Antwort. Wirkt souverän.
+- Wenn du etwas nicht weißt: ruhig sagen. Ehrlichkeit schlägt Improvisation.
+- Einmal mit Stoppuhr durchsprechen. Wo bist du nach 8 Minuten? Sollte
+  mitten im Cluster-Block sein.
+- Tief atmen zwischen den Blöcken. 15 Minuten sind kurz.

@@ -303,6 +303,29 @@ def _format_word_count(value: str) -> str:
     return f"{escaped} Wörter"
 
 
+def _compute_intent(pct_comm: int, md: str | None = None) -> tuple[str, str]:
+    """Return (label, badge_kind) for a cluster, single source of truth.
+
+    Starts from pct_commercial thresholds, then lets a brief's `**Suchintention:**`
+    metadata override when present. Used for both data-intent (filter) and the
+    visible badge so they cannot disagree.
+    """
+    if pct_comm >= 70:
+        label, kind = "commercial", "ok"
+    elif pct_comm <= 20:
+        label, kind = "informational", "warn"
+    else:
+        label, kind = "mixed", "info"
+    if md:
+        intent_meta = _meta(md, "Suchintention")
+        if intent_meta:
+            kind = _intent_class(intent_meta)
+            first = re.split(r"[,\s]", intent_meta.strip(), 1)[0]
+            if first.lower() in {"commercial", "informational", "mixed"}:
+                label = first.lower()
+    return label, kind
+
+
 def _safe_label(value, display_id: int) -> str:
     """Return a string label, falling back when the cell is missing/NaN/empty.
 
@@ -327,22 +350,8 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
     median_kd = int(profile_row["median_kd"])
     pct_comm = int(profile_row["pct_commercial"])
 
-    # Intent badge: derive from pct_commercial
-    if pct_comm >= 70:
-        intent_label, intent_kind = "commercial", "ok"
-    elif pct_comm <= 20:
-        intent_label, intent_kind = "informational", "warn"
-    else:
-        intent_label, intent_kind = "mixed", "info"
-
-    # Optional override from the brief metadata if present
+    intent_label, intent_kind = _compute_intent(pct_comm, md)
     intent_meta = _meta(md, "Suchintention")
-    if intent_meta:
-        intent_kind = _intent_class(intent_meta)
-        # Pull just the first word as the badge label
-        first = re.split(r"[,\s]", intent_meta.strip(), 1)[0]
-        if first.lower() in {"commercial", "informational", "mixed"}:
-            intent_label = first.lower()
 
     # Title from the brief or fall back to the cluster label
     title_match = re.match(r"#\s+(.+)", md.strip())
@@ -459,7 +468,8 @@ def _render_summary(prof: pd.DataFrame) -> str:
 """.replace(",", ".").strip()
 
 
-def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
+def _render_minicards(prof: pd.DataFrame, titles: dict[int, str],
+                      intents: dict[int, tuple[str, str]]) -> str:
     """Mini cluster cards at the top. Click a card to jump to the full brief below."""
     real = prof[prof["cluster_id"] != -1].sort_values("total_sv", ascending=False)
     cards = []
@@ -470,13 +480,7 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
         sv = int(r["total_sv"])
         pct_comm = int(r["pct_commercial"])
 
-        # Same intent logic as the full card
-        if pct_comm >= 70:
-            intent_label, intent_kind = "commercial", "ok"
-        elif pct_comm <= 20:
-            intent_label, intent_kind = "informational", "warn"
-        else:
-            intent_label, intent_kind = "mixed", "info"
+        intent_label, intent_kind = intents.get(cid, _compute_intent(pct_comm))
 
         sv_fmt = f"{sv:,}".replace(",", ".")
         cards.append(
@@ -522,6 +526,7 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
     briefs_root = briefings_dir if briefings_dir is not None else BRIEFINGS
     cards = []
     titles: dict[int, str] = {}
+    intents: dict[int, tuple[str, str]] = {}
     for _, row in real.iterrows():
         cid = int(row["cluster_id"])
         display_id = cid + 1
@@ -533,13 +538,14 @@ def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
         title_match = re.match(r"#\s+(.+)", md.strip())
         if title_match:
             titles[cid] = title_match.group(1).strip()
+        intents[cid] = _compute_intent(int(row["pct_commercial"]), md)
         top_kw = labeled.loc[labeled["hdb"] == cid].sort_values(
             "search_volume", ascending=False).head(6)
         cards.append(_render_card(row, top_kw, md, brief_prefix=brief_prefix,
                                   map_prefix=map_prefix))
 
     summary = _render_summary(profiles)
-    minicards = _render_minicards(profiles, titles)
+    minicards = _render_minicards(profiles, titles, intents)
     cards_html = "\n".join(cards)
 
     back_html = ""

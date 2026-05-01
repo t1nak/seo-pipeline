@@ -1,6 +1,6 @@
 # Technical Review
 
-Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch Lücken, was würde ich in Produktion ergänzen. Dieser Bericht ist bewusst ehrlich, nicht werbend, und macht das Repo in unter 30 Minuten technisch beurteilbar.
+Selbst-Audit dieser Pipeline aus Engineering-Sicht. Was ist solide, was hat noch Lücken, was würde ich in Produktion ergänzen.
 
 ## 1. Code-Qualität
 

@@ -21,32 +21,35 @@ Punkt 3 ist der eigentliche Gewinn. Punkt 4 ist das, was den Unterschied zwische
 
 ## 2. Ergebnis in zwei Minuten
 
-Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 13 thematische Cluster plus 130 Ausreißer (26 Prozent) bei `mcs=15, ms=5, leaf`. Die wichtigsten Zahlen:
+Aus 500 Keywords (Cap aus 504 manuellem Baseline-Set) wurden 13 thematische Cluster — alle 500 Keywords sind zugeordnet, 0 Outlier — bei `mcs=10, ms=5, eom` plus Soft-Assignment der 72 HDBSCAN-Rand-Keywords. Die wichtigsten Zahlen:
 
 | Metrik | Wert |
 |---|---|
 | Keywords gesamt | 500 |
-| Cluster (HDBSCAN, `mcs=15, ms=5, leaf`) | 13 plus 130 Ausreißer (26 Prozent Rauschen) |
-| Gesamt Suchvolumen pro Monat | 192.198 (ohne Rauschen) |
-| Größter Cluster nach SV | HR- und Bewerbermanagementsoftware KMU (36.450 SV, 36 Keywords) |
-| Größter Cluster nach Anzahl | Zeiterfassungs- und Zeitarbeitssoftware (47 Keywords, 26.159 SV) |
-| Höchste kommerzielle Dichte | Zvoove Produktfeatures und Preise (100 Prozent kommerziell, 23.508 SV) |
-| Silhouette Score (ohne Rauschen) | 0,668 |
-| Silhouette Score (Ward k=12) | 0,590 |
-| ARI gegen LLM Cluster | 0,193 |
-| ARI gegen Ward(k=10) | 0,786 |
+| Cluster (HDBSCAN, `mcs=10, ms=5, eom` + Soft-Assignment) | **13 Cluster, 0 Outlier** |
+| HDBSCAN-Kern-Keywords | 428 (direkt geclustert) |
+| Soft-Assigned-Keywords | 72 (per Nearest-Centroid in 5D UMAP) |
+| Gesamt Suchvolumen pro Monat | 239.976 (alle Cluster) |
+| Größter Cluster nach SV | HR Software Dokumenten- und Mitarbeiterverwaltung (45.567 SV, 45 Keywords) |
+| Größter Cluster nach Anzahl | Sammelthemen Zeitarbeit Software und Finanzierung (97 Keywords, 28.301 SV — Sub-Clustering empfohlen) |
+| Höchste kommerzielle Dichte | Zvoove Produkte und Features (97 Prozent kommerziell, 23.604 SV) |
+| Silhouette HDBSCAN-Kern | 0,647 |
+| Silhouette inklusive Soft-Assignment | 0,570 |
+| Silhouette Ward(k=12) (Vergleich) | 0,590 |
+| ARI HDBSCAN gegen LLM-Cluster | 0,143 |
+| ARI HDBSCAN gegen Ward(k=10) | 0,811 |
 
 Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster (DE) | Keywords | SV / Monat | Ø KD | % kommerziell |
 |---|---|---|---|---|---|
-| 9 | HR- und Bewerbermanagementsoftware KMU | 36 | 36.450 | 51 | 86 |
-| 1 | Zeiterfassungs- und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
-| 6 | Digitalisierung in Personaldienstleistung | 33 | 23.592 | 37 | 39 |
-| 3 | Zvoove Produktfeatures und Preise | 33 | 23.508 | 53 | 100 |
-| 4 | Lohnabrechnung und Candidate Sourcing | 28 | 13.668 | 35 | 25 |
+| 10 | HR Software Dokumenten- und Mitarbeiterverwaltung | 45 | 45.567 | 52 | 89 |
+| 12 | Sammelthemen Zeitarbeit Software und Finanzierung | 97 | 28.301 | 36 | 34 |
+| 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
+| 7 | Digitalisierung Personaldienstleistung und KI | 37 | 23.984 | 36 | 35 |
+| 3 | Zvoove Produkte und Features | 34 | 23.604 | 52 | 97 |
 
-Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keywords erzeugt (siehe [`docs/decisions.md`](docs/decisions.md) ADR-5). Vorteil: jede Hyperparameter-Variante bekommt sofort sinnvolle Bezeichnungen; eine handgepflegte YAML bleibt als Fallback für Demo-Läufe ohne API-Key.
+Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf aus den Top-Keywords erzeugt (siehe [`docs/decisions.md`](docs/decisions.md) ADR-5). Soft-Assignment der HDBSCAN-Rand-Keywords ist in [`docs/decisions.md`](docs/decisions.md) ADR-15 dokumentiert: jedes der 72 Noise-Keywords bekommt seinen nächsten Cluster-Centroid im 5D-UMAP-Raum, die ursprüngliche Noise-Eigenschaft bleibt in `noise_assigned: bool` erhalten.
 
 Die interaktive Karte zum Klicken liegt unter [`output/clustering/cluster_map.html`](output/clustering/cluster_map.html). Sprache umschaltbar zwischen Deutsch und Englisch, Bubble Größe wählbar zwischen Suchvolumen, Priorität, CPC und Einfachheit, Klick auf einen Punkt öffnet die Keyword Tabelle des Clusters.
 
@@ -228,10 +231,11 @@ Silhouette misst, wie gut Cluster getrennt sind, von -1 (schlecht) bis +1 (perfe
 
 | Setup | Silhouette |
 |---|---|
-| HDBSCAN ohne Rauschen | 0,668 |
+| HDBSCAN-Kern (428 Keywords, vor Soft-Assignment) | 0,647 |
+| Alle 500 (nach Soft-Assignment) | 0,570 |
 | Ward Hierarchical (k=12) | 0,590 |
 
-0,668 ist für reale Textdaten sehr gut. Zur Einordnung: Werte über 0,5 gelten als belastbare Cluster. Mit 26 Prozent Rauschen ist der Effekt für `mcs=15, leaf` größer als bei der vorherigen `eom`-Konfiguration, das ist die bewusst gewählte Konsequenz für mehr Brief-Granularität.
+0,647 ist für reale Textdaten sehr gut. Zur Einordnung: Werte über 0,5 gelten als belastbare Cluster. Der Drop auf 0,570 nach Soft-Assignment ist erwartet — die 72 Rand-Keywords liegen per Definition näher an einer Cluster-Grenze. Beide Werte bleiben über Ward(k=12) bei 0,590.
 
 ### Quantitativ: Übereinstimmung mit Alternative
 
@@ -239,8 +243,8 @@ Wie ähnlich sind die HDBSCAN Cluster den ursprünglich vom LLM kuratierten Clus
 
 | Vergleich | ARI | NMI |
 |---|---|---|
-| HDBSCAN gegen LLM Cluster (ohne Rauschen) | 0,193 | 0,372 |
-| HDBSCAN gegen Ward Hierarchical (k=10, ohne Rauschen) | 0,786 | (nicht erhoben) |
+| HDBSCAN gegen LLM Cluster (HDBSCAN-Kern) | 0,143 | 0,342 |
+| HDBSCAN gegen Ward Hierarchical (k=10, alle 500) | 0,811 | (nicht erhoben) |
 
 ARI ist konservativer als NMI, also ARI < NMI ist normal. Die LLM-vs-HDBSCAN-Werte sind erwartet niedrig: HDBSCAN findet andere Cluster-Grenzen als die LLM-Klassifikation, das ist methodisch interessant und keineswegs ein Fehler. Beide sind gültige Sichten auf die Daten. Der ARI von 0,786 zwischen HDBSCAN und Ward(k=10) zeigt zugleich, dass zwei mathematisch unabhängige Verfahren auf großer Mehrheit übereinstimmen.
 
@@ -250,35 +254,35 @@ Ein Beispiel: Der ursprüngliche LLM Cluster `cluster_03` („Recruiting & Bewer
 
 Ich habe für jeden der 13 Cluster die Top 10 Keywords gelesen und gegen das LLM-generierte Label gegengeprüft. Ergebnis:
 
-- 11 von 13 Clustern sind eindeutig sinnvoll und sauber. Beispiel Cluster 0 (Factoring Geschäftsmodelle und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`. Beispiel Cluster 1 (Zeiterfassungs- und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`.
-- Cluster 4 (Lohnabrechnung und Candidate Sourcing) ist heterogen, enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`. Nicht falsch, aber kein klares Pillar-Thema. Empfohlene Bearbeitung: Top-Keywords einzeln, nicht als Pillar.
-- Cluster 12 (Zeitarbeit Branchentrends und Einsatzplanung) hat einen breiten thematischen Bogen. Brauchbar für Thought-Leadership-Inhalte, aber kein klarer Pillar-Kandidat ohne Sub-Editorial. Vollständige pro-Cluster-Empfehlung in [`docs/results.md`](docs/results.md).
+- 11 von 13 Clustern sind eindeutig sinnvoll und sauber. Beispiel Cluster 0 (Factoring Buchhaltung und Genehmigung): `factoring buchen`, `factoring erlaubnis`, `offenes factoring`. Beispiel Cluster 1 (Zeiterfassung und Zeitarbeitssoftware): `zeiterfassung software`, `mobile zeiterfassung`, `zeitarbeitssoftware`.
+- Cluster 4 (Sammelthemen Lohnabrechnung und Recruiting) ist vom LLM transparent als „Sammelthemen" gelabelt — enthält `aüg`, `bewerber finden`, `lohnabrechnung sage`, `indeed alternative`. Nicht falsch, aber kein klares Pillar-Thema. Empfohlene Bearbeitung: Top-Keywords einzeln, nicht als Pillar.
+- Cluster 12 (Sammelthemen Zeitarbeit Software und Finanzierung) ist mit 97 Keywords der größte Cluster. Bündelt „Zeitarbeit + X" Kombinationen aus Software, Factoring, CRM, Lohn. Vom LLM transparent als „Sammelthemen" gelabelt. Empfohlen: Sub-Clustering vor Bearbeitung. Vollständige pro-Cluster-Empfehlung in [`docs/results.md`](docs/results.md).
 
 ## 10. Top Empfehlungen aus diesem Lauf
 
 Drei aus den 13 Clustern, sortiert nach Hebel für zvoove. Eine vollständige Cluster-Tabelle mit Empfehlung pro Cluster steht in [`docs/results.md`](docs/results.md).
 
-### Empfehlung 1: HR- und Bewerbermanagementsoftware KMU (Cluster 9)
+### Empfehlung 1: HR Software Dokumenten- und Mitarbeiterverwaltung (Cluster 10)
 
-36.450 SV pro Monat, 36 Keywords, 86 Prozent kommerziell, mittlere KD 51. Top Keywords: `bewerbermanagement software`, `mitarbeiterverwaltung software`, `hr software kmu`, `gehaltsabrechnung software`, `ats software`.
+45.567 SV pro Monat, 45 Keywords, 89 Prozent kommerziell, mittlere KD 52. Top Keywords: `dokumentenmanagement software`, `bewerbermanagement software`, `mitarbeiterverwaltung software`, `hr software kmu`, `gehaltsabrechnung software`.
 
 Was tun: ein Pillar Page Set zu Software-Kategorien, das jeweils zvoove-Module als Lösung positioniert. Hohe SV, mittelhohe Schwierigkeit, hohe kommerzielle Dichte. Klassischer Bottom-of-Funnel-Hebel.
 
-Revenue Hypothese: Wenn 5 Prozent der monatlichen 36.000 SV Klicks generieren und 2 Prozent davon zu MQLs werden, sind das 36 MQLs pro Monat aus diesem Cluster.
+Revenue Hypothese: Wenn 5 Prozent der monatlichen 45.000 SV Klicks generieren und 2 Prozent davon zu MQLs werden, sind das 45 MQLs pro Monat aus diesem Cluster.
 
-### Empfehlung 2: Zvoove Produktfeatures und Preise (Cluster 3)
+### Empfehlung 2: Zvoove Produkte und Features (Cluster 3)
 
-23.508 SV, 33 Keywords, 100 Prozent kommerziell, mittlere KD 53. Top Keywords: `zvoove referenzen`, `zvoove dms`, `zvoove cockpit`, `zvoove payroll`, `zvoove cashlink`.
+23.604 SV, 34 Keywords, 97 Prozent kommerziell, mittlere KD 52. Top Keywords: `zvoove referenzen`, `zvoove dms`, `zvoove cockpit`, `zvoove payroll`, `zvoove cashlink`.
 
-Was tun: alle Brand-Begriffe müssen auf dedizierten Produktseiten ranken. KD 53 ist für Brand-Keywords ungewöhnlich hoch, was darauf hindeutet, dass aktuell entweder Wettbewerber-Vergleichsseiten oder Bewertungsplattformen die SERP belegen.
+Was tun: alle Brand-Begriffe müssen auf dedizierten Produktseiten ranken. KD 52 ist für Brand-Keywords ungewöhnlich hoch, was darauf hindeutet, dass aktuell entweder Wettbewerber-Vergleichsseiten oder Bewertungsplattformen die SERP belegen.
 
 Schneller Win: Ein zvoove-Erfahrungen-Hub, der die positiven Bewertungen aggregiert, mit klarer URL-Struktur unter `/produkte/`.
 
-### Empfehlung 3: Digitalisierung in Personaldienstleistung (Cluster 6)
+### Empfehlung 3: Digitalisierung Personaldienstleistung und KI (Cluster 7)
 
-23.592 SV pro Monat, 33 Keywords, 39 Prozent kommerziell, mittlere KD 37. Top Keywords: `digitalisierung zeitarbeit`, `digitalisierung personaldienstleistung`, `künstliche intelligenz personaldienstleistung`, `digitale zeiterfassung`, `elektronische lohnabrechnung`.
+23.984 SV pro Monat, 37 Keywords, 35 Prozent kommerziell, mittlere KD 36. Top Keywords: `digitalisierung zeitarbeit`, `digitalisierung personaldienstleistung`, `künstliche intelligenz personaldienstleistung`, `digitale zeiterfassung`, `elektronische lohnabrechnung`.
 
-Was tun: Hub-Pillar `/wissen/digitalisierung-personaldienstleistung/`, der gezielt Awareness-Traffic in die kommerziellen Cluster 1 (Zeitarbeitssoftware), 9 (HR-ATS-KMU) und 3 (zvoove) überführt. Mittlere KD und niedrige kommerzielle Dichte machen das zum klassischen Top-of-Funnel-Eingang.
+Was tun: Hub-Pillar `/wissen/digitalisierung-personaldienstleistung/`, der gezielt Awareness-Traffic in die kommerziellen Cluster 1 (Zeitarbeitssoftware), 10 (HR-Software) und 3 (zvoove) überführt. Mittlere KD und niedrige kommerzielle Dichte machen das zum klassischen Top-of-Funnel-Eingang. Priority 16,8 — einer der hebel-stärksten Cluster.
 
 Revenue Hypothese: Pipeline-Influence statt direkte Conversion. Über 6 bis 12 Monate erwartbar: Brand-Lift-Wirkung und gestützte Brand-Suchen. Geschäftsführer recherchieren Digitalisierungs-Schritte genau dann, wenn ein Software-Wechsel ansteht.
 
@@ -289,7 +293,7 @@ Eine SEO Pipeline ist nur dann ein Revenue Asset, wenn ihre Ausgaben in andere S
 | Pipeline Output | Anbindung an den Revenue Stack |
 |---|---|
 | `data/keywords.csv` (500 Keywords mit SV/KD/CPC) | Input für Google Ads Keyword Planning, Input für Ahrefs / Semrush Tracking, Input für Looker Studio SEO Dashboards |
-| `output/clustering/cluster_profiles.csv` plus `cluster_labels.json` (13 Cluster) | Content-Kalender-Anker in Notion / Airtable, Pillar-Page-Architektur für ein neues `/wissen/` Verzeichnis |
+| `output/clustering/cluster_profiles.csv` plus `cluster_labels.json` (13 Cluster, 0 Outlier) | Content-Kalender-Anker in Notion / Airtable, Pillar-Page-Architektur für ein neues `/wissen/` Verzeichnis |
 | `output/briefings/cluster_NN.md` (13 Briefs) | direkter Input für die Redaktion in einem Headless CMS (Sanity, Contentful) oder direkt in WordPress |
 | `output/clustering/cluster_map.html` (interaktive Karte) | embedbar in einem internen Wiki, Slack Card, oder Notion Page für die wöchentliche Marketing Stand-up |
 | `output/reporting/index.html` (Dashboard) | embedbar in der Marketing Wiki, alternativ Quelle für ein Looker Studio Embed |

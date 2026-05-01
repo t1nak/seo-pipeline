@@ -22,7 +22,7 @@ Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute ak
 |---|---|---|
 | **Quelle** | `src/discover.py` | Welche Keywords sind überhaupt relevant. Aktuell Stub mit `--source manual`. |
 | **Anreicherung** | `src/enrich.py` | Pro Keyword: SV, KD, CPC, SERP Features, Priority Score. Heuristik oder DataForSEO. |
-| **Strukturierung** | `src/cluster.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Profiling. Charts und interaktive Karte werden im Report-Schritt aus `src/cluster_viz.py` aufgerufen. |
+| **Strukturierung** | `src/cluster.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Soft-Assignment der Rand-Keywords (Schritt `assign_noise`), Profiling. Charts und interaktive Karte werden im Report-Schritt aus `src/cluster_viz.py` aufgerufen. |
 | **Beschriftung** | `src/labels_llm.py` | Pro Cluster ein DE- und EN-Label per Anthropic-Batch-Call. Schreibt `cluster_labels.json` und aktualisiert die Label-Spalten in `cluster_profiles.csv` und `keywords_labeled.csv`. |
 | **Aktivierung** | `src/brief.py` | Pro Cluster ein redaktions-fertiger Content Brief. Claude API mit Prompt Caching. |
 | **Reporting** | `src/report.py` | Konsolidiertes Dashboard, das alle Artefakte verbindet. |
@@ -112,6 +112,7 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | `embed` | 5 bis 8 Sekunden (erstes Mal: zusätzlich Modell-Download ~120 MB) | Keyword Anzahl, CPU |
 | `reduce` | 3 bis 4 Sekunden | Anzahl plus Embedding Dimension |
 | `cluster` | 2 bis 3 Sekunden | UMAP Dimension |
+| `assign_noise` (Soft-Assignment) | < 1 Sekunde | Anzahl Rand-Keywords mal Cluster |
 | `label` (HDBSCAN-Output) | < 1 Sekunde | Keyword Anzahl |
 | `profile` | < 1 Sekunde | Cluster Anzahl |
 | `labels_llm` (Anthropic Haiku, Batch-Call) | 4 bis 8 Sekunden | API-Latenz |
@@ -133,7 +134,7 @@ Embeddings, UMAP und HDBSCAN laufen lokal (0 USD). Variabel sind Enrichment, Lab
 | DataForSEO | Anthropic Haiku | OpenAI | ~0,75 USD | ~0,01 USD | ~0,40 USD | **~1,16 USD** |
 | SEMrush / Ahrefs | Anthropic Haiku | je Brief-Provider | abhängig vom Plan | ~0,01 USD | abhängig | abhängig |
 
-Annahmen: 500 Keywords, 13 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl. Der Label-Step ist ein einziger Batch-Call und bleibt nahezu konstant (~1 Cent), egal wie viele Cluster entstehen.
+Annahmen: 500 Keywords (alle in Clustern dank Soft-Assignment, siehe [ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)), 13 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl. Der Label-Step ist ein einziger Batch-Call und bleibt nahezu konstant (~1 Cent), egal wie viele Cluster entstehen.
 
 ## Skalierung
 

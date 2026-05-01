@@ -20,7 +20,7 @@ seo-pipeline/
 │   ├── retry.py             # Decorator: exponential backoff für Provider-Calls
 │   ├── discover.py          # Schritt 1: Keyword-Quelle (manual | live)
 │   ├── enrich.py            # Schritt 2: SV/KD/CPC anreichern (estimate | dataforseo)
-│   ├── cluster.py           # Schritt 3: embed → UMAP → HDBSCAN → label-Stub → profile
+│   ├── cluster.py           # Schritt 3: embed → UMAP → HDBSCAN → assign_noise (Soft) → label-Stub → profile
 │   ├── cluster_viz.py       # Plotly-Klick-Map (vom Report-Schritt aufgerufen)
 │   ├── labels_llm.py        # Schritt 3b: DE/EN-Labels per Anthropic-Batch-Call
 │   ├── subcluster.py        # zweiter HDBSCAN-Pass auf einen Cluster
@@ -62,6 +62,9 @@ flowchart LR
     C3 --> U2[umap_2d.npy]
     U5 --> C4[cluster.step_cluster]
     C4 --> KL[keywords_labeled.csv]
+    KL --> CA[cluster.step_assign_noise]
+    U5 --> CA
+    CA --> KL
     KL --> C5[cluster.step_profile]
     C5 --> P[cluster_profiles.csv]
     P --> L[labels_llm.py]
@@ -417,7 +420,7 @@ Rationale: zvoove-Keywords sind deutsch, deutsche Morphologie wäre in einem eng
 
 ### HDBSCAN-Defaults aus dem Sweep
 
-Rationale: Der Hyperparameter-Sweep zeigt eine Plateau-Region. Aktueller Default in der Workflow-UI: `mcs=15, ms=5, leaf` (13 Cluster, 130 Noise, ~26 Prozent Rauschen, Silhouette 0,668). Die Wahl ist Granularität-getrieben: für Content-Briefs sind feinere Themen wertvoller als ein einzelnes Sammelbecken. Konstanten in `Settings` (`cluster_hdbscan_mcs`, `cluster_hdbscan_method`, `cluster_hdbscan_ms`), Begründung in der [Methodik](methodology.md).
+Rationale: Der Hyperparameter-Sweep zeigt eine Plateau-Region. Aktueller Default in der Workflow-UI: `mcs=10, ms=5, eom` (13 Cluster, 72 Noise, 14 Prozent Rauschen, Silhouette 0,647 auf den Kern-Keywords). Die Wahl ist Trade-off-getrieben: `mcs=15/leaf` hatte zwar gleiche Cluster-Anzahl, aber 130 Noise (26 Prozent), `mcs=12/eom` nur 40 Noise aber einen Sammelcluster mit 188 Keywords. `mcs=10/eom` ist der beste Kompromiss aus Granularität und Rauschrate. Die verbleibenden 72 Noise-Keywords werden vom `assign_noise` Schritt soft-assigned (siehe [ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)). Konstanten in `Settings` (`cluster_hdbscan_mcs`, `cluster_hdbscan_method`, `cluster_hdbscan_ms`), Begründung in der [Methodik](methodology.md).
 
 ### LLM-generierte Cluster-Labels mit YAML-Fallback
 
@@ -446,7 +449,7 @@ Jeder Schritt hat eine eigene Sub-CLI:
 ```bash
 python -m src.discover --source manual --max-keywords 200
 python -m src.enrich --provider estimate
-python -m src.cluster --step embed,reduce,cluster,label,profile
+python -m src.cluster --step embed,reduce,cluster,assign_noise,label,profile
 python -m src.labels_llm                            # DE/EN Labels per Anthropic Haiku
 python -m src.brief --provider api --cluster 5 --model claude-sonnet-4-6
 python -m src.briefs_html

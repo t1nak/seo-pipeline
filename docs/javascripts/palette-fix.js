@@ -21,6 +21,9 @@
   function wire() {
     const radios = document.querySelectorAll('input[name="__palette"]');
     if (!radios.length) return false;
+    document
+      .querySelectorAll('[data-md-component="palette"] label[hidden]')
+      .forEach((l) => l.removeAttribute("hidden"));
     radios.forEach((r, i) => {
       r.addEventListener("change", () => {
         if (!r.checked) return;

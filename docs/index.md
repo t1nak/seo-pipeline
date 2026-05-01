@@ -6,7 +6,7 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 ![Pipeline Architektur](landing_diagram.svg)
 
-**Beispiel-Demo:** Im Beispiel ist der Entry Point eine Liste von 500 LLM-erzeugten Keywords. In einer produktiven Pipeline kann dieser Entry Point genauso von externen Anbietern wie Semrush, Ahrefs oder DataForSEO kommen, die Phase ist über die Konfiguration austauschbar. Aus den Keywords entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live-Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
+**Beispiel-Demo:** Im Beispiel ist der Entry Point eine Liste von 500 LLM-erzeugten Keywords. In einer produktiven Pipeline kann dieser Entry Point genauso von externen Anbietern wie Semrush, Ahrefs oder DataForSEO kommen, dieser Schritt lässt sich über die Konfiguration im GitHub Actions Workflow einstellen. Aus den Keywords entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live-Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
 
 [:material-rocket-launch: Go to Pipeline (GitHub Actions)](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml){ .md-button .md-button--primary target=_blank rel=noopener }
 

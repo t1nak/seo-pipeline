@@ -75,20 +75,23 @@ Aus dem **zvoove-Blog** ein Keyword-Set entwickeln und daraus konkrete Content-E
 
 # Anforderungen — so bin ich rangegangen
 
-Vier Leitplanken für jede Entscheidung:
+Fünf Leitplanken für jede Entscheidung:
 
 <br>
 
 **1 · Integrierbar in bestehende Stacks**
-Reporting muss in Airtable, Notion, Sheets, CMS landen — ohne Vendor-Lock.
+Reporting läuft in Airtable, Notion, Sheets, CMS — kein Vendor-Lock auf einer Seite.
 
-**2 · Technisch exzellent**
-Reproduzierbar, validiert (Silhouette + ARI), getestet (42 Tests), versioniert.
+**2 · Provider-unabhängig**
+Embeddings lokal. LLM-Schicht hinter dünner Abstraktion: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.
 
-**3 · Modular und ersetzbar**
+**3 · Technisch exzellent**
+Sauberer Code, 42 Tests, versioniert, validiert (Silhouette + ARI), reproduzierbar.
+
+**4 · Modular und ersetzbar**
 Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
 
-**4 · Wirtschaftlich und transparent**
+**5 · Wirtschaftlich und transparent**
 < 1 USD pro Lauf. Jede Trade-off-Entscheidung in den Decision Records dokumentiert.
 
 ---

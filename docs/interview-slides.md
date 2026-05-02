@@ -35,6 +35,25 @@ style: |
 
 ---
 
+# Agenda
+
+<br>
+
+<span class="sub">— hier später Outline einfügen —</span>
+
+<br>
+
+1. Aufgabe
+2. Anforderungen & mein Ansatz
+3. Ergebnis
+4. Architektur
+5. Cluster-Schritt im Detail
+6. Briefs & Reporting
+7. Drei Empfehlungen für zvoove
+8. Limits & nächste Schritte
+
+---
+
 # Was ist die Aufgabe?
 
 Aus dem **zvoove-Blog** ein Keyword-Set entwickeln und daraus konkrete Content-Empfehlungen ableiten.
@@ -51,6 +70,26 @@ Aus dem **zvoove-Blog** ein Keyword-Set entwickeln und daraus konkrete Content-E
 <br>
 
 <span class="sub">Maximal 500 Keywords. Quelle: <code>zvoove.de/wissen/blog</code></span>
+
+---
+
+# Anforderungen — so bin ich rangegangen
+
+Vier Leitplanken für jede Entscheidung:
+
+<br>
+
+**1 · Integrierbar in bestehende Stacks**
+Reporting muss in Airtable, Notion, Sheets, CMS landen — ohne Vendor-Lock.
+
+**2 · Technisch exzellent**
+Reproduzierbar, validiert (Silhouette + ARI), getestet (42 Tests), versioniert.
+
+**3 · Modular und ersetzbar**
+Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
+
+**4 · Wirtschaftlich und transparent**
+< 1 USD pro Lauf. Jede Trade-off-Entscheidung in den Decision Records dokumentiert.
 
 ---
 

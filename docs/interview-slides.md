@@ -60,39 +60,35 @@ Aus dem **zvoove-Blog** ein Keyword-Set entwickeln und daraus konkrete Content-E
 
 <br>
 
-**Vier Schritte:**
+**Aufgabe:** Automatisiere den Prozess
 
-1. Keywords gewinnen
-2. Thematisch clustern
-3. Pro Cluster einen Content-Brief schreiben
-4. Alles in ein filterbares Reporting
+<div style="text-align: center; margin: 30px 0; font-size: 1.15em;">
+
+**Quelle** → **Keywords** → **Cluster erstellen** → **Content Brief pro Cluster** → **Reporting**
+
+</div>
 
 <br>
 
-<span class="sub">Maximal 500 Keywords. Quelle: <code>zvoove.de/wissen/blog</code></span>
+<span class="sub">**Beispiel:** Quelle <code>zvoove.de/wissen/blog</code> → 500 Keywords</span>
 
 ---
 
-# Anforderungen — so bin ich rangegangen
-
-Fünf Leitplanken für jede Entscheidung:
+# Leitkriterien
 
 <br>
 
 **1 · Integrierbar in bestehende Stacks**
-Reporting läuft in Airtable, Notion, Sheets, CMS — kein Vendor-Lock auf einer Seite.
+Reporting läuft in Airtable, Notion, Sheets, CMS — keine Vendor-Lock-Abhängigkeit.
 
 **2 · Provider-unabhängig**
-Embeddings lokal. LLM-Schicht hinter dünner Abstraktion: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.
+LLM-Call über verschiedene Anbieter: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.
 
-**3 · Technisch exzellent**
-Sauberer Code, 42 Tests, versioniert, validiert (Silhouette + ARI), reproduzierbar.
+**3 · Technisch maintainable und übergebbar**
+42 Tests, versioniert, validiert (Silhouette + ARI), reproduzierbar.
 
-**4 · Modular und ersetzbar**
+**4 · Modular und testable**
 Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
-
-**5 · Wirtschaftlich und transparent**
-< 1 USD pro Lauf. Jede Trade-off-Entscheidung in den Decision Records dokumentiert.
 
 ---
 

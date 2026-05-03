@@ -112,15 +112,12 @@ footer { color: #8a99a8; }
 <h1 id="was-ist-die-aufgabe">Was ist die Aufgabe?</h1>
 <p>Aus dem <strong>zvoove-Blog</strong> ein Keyword-Set entwickeln und daraus konkrete Content-Empfehlungen ableiten.</p>
 <br />
-<p><strong>Vier Schritte:</strong></p>
-<ol>
-<li>Keywords gewinnen</li>
-<li>Thematisch clustern</li>
-<li>Pro Cluster einen Content-Brief schreiben</li>
-<li>Alles in ein filterbares Reporting</li>
-</ol>
+<p><strong>Aufgabe:</strong> Automatisiere den Prozess</p>
+<div style="text-align: center; margin: 30px 0; font-size: 1.15em;">
+<p><strong>Quelle</strong> → <strong>Keywords</strong> → <strong>Cluster erstellen</strong> → <strong>Content Brief pro Cluster</strong> → <strong>Reporting</strong></p>
+</div>
 <br />
-<p><span class="sub">Maximal 500 Keywords. Quelle: <code>zvoove.de/wissen/blog</code></span></p>
+<p><span class="sub"><strong>Beispiel:</strong> Quelle <code>zvoove.de/wissen/blog</code> → 500 Keywords</span></p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4" data-paginate="true" data-header="SEO-Pipeline für zvoove · Interview" data-theme="default" data-style="section {
   font-family: 'Inter', 'Helvetica Neue', sans-serif;
@@ -148,19 +145,16 @@ code { background: #f0f4f8; padding: 2px 6px; border-radius: 3px; }
 footer { color: #8a99a8; }
 ;" data-marpit-pagination-total="19" data-size="16:9">
 <header>SEO-Pipeline für zvoove · Interview</header>
-<h1 id="anforderungen--so-bin-ich-rangegangen">Anforderungen — so bin ich rangegangen</h1>
-<p>Fünf Leitplanken für jede Entscheidung:</p>
+<h1 id="leitkriterien">Leitkriterien</h1>
 <br />
 <p><strong>1 · Integrierbar in bestehende Stacks</strong><br />
-Reporting läuft in Airtable, Notion, Sheets, CMS — kein Vendor-Lock auf einer Seite.</p>
+Reporting läuft in Airtable, Notion, Sheets, CMS — keine Vendor-Lock-Abhängigkeit.</p>
 <p><strong>2 · Provider-unabhängig</strong><br />
-Embeddings lokal. LLM-Schicht hinter dünner Abstraktion: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.</p>
-<p><strong>3 · Technisch exzellent</strong><br />
-Sauberer Code, 42 Tests, versioniert, validiert (Silhouette + ARI), reproduzierbar.</p>
-<p><strong>4 · Modular und ersetzbar</strong><br />
+LLM-Call über verschiedene Anbieter: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.</p>
+<p><strong>3 · Technisch maintainable und übergebbar</strong><br />
+42 Tests, versioniert, validiert (Silhouette + ARI), reproduzierbar.</p>
+<p><strong>4 · Modular und testable</strong><br />
 Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.</p>
-<p><strong>5 · Wirtschaftlich und transparent</strong><br />
-&lt; 1 USD pro Lauf. Jede Trade-off-Entscheidung in den Decision Records dokumentiert.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-paginate="true" data-header="SEO-Pipeline für zvoove · Interview" data-theme="default" data-style="section {
   font-family: 'Inter', 'Helvetica Neue', sans-serif;

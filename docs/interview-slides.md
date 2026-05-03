@@ -60,15 +60,22 @@ Aus dem **zvoove-Blog** ein Keyword-Set entwickeln und daraus konkrete Content-E
 
 <br>
 
-**Aufgabe:** Automatisiere den Prozess
+**Warum?**
+Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen, der echte Kaufinteressenten bringt**.
 
-<div style="text-align: center; margin: 30px 0; font-size: 1.15em;">
+Dafür braucht es eine klare Antwort auf die Frage:
 
-**Quelle** → **Keywords** → **Cluster erstellen** → **Content Brief pro Cluster** → **Reporting**
-
-</div>
+> **Welche Themen lohnen sich wirklich — und in welcher Reihenfolge?**
 
 <br>
+
+**Aufgabe:** Automatisiere den Prozess
+
+<div style="text-align: center; margin: 20px 0; font-size: 1.1em;">
+
+**Quelle** → **Keywords** → **Cluster** → **Content Brief pro Cluster** → **Reporting**
+
+</div>
 
 <span class="sub">**Beispiel:** Quelle <code>zvoove.de/wissen/blog</code> → 500 Keywords</span>
 

@@ -7,40 +7,44 @@ header: 'SEO-Pipeline für zvoove · Interview'
 style: |
   section {
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
-    padding: 90px 110px 70px 110px;
-    line-height: 1.5;
+    padding: 80px 110px 70px 110px;
+    line-height: 1.4;
+    font-size: 26px;
   }
   section header {
     top: 24px;
     left: 110px;
     color: #8a99a8;
-    font-size: 0.7em;
+    font-size: 0.65em;
   }
   section::after {
     right: 60px;
     bottom: 30px;
     color: #8a99a8;
+    font-size: 0.7em;
   }
   h1 {
     color: #0d3b66;
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-top: 0;
-    margin-bottom: 36px;
+    margin-bottom: 28px;
   }
-  h2 { color: #0d3b66; margin-bottom: 24px; }
-  h3 { color: #0d3b66; margin-bottom: 16px; }
-  p { margin: 14px 0; }
-  ul, ol { margin: 14px 0; }
-  li { margin: 8px 0; }
+  h2 { color: #0d3b66; margin-bottom: 20px; }
+  h3 { color: #0d3b66; margin-bottom: 12px; font-size: 1.05em; }
+  p { margin: 10px 0; }
+  ul, ol { margin: 10px 0; }
+  li { margin: 6px 0; }
   strong { color: #0d3b66; }
-  table { font-size: 0.85em; margin: 20px 0; border-spacing: 0; }
-  th, td { padding: 8px 14px; }
+  table { font-size: 0.85em; margin: 16px 0; border-spacing: 0; }
+  th, td { padding: 7px 12px; }
   code { background: #f0f4f8; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
-  blockquote { border-left: 4px solid #0d3b66; margin: 20px 0; padding: 6px 20px; color: #0d3b66; }
-  .big { font-size: 3em; font-weight: 700; color: #0d3b66; line-height: 1.1; }
+  blockquote { border-left: 4px solid #0d3b66; margin: 16px 0; padding: 4px 18px; color: #0d3b66; }
+  pre { font-size: 0.78em; line-height: 1.4; }
+  .big { font-size: 2.6em; font-weight: 700; color: #0d3b66; line-height: 1.1; }
   .sub { color: #5b6b7c; }
+  .flow { text-align: center; margin: 22px 0; font-weight: 600; color: #0d3b66; }
   section.lead { padding: 120px 110px; }
-  section.lead h1 { font-size: 2.4em; margin-bottom: 12px; }
+  section.lead h1 { font-size: 2em; margin-bottom: 12px; }
 ---
 
 <!-- _class: lead -->
@@ -74,17 +78,17 @@ style: |
 
 **Automatisiere den Prozess:**
 
-<div style="text-align: center; margin: 36px 0; font-size: 1.15em;">
+<div class="flow">
 
-**Quelle** → **Keywords** → **Cluster** → **Content Brief pro Cluster** → **Reporting**
+Quelle → Keywords → Cluster → Content Brief → Reporting
 
 </div>
 
 **Beispiel:**
 
-<div style="text-align: center; margin: 24px 0; font-size: 1.05em;">
+<div class="flow">
 
-<code>zvoove.de/wissen/blog</code> → **500 Keywords** → **13 Cluster** → **13 Briefs** → **Dashboard**
+<code>zvoove.de/wissen/blog</code> → 500 Keywords → 13 Cluster → 13 Briefs → Dashboard
 
 </div>
 

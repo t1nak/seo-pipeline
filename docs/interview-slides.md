@@ -7,16 +7,40 @@ header: 'SEO-Pipeline für zvoove · Interview'
 style: |
   section {
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
-    padding: 60px 80px;
+    padding: 90px 110px 70px 110px;
+    line-height: 1.5;
   }
-  h1 { color: #0d3b66; font-size: 1.8em; }
-  h2 { color: #0d3b66; }
+  section header {
+    top: 24px;
+    left: 110px;
+    color: #8a99a8;
+    font-size: 0.7em;
+  }
+  section::after {
+    right: 60px;
+    bottom: 30px;
+    color: #8a99a8;
+  }
+  h1 {
+    color: #0d3b66;
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 36px;
+  }
+  h2 { color: #0d3b66; margin-bottom: 24px; }
+  h3 { color: #0d3b66; margin-bottom: 16px; }
+  p { margin: 14px 0; }
+  ul, ol { margin: 14px 0; }
+  li { margin: 8px 0; }
   strong { color: #0d3b66; }
+  table { font-size: 0.85em; margin: 20px 0; border-spacing: 0; }
+  th, td { padding: 8px 14px; }
+  code { background: #f0f4f8; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  blockquote { border-left: 4px solid #0d3b66; margin: 20px 0; padding: 6px 20px; color: #0d3b66; }
   .big { font-size: 3em; font-weight: 700; color: #0d3b66; line-height: 1.1; }
   .sub { color: #5b6b7c; }
-  table { font-size: 0.85em; }
-  code { background: #f0f4f8; padding: 2px 6px; border-radius: 3px; }
-  footer { color: #8a99a8; }
+  section.lead { padding: 120px 110px; }
+  section.lead h1 { font-size: 2.4em; margin-bottom: 12px; }
 ---
 
 <!-- _class: lead -->
@@ -25,11 +49,7 @@ style: |
 # SEO-Keyword → ContentBrief Pipeline
 ## für zvoove
 
-<br>
-
 **500 Keywords · 13 Cluster · 0 Outlier**
-
-<br>
 
 <span class="sub">Bewerbung als Revenue AI Architect</span>
 
@@ -37,11 +57,7 @@ style: |
 
 # Agenda
 
-<br>
-
 <span class="sub">— hier später Outline einfügen —</span>
-
-<br>
 
 1. Aufgabe
 2. Anforderungen & mein Ansatz
@@ -58,23 +74,19 @@ style: |
 
 **Automatisiere den Prozess:**
 
-<div style="text-align: center; margin: 30px 0; font-size: 1.15em;">
+<div style="text-align: center; margin: 36px 0; font-size: 1.15em;">
 
 **Quelle** → **Keywords** → **Cluster** → **Content Brief pro Cluster** → **Reporting**
 
 </div>
 
-<br>
-
 **Beispiel:**
 
-<div style="text-align: center; font-size: 1.05em;">
+<div style="text-align: center; margin: 24px 0; font-size: 1.05em;">
 
 <code>zvoove.de/wissen/blog</code> → **500 Keywords** → **13 Cluster** → **13 Briefs** → **Dashboard**
 
 </div>
-
-<br>
 
 **Warum?**
 Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen, der echte Kaufinteressenten bringt**.
@@ -82,8 +94,6 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 ---
 
 # Leitkriterien
-
-<br>
 
 **1 · Integration & Continuous Delivery**
 Quelle per API oder CSV · Reporting als JSON/CSV · code-seitig erweiterbar Richtung Google Sheets, Airtable, Notion, CMS.
@@ -101,7 +111,7 @@ Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
 
 # Ergebnis in zwei Zahlen
 
-<div style="display: flex; justify-content: space-around; margin-top: 60px;">
+<div style="display: flex; justify-content: space-around; margin: 80px 0 60px 0;">
 
 <div style="text-align: center;">
 <div class="big">500</div>
@@ -120,8 +130,6 @@ Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
 
 </div>
 
-<br><br>
-
 **Validiert** mit Silhouette 0,65 und ARI 0,81 gegen ein zweites Verfahren.
 
 ---
@@ -133,8 +141,6 @@ Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
 | HR- & Dokumentenverwaltungssoftware | 45.000 | 89 % | Bottom-of-Funnel |
 | Zvoove Plattform & Preise | 23.000 | 97 % | Brand Defense |
 | Digitalisierung Personaldienstleistung | 24.000 | 35 % | Top-of-Funnel |
-
-<br>
 
 <span class="sub">Vollständige Tabelle aller 13 Cluster im Dashboard.</span>
 
@@ -151,8 +157,6 @@ Keywords    SV/KD/CPC   13 Cluster  Markdown  HTML       JSON
                                                          Sheets
 ```
 
-<br>
-
 **Warum entkoppelt?**
 
 - Embeddings einmal rechnen
@@ -168,13 +172,8 @@ Keywords    SV/KD/CPC   13 Cluster  Markdown  HTML       JSON
 
 **Geplant:** Live-Scraping vom Blog plus Claude-basierte Keyword-Expansion.
 
-<br>
-
 **Warum nicht jetzt?**
-
 Web-Scraping ist konzeptionell der schwierigste Schritt: Anti-Bot, JavaScript-Rendering, Pagination. Lieber **vier Schritte richtig fertig** als sechs halb fertig.
-
-<br>
 
 <span class="sub">Trade-off transparent in den Architecture Decision Records dokumentiert.</span>
 
@@ -184,15 +183,10 @@ Web-Scraping ist konzeptionell der schwierigste Schritt: Anti-Bot, JavaScript-Re
 
 Ein **Embedding** ist eine Zahlenfolge, die die Bedeutung eines Texts beschreibt.
 
-<br>
-
 **Beispiel:**
-
 `Lohnabrechnung Software` ≈ `Payroll Tool`
 
 Andere Wörter, gleiche Bedeutung, **ähnliche Zahlen**.
-
-<br>
 
 <span class="sub">Modell: <code>paraphrase-multilingual-MiniLM-L12-v2</code> · mehrsprachig · 120 MB · läuft ohne GPU</span>
 
@@ -200,7 +194,7 @@ Andere Wörter, gleiche Bedeutung, **ähnliche Zahlen**.
 
 # Cluster-Schritt: warum HDBSCAN?
 
-<div style="display: flex; gap: 60px;">
+<div style="display: flex; gap: 60px; margin-top: 20px;">
 
 <div style="flex: 1;">
 
@@ -224,23 +218,17 @@ Andere Wörter, gleiche Bedeutung, **ähnliche Zahlen**.
 
 </div>
 
-<br>
-
 **Beispiel:** `fachkräftemangel deutschland` — gehört semantisch zu nichts. HDBSCAN sagt das. k-means würde es zwanghaft zuordnen.
 
 ---
 
 # Cluster-Schritt: Validierung
 
-<br>
-
 | Metrik | Wert | Bedeutung |
 |---|---|---|
 | Silhouette | **0,65** | Werte > 0,5 gelten als solide |
 | ARI gegen Ward(k=10) | **0,81** | Zwei unabhängige Verfahren stimmen zu 4/5 überein |
 | Hyperparameter | Grid Search | Reproduzierbar, nichts geraten |
-
-<br>
 
 **Plausibilitätsprobe bestanden:** zwei mathematisch unabhängige Methoden sehen ähnliche Cluster.
 
@@ -251,12 +239,8 @@ Andere Wörter, gleiche Bedeutung, **ähnliche Zahlen**.
 **Pro Cluster ein Markdown-Brief mit:**
 Hauptkeyword, Suchintention, Zielgruppe, Outline (H1–H3), 3 Benchmark-URLs, CTA.
 
-<br>
-
 **Prompt Caching:** System-Prompt wird einmal gecached, 13× wiederverwendet
 → rund **90 % Token-Ersparnis**, < 1 USD pro Lauf.
-
-<br>
 
 **Robust:** Retry mit Backoff. Wenn ein Brief fehlschlägt, läuft die Pipeline weiter. Status-Bericht am Ende.
 
@@ -267,8 +251,6 @@ Hauptkeyword, Suchintention, Zielgruppe, Outline (H1–H3), 3 Benchmark-URLs, CT
 **Report:** eine HTML-Datei mit KPIs, Cluster-Tabelle, Charts, Karten-Link.
 Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
-<br>
-
 **Export:** drei JSON-Dateien
 
 | Datei | Inhalt |
@@ -276,8 +258,6 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 | `clusters.json` | eine Zeile pro Cluster |
 | `keywords.json` | eine Zeile pro Keyword |
 | `report.json` | alles zusammen |
-
-<br>
 
 **Optional:** direkter Sync nach Airtable oder Google Sheets, per Schalter.
 
@@ -289,12 +269,8 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 89 % kommerziell · KD ⌀ 53 · 45 Keywords
 
-<br>
-
 **Top-Keywords:**
 `dokumentenmanagement software` · `bewerbermanagement software` · `mitarbeiterverwaltung software` · `hr software kmu`
-
-<br>
 
 **Was tun:** Pillar-Pages zu Software-Kategorien, jeweils mit zvoove-Modul als Lösung.
 
@@ -308,12 +284,8 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 97 % kommerziell · KD ⌀ 52 · 34 Keywords
 
-<br>
-
 **Auffällig:** KD 52 für Brand-Begriffe ist **ungewöhnlich hoch**.
 → Vergleichsseiten und Bewertungsportale belegen die SERP.
-
-<br>
 
 **Was tun:** zvoove-Erfahrungen-Hub unter `/produkte/`, der positive Bewertungen aggregiert.
 
@@ -327,12 +299,8 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 35 % kommerziell · KD ⌀ 36 · 37 Keywords · **Top-of-Funnel**
 
-<br>
-
 **Top-Keywords:**
 `digitalisierung zeitarbeit` · `künstliche intelligenz personaldienstleistung` · `digitale zeiterfassung`
-
-<br>
 
 **Was tun:** Hub `/wissen/digitalisierung-personaldienstleistung/`, der Awareness-Traffic in die kommerziellen Cluster überführt.
 
@@ -342,7 +310,7 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 # Limits & nächste Schritte
 
-<div style="display: flex; gap: 60px;">
+<div style="display: flex; gap: 60px; margin-top: 20px;">
 
 <div style="flex: 1;">
 
@@ -367,8 +335,6 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 </div>
 
-<br>
-
 **Bei einer zweiten Iteration:** Discover zuerst bauen, nicht zuletzt.
 
 ---
@@ -378,12 +344,8 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 **Architektur-Denken** statt Skript-Denken
 → jeder Schritt einzeln ersetzbar
 
-<br>
-
 **Pragmatismus** statt Polish
 → Heuristik klar markiert, Live-Daten optional
-
-<br>
 
 **Revenue-Lens** auf alles
 → jede Empfehlung mit MQL-Hypothese
@@ -394,11 +356,7 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 # Danke.
 
-<br>
-
 **Repo:** `github.com/t1nak/seo-pipeline`
 **Live-Dashboard:** `t1nak.github.io/seo-pipeline`
-
-<br>
 
 ## Fragen?

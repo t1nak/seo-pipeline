@@ -56,28 +56,28 @@ style: |
 
 # Was ist die Aufgabe?
 
-Aus dem **zvoove-Blog** ein Keyword-Set entwickeln und daraus konkrete Content-Empfehlungen ableiten.
+**Automatisiere den Prozess:**
 
-<br>
-
-**Warum?**
-Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen, der echte Kaufinteressenten bringt**.
-
-Dafür braucht es eine klare Antwort auf die Frage:
-
-> **Welche Themen lohnen sich wirklich — und in welcher Reihenfolge?**
-
-<br>
-
-**Aufgabe:** Automatisiere den Prozess
-
-<div style="text-align: center; margin: 20px 0; font-size: 1.1em;">
+<div style="text-align: center; margin: 30px 0; font-size: 1.15em;">
 
 **Quelle** → **Keywords** → **Cluster** → **Content Brief pro Cluster** → **Reporting**
 
 </div>
 
-<span class="sub">**Beispiel:** Quelle <code>zvoove.de/wissen/blog</code> → 500 Keywords</span>
+<br>
+
+**Beispiel:**
+
+<div style="text-align: center; font-size: 1.05em;">
+
+<code>zvoove.de/wissen/blog</code> → **500 Keywords** → **13 Cluster** → **13 Briefs** → **Dashboard**
+
+</div>
+
+<br>
+
+**Warum?**
+Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen, der echte Kaufinteressenten bringt**.
 
 ---
 
@@ -85,10 +85,10 @@ Dafür braucht es eine klare Antwort auf die Frage:
 
 <br>
 
-**1 · Integrierbar in bestehende Stacks**
-Reporting läuft in Airtable, Notion, Sheets, CMS — keine Vendor-Lock-Abhängigkeit.
+**1 · Integration & Continuous Delivery**
+Quelle per API oder CSV · Reporting als JSON/CSV · code-seitig erweiterbar Richtung Google Sheets, Airtable, Notion, CMS.
 
-**2 · Provider-unabhängig**
+**2 · Provider-unabhängig — keine Lock-in-Abhängigkeit**
 LLM-Call über verschiedene Anbieter: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.
 
 **3 · Technisch maintainable und übergebbar**

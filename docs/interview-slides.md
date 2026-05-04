@@ -207,7 +207,7 @@ style: |
 # SEO-Keyword → ContentBrief Pipeline
 ## für zvoove
 
-**500 Keywords · 13 Cluster · 0 Outlier**
+**500 Keywords · 13 thematische Cluster**
 
 <span class="lead-sub">Bewerbung als Revenue AI Architect</span>
 
@@ -278,7 +278,7 @@ Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
 
 <div style="text-align: center;">
 <div class="big">13</div>
-<div class="sub">Cluster, 0 Outlier</div>
+<div class="sub">Cluster</div>
 </div>
 
 <div style="text-align: center;">

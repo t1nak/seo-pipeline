@@ -199,6 +199,9 @@ style: |
     font-size: 1.3em;
     font-weight: 500;
   }
+  section.dense { font-size: 21px; padding: 70px 110px 60px 110px; }
+  section.dense h1 { margin-bottom: 22px; }
+  section.dense p { margin: 8px 0; }
 ---
 
 <!-- _class: lead -->
@@ -251,19 +254,21 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 
 ---
 
+<!-- _class: dense -->
+
 # Leitkriterien
 
-**1 · Integration & Continuous Delivery**
-Quelle per API oder CSV · Reporting als JSON/CSV · code-seitig erweiterbar Richtung Google Sheets, Airtable, Notion, CMS.
+**1 · Flexible Integration in bestehende Systeme**
+Daten können per API oder CSV angebunden werden. Ergebnisse werden als JSON oder CSV bereitgestellt und lassen sich technisch problemlos in Google Sheets, Airtable, Notion oder ein CMS erweitern.
 
-**2 · Provider-unabhängig — keine Lock-in-Abhängigkeit**
-LLM-Call über verschiedene Anbieter: Anthropic heute, OpenAI oder lokales Modell morgen — ohne Pipeline-Umbau.
+**2 · Provider-unabhängig, kein Vendor Lock-in**
+Der LLM-Call ist abstrahiert und kann über verschiedene Anbieter laufen: heute Anthropic, morgen OpenAI oder ein lokales Modell — ohne Umbau der Pipeline.
 
-**3 · Technisch maintainable und übergebbar**
-42 Tests, versioniert, validiert (Silhouette + ARI), reproduzierbar.
+**3 · Wartbar, validiert und übergabefähig**
+Die Pipeline ist versioniert, reproduzierbar und durch 42 Tests abgesichert. Die Cluster-Qualität wird zusätzlich über etablierte Metriken wie Silhouette und ARI validiert.
 
-**4 · Modular und testable**
-Sechs entkoppelte Schritte. Jeder einzeln testbar, einzeln austauschbar.
+**4 · Modularer, testbarer Aufbau**
+Der Prozess besteht aus sechs klar getrennten Schritten. Jeder Schritt ist einzeln testbar, nachvollziehbar und bei Bedarf austauschbar.
 
 ---
 

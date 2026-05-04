@@ -5,46 +5,200 @@ paginate: true
 size: 16:9
 header: 'SEO-Pipeline für zvoove · Interview'
 style: |
+  :root {
+    --bg: #0f172a;
+    --bg-elevated: #1e293b;
+    --text: #e2e8f0;
+    --text-strong: #f8fafc;
+    --muted: #94a3b8;
+    --teal: #2dd4bf;
+    --teal-soft: #5eead4;
+    --amber: #fbbf24;
+  }
   section {
+    background: var(--bg);
+    color: var(--text);
     font-family: 'Inter', 'Helvetica Neue', sans-serif;
     padding: 80px 110px 70px 110px;
-    line-height: 1.4;
-    font-size: 26px;
+    line-height: 1.45;
+    font-size: 24px;
   }
   section header {
-    top: 24px;
+    top: 28px;
     left: 110px;
-    color: #8a99a8;
+    color: var(--muted);
     font-size: 0.65em;
+    letter-spacing: 0.04em;
   }
   section::after {
     right: 60px;
     bottom: 30px;
-    color: #8a99a8;
+    color: var(--muted);
     font-size: 0.7em;
   }
   h1 {
-    color: #0d3b66;
-    font-size: 1.5em;
+    color: var(--text-strong);
+    font-size: 1.6em;
+    font-weight: 700;
     margin-top: 0;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
   }
-  h2 { color: #0d3b66; margin-bottom: 20px; }
-  h3 { color: #0d3b66; margin-bottom: 12px; font-size: 1.05em; }
-  p { margin: 10px 0; }
+  h2 {
+    color: var(--teal);
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  h3 {
+    color: var(--text-strong);
+    margin-bottom: 10px;
+    font-size: 1.05em;
+    font-weight: 600;
+  }
+  p { margin: 10px 0; color: var(--text); }
   ul, ol { margin: 10px 0; }
   li { margin: 6px 0; }
-  strong { color: #0d3b66; }
-  table { font-size: 0.85em; margin: 16px 0; border-spacing: 0; }
-  th, td { padding: 7px 12px; }
-  code { background: #f0f4f8; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
-  blockquote { border-left: 4px solid #0d3b66; margin: 16px 0; padding: 4px 18px; color: #0d3b66; }
-  pre { font-size: 0.78em; line-height: 1.4; }
-  .big { font-size: 2.6em; font-weight: 700; color: #0d3b66; line-height: 1.1; }
-  .sub { color: #5b6b7c; }
-  .flow { text-align: center; margin: 22px 0; font-weight: 600; color: #0d3b66; }
-  section.lead { padding: 120px 110px; }
-  section.lead h1 { font-size: 2em; margin-bottom: 12px; }
+  strong { color: var(--text-strong); font-weight: 700; }
+  em { color: var(--teal-soft); font-style: normal; }
+  table {
+    font-size: 0.85em;
+    margin: 16px 0;
+    border-spacing: 0;
+    border-collapse: separate;
+    width: 100%;
+  }
+  th {
+    color: var(--muted);
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid var(--bg-elevated);
+    padding: 10px 14px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--bg-elevated);
+  }
+  code {
+    background: var(--bg-elevated);
+    color: var(--teal-soft);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  blockquote {
+    border-left: 3px solid var(--teal);
+    margin: 18px 0;
+    padding: 4px 18px;
+    color: var(--text-strong);
+  }
+  pre {
+    background: var(--bg-elevated);
+    color: var(--text);
+    padding: 18px 22px;
+    border-radius: 6px;
+    font-size: 0.78em;
+    line-height: 1.45;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid var(--bg-elevated);
+    margin: 28px 0;
+  }
+  .big { font-size: 2.6em; font-weight: 700; color: var(--teal); line-height: 1.1; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); font-size: 0.92em; }
+  .lead-sub { color: var(--muted); }
+  .accent { color: var(--teal); }
+  .amber { color: var(--amber); }
+  .flow {
+    text-align: center;
+    margin: 22px 0;
+    font-weight: 600;
+    color: var(--teal);
+    font-size: 1em;
+  }
+  .topright {
+    position: absolute;
+    top: 80px;
+    right: 110px;
+    color: var(--muted);
+    font-size: 0.85em;
+    text-align: right;
+    max-width: 360px;
+    line-height: 1.4;
+  }
+  .timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    position: relative;
+    margin: 40px 0 30px 0;
+    gap: 20px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: var(--teal);
+    opacity: 0.35;
+    z-index: 0;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .step h3 { color: var(--text-strong); margin: 0; font-size: 1.1em; }
+  .step .desc { color: var(--muted); font-size: 0.85em; min-height: 50px; }
+  .step .circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    background: var(--bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 1.05em;
+    margin: 6px auto;
+  }
+  .step .circle.amber { border-color: var(--amber); color: var(--amber); }
+  .step .metric { font-size: 1.25em; font-weight: 700; color: var(--teal); margin-top: 6px; }
+  .step .metric.amber { color: var(--amber); }
+  .step .footnote { color: var(--muted); font-size: 0.82em; }
+  .fazit-row {
+    display: flex;
+    align-items: baseline;
+    gap: 30px;
+    margin-top: 8px;
+  }
+  .fazit-label { color: var(--teal); font-weight: 700; font-size: 1.05em; min-width: 70px; }
+  .lesart {
+    position: absolute;
+    bottom: 30px;
+    left: 110px;
+    color: var(--muted);
+    font-size: 0.72em;
+  }
+  section.lead { padding: 130px 110px; }
+  section.lead h1 {
+    font-size: 2.2em;
+    margin-bottom: 14px;
+    color: var(--text-strong);
+  }
+  section.lead h2 {
+    color: var(--teal);
+    font-size: 1.3em;
+    font-weight: 500;
+  }
 ---
 
 <!-- _class: lead -->
@@ -55,7 +209,7 @@ style: |
 
 **500 Keywords · 13 Cluster · 0 Outlier**
 
-<span class="sub">Bewerbung als Revenue AI Architect</span>
+<span class="lead-sub">Bewerbung als Revenue AI Architect</span>
 
 ---
 
@@ -226,15 +380,51 @@ Andere Wörter, gleiche Bedeutung, **ähnliche Zahlen**.
 
 ---
 
-# Cluster-Schritt: Validierung
+# Woran erkennt man gutes Clustering?
 
-| Metrik | Wert | Bedeutung |
-|---|---|---|
-| Silhouette | **0,65** | Werte > 0,5 gelten als solide |
-| ARI gegen Ward(k=10) | **0,81** | Zwei unabhängige Verfahren stimmen zu 4/5 überein |
-| Hyperparameter | Grid Search | Reproduzierbar, nichts geraten |
+<span class="sub">Nicht eine einzelne Kennzahl entscheidet — sondern ein konsistentes Gesamtbild.</span>
 
-**Plausibilitätsprobe bestanden:** zwei mathematisch unabhängige Methoden sehen ähnliche Cluster.
+<div class="topright">Kein Goldstandard ohne Labels — deshalb validieren.</div>
+
+<div class="timeline">
+
+<div class="step">
+<h3>Trennschärfe</h3>
+<div class="desc">Innerhalb ähnlich, zwischen Clustern verschieden</div>
+<div class="circle">1</div>
+<div class="metric">Silhouette = 0,65</div>
+<div class="footnote">solide Trennung<br>(&gt; 0,5 gilt als gut)</div>
+</div>
+
+<div class="step">
+<h3>Stabilität</h3>
+<div class="desc">Unabhängiges Verfahren findet ähnliche Struktur</div>
+<div class="circle amber">2</div>
+<div class="metric amber">ARI = 0,81</div>
+<div class="footnote">hohe Übereinstimmung<br>mit Ward(k=10)</div>
+</div>
+
+<div class="step">
+<h3>Plausibilität</h3>
+<div class="desc">Parameter systematisch und Segmente interpretierbar</div>
+<div class="circle">3</div>
+<div class="metric">Grid Search</div>
+<div class="footnote">reproduzierbar,<br>nichts geraten</div>
+</div>
+
+</div>
+
+<hr>
+
+<div class="fazit-row">
+<div class="fazit-label">Fazit</div>
+<div>
+<strong>Die Cluster sind nicht zufällig, sondern belastbar und interpretierbar.</strong><br>
+<span class="sub">Damit ist die Segmentierung stark genug für die nächste Ebene: Profilierung und fachliche Interpretation der Cluster.</span>
+</div>
+</div>
+
+<div class="lesart">Lesart: gutes Clustering = getrennt + stabil + reproduzierbar + fachlich sinnvoll</div>
 
 ---
 
@@ -271,14 +461,14 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 <div class="big" style="font-size: 2em;">45.000 Suchen / Monat</div>
 
-89 % kommerziell · KD ⌀ 53 · 45 Keywords
+<span class="sub">89 % kommerziell · KD ⌀ 53 · 45 Keywords</span>
 
 **Top-Keywords:**
 `dokumentenmanagement software` · `bewerbermanagement software` · `mitarbeiterverwaltung software` · `hr software kmu`
 
 **Was tun:** Pillar-Pages zu Software-Kategorien, jeweils mit zvoove-Modul als Lösung.
 
-**Hypothese:** 5 % CTR × 2 % MQL-Rate ≈ **45 MQLs / Monat**.
+**Hypothese:** 5 % CTR × 2 % MQL-Rate ≈ <span class="amber">**45 MQLs / Monat**</span>.
 
 ---
 
@@ -286,9 +476,9 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 <div class="big" style="font-size: 2em;">23.000 Suchen / Monat</div>
 
-97 % kommerziell · KD ⌀ 52 · 34 Keywords
+<span class="sub">97 % kommerziell · KD ⌀ 52 · 34 Keywords</span>
 
-**Auffällig:** KD 52 für Brand-Begriffe ist **ungewöhnlich hoch**.
+**Auffällig:** KD 52 für Brand-Begriffe ist <span class="amber">**ungewöhnlich hoch**</span>.
 → Vergleichsseiten und Bewertungsportale belegen die SERP.
 
 **Was tun:** zvoove-Erfahrungen-Hub unter `/produkte/`, der positive Bewertungen aggregiert.
@@ -301,7 +491,7 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 <div class="big" style="font-size: 2em;">24.000 Suchen / Monat</div>
 
-35 % kommerziell · KD ⌀ 36 · 37 Keywords · **Top-of-Funnel**
+<span class="sub">35 % kommerziell · KD ⌀ 36 · 37 Keywords · **Top-of-Funnel**</span>
 
 **Top-Keywords:**
 `digitalisierung zeitarbeit` · `künstliche intelligenz personaldienstleistung` · `digitale zeiterfassung`

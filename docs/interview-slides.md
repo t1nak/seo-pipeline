@@ -222,8 +222,8 @@ style: |
 
 1. Aufgabe
 2. Anforderungen & mein Ansatz
-3. Ergebnis
-4. Architektur
+3. Architektur
+4. Ergebnis
 5. Cluster-Schritt im Detail
 6. Briefs & Reporting
 7. Drei Empfehlungen für zvoove
@@ -258,28 +258,25 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 
 # Leitkriterien
 
-**1 · Integration in bestehende Systeme**
-- Dateneingang per API oder CSV
-- Ergebnisse in einem konfigurierbaren Dashboard
-- Bereitstellung der Ergebnisse als JSON oder CSV
-- Erweiterbare Darstellung in Google Sheets, Notion, Airtable oder CMS
+**1 · Integration in verschiedene Systeme**
+- Dateneingang per API oder CSV; Ergebnisse in einem Dashboard, JSON oder CSV
+  -> Mögliche erweiterte Darstellung in Google Sheets, Notion etc.
+<br>
 
 **2 · Provider-unabhängig, kein Vendor Lock-in**
-- LLM-Call über verschiedene Anbieter möglich
-- Anthropic, OpenAI oder lokales Modell einsetzbar
-- Provider-Wechsel ohne grundlegenden Pipeline-Umbau
+- LLM-Call über verschiedene Anbieter möglich (Anthropic, OpenAI, lokales Modell)
 
-**3 · Transparent und steuerbar**
-- Technische Qualität durch Tests und Validierungsmetriken
-- Nachvollziehbare Prozessschritte und gute Dokumentation
-- Sichtbare LLM-Calls, Token-Verbrauch und Batch-Größen
-- Technische und wirtschaftliche Steuerbarkeit der laufenden Nutzung
+<br>
 
-**4 · Modularer, wartbarer Aufbau**
+**3 · Transparente und steuerbare Nutzbarkeit**
+  - Technische Qualität durch Tests und Validierungsmetriken
+  - Nachvollziehbar; gute Dokumentation
+
+<br>
+
+**4 · Modularer, 'maintainable' Aufbau**
 - Reproduzierbare Pipeline
-- Sechs klar getrennte Prozessschritte
-- Jeder Schritt einzeln testbar und nachvollziehbar
-- Komponenten bei Bedarf austauschbar
+- Sechs getrennte Prozessschritte (einzeln testbar und austauschbar)
 
 ---
 
@@ -471,8 +468,57 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 
 **Optional:** direkter Sync nach Airtable oder Google Sheets, per Schalter.
 
+
+
 ---
 
+# Limits & nächste Schritte
+
+<div style="display: flex; gap: 60px; margin-top: 20px;">
+
+<div style="flex: 1;">
+
+### Was fehlt
+
+- Discover ist Stub
+- Keine Datenbank, nur Dateien
+- Keine GSC-Anbindung
+
+</div>
+
+<div style="flex: 1;">
+
+### Was als Nächstes
+
+1. Discover live machen
+2. Search Console anbinden
+3. SQLite-Persistenz
+4. CMS-Integration (Sanity)
+
+</div>
+
+</div>
+
+**Bei einer zweiten Iteration:** Discover zuerst bauen, nicht zuletzt.
+
+---
+<!-- _class: lead -->
+
+# Danke.
+
+**Repo:** `github.com/t1nak/seo-pipeline`
+**Dashboard & Clustermap:** `t1nak.github.io/seo-pipeline`
+
+## Fragen?
+
+---
+
+# SEO Discussion
+
+<div class="big" style="font-size: 2em;">Extra</div>
+
+---
+Content Seo and Keywords
 # Empfehlung 1: HR-Software
 
 <div class="big" style="font-size: 2em;">45.000 Suchen / Monat</div>
@@ -515,58 +561,3 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 **Was tun:** Hub `/wissen/digitalisierung-personaldienstleistung/`, der Awareness-Traffic in die kommerziellen Cluster überführt.
 
 **Wirkung:** Pipeline-Influence über 6–12 Monate, nicht direkte Conversion.
-
----
-
-# Limits & nächste Schritte
-
-<div style="display: flex; gap: 60px; margin-top: 20px;">
-
-<div style="flex: 1;">
-
-### Was fehlt
-
-- Discover ist Stub
-- Keine Datenbank, nur Dateien
-- Keine GSC-Anbindung
-
-</div>
-
-<div style="flex: 1;">
-
-### Was als Nächstes
-
-1. Discover live machen
-2. Search Console anbinden
-3. SQLite-Persistenz
-4. CMS-Integration (Sanity)
-
-</div>
-
-</div>
-
-**Bei einer zweiten Iteration:** Discover zuerst bauen, nicht zuletzt.
-
----
-
-# Was diese Pipeline zeigen soll
-
-**Architektur-Denken** statt Skript-Denken
-→ jeder Schritt einzeln ersetzbar
-
-**Pragmatismus** statt Polish
-→ Heuristik klar markiert, Live-Daten optional
-
-**Revenue-Lens** auf alles
-→ jede Empfehlung mit MQL-Hypothese
-
----
-
-<!-- _class: lead -->
-
-# Danke.
-
-**Repo:** `github.com/t1nak/seo-pipeline`
-**Live-Dashboard:** `t1nak.github.io/seo-pipeline`
-
-## Fragen?

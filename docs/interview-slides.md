@@ -258,17 +258,28 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 
 # Leitkriterien
 
-**1 · Flexible Integration in bestehende Systeme**
-Daten können per API oder CSV angebunden werden. Ergebnisse werden als JSON oder CSV bereitgestellt und lassen sich technisch problemlos in Google Sheets, Airtable, Notion oder ein CMS erweitern.
+**1 · Integration in bestehende Systeme**
+- Dateneingang per API oder CSV
+- Ergebnisse in einem konfigurierbaren Dashboard
+- Bereitstellung der Ergebnisse als JSON oder CSV
+- Erweiterbare Darstellung in Google Sheets, Notion, Airtable oder CMS
 
 **2 · Provider-unabhängig, kein Vendor Lock-in**
-Der LLM-Call ist abstrahiert und kann über verschiedene Anbieter laufen: heute Anthropic, morgen OpenAI oder ein lokales Modell — ohne Umbau der Pipeline.
+- LLM-Call über verschiedene Anbieter möglich
+- Anthropic, OpenAI oder lokales Modell einsetzbar
+- Provider-Wechsel ohne grundlegenden Pipeline-Umbau
 
-**3 · Wartbar, validiert und übergabefähig**
-Die Pipeline ist versioniert, reproduzierbar und durch 42 Tests abgesichert. Die Cluster-Qualität wird zusätzlich über etablierte Metriken wie Silhouette und ARI validiert.
+**3 · Transparent und steuerbar**
+- Technische Qualität durch Tests und Validierungsmetriken
+- Nachvollziehbare Prozessschritte und gute Dokumentation
+- Sichtbare LLM-Calls, Token-Verbrauch und Batch-Größen
+- Technische und wirtschaftliche Steuerbarkeit der laufenden Nutzung
 
-**4 · Modularer, testbarer Aufbau**
-Der Prozess besteht aus sechs klar getrennten Schritten. Jeder Schritt ist einzeln testbar, nachvollziehbar und bei Bedarf austauschbar.
+**4 · Modularer, wartbarer Aufbau**
+- Reproduzierbare Pipeline
+- Sechs klar getrennte Prozessschritte
+- Jeder Schritt einzeln testbar und nachvollziehbar
+- Komponenten bei Bedarf austauschbar
 
 ---
 

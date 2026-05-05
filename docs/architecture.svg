@@ -110,10 +110,10 @@
       <text x="590" y="505" fill="#6b7280" font-size="10">UMAP · 5D (cluster) + 2D (viz)</text>
 
       <text x="374" y="525" font-weight="600">3d</text><text x="412" y="525">cluster</text>
-      <text x="590" y="525" fill="#6b7280" font-size="10">HDBSCAN · mcs=12, ms=5, eom</text>
+      <text x="590" y="525" fill="#6b7280" font-size="10">HDBSCAN · mcs=10, ms=5, eom · Soft-Assignment</text>
 
       <text x="374" y="545" font-weight="600">3e</text><text x="412" y="545">label</text>
-      <text x="590" y="545" fill="#6b7280" font-size="10">DE + EN labels manuell kuratiert</text>
+      <text x="590" y="545" fill="#6b7280" font-size="10">DE + EN Labels per LLM-Lauf (Anthropic Haiku)</text>
 
       <text x="374" y="565" font-weight="600">3f</text><text x="412" y="565">profile</text>
       <text x="590" y="565" fill="#6b7280" font-size="10">SV, KD, CPC, intent mix pro Cluster</text>
@@ -146,7 +146,7 @@
   <g filter="url(#shadow)">
     <rect x="850" y="516" width="220" height="50" rx="6" fill="white" stroke="#059669" stroke-width="0.8"/>
     <text x="862" y="534" font-size="12" font-weight="600" fill="#065f46" font-family="ui-monospace, SFMono-Regular, monospace">cluster_profiles.csv</text>
-    <text x="862" y="554" font-size="10" fill="#6b7280">14 Zeilen · Stats pro Cluster</text>
+    <text x="862" y="554" font-size="10" fill="#6b7280">13 Zeilen · Stats pro Cluster</text>
   </g>
   <g filter="url(#shadow)">
     <rect x="850" y="574" width="220" height="50" rx="6" fill="white" stroke="#059669" stroke-width="0.8"/>
@@ -193,7 +193,7 @@
   <!-- Artifact: 10 briefs -->
   <g filter="url(#shadow)">
     <rect x="850" y="740" width="220" height="50" rx="6" fill="white" stroke="#9333ea" stroke-width="0.8"/>
-    <text x="862" y="758" font-size="12" font-weight="600" fill="#6b21a8" font-family="ui-monospace, SFMono-Regular, monospace">briefings/cluster_NN.md ×10</text>
+    <text x="862" y="758" font-size="12" font-weight="600" fill="#6b21a8" font-family="ui-monospace, SFMono-Regular, monospace">briefings/cluster_NN.md ×13</text>
     <text x="862" y="778" font-size="10" fill="#6b7280">vollständige Content Briefs (DE)</text>
   </g>
 
@@ -264,14 +264,14 @@
       <text x="60" y="1145" font-size="20" font-weight="700" fill="#111827">500</text>
       <text x="60" y="1163" fill="#6b7280">Keywords</text>
 
-      <text x="200" y="1145" font-size="20" font-weight="700" fill="#111827">10</text>
-      <text x="200" y="1163" fill="#6b7280">Cluster + 40 Ausreißer</text>
+      <text x="200" y="1145" font-size="20" font-weight="700" fill="#111827">13</text>
+      <text x="200" y="1163" fill="#6b7280">Cluster · 0 Ausreißer</text>
 
-      <text x="430" y="1145" font-size="20" font-weight="700" fill="#059669">0,67</text>
-      <text x="430" y="1163" fill="#6b7280">Silhouette (ohne Rauschen)</text>
+      <text x="430" y="1145" font-size="20" font-weight="700" fill="#059669">0,65</text>
+      <text x="430" y="1163" fill="#6b7280">Silhouette HDBSCAN-Kern</text>
 
-      <text x="650" y="1145" font-size="20" font-weight="700" fill="#2563eb">0,57</text>
-      <text x="650" y="1163" fill="#6b7280">ARI vs Ward(k=10)</text>
+      <text x="650" y="1145" font-size="20" font-weight="700" fill="#2563eb">0,95</text>
+      <text x="650" y="1163" fill="#6b7280">ARI vs Ward(k=13), Kern</text>
 
       <text x="850" y="1145" font-size="20" font-weight="700" fill="#f59e0b">~25 s</text>
       <text x="850" y="1163" fill="#6b7280">voller Lauf ohne Briefs</text>

@@ -267,24 +267,19 @@ style: |
 # SEO-Keyword → ContentBrief Pipeline
 ## für zvoove
 
-**500 Keywords · 13 thematische Cluster**
-
 <span class="lead-sub">Bewerbung als Revenue AI Architect</span>
 
 ---
 
 # Agenda
 
-<span class="sub">— hier später Outline einfügen —</span>
-
-1. Aufgabe
-2. Anforderungen & mein Ansatz
-3. Architektur
-4. Ergebnis
-5. Cluster-Schritt im Detail
-6. Briefs & Reporting
-7. Drei Empfehlungen für zvoove
-8. Limits & nächste Schritte
+1. Aufgabe & Leitkriterien
+2. Pipeline: Automatisierung & Architektur
+3. Clustering-Methodik (Embedding, HDBSCAN, Validierung)
+4. Briefs, Reporting & Kosten
+5. Ergebnisse
+6. Stärken, Schwächen, Future Work
+7. Extra: Drei Cluster-Empfehlungen
 
 ---
 
@@ -293,21 +288,19 @@ style: |
 **Automatisiere den Prozess:**
 
 <div class="flow">
-
 Quelle → Keywords → Cluster → Content Brief → Reporting
-
 </div>
 
 **Beispiel:**
-
 <div class="flow">
-
 <code>zvoove.de/wissen/blog</code> → 500 Keywords → 13 Cluster → 13 Briefs → Dashboard
-
 </div>
 
 **Warum?**
 Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen, der echte Kaufinteressenten bringt**.
+
+**Lösungsansatz:**
+Python-Pipeline orchestriert mit GitHub Actions. HDBSCAN für Clustering, LLM-Calls für Labels, Briefs und Keyword-Generierung.
 
 ---
 
@@ -317,48 +310,375 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 
 **1 · Integration in verschiedene Systeme**
 - Dateneingang per API oder CSV; Ergebnisse in einem Dashboard, JSON oder CSV
-  -> Mögliche erweiterte Darstellung in Google Sheets, Notion etc.
-<br>
+- Mögliche erweiterte Darstellung in Google Sheets, Notion etc.
+
+---
+
+<!-- _class: dense -->
+
+# Leitkriterien
+
+**1 · Integration in verschiedene Systeme**
+- Dateneingang per API oder CSV; Ergebnisse in einem Dashboard, JSON oder CSV
+- Mögliche erweiterte Darstellung in Google Sheets, Notion etc.
 
 **2 · Provider-unabhängig, kein Vendor Lock-in**
 - LLM-Call über verschiedene Anbieter möglich (Anthropic, OpenAI, lokales Modell)
 
-<br>
+---
+
+<!-- _class: dense -->
+
+# Leitkriterien
+
+**1 · Integration in verschiedene Systeme**
+- Dateneingang per API oder CSV; Ergebnisse in einem Dashboard, JSON oder CSV
+- Mögliche erweiterte Darstellung in Google Sheets, Notion etc.
+
+**2 · Provider-unabhängig, kein Vendor Lock-in**
+- LLM-Call über verschiedene Anbieter möglich (Anthropic, OpenAI, lokales Modell)
 
 **3 · Transparente und steuerbare Nutzbarkeit**
-  - Technische Qualität durch Tests und Validierungsmetriken
-  - Nachvollziehbar; gute Dokumentation
+- Technische Qualität durch Tests und Validierungsmetriken
+- Nachvollziehbar; gute Dokumentation
 
-<br>
+---
 
-**4 · Modularer, 'maintainable' Aufbau**
+<!-- _class: dense -->
+
+# Leitkriterien
+
+**1 · Integration in verschiedene Systeme**
+- Dateneingang per API oder CSV; Ergebnisse in einem Dashboard, JSON oder CSV
+- Mögliche erweiterte Darstellung in Google Sheets, Notion etc.
+
+**2 · Provider-unabhängig, kein Vendor Lock-in**
+- LLM-Call über verschiedene Anbieter möglich (Anthropic, OpenAI, lokales Modell)
+
+**3 · Transparente und steuerbare Nutzbarkeit**
+- Technische Qualität durch Tests und Validierungsmetriken
+- Nachvollziehbar; gute Dokumentation
+
+**4 · Modularer, wartbarer Aufbau**
 - Reproduzierbare Pipeline
 - Sechs getrennte Prozessschritte (einzeln testbar und austauschbar)
 
 ---
 
-# Ergebnis in zwei Zahlen
+# Automatisierung
+
+<div class="auto-trigger">GitHub Actions · Auslöser per Cron-Schedule oder manueller Trigger</div>
+
+<div class="auto-flow">
+
+<div class="auto-card c1">
+<div class="num">1</div>
+<div class="ttl">Keywords holen<br>& anreichern</div>
+<div class="dsc">Volumen, Difficulty und SERP-Merkmale je Keyword</div>
+<div class="chips">
+<span class="chip">SEMrush</span>
+<span class="chip">DataForSEO</span>
+<span class="chip">LLM-extraction</span>
+<span class="chip">CSV</span>
+</div>
+<div class="out">→ keywords.json</div>
+</div>
+
+<div class="auto-card c2">
+<div class="num">2</div>
+<div class="ttl">Semantisches Clustering</div>
+<div class="dsc">Embeddings, Dimensions­reduktion. Anzahl ergibt sich aus den Daten.</div>
+<div class="chips">
+<span class="chip">MiniLM</span>
+<span class="chip">UMAP</span>
+<span class="chip">HDBSCAN</span>
+</div>
+<div class="out">→ clusters.json</div>
+</div>
+
+<div class="auto-card c3">
+<div class="num">3</div>
+<div class="ttl">Content-Briefings</div>
+<div class="dsc">Intention, Persona, Outline, SERP-Lücken, CTA. Provider auswechselbar.</div>
+<div class="chips">
+<span class="chip">Anthropic</span>
+<span class="chip">OpenAI</span>
+</div>
+<div class="out">→ briefing_[cluster].md</div>
+</div>
+
+<div class="auto-card c4">
+<div class="num">4</div>
+<div class="ttl">Reporting</div>
+<div class="dsc">Konsolidiertes Dashboard. Plattformen austauschbar.</div>
+<div class="chips">
+<span class="chip">Pages</span>
+<span class="chip">Notion</span>
+<span class="chip">Airtable</span>
+<span class="chip">Slack</span>
+</div>
+<div class="out">→ HTML + JSON</div>
+</div>
+
+</div>
+
+<div class="infra-row">
+<div class="infra-label">Infrastruktur · unsichtbar aber überall</div>
+<div class="infra-chips">
+<span class="chip">Secrets</span>
+<span class="chip">Run-Logs</span>
+<span class="chip">Retry-Logik</span>
+<span class="chip">Git-Versionierung</span>
+</div>
+</div>
+·
+
+---
+
+# Architektur: 6 Schritte
+
+```
+Discover  →  Enrich  →  Cluster  →  Brief  →  Report  →  Export
+   ↓           ↓          ↓          ↓         ↓          ↓
+Keywords    SV/KD/CPC   13 Cluster  Markdown  HTML       JSON
+                        + Labels    pro       Dashboard  Airtable
+                                    Cluster              Notion
+                                                         Sheets
+```
+
+**Discover** sagt, welche Keywords. 
+**Enrich** sagt, was sie wert sind. 
+**Cluster** gruppiert und aggregiert sie. 
+**Brief** erstellt für jeden Cluster (außer Noise) einen Brief. 
+**Report** bündelt alles in ein Dashboard. 
+**Export** liefert JSON für externe Systeme (Airtable, Notion, Sheets).
+
+---
+
+# Ergebnisse
 
 <div style="display: flex; justify-content: space-around; margin: 80px 0 60px 0;">
 
 <div style="text-align: center;">
-<div class="big">500</div>
-<div class="sub">Keywords</div>
+<div class="name">500 Keywords, 13 Cluster</div>
+
 </div>
+</div>
+
+<span class="sub">
+
+[Dashboard](https://t1nak.github.io/seo-pipeline/output/reporting/index.html) · [Cluster-Map](https://t1nak.github.io/seo-pipeline/output/reporting/runs/2026-05-01/cluster_map.html) · [Letzter Lauf](https://t1nak.github.io/seo-pipeline/output/reporting/runs/2026-05-01/index.html)
+
+</span>
+
+<br>
+Das HDBSCAN-Clustering ist methodisch abgesichert: 
+
+  - gute interne Clusterqualität und starke Übereinstimmung mit Vergleichsverfahren, das die Stabilität der Ergebnisse unterstützt (Ward-Clustering)
+  -> gefundenen Cluster sind robust, nicht zufällig oder modellabhängig
+
+---
+
+# Cluster-Schritt: was ist ein Embedding?
+
+Ein **Embedding** ist eine Zahlenfolge, die die semantische Bedeutung eines Texts mathematisch geometrisch beschreibt.
+
+```
+Input            → Embedding-Modell      → 384-dim Vektor pro Keyword
+"hr software"    → MiniLM                → [0.12, -0.34, 0.81, ...]
+                                         │
+                                         ▼
+                                    UMAP (384D → 5D)
+                                         │
+                                         ▼
+                                    HDBSCAN → Cluster-Label
+```
+
+<span class="sub">Modell: <code>paraphrase-multilingual-MiniLM-L12-v2</code> · mehrsprachig · 120 MB · läuft ohne GPU</span>
+
+---
+
+# Woran erkennt man gutes Clustering?
+
+<div class="timeline">
+
+<div class="step">
+<h3>Trennschärfe</h3>
+<div class="desc">Innerhalb ähnlich, zwischen Clustern verschieden</div>
+<div class="circle">1</div>
+<div class="metric">Silhouette = 0,65</div>
+<div class="footnote">solide Trennung<br>(&gt; 0,5 gilt als gut)</div>
+</div>
+
+<div class="step">
+<h3>Stabilität</h3>
+<div class="desc">Unabhängiges Verfahren findet ähnliche Struktur</div>
+<div class="circle amber">2</div>
+<div class="metric amber">ARI = 0,94</div>
+<div class="footnote">hohe Übereinstimmung<br>mit Ward(k=13)</div>
+</div>
+
+<div class="step">
+<h3>Plausibilität</h3>
+<div class="desc">Parameter systematisch und Segmente interpretierbar</div>
+<div class="circle">3</div>
+<div class="metric">Grid Search</div>
+<div class="footnote">reproduzierbar,<br>nichts geraten</div>
+</div>
+
+</div>
+
+<hr>
+
+<div class="fazit-row">
+<div class="fazit-label">Fazit</div>
+<div>
+<strong>Die Cluster sind nicht zufällig, sondern belastbar und interpretierbar.</strong>
+</div>
+</div>
+
+<div class="lesart">gutes Clustering = getrennt + stabil + reproduzierbar + fachlich sinnvoll</div>
+
+---
+
+# Briefs mit Claude + Prompt Caching
+
+**Pro Cluster ein Markdown-Brief mit:**
+Hauptkeyword, Suchintention, Zielgruppe, Outline (H1–H3), 3 Benchmark-URLs, CTA.
+<br>
+**Prompt Caching:** System-Prompt wird einmal gecached, 13× wiederverwendet
+→ rund **90 % Token-Ersparnis**, < 1 USD pro Lauf.
+<br>
+**Fehlertolerante Pipeline:** Bei temporären Fehlern wird die Generierung automatisch erneut versucht. Schlägt ein einzelner Brief fehl, läuft der Prozess weiter und gibt am Ende einen Statusbericht aus.
+
+---
+
+# Reporting & Export
+
+<div class="auto-flow" style="margin-top: 20px;">
+
+<div class="auto-card c3" style="flex: 1;">
+<div class="num">Report</div>
+<div class="ttl">HTML Dashboard</div>
+<div class="dsc">KPIs, Cluster-Tabelle, Charts, Karten-Link</div>
+<div class="chips">
+<span class="chip">Kein Framework</span>
+<span class="chip">Mail-ready</span>
+</div>
+</div>
+
+<div class="auto-card c1" style="flex: 1;">
+<div class="num">Export</div>
+<div class="ttl">JSON-Dateien</div>
+<div class="dsc">`clusters.json` · `keywords.json` · `report.json`</div>
+<div class="chips">
+<span class="chip">Pro Cluster</span>
+<span class="chip">Pro Keyword</span>
+</div>
+</div>
+
+<div class="auto-card c4" style="flex: 1;">
+<div class="num">Sync</div>
+<div class="ttl">Optional</div>
+<div class="dsc">Direkter Push zu externen Plattformen</div>
+<div class="chips">
+<span class="chip">Airtable</span>
+<span class="chip">Sheets</span>
+<span class="chip">Notion</span>
+</div>
+</div>
+
+</div>
+
+---
+
+# Was kostet ein Pipeline-Run?
+
+<div style="display: flex; gap: 80px; margin-top: 40px;">
+
+<div style="flex: 1;">
+
+**Lokal / GitHub Actions VM (0 USD)**
+Embeddings (MiniLM), UMAP, HDBSCAN
+
+**API-Calls (≈ 0,21 USD)**
+Cluster-Labels (Haiku) + 13 Briefs (Sonnet mit Caching)
+
+**Optional (≈ 0,75 USD)**
+DataForSEO Search Volume Enrichment
+
+</div>
+
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;">
 
 <div style="text-align: center;">
-<div class="big">13</div>
-<div class="sub">Cluster</div>
+<div class="big">≈ 1 USD</div>
+<span class="sub">pro vollem Lauf</span>
 </div>
 
-<div style="text-align: center;">
-<div class="big">240k</div>
-<div class="sub">Suchen / Monat</div>
-</div>
 
 </div>
 
-**Validiert** mit Silhouette 0,65 und ARI 0,81 gegen ein zweites Verfahren.
+</div>
+
+
+---
+
+<!-- _class: dense -->
+
+# Stärken, Schwächen, Future Work
+
+<div style="display: flex; gap: 40px; margin-top: 10px;">
+
+<div style="flex: 1;">
+
+### Stärken
+
+- Automatisierter, nachvollziehbarer Workflow mit hoher Wartbarkeit und Anpassbarkeit
+- Systematischer Parameter-Sweep zur Bewertung unterschiedlicher Konfigurationen
+- Fundierter Clustering-Vergleich zwischen HDBSCAN und Ward
+
+</div>
+
+<div style="flex: 1;">
+
+### Schwächen
+
+- Discover basiert auf LLM-generierten CSV-Daten; belastbarer wäre Scraping oder SEMrush-API
+- Branch-Struktur benötigt Bereinigung (Entwicklung, Experimente, Produktion trennen)
+
+### Future Work
+
+- Discover belastbar machen
+- Datenbank und Run-Historie: Artefakte versioniert speichern
+- Pydantic für Validierung, besseres Typing
+
+</div>
+
+</div>
+
+
+
+---
+
+<!-- _class: lead -->
+
+# Danke.
+
+**Repo:** `github.com/t1nak/seo-pipeline`
+**Live-Dashboard:** `t1nak.github.io/seo-pipeline`
+
+## Fragen?
+
+---
+
+<!-- _class: lead -->
+
+# Extra.
+
+**SEO:** `Content discussion`
+
+
 
 ---
 
@@ -402,278 +722,34 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 
 ---
 
-# Architektur: 6 entkoppelte Schritte
-
-```
-Discover  →  Enrich  →  Cluster  →  Brief  →  Report  →  Export
-   ↓           ↓          ↓          ↓         ↓          ↓
-Keywords    SV/KD/CPC   13 Cluster  Markdown  HTML       JSON
-                        + Labels    pro       Dashboard  Airtable
-                                    Cluster              Notion
-                                                         Sheets
-```
-
-**Warum entkoppelt?**
-
-- Embeddings einmal rechnen
-- Cluster-Tuning ohne Neukosten
-- Briefs nicht versehentlich neu erzeugen
-- Jeder Schritt einzeln ersetzbar
-
----
-
-# Automatisierung
-
-<div class="auto-trigger">GitHub Actions · Auslöser per Cron-Schedule oder manueller Trigger</div>
-
-<div class="auto-flow">
-
-<div class="auto-card c1">
-<div class="num">Step 1</div>
-<div class="ttl">Keywords holen<br>& anreichern</div>
-<div class="dsc">Volumen, Difficulty und SERP-Merkmale je Keyword</div>
-<div class="chips">
-<span class="chip">SEMrush</span>
-<span class="chip">DataForSEO</span>
-<span class="chip">LLM-Set</span>
-<span class="chip">CSV</span>
-</div>
-<div class="out">→ keywords.json</div>
-</div>
-
-<div class="auto-card c2">
-<div class="num">Step 2</div>
-<div class="ttl">Semantisches Clustering</div>
-<div class="dsc">Embeddings, Dimensions­reduktion. Anzahl ergibt sich aus den Daten.</div>
-<div class="chips">
-<span class="chip">MiniLM</span>
-<span class="chip">UMAP</span>
-<span class="chip">HDBSCAN</span>
-</div>
-<div class="out">→ clusters.json</div>
-</div>
-
-<div class="auto-card c3">
-<div class="num">Step 3</div>
-<div class="ttl">Content-Briefings</div>
-<div class="dsc">Intention, Persona, Outline, SERP-Lücken, CTA. Provider auswechselbar.</div>
-<div class="chips">
-<span class="chip">Anthropic</span>
-<span class="chip">OpenAI</span>
-</div>
-<div class="out">→ briefing_[cluster].md</div>
-</div>
-
-<div class="auto-card c4">
-<div class="num">Step 4</div>
-<div class="ttl">Reporting</div>
-<div class="dsc">Konsolidiertes Dashboard. Plattformen austauschbar.</div>
-<div class="chips">
-<span class="chip">Pages</span>
-<span class="chip">Notion</span>
-<span class="chip">Airtable</span>
-<span class="chip">Slack</span>
-</div>
-<div class="out">→ HTML + JSON</div>
-</div>
-
-</div>
-
-<div class="infra-row">
-<div class="infra-label">Infrastruktur · unsichtbar aber überall</div>
-<div class="infra-chips">
-<span class="chip">Secrets</span>
-<span class="chip">Run-Logs</span>
-<span class="chip">Retry-Logik</span>
-<span class="chip">Git-Versionierung</span>
-</div>
-</div>
-
----
-
-# Discover: ehrlicher Stand
-
-**Aktuell:** Stub. Liest ein kuratiertes Keyword-Set aus CSV.
-
-**Geplant:** Live-Scraping vom Blog plus Claude-basierte Keyword-Expansion.
-
-**Warum nicht jetzt?**
-Web-Scraping ist konzeptionell der schwierigste Schritt: Anti-Bot, JavaScript-Rendering, Pagination. Lieber **vier Schritte richtig fertig** als sechs halb fertig.
-
-<span class="sub">Trade-off transparent in den Architecture Decision Records dokumentiert.</span>
-
----
-
-# Cluster-Schritt: was ist ein Embedding?
-
-Ein **Embedding** ist eine Zahlenfolge, die die Bedeutung eines Texts beschreibt.
-
-**Beispiel:**
-`Lohnabrechnung Software` ≈ `Payroll Tool`
-
-Andere Wörter, gleiche Bedeutung, **ähnliche Zahlen**.
-
-<span class="sub">Modell: <code>paraphrase-multilingual-MiniLM-L12-v2</code> · mehrsprachig · 120 MB · läuft ohne GPU</span>
-
----
-
-# Cluster-Schritt: warum HDBSCAN?
-
-<div style="display: flex; gap: 60px; margin-top: 20px;">
-
-<div style="flex: 1;">
-
-### k-means
-
-- Clusteranzahl muss vorgegeben werden
-- Kein Outlier-Konzept
-- Setzt sphärische Cluster voraus
-
-</div>
-
-<div style="flex: 1;">
-
-### HDBSCAN ✓
-
-- Findet die Anzahl selbst
-- Markiert Ausreißer als Rauschen
-- Variable Cluster-Dichte
-
-</div>
-
-</div>
-
-**Beispiel:** `fachkräftemangel deutschland` — gehört semantisch zu nichts. HDBSCAN sagt das. k-means würde es zwanghaft zuordnen.
-
----
-
-# Woran erkennt man gutes Clustering?
-
-<span class="sub">Nicht eine einzelne Kennzahl entscheidet — sondern ein konsistentes Gesamtbild.</span>
-
-<div class="topright">Kein Goldstandard ohne Labels — deshalb validieren.</div>
-
-<div class="timeline">
-
-<div class="step">
-<h3>Trennschärfe</h3>
-<div class="desc">Innerhalb ähnlich, zwischen Clustern verschieden</div>
-<div class="circle">1</div>
-<div class="metric">Silhouette = 0,65</div>
-<div class="footnote">solide Trennung<br>(&gt; 0,5 gilt als gut)</div>
-</div>
-
-<div class="step">
-<h3>Stabilität</h3>
-<div class="desc">Unabhängiges Verfahren findet ähnliche Struktur</div>
-<div class="circle amber">2</div>
-<div class="metric amber">ARI = 0,81</div>
-<div class="footnote">hohe Übereinstimmung<br>mit Ward(k=10)</div>
-</div>
-
-<div class="step">
-<h3>Plausibilität</h3>
-<div class="desc">Parameter systematisch und Segmente interpretierbar</div>
-<div class="circle">3</div>
-<div class="metric">Grid Search</div>
-<div class="footnote">reproduzierbar,<br>nichts geraten</div>
-</div>
-
-</div>
-
-<hr>
-
-<div class="fazit-row">
-<div class="fazit-label">Fazit</div>
-<div>
-<strong>Die Cluster sind nicht zufällig, sondern belastbar und interpretierbar.</strong><br>
-<span class="sub">Damit ist die Segmentierung stark genug für die nächste Ebene: Profilierung und fachliche Interpretation der Cluster.</span>
-</div>
-</div>
-
-<div class="lesart">Lesart: gutes Clustering = getrennt + stabil + reproduzierbar + fachlich sinnvoll</div>
-
----
-
-# Briefs mit Claude + Prompt Caching
-
-**Pro Cluster ein Markdown-Brief mit:**
-Hauptkeyword, Suchintention, Zielgruppe, Outline (H1–H3), 3 Benchmark-URLs, CTA.
-
-**Prompt Caching:** System-Prompt wird einmal gecached, 13× wiederverwendet
-→ rund **90 % Token-Ersparnis**, < 1 USD pro Lauf.
-
-**Robust:** Retry mit Backoff. Wenn ein Brief fehlschlägt, läuft die Pipeline weiter. Status-Bericht am Ende.
-
----
-
-# Reporting & Export
-
-**Report:** eine HTML-Datei mit KPIs, Cluster-Tabelle, Charts, Karten-Link.
-Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
-
-**Export:** drei JSON-Dateien
-
-| Datei | Inhalt |
-|---|---|
-| `clusters.json` | eine Zeile pro Cluster |
-| `keywords.json` | eine Zeile pro Keyword |
-| `report.json` | alles zusammen |
-
-**Optional:** direkter Sync nach Airtable oder Google Sheets, per Schalter.
-
----
-
-# Was kostet ein Pipeline-Run?
-
-<div class="cost-grid">
-
-<div class="cost-table">
-
-| Komponente | Pro Lauf |
-|---|---|
-| Embeddings · lokal (MiniLM) | **0 USD** |
-| UMAP + HDBSCAN · CPU | **0 USD** |
-| DataForSEO Search Volume *(optional)* | ~ 0,75 USD |
-| Cluster-Labels (Anthropic Haiku, 1 Batch) | ~ 0,01 USD |
-| Briefs (Claude Sonnet, 13× mit Caching) | ~ 0,20 USD |
-
-</div>
-
-<div class="cost-headline">
-
-<div class="row">
-<div class="big">≈ 1 USD</div>
-<span class="sub">pro vollem Lauf</span>
-</div>
-
-<div class="row">
-<div class="big amber">≈ 50 USD</div>
-<span class="sub">/ Jahr bei wöchentlichem Lauf</span>
-</div>
-
-</div>
-
-</div>
-
-<div class="cost-footer">
-Vernachlässigbar gegenüber dem Wert <strong>eines</strong> rankenden Pillar-Artikels.
-</div>
-
----
-
 # Empfehlung 1: HR-Software
 
-<div class="big" style="font-size: 2em;">45.000 Suchen / Monat</div>
+<div class="auto-flow" style="margin-top: 30px;">
 
-<span class="sub">89 % kommerziell · KD ⌀ 53 · 45 Keywords</span>
+<div class="auto-card c3" style="flex: 1.2;">
+<div class="ttl" style="font-size: 2em;">45.000</div>
+<div class="dsc">Suchen / Monat</div>
+<div class="chips">
+<span class="chip">89 % kommerziell</span>
+<span class="chip">KD ⌀ 53</span>
+<span class="chip">45 Keywords</span>
+</div>
+</div>
 
-**Top-Keywords:**
-`dokumentenmanagement software` · `bewerbermanagement software` · `mitarbeiterverwaltung software` · `hr software kmu`
+<div class="auto-card c1" style="flex: 2;">
+<div class="num">Top-Keywords</div>
+<div class="dsc" style="text-align: left; min-height: auto;">`dokumentenmanagement software` · `bewerbermanagement software` · `mitarbeiterverwaltung software` · `hr software kmu`</div>
+</div>
+
+</div>
+
+<div style="margin-top: 30px;">
 
 **Was tun:** Pillar-Pages zu Software-Kategorien, jeweils mit zvoove-Modul als Lösung.
 
-**Hypothese:** 5 % CTR × 2 % MQL-Rate ≈ <span class="amber">**45 MQLs / Monat**</span>.
+**Hypothese:** 5 % CTR × 2 % MQL-Rate ≈ <span class="amber">**45 MQLs / Monat**</span>
+
+</div>
 
 ---
 
@@ -704,3 +780,34 @@ Vernachlässigbar gegenüber dem Wert <strong>eines</strong> rankenden Pillar-Ar
 **Was tun:** Hub `/wissen/digitalisierung-personaldienstleistung/`, der Awareness-Traffic in die kommerziellen Cluster überführt.
 
 **Wirkung:** Pipeline-Influence über 6–12 Monate, nicht direkte Conversion.
+
+
+---
+
+# Cluster-Schritt: warum HDBSCAN?
+
+<div style="display: flex; gap: 60px; margin-top: 20px;">
+
+<div style="flex: 1;">
+
+### k-means
+
+- Clusteranzahl muss vorgegeben werden
+- Kein Outlier-Konzept
+- Setzt sphärische Cluster voraus
+
+</div>
+
+<div style="flex: 1;">
+
+### HDBSCAN ✓
+
+- Findet die Anzahl selbst
+- Markiert Ausreißer als Rauschen
+- Variable Cluster-Dichte
+
+</div>
+
+</div>
+
+**Beispiel:** `fachkräftemangel deutschland` — gehört semantisch zu nichts. HDBSCAN sagt das. k-means würde es zwanghaft zuordnen.

@@ -227,17 +227,18 @@ Das ist eine empirische Erkenntnis, die ohne diese Analyse nicht sichtbar wäre,
 
 ### 6.3 Hierarchischer Vergleich (Ward)
 
-Als zweite unabhängige Methode rechne ich [Ward Hierarchical Clustering](https://en.wikipedia.org/wiki/Ward%27s_method) auf denselben UMAP-Daten mit `k=8`, `k=10`, `k=12`. Ward minimiert die Varianz innerhalb der Cluster und produziert kompakte, klar getrennte Gruppen.
+Als zweite unabhängige Methode rechne ich [Ward Hierarchical Clustering](https://en.wikipedia.org/wiki/Ward%27s_method) auf denselben UMAP-Daten mit `k=8`, `k=10`, `k=12`, `k=13`. Ward minimiert die Varianz innerhalb der Cluster und produziert kompakte, klar getrennte Gruppen. `k=13` ist der natürliche Vergleichspunkt, weil HDBSCAN datengetrieben 13 Cluster findet.
 
 | k | Silhouette |
 |---|---|
 | 8 | 0,552 |
 | 10 | 0,562 |
 | 12 | 0,590 |
+| 13 | 0,586 |
 
-Ward erreicht 0,590 bei k=12, HDBSCAN liegt auf den Kern-Punkten bei 0,647. HDBSCAN ist klar besser. Der wichtigere Vorteil von HDBSCAN: das Verfahren findet datengetrieben 13 Cluster ohne Vorgabe-`k` und markiert Rand-Keywords explizit als Noise, die wir dann kontrolliert per Soft-Assignment integrieren.
+Ward erreicht maximal 0,590 (k=12), HDBSCAN liegt auf den Kern-Punkten bei 0,647. HDBSCAN ist klar besser. Der wichtigere Vorteil von HDBSCAN: das Verfahren findet datengetrieben 13 Cluster ohne Vorgabe-`k` und markiert Rand-Keywords explizit als Noise, die wir dann kontrolliert per Soft-Assignment integrieren.
 
-ARI HDBSCAN gegen Ward(k=10) auf den HDBSCAN-Kern-Keywords: 0,859. Inklusive Soft-Assignment auf alle 500: 0,811. In beiden Fällen sehr hohe Übereinstimmung — zwei mathematisch unabhängige Verfahren finden im Wesentlichen dieselbe Struktur, das stärkt das Vertrauen in die Cluster-Grenzen.
+ARI HDBSCAN gegen Ward auf den HDBSCAN-Kern-Keywords: 0,859 bei k=10, 0,902 bei k=12, 0,952 bei k=13. Inklusive Soft-Assignment auf alle 500: 0,811 / 0,859 / 0,904. Die Übereinstimmung ist bei gleicher Cluster-Anzahl (k=13) am höchsten — zwei mathematisch unabhängige Verfahren finden im Wesentlichen dieselbe Struktur, das stärkt das Vertrauen in die Cluster-Grenzen.
 
 ### 6.4 Manuelle Spot Checks
 

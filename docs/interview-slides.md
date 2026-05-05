@@ -202,6 +202,41 @@ style: |
   section.dense { font-size: 21px; padding: 70px 110px 60px 110px; }
   section.dense h1 { margin-bottom: 22px; }
   section.dense p { margin: 8px 0; }
+  .auto-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 18px 0 14px 0;
+  }
+  .auto-card {
+    flex: 1;
+    border-radius: 10px;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    font-size: 0.7em;
+  }
+  .auto-card .num { font-weight: 700; font-size: 0.9em; opacity: 0.85; letter-spacing: 0.04em; }
+  .auto-card .ttl { color: var(--text-strong); font-weight: 700; font-size: 1.3em; line-height: 1.15; min-height: 2.6em; display: flex; align-items: center; justify-content: center; }
+  .auto-card .dsc { color: var(--muted); font-size: 0.95em; line-height: 1.3; min-height: 3.6em; }
+  .auto-card .chips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; padding: 4px 0; }
+  .auto-card .chip { background: rgba(0,0,0,0.25); border: 1px solid currentColor; padding: 2px 8px; border-radius: 12px; font-size: 0.92em; color: currentColor; }
+  .auto-card .out { color: var(--muted); font-size: 0.85em; margin-top: auto; padding-top: 4px; }
+  .auto-card.c1 { color: #60a5fa; background: rgba(96,165,250,0.1); border: 1px solid #60a5fa; }
+  .auto-card.c2 { color: #fb923c; background: rgba(251,146,60,0.1); border: 1px solid #fb923c; }
+  .auto-card.c3 { color: #4ade80; background: rgba(74,222,128,0.1); border: 1px solid #4ade80; }
+  .auto-card.c4 { color: #a78bfa; background: rgba(167,139,250,0.1); border: 1px solid #a78bfa; }
+  .infra-row {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--bg-elevated);
+  }
+  .infra-label { color: var(--muted); font-size: 0.75em; margin-bottom: 10px; text-align: center; }
+  .infra-chips { display: flex; gap: 12px; justify-content: center; }
+  .infra-chips .chip { background: var(--bg-elevated); padding: 5px 14px; border-radius: 6px; font-size: 0.78em; color: var(--text); border: 1px solid #334155; }
+  .auto-trigger { color: var(--muted); font-size: 0.78em; text-align: center; margin-bottom: 6px; }
 ---
 
 <!-- _class: lead -->
@@ -309,23 +344,72 @@ Der Prozess besteht aus sechs klar getrennten Schritten. Jeder Schritt ist einze
 
 ---
 
-# Architektur: 6 entkoppelte Schritte
+# Automatisierung
 
-```
-Discover  →  Enrich  →  Cluster  →  Brief  →  Report  →  Export
-   ↓           ↓          ↓          ↓         ↓          ↓
-Keywords    SV/KD/CPC   13 Cluster  Markdown  HTML       JSON
-                        + Labels    pro       Dashboard  Airtable
-                                    Cluster              Notion
-                                                         Sheets
-```
+<div class="auto-trigger">GitHub Actions · Auslöser per Cron-Schedule oder manueller Trigger</div>
 
-**Warum entkoppelt?**
+<div class="auto-flow">
 
-- Embeddings einmal rechnen
-- Cluster-Tuning ohne Neukosten
-- Briefs nicht versehentlich neu erzeugen
-- Jeder Schritt einzeln ersetzbar
+<div class="auto-card c1">
+<div class="num">Step 1</div>
+<div class="ttl">Keywords holen<br>& anreichern</div>
+<div class="dsc">Volumen, Difficulty und SERP-Merkmale je Keyword</div>
+<div class="chips">
+<span class="chip">SEMrush</span>
+<span class="chip">DataForSEO</span>
+<span class="chip">LLM-Set</span>
+<span class="chip">CSV</span>
+</div>
+<div class="out">→ keywords.json</div>
+</div>
+
+<div class="auto-card c2">
+<div class="num">Step 2</div>
+<div class="ttl">Semantisches Clustering</div>
+<div class="dsc">Embeddings, Dimensions­reduktion. Anzahl ergibt sich aus den Daten.</div>
+<div class="chips">
+<span class="chip">MiniLM</span>
+<span class="chip">UMAP</span>
+<span class="chip">HDBSCAN</span>
+</div>
+<div class="out">→ clusters.json</div>
+</div>
+
+<div class="auto-card c3">
+<div class="num">Step 3</div>
+<div class="ttl">Content-Briefings</div>
+<div class="dsc">Intention, Persona, Outline, SERP-Lücken, CTA. Provider auswechselbar.</div>
+<div class="chips">
+<span class="chip">Anthropic</span>
+<span class="chip">OpenAI</span>
+</div>
+<div class="out">→ briefing_[cluster].md</div>
+</div>
+
+<div class="auto-card c4">
+<div class="num">Step 4</div>
+<div class="ttl">Reporting</div>
+<div class="dsc">Konsolidiertes Dashboard. Plattformen austauschbar.</div>
+<div class="chips">
+<span class="chip">Pages</span>
+<span class="chip">Notion</span>
+<span class="chip">Airtable</span>
+<span class="chip">Slack</span>
+</div>
+<div class="out">→ HTML + JSON</div>
+</div>
+
+</div>
+
+<div class="infra-row">
+<div class="infra-label">Infrastruktur · unsichtbar aber überall</div>
+<div class="infra-chips">
+<span class="chip">Secrets</span>
+<span class="chip">Run-Logs</span>
+<span class="chip">Retry-Logik</span>
+<span class="chip">Git-Versionierung</span>
+</div>
+</div>
 
 ---
 

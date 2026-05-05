@@ -167,7 +167,7 @@ Die Wahl fällt auf **`mcs=10, ms=5, eom`**: 13 Cluster, 72 Noise-Punkte (14 Pro
 
 **3. Soft-Assignment als zweiter Schritt schließt die Lücke ohne Cluster-Distortion.** Anstatt die HDBSCAN-Parameter so weit zu drehen, bis kein Noise mehr entsteht (was die Cluster-Reinheit zerstören würde), wird ein zusätzlicher Schritt nachgelagert: jedes Noise-Keyword wird seinem nächsten Cluster-Centroid zugeordnet. Bei `mcs=10, eom` sind das nur 72 Punkte, die sich gleichmäßig über die Cluster verteilen — keine neuen Sammelcluster entstehen. Bei `mcs=15, leaf` mit 130 Noise hätte ein einzelner Cluster 43 Keywords absorbiert, was operativ nicht akzeptabel war.
 
-**4. Validierung über Silhouette und Ward-Vergleich.** HDBSCAN mit `mcs=10, eom` erreicht eine Silhouette von 0,647 auf den 428 HDBSCAN-Kern-Keywords (vor Soft-Assignment). Ward Hierarchical bei k=12 erreicht 0,590. Der ARI zwischen beiden Methoden ist 0,811 — sehr hohe Übereinstimmung. Beide unabhängige Verfahren finden ähnliche Strukturen, das stärkt das Vertrauen in die Cluster-Grenzen.
+**4. Validierung über Silhouette und Ward-Vergleich.** HDBSCAN mit `mcs=10, eom` erreicht eine Silhouette von 0,647 auf den 428 HDBSCAN-Kern-Keywords (vor Soft-Assignment). Ward Hierarchical bei k=12 erreicht 0,590. Der ARI zwischen HDBSCAN-Kern und Ward(k=10) ist 0,859, inklusive Soft-Assignment auf alle 500 Keywords noch 0,811 — sehr hohe Übereinstimmung. Beide unabhängige Verfahren finden ähnliche Strukturen, das stärkt das Vertrauen in die Cluster-Grenzen. Details in Abschnitt 6.3.
 
 Die Wahl ist über `cluster_hdbscan_mcs` (Default 10), `cluster_hdbscan_method` (Default eom) bzw. die Environment-Variablen `PIPELINE_CLUSTER_HDBSCAN_MCS` / `PIPELINE_CLUSTER_HDBSCAN_METHOD` veränderbar, ohne Code-Änderung.
 
@@ -260,7 +260,7 @@ Die Pipeline ist auf Reproduzierbarkeit ausgelegt:
 - **Embeddings sind deterministisch** (Sentence Transformer im Inference-Modus).
 - **Heuristische Enrichment** ist deterministisch (SHA256 Hash des Keywords als Seed).
 
-Ein zweiter Lauf mit identischer `data/keywords.csv` produziert auf derselben Plattform byte-identische `embeddings.npy`, `umap_*.npy` und `keywords_labeled.csv`. Cross-Platform (z.B. lokale macOS-Entwicklung gegen Ubuntu-CI) sind die Embeddings byte-identisch, die UMAP-Koordinaten weichen wegen unterschiedlicher BLAS/LAPACK-Implementierungen minimal ab. Die Cluster-Anzahl mit `mcs=15, leaf` bleibt über Plattformen hinweg robust, auch wenn einzelne Keywords je Plattform leicht zwischen Cluster und Noise springen können.
+Ein zweiter Lauf mit identischer `data/keywords.csv` produziert auf derselben Plattform byte-identische `embeddings.npy`, `umap_*.npy` und `keywords_labeled.csv`. Cross-Platform (z.B. lokale macOS-Entwicklung gegen Ubuntu-CI) sind die Embeddings byte-identisch, die UMAP-Koordinaten weichen wegen unterschiedlicher BLAS/LAPACK-Implementierungen minimal ab. Die Cluster-Anzahl mit `mcs=10, eom` bleibt über Plattformen hinweg bei 13, auch wenn einzelne Rand-Keywords je Plattform leicht zwischen Cluster und Noise springen können.
 
 Reproduktion auf einem fremden Rechner:
 

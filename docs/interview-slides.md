@@ -244,6 +244,21 @@ style: |
   .cost-grid .cost-headline .big { font-size: 2.4em; line-height: 1.05; }
   .cost-grid .cost-headline .row { margin-bottom: 18px; }
   .cost-footer { text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--bg-elevated); color: var(--text); font-size: 0.95em; }
+  .cluster-cards { display: flex; gap: 16px; margin: 24px 0 16px 0; }
+  .cluster-card { flex: 1; padding: 18px 18px 16px 18px; border-radius: 10px; background: var(--bg-elevated); border-top: 3px solid var(--teal); display: flex; flex-direction: column; gap: 8px; }
+  .cluster-card.green { border-top-color: #4ade80; }
+  .cluster-card.amber { border-top-color: var(--amber); }
+  .cluster-card.blue { border-top-color: #60a5fa; }
+  .cluster-card .name { color: var(--text-strong); font-weight: 700; font-size: 0.95em; line-height: 1.25; min-height: 2.5em; }
+  .cluster-card .sv { color: var(--teal); font-weight: 700; font-size: 1.6em; line-height: 1; margin-top: 4px; }
+  .cluster-card .sv-label { color: var(--muted); font-size: 0.75em; margin-top: -2px; }
+  .cluster-card .meta { color: var(--text); font-size: 0.78em; margin-top: 6px; }
+  .cluster-card .hebel { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.75em; font-weight: 600; margin-top: 8px; align-self: flex-start; }
+  .cluster-card.green .hebel { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid #4ade80; }
+  .cluster-card.amber .hebel { background: rgba(251,191,36,0.15); color: var(--amber); border: 1px solid var(--amber); }
+  .cluster-card.blue .hebel { background: rgba(96,165,250,0.15); color: #60a5fa; border: 1px solid #60a5fa; }
+  .funnel-legend { display: flex; gap: 24px; padding: 12px 18px; background: var(--bg-elevated); border-radius: 8px; margin-top: 8px; font-size: 0.78em; color: var(--muted); justify-content: space-between; }
+  .funnel-legend strong { color: var(--text-strong); font-weight: 600; }
 ---
 
 <!-- _class: lead -->
@@ -349,11 +364,39 @@ Im Bereich Zeitarbeit und Personaldienstleistung **organischen Traffic gewinnen,
 
 # Drei interessante Cluster
 
-| Cluster | SV/Monat | Kommerziell | Hebel |
-|---|---|---|---|
-| HR- & Dokumentenverwaltungssoftware | 45.000 | 89 % | Bottom-of-Funnel |
-| Zvoove Plattform & Preise | 23.000 | 97 % | Brand Defense |
-| Digitalisierung Personaldienstleistung | 24.000 | 35 % | Top-of-Funnel |
+<div class="cluster-cards">
+
+<div class="cluster-card green">
+<div class="name">HR- &amp; Dokumenten­verwaltungs­software</div>
+<div class="sv">45.000</div>
+<div class="sv-label">Suchen / Monat</div>
+<div class="meta">89 % kommerziell · KD ⌀ 53</div>
+<div class="hebel">Bottom-of-Funnel</div>
+</div>
+
+<div class="cluster-card amber">
+<div class="name">zvoove Plattform &amp; Preise</div>
+<div class="sv">23.000</div>
+<div class="sv-label">Suchen / Monat</div>
+<div class="meta">97 % kommerziell · KD ⌀ 52</div>
+<div class="hebel">Brand Defense</div>
+</div>
+
+<div class="cluster-card blue">
+<div class="name">Digitalisierung Personal­dienstleistung</div>
+<div class="sv">24.000</div>
+<div class="sv-label">Suchen / Monat</div>
+<div class="meta">35 % kommerziell · KD ⌀ 36</div>
+<div class="hebel">Top-of-Funnel</div>
+</div>
+
+</div>
+
+<div class="funnel-legend">
+<div><strong>Bottom-of-Funnel</strong> · kaufbereit, vergleicht Lösungen</div>
+<div><strong>Brand Defense</strong> · sucht nach uns, will Beweise</div>
+<div><strong>Top-of-Funnel</strong> · recherchiert, noch früh</div>
+</div>
 
 <span class="sub">Vollständige Tabelle aller 13 Cluster im Dashboard.</span>
 

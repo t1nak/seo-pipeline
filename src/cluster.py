@@ -259,14 +259,15 @@ def step_cluster() -> pd.DataFrame:
           f"({noise / len(labs) * 100:.1f}%)")
     logger.info(f"sizes: {sorted(Counter(labs).items())}")
 
-    logger.info("Ward hierarchical comparison (k=8,10,12)")
+    logger.info("Ward hierarchical comparison (k=8,10,12,13)")
     Z = linkage(red5, method="ward")
-    for k in (8, 10, 12):
+    for k in (8, 10, 12, 13):
         h = fcluster(Z, t=k, criterion="maxclust")
         sil = silhouette_score(red5, h)
         logger.info(f"          k={k}: silhouette={sil:.3f}")
     df["hier10"] = fcluster(Z, t=10, criterion="maxclust")
     df["hier12"] = fcluster(Z, t=12, criterion="maxclust")
+    df["hier13"] = fcluster(Z, t=13, criterion="maxclust")
 
     mask = df["hdb"] != -1
     orig = df["category"].astype("category").cat.codes
@@ -276,6 +277,8 @@ def step_cluster() -> pd.DataFrame:
     logger.info(f"          Hier(10) vs LLM      ARI={adjusted_rand_score(orig, df['hier10']):.3f}, "
           f"NMI={normalized_mutual_info_score(orig, df['hier10']):.3f}")
     logger.info(f"          HDB vs Hier(10)      ARI={adjusted_rand_score(df['hier10'][mask], df['hdb'][mask]):.3f}")
+    logger.info(f"          HDB vs Hier(12)      ARI={adjusted_rand_score(df['hier12'][mask], df['hdb'][mask]):.3f}")
+    logger.info(f"          HDB vs Hier(13)      ARI={adjusted_rand_score(df['hier13'][mask], df['hdb'][mask]):.3f}")
 
     df.to_csv(F_LABELED, index=False)
     logger.info(f"wrote {F_LABELED.relative_to(ROOT)}")

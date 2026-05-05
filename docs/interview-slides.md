@@ -237,6 +237,13 @@ style: |
   .infra-chips { display: flex; gap: 12px; justify-content: center; }
   .infra-chips .chip { background: var(--bg-elevated); padding: 5px 14px; border-radius: 6px; font-size: 0.78em; color: var(--text); border: 1px solid #334155; }
   .auto-trigger { color: var(--muted); font-size: 0.78em; text-align: center; margin-bottom: 6px; }
+  .cost-grid { display: flex; gap: 40px; align-items: center; margin: 30px 0 20px 0; }
+  .cost-grid .cost-table { flex: 1.5; }
+  .cost-grid .cost-table table { font-size: 0.85em; margin: 0; }
+  .cost-grid .cost-headline { flex: 1; text-align: right; }
+  .cost-grid .cost-headline .big { font-size: 2.4em; line-height: 1.05; }
+  .cost-grid .cost-headline .row { margin-bottom: 18px; }
+  .cost-footer { text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--bg-elevated); color: var(--text); font-size: 0.95em; }
 ---
 
 <!-- _class: lead -->
@@ -341,6 +348,26 @@ Der Prozess besteht aus sechs klar getrennten Schritten. Jeder Schritt ist einze
 | Digitalisierung Personaldienstleistung | 24.000 | 35 % | Top-of-Funnel |
 
 <span class="sub">Vollständige Tabelle aller 13 Cluster im Dashboard.</span>
+
+---
+
+# Architektur: 6 entkoppelte Schritte
+
+```
+Discover  →  Enrich  →  Cluster  →  Brief  →  Report  →  Export
+   ↓           ↓          ↓          ↓         ↓          ↓
+Keywords    SV/KD/CPC   13 Cluster  Markdown  HTML       JSON
+                        + Labels    pro       Dashboard  Airtable
+                                    Cluster              Notion
+                                                         Sheets
+```
+
+**Warum entkoppelt?**
+
+- Embeddings einmal rechnen
+- Cluster-Tuning ohne Neukosten
+- Briefs nicht versehentlich neu erzeugen
+- Jeder Schritt einzeln ersetzbar
 
 ---
 
@@ -543,6 +570,44 @@ Bewusst kein Frontend-Framework. Verschickbar per Mail oder Slack.
 | `report.json` | alles zusammen |
 
 **Optional:** direkter Sync nach Airtable oder Google Sheets, per Schalter.
+
+---
+
+# Was kostet ein Pipeline-Run?
+
+<div class="cost-grid">
+
+<div class="cost-table">
+
+| Komponente | Pro Lauf |
+|---|---|
+| Embeddings · lokal (MiniLM) | **0 USD** |
+| UMAP + HDBSCAN · CPU | **0 USD** |
+| DataForSEO Search Volume *(optional)* | ~ 0,75 USD |
+| Cluster-Labels (Anthropic Haiku, 1 Batch) | ~ 0,01 USD |
+| Briefs (Claude Sonnet, 13× mit Caching) | ~ 0,20 USD |
+
+</div>
+
+<div class="cost-headline">
+
+<div class="row">
+<div class="big">≈ 1 USD</div>
+<span class="sub">pro vollem Lauf</span>
+</div>
+
+<div class="row">
+<div class="big amber">≈ 50 USD</div>
+<span class="sub">/ Jahr bei wöchentlichem Lauf</span>
+</div>
+
+</div>
+
+</div>
+
+<div class="cost-footer">
+Vernachlässigbar gegenüber dem Wert <strong>eines</strong> rankenden Pillar-Artikels.
+</div>
 
 ---
 

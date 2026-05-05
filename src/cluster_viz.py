@@ -262,6 +262,11 @@ def _customdata(sub: pd.DataFrame, header: str) -> np.ndarray:
     ], axis=-1)
 
 
+def _lbl(d: dict[int, str], cid: int) -> str:
+    """Look up a cluster label with a safe fallback for unknown IDs."""
+    return d.get(cid, f"Cluster {cid + 1}" if cid >= 0 else "Outliers")
+
+
 def build_cluster_map_html(df: pd.DataFrame, red2: np.ndarray,
                            labels_en: dict[int, str],
                            labels_de: dict[int, str]) -> str:
@@ -302,12 +307,12 @@ def build_cluster_map_html(df: pd.DataFrame, red2: np.ndarray,
         sub_mask = df["hdb"] == cid
         sub = df[sub_mask]
         d = cid + 1
-        header_en = f"<b>{L['clusterHoverPrefix']} {d}: {labels_en[cid]}</b><br>"
+        header_en = f"<b>{L['clusterHoverPrefix']} {d}: {_lbl(labels_en, cid)}</b><br>"
         fig.add_trace(go.Scatter(
             x=sub["x"], y=sub["y"], mode="markers",
             marker=dict(size=default_size[sub_mask.values], color=color_map[cid],
                         opacity=0.78, line=dict(width=0.7, color="white")),
-            name=f"{d}: {labels_en[cid]}",
+            name=f"{d}: {_lbl(labels_en, cid)}",
             customdata=_customdata(sub, header_en),
             hovertemplate=_build_hover(L["hoverIntent"], L["hoverPriority"]),
         ))
@@ -325,9 +330,9 @@ def build_cluster_map_html(df: pd.DataFrame, red2: np.ndarray,
         cd6 = [[L_["noiseHoverPrefix"]] * len(noise)]
         for cid in clusters:
             d = cid + 1
-            names.append(f"{d}: {labs[cid]}")
+            names.append(f"{d}: {_lbl(labs, cid)}")
             sub = df[df["hdb"] == cid]
-            cd6.append([f"<b>{L_['clusterHoverPrefix']} {d}: {labs[cid]}</b><br>"] * len(sub))
+            cd6.append([f"<b>{L_['clusterHoverPrefix']} {d}: {_lbl(labs, cid)}</b><br>"] * len(sub))
         return {"names": names, "cdField6": cd6,
                 "hovertemplate": _build_hover(L_["hoverIntent"], L_["hoverPriority"])}
 
@@ -388,8 +393,8 @@ def build_cluster_map_html(df: pd.DataFrame, red2: np.ndarray,
         d = int(cid + 1) if cid >= 0 else None
         kw_data[str(cid)] = {
             "display_id": d,
-            "name_en": labels_en[cid],
-            "name_de": labels_de[cid],
+            "name_en": _lbl(labels_en, cid),
+            "name_de": _lbl(labels_de, cid),
             "color": color_map[cid],
             "count": int(len(sub)),
             "total_sv": int(sub["search_volume"].sum()),

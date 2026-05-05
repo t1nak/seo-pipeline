@@ -1,6 +1,9 @@
 # Configuration via environment variables (Pydantic Settings + .env support)
 pydantic-settings>=2.0,<3.0
 
+# Cluster labels loaded from data/cluster_labels.yaml (edit without code change)
+pyyaml>=6.0,<7.0
+
 # Core data and ML
 # Versions pinned to the local baseline that produces the documented
 # 10-cluster result (sil 0.672, 38 noise). UMAP's random_state only
@@ -32,3 +35,8 @@ claude-agent-sdk>=0.1.70  # requires Python >=3.10
 
 # Live keyword metrics (optional, only used with --provider dataforseo)
 # requests is stdlib via urllib in src/enrich.py, no extra dep needed
+
+# Reporting-Push nach Google Sheets (optional, nur aktiv wenn
+# PIPELINE_SHEETS_SYNC_ENABLED=true). gspread bringt google-auth mit,
+# weil Service-Account-Auth einen JWT mit RSA-256 signieren muss.
+gspread>=6.0,<7.0

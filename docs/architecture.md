@@ -1,6 +1,6 @@
 # Prozessarchitektur
 
-Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Anbindung an einen Revenue Stack.
+Diese Datei beschreibt den Datenfluss durch die Pipeline, die Schnittstellen zwischen Schritten und die Einbindung in externe Systeme.
 
 ## Pipeline auf einen Blick
 
@@ -10,22 +10,24 @@ Vier modulare Phasen, an jeder Stelle sind Provider per Konfiguration austauschb
 
 ## Implementierungs-Detail
 
-Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute aktiven und alternativen Optionen), in der Mitte die fünf entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese fünf Skripte realisieren die vier modularen Phasen aus dem Diagramm oben; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Markierte Artefakte (★ gelb) sind über GitHub Pages live deployed.
+Die folgende SVG zeigt links die externen Provider (jede Spalte mit den heute aktiven und alternativen Optionen), in der Mitte die sechs entkoppelten Skripte (Discover, Enrich, Cluster, Brief, Report, Export) mit den jeweiligen Sub-Schritten von `cluster.py`, rechts die produzierten Datenartefakte. Diese Skripte realisieren die vier modularen Phasen aus dem Diagramm oben; Discover und Enrich liegen heute als zwei Skripte vor, weil das Discover-Stub auf Heuristik arbeitet, würden bei Providern wie SEMrush oder DataForSEO mit erweitertem Endpoint aber zusammenfallen. Report und Export gehören beide zur Reporting-Phase: Report erzeugt ein menschlich lesbares HTML-Dashboard, Export ein maschinenlesbares JSON-Trio für externe Reporting-Tools. Markierte Artefakte (★ gelb) sind über GitHub Pages live deployed.
 
 ![Architektur Diagramm](architecture.svg){ .zoomable }
 
 *Klick auf das Diagramm öffnet eine Vollbild-Ansicht zum Zoomen.*
 
-## Schichten und Verantwortlichkeiten
+## Module und Aufgaben
 
 | Schicht | Modul | Verantwortlich für |
 |---|---|---|
 | **Quelle** | `src/discover.py` | Welche Keywords sind überhaupt relevant. Aktuell Stub mit `--source manual`. |
 | **Anreicherung** | `src/enrich.py` | Pro Keyword: SV, KD, CPC, SERP Features, Priority Score. Heuristik oder DataForSEO. |
-| **Strukturierung** | `src/cluster.py` plus `src/cluster_viz.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Profiling, Charts, interaktive Karte. |
+| **Strukturierung** | `src/cluster.py` | Embeddings, Dimensionsreduktion, Density-based Clustering, Soft-Assignment der Rand-Keywords (Schritt `assign_noise`), Profiling. Charts und interaktive Karte werden im Report-Schritt aus `src/cluster_viz.py` aufgerufen. |
+| **Beschriftung** | `src/labels_llm.py` | Pro Cluster ein DE- und EN-Label per Anthropic-Batch-Call. Schreibt `cluster_labels.json` und aktualisiert die Label-Spalten in `cluster_profiles.csv` und `keywords_labeled.csv`. |
 | **Aktivierung** | `src/brief.py` | Pro Cluster ein redaktions-fertiger Content Brief. Claude API mit Prompt Caching. |
-| **Reporting** | `src/report.py` | Konsolidiertes Dashboard, das alle Artefakte verbindet. |
-| **Orchestrierung** | `pipeline.py` | CLI Entry Point. Kann alles oder einzelne Schritte ausführen. |
+| **Reporting** | `src/report.py` | Konsolidiertes HTML-Dashboard, das alle Artefakte verbindet. |
+| **Reporting (JSON)** | `src/export.py` | Bündelt alle Ergebnisse als `clusters.json`, `keywords.json` und `report.json` zum direkten Import in Airtable, Notion, Google Sheets oder Looker Studio. |
+| **Orchestrierung** | `pipeline.py` plus Workflow `pipeline-full.yml` | `pipeline.py` orchestriert die sechs Pipeline-Schritte, der Workflow ruft den Label-Schritt zwischen `cluster` und `brief` auf (`Step 3b`). |
 
 ## Schnittstellen zwischen Schritten
 
@@ -39,7 +41,7 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 |---|---|---|
 | `keyword` | Freitext, deutsch | Ja |
 | `estimated_intent` | `commercial`, `informational`, `transactional`, `navigational` | Ja |
-| `category` | Cluster ID (`cluster_01` bis `cluster_12`) | Ja |
+| `category` | Original-Cluster-ID aus dem Discover-Stub. Dient nur als Vergleichsbasis und ist nicht identisch mit den später per HDBSCAN gefundenen Clustern. | Ja |
 | `type` | `head`, `body`, `longtail` | Ja |
 | `notes` | Freitext | Optional |
 
@@ -56,7 +58,11 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 | `priority_score` | Float, `volume / max(kd, 5)` |
 | `data_source` | `estimated` oder `dataforseo` |
 
-### Cluster -> Brief
+### Cluster -> Labels
+
+**Schnittstelle:** `cluster_profiles.csv` (Top-Keywords und Top-Terms pro Cluster) wird vom Label-Schritt gelesen. Output: `output/clustering/cluster_labels.json` mit DE- und EN-Label pro Cluster-ID, plus die aktualisierten Spalten `label_en` / `label_de` in `cluster_profiles.csv` und `hdb_label` / `hdb_label_de` in `keywords_labeled.csv`. Details in [ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback).
+
+### Labels (oder Cluster) -> Brief
 
 **Schnittstelle:** `output/clustering/cluster_profiles.csv` plus `output/clustering/keywords_labeled.csv`.
 
@@ -72,17 +78,28 @@ Jeder Schritt liest und schreibt explizite Dateien. Das macht jeden Schritt einz
 - `output/clustering/chart*.png` (eingebettete Bilder)
 - `output/briefings/*.md` (Liste, für die Brief-Spalte in der Tabelle)
 
+### Report (oder Cluster und Brief direkt) -> Export
+
+`export.py` liest dieselben Quellen wie `report.py` und schreibt drei flache JSON-Dateien nach `output/reporting/`:
+
+- `clusters.json` eine Zeile pro Cluster mit allen KPIs plus den geparsten Brief-Feldern (Hauptkeyword, Zielgruppe, H1, H2-Outline, Wortanzahl, CTA, Benchmark-URLs als Liste).
+- `keywords.json` eine Zeile pro Keyword mit Cluster-Zuordnung und allen Metriken (SV, KD, CPC, Priority, SERP Features).
+- `report.json` Bundle aus Run-Metadaten plus beiden Listen.
+
+Wenn `report.py` für denselben Lauf zuvor lief, werden die drei Dateien zusätzlich nach `output/reporting/runs/<run_id>/` gespiegelt, damit der Export pro Lauf erhalten bleibt.
+
 ## Datenflüsse: was läuft wann
 
 | Phase | Wer löst aus | Was wird neu berechnet | Was bleibt |
 |---|---|---|---|
-| Wöchentliche Aktualisierung | Cron | `enrich` (für SV/KD Updates), `report` | Cluster, Briefs |
-| Re-Clustering | Manuell oder geplant | Alles | Nichts (mit Snapshot in `output/_archive/`) |
+| Wöchentliche Aktualisierung | Cron | `enrich` (für SV/KD Updates), `report` | Cluster, Labels, Briefs |
+| Re-Clustering | Manuell oder geplant | Alles, inklusive frischer LLM-Labels | Nichts (mit Snapshot in `output/_archive/`) |
+| Label-Refresh ohne Re-Clustering | Manuell | nur `labels_llm` (Cluster-IDs bleiben, neue Labels) | Embeddings, UMAP, HDBSCAN, Briefs |
 | Brief Update für einen Cluster | Manuell | nur ein Brief | Alles andere |
 
 Der Snapshot-Mechanismus in `output/_archive/` schützt vor unbeabsichtigtem Datenverlust: vor jedem `cluster --step all` wird der aktuelle Output Stand pinned.
 
-## Anbindung an einen Revenue Stack
+## Einbindung in externe Systeme
 
 Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes System. Pro Schritt gibt es eine klare Andockung an externe Systeme:
 
@@ -90,8 +107,10 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 |---|---|---|
 | `data/keywords.csv` | Google Ads | Direkter CSV Import in Keyword Planner für Search Kampagnen |
 | `data/keywords.csv` | Ahrefs / Semrush | CSV Import für Rank Tracking auf den 500 Keywords |
-| `output/clustering/clusters.json` | Notion / Airtable | Content Kalender Anker, ein Eintrag pro Cluster |
-| `output/clustering/cluster_profiles.csv` | Looker Studio | Datenquelle für SEO Dashboard, Visualisierung von Cluster Performance |
+| `output/reporting/clusters.json` | Airtable, Notion-Datenbank | Content-Kalender-Anker, ein Eintrag pro Cluster mit allen Brief-Feldern |
+| `output/reporting/keywords.json` | Google Sheets, Airtable | Filterbare Keyword-Tabelle, sortier- und gruppierbar nach Cluster, Intent, Priorität |
+| `output/reporting/report.json` | Looker Studio, Metabase, BI-Tools | Konsolidierte Datenquelle für ein SEO-Dashboard inkl. Run-Metadaten |
+| `output/clustering/cluster_profiles.csv` | Looker Studio (CSV-Connector) | Klassischer CSV-Import als Alternative zu `report.json` |
 | `output/briefings/*.md` | Sanity / Contentful | Draft Eintrag pro Cluster für die Redaktion |
 | `output/clustering/cluster_map.html` | Slack, Notion, Confluence | Embed in Marketing Wiki oder wöchentliche Stand-up Updates |
 | `output/reporting/index.html` | Internes Wiki | Self-service Dashboard, Stakeholder können selbst nachschauen |
@@ -106,29 +125,15 @@ Diese Pipeline ist bewusst als Datenquelle gebaut, nicht als geschlossenes Syste
 | `embed` | 5 bis 8 Sekunden (erstes Mal: zusätzlich Modell-Download ~120 MB) | Keyword Anzahl, CPU |
 | `reduce` | 3 bis 4 Sekunden | Anzahl plus Embedding Dimension |
 | `cluster` | 2 bis 3 Sekunden | UMAP Dimension |
-| `label` | < 1 Sekunde | Keyword Anzahl |
+| `assign_noise` (Soft-Assignment) | < 1 Sekunde | Anzahl Rand-Keywords mal Cluster |
+| `label` (HDBSCAN-Output) | < 1 Sekunde | Keyword Anzahl |
 | `profile` | < 1 Sekunde | Cluster Anzahl |
-| `charts` | 5 bis 7 Sekunden | matplotlib Rendering |
-| `viz` | 3 bis 5 Sekunden | Plotly Figure Größe |
-| `brief` (alle 10 Cluster, mit API) | 50 bis 100 Sekunden | Anthropic API Latenz |
-| `report` | < 1 Sekunde | Anzahl Cluster, Dateigrößen |
+| `labels_llm` (Anthropic Haiku, Batch-Call) | 4 bis 8 Sekunden | API-Latenz |
+| `report` (Charts, Cluster-Map, Dashboard) | 8 bis 12 Sekunden | matplotlib- und Plotly-Rendering |
+| `export` (drei JSON-Dateien) | < 1 Sekunde | Cluster- und Keyword-Anzahl |
+| `brief` (alle Cluster, mit API) | 60 bis 130 Sekunden | Anthropic API Latenz, linear in Cluster-Anzahl |
 
-Voller Lauf ohne Briefs (Demo): ungefähr 25 Sekunden. Voller Lauf mit Briefs: ungefähr 2 Minuten.
-
-### Kosten pro Lauf, je Provider-Kombination
-
-Embeddings, UMAP und HDBSCAN laufen lokal (0 USD). Variabel sind nur Enrichment- und Brief-Provider.
-
-| Enrichment | Brief-Provider | Enrichment-Kosten | Brief-Kosten | Gesamt pro Lauf |
-|---|---|---|---|---|
-| Heuristik | Stub (`--dry-run`) | 0 USD | 0 USD | **0 USD** |
-| Heuristik | Anthropic API (sonnet-4-6, Caching) | 0 USD | ~0,15 USD | **~0,15 USD** |
-| Heuristik | OpenAI (gpt-5) | 0 USD | ~0,30 USD | **~0,30 USD** |
-| DataForSEO | Anthropic API | ~0,75 USD | ~0,15 USD | **~0,90 USD** |
-| DataForSEO | OpenAI | ~0,75 USD | ~0,30 USD | **~1,05 USD** |
-| SEMrush / Ahrefs | je nach Provider | abhängig vom Plan | je Brief-Provider | abhängig |
-
-Annahmen: 500 Keywords, 10 Cluster, Sonnet mit Prompt Caching auf System Block. Brief-Kosten skalieren linear mit der Cluster-Anzahl.
+Voller Lauf ohne Briefs (Demo, kein Label-Call): ungefähr 25 Sekunden. Voller Lauf mit Labels und Briefs: ungefähr 2 bis 3 Minuten (13 Cluster).
 
 ## Skalierung
 

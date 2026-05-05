@@ -40,6 +40,8 @@ BRIEFINGS = OUT / "briefings"
 PROFILES_CSV = OUT / "clustering" / "cluster_profiles.csv"
 LABELED_CSV = OUT / "clustering" / "keywords_labeled.csv"
 
+SHEET_URL = "https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit"
+
 
 # ---------------------------------------------------------------------------
 # Markdown brief parsing
@@ -287,32 +289,69 @@ def _badge(label: str, kind: str) -> str:
     return f'<span class="badge badge-{kind}">{htmllib.escape(label)}</span>'
 
 
-def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
+def _format_word_count(value: str) -> str:
+    """Append "Wörter" if the value is a bare number, leave it alone otherwise.
+
+    Briefs usually contain just "2800" but the LLM occasionally returns
+    "2800 Wörter" or "2500-3000 Wörter"; we don't want to double-stamp.
+    """
+    if not isinstance(value, str) or not value.strip():
+        return "—"
+    escaped = htmllib.escape(value.strip())
+    if "Wörter" in escaped or "Wörtern" in escaped:
+        return escaped
+    return f"{escaped} Wörter"
+
+
+def _compute_intent(pct_comm: int, md: str | None = None) -> tuple[str, str]:
+    """Return (label, badge_kind) for a cluster, single source of truth.
+
+    Starts from pct_commercial thresholds, then lets a brief's `**Suchintention:**`
+    metadata override when present. Used for both data-intent (filter) and the
+    visible badge so they cannot disagree.
+    """
+    if pct_comm >= 70:
+        label, kind = "commercial", "ok"
+    elif pct_comm <= 20:
+        label, kind = "informational", "warn"
+    else:
+        label, kind = "mixed", "info"
+    if md:
+        intent_meta = _meta(md, "Suchintention")
+        if intent_meta:
+            kind = _intent_class(intent_meta)
+            first = re.split(r"[,\s]", intent_meta.strip(), 1)[0]
+            if first.lower() in {"commercial", "informational", "mixed"}:
+                label = first.lower()
+    return label, kind
+
+
+def _safe_label(value, display_id: int) -> str:
+    """Return a string label, falling back when the cell is missing/NaN/empty.
+
+    pandas reads empty CSV cells as float NaN, and `NaN or fallback`
+    evaluates to NaN (NaN is truthy), so the bare `or` pattern leaks NaN
+    into htmllib.escape and crashes. This helper coerces both NaN and
+    empty strings to the generic "Cluster N" fallback.
+    """
+    if isinstance(value, str) and value.strip():
+        return value
+    return f"Cluster {display_id}"
+
+
+def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str,
+                 brief_prefix: str = "", map_prefix: str = "../clustering/") -> str:
     """Build one cluster card."""
     cid = int(profile_row["cluster_id"])
     display_id = cid + 1
-    label = profile_row["label_de"] or f"Cluster {display_id}"
+    label = _safe_label(profile_row["label_de"], display_id)
     n_kw = int(profile_row["n_keywords"])
     total_sv = int(profile_row["total_sv"])
     median_kd = int(profile_row["median_kd"])
     pct_comm = int(profile_row["pct_commercial"])
 
-    # Intent badge: derive from pct_commercial
-    if pct_comm >= 70:
-        intent_label, intent_kind = "commercial", "ok"
-    elif pct_comm <= 20:
-        intent_label, intent_kind = "informational", "warn"
-    else:
-        intent_label, intent_kind = "mixed", "info"
-
-    # Optional override from the brief metadata if present
+    intent_label, intent_kind = _compute_intent(pct_comm, md)
     intent_meta = _meta(md, "Suchintention")
-    if intent_meta:
-        intent_kind = _intent_class(intent_meta)
-        # Pull just the first word as the badge label
-        first = re.split(r"[,\s]", intent_meta.strip(), 1)[0]
-        if first.lower() in {"commercial", "informational", "mixed"}:
-            intent_label = first.lower()
 
     # Title from the brief or fall back to the cluster label
     title_match = re.match(r"#\s+(.+)", md.strip())
@@ -362,11 +401,11 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
     # Volume formatted
     sv_fmt = f"{total_sv:,}".replace(",", ".")
 
-    brief_filename = f"cluster_{display_id:02d}.md"
-    map_link = f"../clustering/cluster_map.html#cluster-{display_id}"
+    brief_filename = f"{brief_prefix}cluster_{display_id:02d}.md"
+    map_link = f"{map_prefix}cluster_map.html#cluster-{display_id}"
 
     return f"""
-<section class="card" id="cluster-{display_id}">
+<section class="card brief-card" id="cluster-{display_id}" data-intent="{intent_label}" data-sv="{total_sv}" data-keywords="{n_kw}" data-title="{htmllib.escape(title).lower()}" data-search="{htmllib.escape((title + ' ' + ' '.join(top_kw['keyword'].astype(str).tolist())).lower())}">
   <p class="cluster-id">Cluster {display_id}</p>
   <h2 class="cluster-title">{htmllib.escape(title)}</h2>
   <div style="margin: 8px 0 0;">
@@ -392,7 +431,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
   <p class="section-label">Zielgruppe</p>
   <p class="section-value">{htmllib.escape(zielgruppe) or "—"}</p>
 
-  {f'<p class="section-label">Schmerzpunkt</p><p class="section-value">{htmllib.escape(schmerz)}</p>' if schmerz else ''}
+  {f'<p class="section-label">Pain Points</p><p class="section-value">{htmllib.escape(schmerz)}</p>' if schmerz else ''}
 
   {f'<p class="section-label">Ziel des Artikels</p><p class="section-value">{htmllib.escape(ziel)}</p>' if ziel else ''}
 
@@ -405,7 +444,7 @@ def _render_card(profile_row: pd.Series, top_kw: pd.DataFrame, md: str) -> str:
   {gap_html}
 
   <p class="section-label" style="margin-top: 16px;">Empfohlene Länge</p>
-  <p class="section-value">{htmllib.escape(wortanzahl) or "—"}</p>
+  <p class="section-value">{_format_word_count(wortanzahl)}</p>
 
   <p class="section-label">Call to Action</p>
   <div class="cta-block">{htmllib.escape(cta) or "—"}</div>
@@ -429,28 +468,25 @@ def _render_summary(prof: pd.DataFrame) -> str:
 """.replace(",", ".").strip()
 
 
-def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
+def _render_minicards(prof: pd.DataFrame, titles: dict[int, str],
+                      intents: dict[int, tuple[str, str]]) -> str:
     """Mini cluster cards at the top. Click a card to jump to the full brief below."""
     real = prof[prof["cluster_id"] != -1].sort_values("total_sv", ascending=False)
     cards = []
     for _, r in real.iterrows():
         cid = int(r["cluster_id"])
         display_id = cid + 1
-        title = titles.get(cid, r["label_de"] or f"Cluster {display_id}")
+        title = titles.get(cid, _safe_label(r["label_de"], display_id))
         sv = int(r["total_sv"])
         pct_comm = int(r["pct_commercial"])
 
-        # Same intent logic as the full card
-        if pct_comm >= 70:
-            intent_label, intent_kind = "commercial", "ok"
-        elif pct_comm <= 20:
-            intent_label, intent_kind = "informational", "warn"
-        else:
-            intent_label, intent_kind = "mixed", "info"
+        intent_label, intent_kind = intents.get(cid, _compute_intent(pct_comm))
 
         sv_fmt = f"{sv:,}".replace(",", ".")
         cards.append(
-            f'<a href="#cluster-{display_id}" class="mini-card">'
+            f'<a href="#cluster-{display_id}" class="mini-card" '
+            f'data-intent="{intent_label}" data-sv="{sv}" '
+            f'data-title="{htmllib.escape(title).lower()}">'
             f'<div>'
             f'<div class="mini-id">Cluster {display_id}</div>'
             f'<div class="mini-title">{htmllib.escape(title)}</div>'
@@ -468,46 +504,93 @@ def _render_minicards(prof: pd.DataFrame, titles: dict[int, str]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Main
+# Public page builder (used by src.report for the combined dashboard)
 # ---------------------------------------------------------------------------
 
 
-def run() -> None:
-    if not PROFILES_CSV.exists():
-        raise SystemExit(f"missing {PROFILES_CSV}. Run `python -m src.cluster --step profile` first.")
+def build_page(profiles: pd.DataFrame, labeled: pd.DataFrame,
+               brief_prefix: str = "", extra_section: str = "",
+               map_prefix: str = "../clustering/",
+               briefings_dir: Path | None = None,
+               back_links: list[tuple[str, str]] | None = None) -> str:
+    """Assemble the full dashboard HTML and return it as a string.
 
-    profiles = pd.read_csv(PROFILES_CSV)
-    labeled = pd.read_csv(LABELED_CSV)
-
+    brief_prefix: prepended to brief download links (e.g. "../briefings/" when
+                  the page is served from a sibling directory).
+    extra_section: optional HTML block inserted between the mini-grid and the
+                   cluster cards (used by src.report to inject chart PNGs).
+    back_links: optional list of (label, href) rendered as small back-buttons
+                above the header (e.g. "Zurück zur Übersicht").
+    """
+    real = profiles[profiles["cluster_id"] != -1].sort_values("total_sv", ascending=False)
+    briefs_root = briefings_dir if briefings_dir is not None else BRIEFINGS
     cards = []
     titles: dict[int, str] = {}
-    real = profiles[profiles["cluster_id"] != -1].sort_values("total_sv", ascending=False)
+    intents: dict[int, tuple[str, str]] = {}
     for _, row in real.iterrows():
         cid = int(row["cluster_id"])
         display_id = cid + 1
-        md_path = BRIEFINGS / f"cluster_{display_id:02d}.md"
+        md_path = briefs_root / f"cluster_{display_id:02d}.md"
         if not md_path.exists():
-            logger.info(f"WARN: brief missing for cluster {cid}, skipping")
+            logger.info("WARN: brief missing for cluster %d, skipping", cid)
             continue
         md = md_path.read_text(encoding="utf-8")
         title_match = re.match(r"#\s+(.+)", md.strip())
         if title_match:
             titles[cid] = title_match.group(1).strip()
+        intents[cid] = _compute_intent(int(row["pct_commercial"]), md)
         top_kw = labeled.loc[labeled["hdb"] == cid].sort_values(
             "search_volume", ascending=False).head(6)
-        cards.append(_render_card(row, top_kw, md))
+        cards.append(_render_card(row, top_kw, md, brief_prefix=brief_prefix,
+                                  map_prefix=map_prefix))
 
     summary = _render_summary(profiles)
-    minicards = _render_minicards(profiles, titles)
+    minicards = _render_minicards(profiles, titles, intents)
     cards_html = "\n".join(cards)
 
-    page = f"""<!DOCTYPE html>
+    back_html = ""
+    if back_links:
+        items = "".join(
+            f'<a class="back-link" href="{href}">← {label}</a>'
+            for label, href in back_links
+        )
+        back_html = f'<nav class="back-nav">{items}</nav>'
+
+    return f"""<!DOCTYPE html>
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cluster Briefs · zvoove SEO Pipeline</title>
-<style>{_PAGE_CSS}</style>
+<style>{_PAGE_CSS}
+.back-nav{{display:flex;gap:14px;margin:0 0 18px;flex-wrap:wrap}}
+.back-link{{font-size:13px;color:#0d9488;text-decoration:none;font-weight:500}}
+.back-link:hover{{text-decoration:underline}}
+.sheet-cta{{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+            background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;
+            color:#047857;font-size:13px;font-weight:500;text-decoration:none}}
+.sheet-cta:hover{{background:#d1fae5}}
+.filter-bar{{display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+             background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+             padding:12px 14px;margin:0 0 24px}}
+.filter-bar input[type=search]{{flex:1;min-width:220px;padding:8px 12px;
+             border:1px solid #cbd5e1;border-radius:6px;font-size:13px;
+             background:white;outline:none}}
+.filter-bar input[type=search]:focus{{border-color:#0d9488;box-shadow:0 0 0 3px rgba(13,148,136,0.15)}}
+.filter-group{{display:flex;gap:6px;align-items:center;font-size:12px;color:#64748b}}
+.filter-group label{{font-weight:600;text-transform:uppercase;letter-spacing:0.04em;font-size:11px;margin-right:4px}}
+.filter-btn{{padding:6px 12px;border:1px solid #cbd5e1;background:white;border-radius:6px;
+             font-size:12px;cursor:pointer;color:#475569;font-weight:500}}
+.filter-btn:hover{{border-color:#0d9488;color:#0d9488}}
+.filter-btn.active{{background:#0d9488;border-color:#0d9488;color:white}}
+.filter-bar select{{padding:7px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;background:white;color:#475569;cursor:pointer}}
+.filter-count{{font-size:12px;color:#64748b;margin-left:auto}}
+.brief-card.is-hidden,.mini-card.is-hidden{{display:none !important}}
+.page-footer{{margin-top:40px;padding-top:18px;border-top:1px solid #e2e8f0;
+             display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:13px;color:#475569}}
+.page-footer a{{color:#0d9488;text-decoration:none;font-weight:500}}
+.page-footer a:hover{{text-decoration:underline}}
+</style>
 </head><body><div class="wrap">
-
+{back_html}
 <header>
   <div class="header-text">
     <h1>Cluster Briefs</h1>
@@ -515,7 +598,8 @@ def run() -> None:
     Sortiert nach Suchvolumen pro Monat.</p>
   </div>
   <div class="header-actions">
-    <a class="map-cta" href="../clustering/cluster_map.html">Cluster Karte öffnen</a>
+    <a class="map-cta" href="{map_prefix}cluster_map.html">Cluster Karte öffnen</a>
+    <a class="sheet-cta" href="{SHEET_URL}" target="_blank" rel="noopener">📊 Google Sheet öffnen</a>
     <button type="button" class="glossar-btn" onclick="openGlossar()">Glossar: was heißen die Zahlen?</button>
   </div>
 </header>
@@ -525,7 +609,7 @@ def run() -> None:
   <div class="modal" role="dialog" aria-labelledby="glossar-title">
     <button class="modal-close" onclick="closeGlossar()" aria-label="Schließen">×</button>
     <h2 id="glossar-title">Glossar</h2>
-    <p class="modal-sub">Was die Kennzahlen im Dashboard bedeuten, in einfachem Deutsch.</p>
+    <p class="modal-sub">Was die Kennzahlen im Dashboard bedeuten.</p>
 
     <h3>KPI-Box ganz oben</h3>
     <table>
@@ -592,7 +676,11 @@ def run() -> None:
     </table>
 
     <div class="note">
-      <b>Wichtig:</b> Die Werte sind Schätzungen aus einer deterministischen Heuristik (SHA256 Hash des Keywords als Seed), nicht echte DataForSEO Daten. Spalte <code>data_source</code> in den CSV-Dateien markiert das. In Produktion stehen hier echte Werte, die Größenordnungen sind aber realistisch genug, um die Cluster-Strategie zu bewerten.
+      <b>Wichtig — woher die Zahlen kommen:</b> SV, KD und CPC sind in dieser Demo <em>Schätzwerte</em>, keine Live-API-Daten von DataForSEO oder Semrush.
+      <br><br>
+      Die Schätzung ist eine <b>deterministische Heuristik</b>: jedes Keyword wird per SHA256 in einen Hash umgewandelt, und Bytes aus diesem Hash bestimmen die konkreten Zahlen innerhalb plausibler Bereiche (Head-Keywords bekommen z.B. höhere SV-Bereiche als Longtails, kommerzielle Intent höhere CPC). „Deterministisch" heißt: dasselbe Keyword liefert in jedem Lauf die exakt gleiche Schätzung, weil der Hash nur vom Wort abhängt, nicht vom Zeitpunkt.
+      <br><br>
+      Vorteil: kostenlos, reproduzierbar, plausible Größenordnung — reicht zum Bewerten der Cluster-Strategie. Spalte <code>data_source</code> in den CSV-Dateien markiert jedes Keyword als <code>estimated</code>. In einer produktiven Pipeline (Schalter <code>--provider dataforseo</code>) stehen an dieser Stelle echte API-Werte.
     </div>
   </div>
 </div>
@@ -605,17 +693,121 @@ document.addEventListener('keydown', function(e) {{ if (e.key === 'Escape') clos
 
 {summary}
 
+<div class="filter-bar" id="filter-bar">
+  <input type="search" id="filter-search" placeholder="Suche nach Cluster oder Keyword..." aria-label="Cluster suchen">
+  <div class="filter-group" role="group" aria-label="Intent-Filter">
+    <label>Intent</label>
+    <button type="button" class="filter-btn active" data-intent="all">Alle</button>
+    <button type="button" class="filter-btn" data-intent="commercial">commercial</button>
+    <button type="button" class="filter-btn" data-intent="informational">informational</button>
+    <button type="button" class="filter-btn" data-intent="mixed">mixed</button>
+  </div>
+  <div class="filter-group">
+    <label for="filter-sort">Sortierung</label>
+    <select id="filter-sort">
+      <option value="sv-desc">Suchvolumen (hoch → niedrig)</option>
+      <option value="sv-asc">Suchvolumen (niedrig → hoch)</option>
+      <option value="kw-desc">Keywords (viele → wenige)</option>
+      <option value="title-asc">Titel (A → Z)</option>
+    </select>
+  </div>
+  <span class="filter-count" id="filter-count"></span>
+</div>
+
 {minicards}
 
+{extra_section}
+
+<div id="brief-list">
 {cards_html}
+</div>
+
+<script>
+(function() {{
+  var search = document.getElementById('filter-search');
+  var sortSel = document.getElementById('filter-sort');
+  var intentBtns = document.querySelectorAll('.filter-btn[data-intent]');
+  var countEl = document.getElementById('filter-count');
+  var briefList = document.getElementById('brief-list');
+  var miniGrid = document.querySelector('.mini-grid');
+  var briefs = Array.prototype.slice.call(document.querySelectorAll('.brief-card'));
+  var minis = Array.prototype.slice.call(document.querySelectorAll('.mini-card'));
+
+  var state = {{ intent: 'all', q: '' }};
+
+  function apply() {{
+    var q = state.q.trim().toLowerCase();
+    var visible = 0;
+    briefs.forEach(function(c) {{
+      var hay = (c.dataset.search || '') + ' ' + (c.dataset.title || '');
+      var okIntent = state.intent === 'all' || c.dataset.intent === state.intent;
+      var okSearch = !q || hay.indexOf(q) !== -1;
+      var show = okIntent && okSearch;
+      c.classList.toggle('is-hidden', !show);
+      if (show) visible++;
+    }});
+    var clusterIds = {{}};
+    briefs.forEach(function(c) {{ if (!c.classList.contains('is-hidden')) clusterIds[c.id] = 1; }});
+    minis.forEach(function(m) {{
+      var href = (m.getAttribute('href') || '').replace('#','');
+      m.classList.toggle('is-hidden', !clusterIds[href]);
+    }});
+    countEl.textContent = visible + ' von ' + briefs.length + ' Clustern';
+  }}
+
+  function sortCards() {{
+    var mode = sortSel.value;
+    function num(el, attr) {{ return parseFloat(el.dataset[attr] || '0'); }}
+    var cmp = {{
+      'sv-desc': function(a,b) {{ return num(b,'sv') - num(a,'sv'); }},
+      'sv-asc':  function(a,b) {{ return num(a,'sv') - num(b,'sv'); }},
+      'kw-desc': function(a,b) {{ return num(b,'keywords') - num(a,'keywords'); }},
+      'title-asc': function(a,b) {{ return (a.dataset.title||'').localeCompare(b.dataset.title||''); }}
+    }}[mode];
+    if (!cmp) return;
+    var sortedBriefs = briefs.slice().sort(cmp);
+    sortedBriefs.forEach(function(c) {{ briefList.appendChild(c); }});
+    if (miniGrid) {{
+      var byId = {{}};
+      minis.forEach(function(m) {{ byId[(m.getAttribute('href')||'').replace('#','')] = m; }});
+      sortedBriefs.forEach(function(c) {{
+        var m = byId[c.id]; if (m) miniGrid.appendChild(m);
+      }});
+    }}
+  }}
+
+  search.addEventListener('input', function() {{ state.q = this.value; apply(); }});
+  sortSel.addEventListener('change', function() {{ sortCards(); }});
+  intentBtns.forEach(function(b) {{
+    b.addEventListener('click', function() {{
+      intentBtns.forEach(function(x) {{ x.classList.remove('active'); }});
+      this.classList.add('active');
+      state.intent = this.dataset.intent;
+      apply();
+    }});
+  }});
+  apply();
+}})();
+</script>
 
 </div></body></html>"""
 
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+
+def run() -> None:
+    if not PROFILES_CSV.exists():
+        raise SystemExit(f"missing {PROFILES_CSV}. Run `python -m src.cluster --step profile` first.")
+    profiles = pd.read_csv(PROFILES_CSV)
+    labeled = pd.read_csv(LABELED_CSV)
+    page = build_page(profiles, labeled)
     out = BRIEFINGS / "index.html"
     out.write_text(page, encoding="utf-8")
     size_kb = out.stat().st_size / 1024
-    logger.info(f"wrote {out.relative_to(ROOT)} ({size_kb:.1f} KB, "
-          f"{len(cards)} cluster cards)")
+    logger.info("wrote %s (%.1f KB)", out.relative_to(ROOT), size_kb)
 
 
 def main() -> None:

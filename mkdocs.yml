@@ -1,4 +1,4 @@
-site_name: SEO Keyword Pipeline für zvoove
+site_name: SEO Keyword → ContentBrief Pipeline für zvoove
 site_url: https://t1nak.github.io/seo-pipeline/
 site_description: Case Study Bewerbung Revenue AI Architect, zvoove
 site_author: Tina Koziol
@@ -9,7 +9,7 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: de
-  favicon: assets/cluster_overview.png
+  favicon: assets/favicon.svg
   palette:
     - scheme: default
       primary: custom
@@ -48,11 +48,13 @@ nav:
       - methodology.md
       - Entscheidungen: decisions.md
     - Ergebnisse: results.md
+    - Reporting-Anbindung: reporting-integration.md
+    - Developer Guide: developer-guide.md
     - Technical Review: technical_review.md
-  - Example Output:
-    - Cluster Map: https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html
+  - Beispiel-Output:
+    - Übersicht: example-output.md
     - Reporting Dashboard: https://t1nak.github.io/seo-pipeline/output/reporting/index.html
-    - Example Brief: https://t1nak.github.io/seo-pipeline/output/briefings/index.html
+    - Live Google Sheet: https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit
   - Pipeline: https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml
   - GitHub: https://github.com/t1nak/seo-pipeline
 
@@ -103,20 +105,6 @@ plugins:
         - locale: en
           name: English
           build: true
-          nav_translations:
-            Übersicht: Overview
-            Dokumentation: Documentation
-            Case Study: Case Study
-            Prozessarchitektur: Process Architecture
-            Methodik: Methodology
-            Entscheidungen: Decisions
-            Ergebnisse: Results
-            Technical Review: Technical Review
-            Example Output: Example Output
-            Cluster Map: Cluster Map
-            Reporting Dashboard: Reporting Dashboard
-            Example Brief: Example Brief
-            Pipeline: Pipeline
 
 extra:
   social:
@@ -129,5 +117,6 @@ extra_css:
 
 extra_javascript:
   - javascripts/lightbox.js
+  - javascripts/palette-fix.js
 
 copyright: Tina Koziol, Case Study für eine Bewerbung als Revenue AI Architect

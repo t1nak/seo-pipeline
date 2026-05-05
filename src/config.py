@@ -21,7 +21,7 @@ Usage:
 
     from src.config import settings
     print(settings.brief_provider)         # api | openai | max
-    print(settings.cluster_hdbscan_mcs)    # 12
+    print(settings.cluster_hdbscan_mcs)    # 10
 """
 from __future__ import annotations
 
@@ -63,14 +63,19 @@ class Settings(BaseSettings):
     cluster_umap_metric: str = "cosine"
 
     # ----- Cluster: HDBSCAN -----
-    # mcs=12 reproduces the documented 10-cluster baseline on both
-    # macOS local (sil 0.672, 38 noise) and Ubuntu CI (sil ~0.59,
-    # 40 noise). UMAP cross-platform drift is real even with
-    # random_state=42; the parameter sweep showed mcs ∈ {10, 12, 15}
-    # all hit the plateau at 10 clusters locally, so picking 12
-    # gives one buffer on each side. Override per run via the env
-    # var PIPELINE_CLUSTER_HDBSCAN_MCS or the workflow input.
-    cluster_hdbscan_mcs: int = 12
+    # mcs=10, ms=5, eom is the sweep row that produces 13 differentiated
+    # clusters at 14% noise (sil 0.647) on the 500-keyword baseline — see
+    # the table in docs/methodology.md. The choice is operationally driven:
+    # leaf at the same cluster count produced 26% noise (130 keywords lost
+    # to outliers, including high-SV terms), and mcs=12/eom produced a
+    # 188-keyword Sammelcluster mixing AÜG, Equal Pay, Debitorenmanagement
+    # and Höchstüberlassungsdauer that no single brief could address.
+    # The remaining 14% noise is absorbed by the assign_noise step
+    # (nearest-cluster centroid in 5D UMAP space) so every keyword has a
+    # home for the content plan. Override per run via
+    # PIPELINE_CLUSTER_HDBSCAN_MCS / PIPELINE_CLUSTER_HDBSCAN_METHOD or
+    # the workflow inputs.
+    cluster_hdbscan_mcs: int = 10
     cluster_hdbscan_ms: int = 5
     cluster_hdbscan_method: Literal["eom", "leaf"] = "eom"
     cluster_hdbscan_metric: str = "euclidean"
@@ -85,6 +90,15 @@ class Settings(BaseSettings):
     brief_retry_base_delay: float = 2.0      # first backoff sleep, seconds
     brief_retry_max_delay: float = 60.0      # cap on backoff, seconds
     brief_retry_multiplier: float = 2.0      # exponential factor
+
+    # ----- Sheets sync (optional Reporting-Push nach Google Sheets) -----
+    # Aus per Default: ohne den Schalter (oder ohne Service-Account-JSON)
+    # ist `python -m src.sync_sheets` ein No-op. So funktioniert lokal
+    # `python pipeline.py` und in CI auch ohne Google-Cloud-Setup.
+    sheets_sync_enabled: bool = False
+    sheets_id: str | None = None
+    sheets_clusters_tab: str = "Clusters"
+    sheets_keywords_tab: str = "Keywords"
 
     # ----- Logging -----
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"

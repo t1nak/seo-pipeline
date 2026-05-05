@@ -1,4 +1,4 @@
-# SEO Keyword Pipeline für zvoove
+# SEO Keyword → ContentBrief Pipeline für zvoove
 
 ## Was ist die SEO Pipeline?
 
@@ -6,11 +6,19 @@ Eine Daten-Pipeline für die automatisierte Erstellung von SEO Content Briefs. V
 
 ![Pipeline Architektur](landing_diagram.svg)
 
-**Beispiel-Demo:** Diese Pipeline läuft end-to-end auf einem zuvor LLM-erzeugten Keyword Set. Daraus entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Provider per Konfiguration austauschbar. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
+**Beispiel-Demo:** Im Beispiel ist der Entry Point eine Liste von 500 Keywords, die ein LLM auf Basis des [zvoove Blogs](https://zvoove.de/wissen/blog) generiert hat. In einer produktiven Pipeline kann dieser Entry Point genauso von externen Anbietern wie Semrush, Ahrefs oder DataForSEO kommen, dieser Schritt lässt sich über die Konfiguration im GitHub Actions Workflow einstellen. Aus den Keywords entstehen thematische Cluster, Content Briefs und ein interaktives Reporting. Lokale ML, Anthropic API für Briefs, GitHub Pages für die Live-Demo. Der Discover-Schritt scrapt den Blog noch nicht live, das ist transparent in den [Entscheidungen](decisions.md) dokumentiert und der nächste Arbeitsblock.
 
 [:material-rocket-launch: Go to Pipeline (GitHub Actions)](https://github.com/t1nak/seo-pipeline/actions/workflows/pipeline-full.yml){ .md-button .md-button--primary target=_blank rel=noopener }
 
-## Häufige Fragen
+## Grundlagen
+
+- [Wie wird die Pipeline getriggert?](#wie-wird-die-pipeline-getriggert)
+- [Wie kann ich Model und Provider ändern?](#wie-kann-ich-model-und-provider-andern)
+- [Was kostet ein Lauf?](#was-kostet-ein-lauf)
+- [Wie viele Cluster werden erkannt?](#wie-viele-cluster-werden-erkannt)
+- [Was ist lokal, und was wäre in einer produktiven Pipeline anders?](#was-ist-lokal-und-was-ware-in-einer-produktiven-pipeline-anders)
+- [Welche Parameter beeinflussen das Ergebnis maßgeblich?](#welche-parameter-beeinflussen-das-ergebnis-massgeblich)
+- [Welche Variablen sind sicherheitskritisch?](#welche-variablen-sind-sicherheitskritisch-wegen-api-kosten-und-berechtigungen)
 
 ### Wie wird die Pipeline getriggert?
 
@@ -18,26 +26,36 @@ GitHub Actions: per Cron-Schedule oder manuellem Trigger via [`workflow_dispatch
 
 ### Wie kann ich Model und Provider ändern?
 
-Alle Provider sind per CLI-Flag oder `PIPELINE_*` Environment-Variable wählbar.
+Der einfachste Weg ist die GitHub Actions UI: beim manuellen Auslösen von [`pipeline-full.yml`](https://github.com/t1nak/seo-pipeline/blob/main/.github/workflows/pipeline-full.yml) erscheinen Dropdowns für Provider und Modell-ID direkt im Browser, kein Code-Edit nötig.
 
-| Komponente | CLI-Flag | Optionen |
+| Eingabefeld | Optionen | Default |
 |---|---|---|
-| Brief-Provider | `--brief-provider` | `api` (Anthropic), `openai`, `max` (Agent SDK) |
-| Brief-Model | `--brief-model` | beliebige Modell-ID, z.B. `claude-sonnet-4-6` |
-| Keyword-Quelle | `--source` | `manual`, `live` |
-| Enrich-Provider | `--provider` | `estimate` (Heuristik), `dataforseo` |
+| **Brief-Provider** | `api` (Anthropic), `openai` | `api` |
+| **Modell-ID** | beliebige ID, z.B. `claude-sonnet-4-6`, `gpt-5` | leer = Provider-Default |
+| **Enrich-Provider** | `estimate` (kostenlos), `dataforseo` | `estimate` |
+
+Lokal lassen sich dieselben Einstellungen als `PIPELINE_*` Environment-Variable oder CLI-Flag übergeben. Die vollständige Referenz aller Variablen, die Präzedenz-Reihenfolge und Beispiele für CI und lokale `.env` Dateien stehen im [Developer Guide](developer-guide.md#3-konfigurations-modell).
 
 ### Was kostet ein Lauf?
 
-Bei der aktuellen Konfiguration (10 Cluster, Anthropic API mit Prompt Caching) rund **0,15 bis 0,25 USD pro Lauf** für die Brief-Generierung. Optionaler DataForSEO Live-Lookup für 500 Keywords: ~0,75 USD. Gesamt **~1 USD pro voller Lauf**, bei wöchentlicher Ausführung etwa 50 USD pro Jahr. Detail in §12 der [Case Study](case-study.md).
+Hängt vom gewählten Modell und Provider ab. Beispielwerte für 13 Cluster, 500 Keywords:
+
+| Konfiguration | Brief | Labels | Enrich | Gesamt |
+|---|---|---|---|---|
+| Anthropic Sonnet 4.6 (Caching) plus Heuristik | ~0,18 bis 0,25 USD | ~0,01 USD | 0 USD | **~0,20 USD** |
+| OpenAI GPT-5 plus Heuristik | ~0,30 bis 0,40 USD | ~0,01 USD | 0 USD | **~0,35 USD** |
+| Anthropic Sonnet plus DataForSEO Live | ~0,18 bis 0,25 USD | ~0,01 USD | ~0,75 USD | **~1,00 USD** |
+| Claude Subscription (Max/Pro) plus Heuristik | 0 USD (im Abo) | ~0,01 USD | 0 USD | **~0,01 USD** |
+
+Bei wöchentlicher Ausführung mit Anthropic API plus Heuristik also ungefähr 10 USD pro Jahr, mit DataForSEO eher 50 USD. Vollständige Tabelle und Annahmen in §12 der [Case Study](case-study.md).
 
 ### Wie viele Cluster werden erkannt?
 
-HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Auf der aktuellen 500-Keyword-Baseline: **10 Cluster plus rund 40 Ausreißer** (~8 Prozent als Rauschen markiert). Hyperparameter-Sweep und Wahl von `mcs=12` aus der Plateau-Klasse in der [Methodik](methodology.md).
+HDBSCAN bestimmt die Cluster-Anzahl selbst aus der Datendichte, ohne vorgegebene `k`. Mit dem aktuellen Default `mcs=10, ms=5, eom` entstehen aus der 500-Keyword-Baseline **13 Cluster, alle 500 Keywords sind zugeordnet**. HDBSCAN markiert zunächst 72 Rand-Keywords als Noise (14 Prozent), die anschließend per Soft-Assignment ihrem nächsten Cluster-Centroid zugeordnet werden ([ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) — Endzustand: 0 Outlier. Die Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Begründung der Wahl `mcs=10/eom` in der [Methodik](methodology.md).
 
-### Welche Daten werden lokal gespeichert?
+### Was ist lokal, und was wäre in einer produktiven Pipeline anders?
 
-Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
+**Aktuell (Case-Study-Setup):** Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
 
 - `data/keywords.csv` (angereicherte Keyword-Liste)
 - `output/clustering/` (Embeddings, UMAP-Reduktionen, Cluster-Map, Diagnostik-Charts)
@@ -45,6 +63,14 @@ Alles bleibt im Repo, keine externen Datenbanken. Die Artefakte liegen unter:
 - `output/reporting/index.html` (konsolidiertes Dashboard)
 
 API-Keys liegen in `.env` (lokal) bzw. GitHub Secrets (CI), nicht im Repo.
+
+**In einer produktiven Pipeline würde sich typischerweise ändern:**
+
+- **Storage:** Artefakte in Object Storage (z. B. S3) statt im Repo, damit Läufe versioniert und teamweit zugänglich sind.
+- **Metadaten und Historie:** Keyword-Tabellen, Cluster-Zuordnungen und Briefing-Stände in einer Datenbank (z. B. Postgres), damit sich Verläufe über Zeit auswerten lassen.
+- **Secrets:** Zentrales Secret-Management (Vault, AWS Secrets Manager, GitHub Actions Environments) statt `.env`-Dateien.
+- **Beobachtbarkeit:** Strukturierte Logs, Cost-Tracking je Lauf und Alerts statt Konsolen-Output.
+- **Trigger:** Geplante Läufe und Event-Trigger (neuer Blog-Post, manuelle Freigabe) statt nur lokalem CLI-Aufruf.
 
 ### Welche Parameter beeinflussen das Ergebnis maßgeblich?
 
@@ -72,7 +98,6 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
 **Schutz-Mechanismen:**
 
-- **`dry_run=true`** im `pipeline-full.yml` Workflow überspringt alle LLM-Calls und schreibt Stubs. Default ist `false` (echter Lauf), aber zum Testen explizit umstellbar.
 - **`workflow_dispatch`** ist die einzige Trigger-Option für `pipeline-full.yml` — kein versehentliches Auslösen über Push.
 - **Secrets sind `null` bei fehlender Konfiguration**; der Workflow bricht früh ab mit `::error::ANTHROPIC_API_KEY secret missing` statt blind zu starten.
 - **API-Keys nie in Logs** — der Workflow prüft nur die Länge (`${#ANTHROPIC_API_KEY}`), nicht den Wert.
@@ -90,7 +115,7 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
 -   :material-map-marker-radius: __Interaktive Cluster Karte__
 
-    10 Themengruppen visuell, mit Klick auf jeden Punkt die Details. Sprache umschaltbar.
+    13 Themengruppen visuell, mit Klick auf jeden Punkt die Details. Sprache umschaltbar.
 
     [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/clustering/cluster_map.html)
 
@@ -106,6 +131,12 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
     [:octicons-arrow-right-24: Live Demo](https://t1nak.github.io/seo-pipeline/output/briefings/index.html)
 
+-   :material-google-spreadsheet: __Live Reporting in Google Sheets__
+
+    Cluster und Keywords in zwei Tabs, automatisch von der Pipeline gepusht. Filterbar, sortierbar, teamtauglich.
+
+    [:octicons-arrow-right-24: Sheet öffnen](https://docs.google.com/spreadsheets/d/1JExk1b5M8ljtTkhKHwgmEFH9f2fHgOoOmM2pz020JUQ/edit)
+
 -   :material-book-open-variant: __Case Study__
 
     Vollständige Schreibarbeit mit Architektur, Validierung, Empfehlungen, Reflektion.
@@ -118,7 +149,7 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 
     [:octicons-arrow-right-24: Tiefe](methodology.md)
 
--   :material-format-list-bulleted: __10 Cluster Katalog__
+-   :material-format-list-bulleted: __Cluster Katalog__
 
     Pro Cluster: Stats, Top Keywords, Empfehlung, Aufwand, Revenue Hypothese.
 
@@ -139,15 +170,15 @@ Begründung der Default-Werte und Sensitivitäts-Analyse mit Sweep-Tabelle in de
 `500` Keywords (Cap aus 504 Baseline)
 { .annotate }
 
-`10` Cluster plus 40 Ausreißer (8,0 Prozent)
+`13` Cluster, **0 Outlier**
 
-`213.302` SV pro Monat (geschätzt, ohne Rauschen)
+`239.976` SV pro Monat (geschätzt)
 
-`0,67` Silhouette Score (ohne Rauschen)
+`0,65` Silhouette HDBSCAN-Kern
 
-`0,57` ARI gegen Ward Hierarchical (k=10)
+`mcs=10/eom` plus Soft-Assignment
 
-`~25 s` voller Lauf ohne Briefs
+`~30 s` voller Lauf ohne Briefs
 
 </div>
 
@@ -155,15 +186,15 @@ Die fünf größten Cluster nach Suchvolumen:
 
 | # | Cluster | Keywords | SV / Monat | Ø KD | % komm. |
 |---|---|---|---|---|---|
-| 10 | B2B-SaaS Kategorie-Heads | 44 | 47.989 | 49 | 82 |
-| 3 | Kommerzielle Zeit/Software-Heads | 47 | 26.159 | 43 | 94 |
-| 5 | Marke: zvoove Produktnamen | 34 | 23.604 | 51 | 97 |
-| 6 | Operative Anleitungen (gemischt) | 30 | 13.755 | 33 | 23 |
-| 4 | Recruiting & KI-Tools | 34 | 12.075 | 38 | 44 |
+| 10 | HR und Dokumentenverwaltungssoftware | 45 | 45.567 | 53 | 89 |
+| 12 | Zeitarbeit Branche Software und Tools | 97 | 28.301 | 37 | 34 |
+| 1 | Zeiterfassung und Zeitarbeitssoftware | 47 | 26.159 | 48 | 94 |
+| 7 | Digitalisierung Personaldienstleistung | 37 | 23.984 | 36 | 35 |
+| 3 | Zvoove Plattform Features und Preise | 34 | 23.604 | 52 | 97 |
 
-Plus der Catch-all Cluster 2 mit 189 Keywords (Branche & Arbeitsrecht), nach Anzahl der größte mit 64.264 SV.
+HDBSCAN findet 13 Cluster aus den Daten heraus (`mcs=10, eom`). 72 Rand-Keywords werden per Soft-Assignment ihrem nächsten Cluster-Centroid zugeordnet ([ADR-15](decisions.md#adr-15-soft-assignment-fur-noise-keywords)) — alle 500 Keywords haben einen Pillar. Cluster-Labels werden pro Lauf von einem Anthropic-Haiku-Aufruf erzeugt ([ADR-5](decisions.md#adr-5-llm-generierte-cluster-labels-pro-lauf-yaml-als-fallback)). Zwei Cluster sind vom LLM transparent als „Sammelthemen" markiert und benötigen Sub-Clustering vor redaktioneller Bearbeitung.
 
-[Alle 10 Cluster im Detail :octicons-arrow-right-24:](results.md)
+[Alle Cluster im Detail :octicons-arrow-right-24:](results.md)
 
 ## Aktueller Stand der Pipeline
 
@@ -171,9 +202,10 @@ Plus der Catch-all Cluster 2 mit 189 Keywords (Branche & Arbeitsrecht), nach Anz
 |---|---|
 | Discover | Stub. `--source manual` funktioniert, `--source live` ist offen |
 | Enrich | Vollständig. Heuristik plus optional DataForSEO Live Lookup |
-| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, 6 Charts, interaktive Karte |
+| Cluster | Vollständig. Embeddings, UMAP, HDBSCAN, Soft-Assignment, Profiling |
+| Labels (LLM) | Vollständig. Anthropic Haiku Batch-Call, JSON pro Lauf, YAML-Fallback |
 | Brief | Vollständig. Claude API mit Prompt Caching |
-| Report | Vollständig. Konsolidiertes HTML Dashboard |
+| Report | Vollständig. Charts, Cluster-Map, konsolidiertes HTML Dashboard |
 
 ## Schnellstart
 

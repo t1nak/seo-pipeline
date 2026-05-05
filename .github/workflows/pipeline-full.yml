@@ -1,4 +1,4 @@
-name: Pipeline (full, 5 steps incl. brief)
+name: Pipeline (full)
 
 # Voller Pipeline-Lauf inklusive Brief-Step (Claude API).
 # Manuell ausgeloest, ANTHROPIC_API_KEY-Secret erforderlich.
@@ -6,35 +6,35 @@ name: Pipeline (full, 5 steps incl. brief)
 # Prompt-Caching). dry_run=true testet die Verkabelung ohne API-Aufruf.
 #
 # Warum kein push-Trigger: Brief-Step kostet Geld, jeder Lauf soll eine
-# bewusste Entscheidung sein. Demo-Lauf ohne Brief: pipeline.yml.
+# bewusste Entscheidung sein. dry_run=true testet die Verkabelung ohne API-Aufruf.
 
 on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Test-Modus: kein LLM-Call, Stubs schreiben (kostenlos, gut für Verkabelungs-Test)"
+        description: "Test-Modus ohne LLM-Aufruf. Schreibt Stub-Briefs, kostet nichts, prüft die Verkabelung."
         type: boolean
         default: false
       brief_provider:
-        description: "Brief-Provider (LLM für Content-Briefings) — api: Anthropic, openai: GPT-5. max (Agent SDK) ist lokal-only und in CI nicht verfügbar."
+        description: "LLM für die Content-Briefs. api = Anthropic Claude, openai = GPT-5. (max läuft nur lokal.)"
         type: choice
         options:
           - api
           - openai
         default: api
       model:
-        description: "Modell-ID überschreiben (leer = Default je Provider: api -> claude-sonnet-4-6, openai -> gpt-5). Nur relevant wenn dry_run=false."
+        description: "Modell-ID überschreiben. Leer = Default je Provider (api → claude-sonnet-4-6, openai → gpt-5)."
         type: string
         default: ""
       enrich_provider:
-        description: "Enrich-Provider (Suchvolumen, Difficulty) — estimate: Heuristik kostenlos, dataforseo: ~0.75 USD pro 500 Keywords"
+        description: "Suchvolumen + Keyword Difficulty. estimate = kostenlose Heuristik. dataforseo = Live-API (~0,75 USD pro 500 Keywords)."
         type: choice
         options:
           - estimate
           - dataforseo
         default: estimate
       max_keywords:
-        description: "Cap der Keyword-Anzahl nach Discover"
+        description: "Maximale Keyword-Anzahl nach dem Discover-Schritt."
         type: choice
         options:
           - "100"
@@ -43,7 +43,7 @@ on:
           - "1000"
         default: "500"
       cluster_mcs:
-        description: "HDBSCAN min_cluster_size (kleiner -> mehr Cluster). Plateau-Mitte 12, siehe Methodik."
+        description: "HDBSCAN min_cluster_size. Kleiner = mehr, kleinere Cluster. Default 10."
         type: choice
         options:
           - "8"
@@ -51,10 +51,21 @@ on:
           - "12"
           - "15"
           - "20"
-        default: "12"
+        default: "10"
+      cluster_method:
+        description: "HDBSCAN cluster_selection_method. eom = wenige stabile Cluster. leaf = mehr feinere Cluster. Default eom."
+        type: choice
+        options:
+          - eom
+          - leaf
+        default: eom
+      sheets_sync:
+        description: "Reporting nach jedem Lauf in Google Sheets pushen. Braucht GOOGLE_SHEETS_CREDENTIALS_JSON (Secret) + GOOGLE_SHEETS_ID (Variable). Setup: docs/reporting-integration.md."
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: pipeline-full
@@ -108,22 +119,61 @@ jobs:
             ~/.cache/torch/sentence_transformers
           key: st-${{ runner.os }}-paraphrase-multilingual-MiniLM-L12-v2
 
-      - name: Run pipeline (5 steps incl. brief)
-        # Pipeline-Settings als PIPELINE_* env vars. Pydantic Settings in
-        # src/config.py liest sie automatisch. CLI-Flags würden die env
-        # Werte überschreiben, aber wir passen alles über env.
+      - name: Step 1 -- Discover keywords
+        env:
+          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
+        run: python pipeline.py --step discover
+
+      - name: Step 2 -- Enrich (Search Volume, Keyword Difficulty)
+        env:
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
+        run: python pipeline.py --step enrich
+
+      - name: Step 3 -- Cluster keywords
+        env:
+          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
+          PIPELINE_CLUSTER_HDBSCAN_METHOD: ${{ inputs.cluster_method }}
+        run: python pipeline.py --step cluster
+
+      - name: Step 3b -- Generate cluster labels (LLM)
+        if: ${{ !inputs.dry_run }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m src.labels_llm
+
+      - name: Step 4 -- Generate content briefs (LLM)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
-          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
           PIPELINE_BRIEF_PROVIDER: ${{ inputs.brief_provider }}
           PIPELINE_BRIEF_MODEL: ${{ inputs.model }}
-          PIPELINE_ENRICH_PROVIDER: ${{ inputs.enrich_provider }}
-          PIPELINE_DISCOVER_MAX_KEYWORDS: ${{ inputs.max_keywords }}
-          PIPELINE_CLUSTER_HDBSCAN_MCS: ${{ inputs.cluster_mcs }}
+        run: python pipeline.py --step brief ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Step 5 -- Build report
+        run: python pipeline.py --step report
+
+      - name: Step 6 -- Export reporting (JSON + CSV für Airtable, Notion, Sheets)
+        run: python pipeline.py --step export
+
+      - name: Step 7 -- Sync reporting to Google Sheets
+        if: ${{ inputs.sheets_sync }}
+        env:
+          PIPELINE_SHEETS_SYNC_ENABLED: "true"
+          PIPELINE_SHEETS_ID: ${{ vars.GOOGLE_SHEETS_ID }}
+          GOOGLE_SHEETS_CREDENTIALS_JSON: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_JSON }}
         run: |
-          python pipeline.py ${{ inputs.dry_run && '--dry-run' || '' }}
+          if [ -z "$GOOGLE_SHEETS_CREDENTIALS_JSON" ]; then
+            echo "::error::sheets_sync=true requires GOOGLE_SHEETS_CREDENTIALS_JSON secret."
+            echo "Setup: docs/reporting-integration.md"
+            exit 1
+          fi
+          if [ -z "$PIPELINE_SHEETS_ID" ]; then
+            echo "::error::sheets_sync=true requires GOOGLE_SHEETS_ID repo variable."
+            exit 1
+          fi
+          python -m src.sync_sheets
 
       - name: Show run summary
         run: |
@@ -150,3 +200,19 @@ jobs:
             output/reporting/
           retention-days: 14
           if-no-files-found: error
+
+      - name: Commit pipeline output back to main
+        # Output ins Repo committen, damit GitHub Pages den frischen Lauf
+        # zeigt (Dashboard, Charts, Cluster Map, Briefs). Der Push triggert
+        # docs.yml fuer das Pages-Deployment. pipeline.yml hat einen
+        # paths-Filter ohne output/, wird also nicht erneut ausgeloest.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/keywords.csv output/clustering/ output/briefings/ output/reporting/
+          if git diff --cached --quiet; then
+            echo "No output changes to commit."
+            exit 0
+          fi
+          git commit -m "ci(pipeline-full): update output from run ${{ github.run_id }} (provider=${{ inputs.brief_provider }}, mcs=${{ inputs.cluster_mcs }}/${{ inputs.cluster_method }}, n=${{ inputs.max_keywords }})"
+          git push
